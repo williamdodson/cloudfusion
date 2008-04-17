@@ -1,0 +1,80 @@
+body {
+	font:14px/1.4em "Lucida Grande", Verdana, sans-serif;
+}
+
+#page {
+	width:950px;
+	margin:0 auto;
+}
+
+.indent {
+	margin-left:100px;
+}
+
+h1 {
+	text-align:center;
+	margin:0;
+	padding:20px 0;
+}
+
+h2 {
+	margin-top:2em;
+}
+
+pre {
+	font:12px/1.3em monospace;
+	background-color:#e9f5ff;
+	color:#000080;
+	border:1px dotted #000080;
+	max-height:500px;
+	overflow:auto;
+	padding:10px;
+}
+
+.footnote,
+.footnote a {
+	font-size:12px;
+	line-height:1.3em;
+	color:#aaa;
+}
+
+table.chart {
+	border-collapse:collapse;
+	width:100%;
+}
+
+table.chart td {
+	border:1px solid #ccc;
+	padding:5px 10px;
+	width:99%;
+}
+
+table.chart td.status {
+	font-size:2em;
+	text-align:center;
+	width:1%;
+}
+
+table.chart tr.pass {
+	background-color:transparent;
+}
+
+table.chart tr.pass td.status {
+	color:#093;
+}
+
+table.chart tr.fail {
+	background-color:#fee;
+}
+
+table.chart tr.fail td.status {
+	color:#c00;
+}
+
+table.chart tr.notest {
+	background-color:#eee;
+}
+
+table.chart tr.notest td.status {
+	color:#666;
+}
