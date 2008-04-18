@@ -204,8 +204,7 @@ class TarzanCore
 	 * @param array $opt (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * @param string $queue_url (Optional) The URL of the queue to perform the action on.
 	 * @param string $message (Optional) This parameter is only used by the send_message() method.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
-	 * 
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryAuth.html
 	 */
 	public function authenticate($action, $opt = null, $queue_url = null, $message = null)

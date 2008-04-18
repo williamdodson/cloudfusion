@@ -6,7 +6,7 @@
  *
  * @category Tarzan
  * @package AAWS
- * @version 2008.04.12
+ * @version 2008.04.18
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -16,83 +16,57 @@
 
 
 /*%******************************************************************************************%*/
-
-
-/**
- * Require all necessary libraries
- */
-require_once('common.class.php');
-
-
-/*%******************************************************************************************%*/
-
+// CONSTANTS
 
 /**
- * Define the constants for Amazon's various locales.
+ * Locale code for the United States
  */
 define('AAWS_LOCALE_US', 'us');
+
+/**
+ * Locale code for the United Kingdom
+ */
 define('AAWS_LOCALE_UK', 'uk');
+
+/**
+ * Locale code for Canada
+ */
 define('AAWS_LOCALE_CANADA', 'ca');
+
+/**
+ * Locale code for France
+ */
 define('AAWS_LOCALE_FRANCE', 'fr');
+
+/**
+ * Locale code for Germany
+ */
 define('AAWS_LOCALE_GERMANY', 'de');
+
+/**
+ * Locale code for Japan
+ */
 define('AAWS_LOCALE_JAPAN', 'jp');
 
 
 /*%******************************************************************************************%*/
-
+// MAIN CLASS
 
 /**
  * Container for all Amazon AAWS-related methods.
  */
-class AmazonAAWS
+class AmazonAAWS extends TarzanCore
 {
-	/**
-	 * The Amazon API Key
-	 */
-	var $key;
-
-	/**
-	 * The Amazon Associates ID
-	 */
-	var $associates_id;
-
-
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
 
 	/**
 	 * Constructor
-	 *
-	 * Constructs a new instance of the AmazonAAWS class.
-	 *
-	 * @access public
-	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * @param string $associates_id Your Amazon Associates ID. If blank, it will look for the AWS_ASSOC_ID constant.
-	 * @return bool FALSE if no valid values are set, otherwise true.
 	 */
-	public function __construct($key = null, $associates_id = null)
+	public function __construct()
 	{
-		$this->key = $key;
-		$this->associates_id = $associates_id;
-
-		// If neither are passed in, look for the constants instead.
-		if (!$this->key && defined('AWS_KEY'))
-		{
-			$this->key = AWS_KEY;
-		}
-		else
-		{
-			return false;
-		}
-
-		if (!$this->associates_id && defined('AWS_ASSOC_ID'))
-		{
-			$this->associates_id = AWS_ASSOC_ID;
-		}
-		else
-		{
-			$this->associates_id = null;
-		}
+		$this->api_version = '2007-10-29';
+		parent::__construct();
 	}
 
 
@@ -100,61 +74,66 @@ class AmazonAAWS
 	// CORE FUNCTIONALITY
 
 	/**
-	 * Fetch Data
-	 * 
+	 * Authenticate
+	 *
 	 * Construct a URL to request from Amazon, request it, and return a formatted response.
 	 *
-	 * @access private
-	 * @param string $operation (Required) What task are we trying to do?
+	 * @access public
+	 * @param string $action (Required) Indicates the action to perform.
 	 * @param array $opt (Optional) Settings to use for the request.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
-	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-07-16/DG/
+	 * @return object A TarzanHTTPResponse response object.
 	 */
-	private function fetch_data($operation, $opt = null, $locale = AAWS_LOCALE_US)
+	public function authenticate($action, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		// Determine the hostname
+		switch ($locale)
+		{
+			// United Kingdom
+			case AAWS_LOCALE_UK:
+				$hostname = 'http://ecs.amazonaws.co.uk/';
+				break;
+
+			// Canada
+			case AAWS_LOCALE_CA:
+				$hostname = 'http://ecs.amazonaws.ca/';
+				break;
+
+			// France
+			case AAWS_LOCALE_FR:
+				$hostname = 'http://ecs.amazonaws.fr/';
+				break;
+
+			// Germany
+			case AAWS_LOCALE_DE:
+				$hostname = 'http://ecs.amazonaws.de/';
+				break;
+
+			// Japan
+			case AAWS_LOCALE_JP:
+				$hostname = 'http://ecs.amazonaws.jp/';
+				break;
+
+			// Default to United States
+			default:
+				$hostname = 'http://ecs.amazonaws.com/';
+				break;
+		}
+
 		// Send the request to the service.
-		$request_url = 'http://' . $this->get_base_url($locale) . '/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $operation . '&' . AWS::to_query_string($opt);
+		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $operation . '&' . $this->util->to_query_string($opt);
 		$request =& new HTTP_Request($request_url);
-		$request->addHeader('User-Agent', AWS_USERAGENT);
+		$request->addHeader('User-Agent', TARZAN_USERAGENT);
 		$request->sendRequest();
 
-		// If response was successful return data, otherwise false.
-		if ($request->getResponseCode() == 200)
-		{
-			$headers = $request->getResponseHeader();
-			$headers['x-amz-requesturl'] = $request_url;
-			$data = new AmazonHTTPResponse($headers, $request->getResponseBody());
+		// Prepare the response.
+		$headers = $request->getResponseHeader();
+		$headers['x-amz-requesturl'] = $request_url;
+		$headers['x-amz-httpstatus'] = $request->getResponseCode();
+		$data = new TarzanHTTPResponse($headers, $request->getResponseBody());
 
-			return $data;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	/**
-	 * Get Base URL
-	 * 
-	 * Return the proper hostname for the locale.
-	 *
-	 * @access private
-	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return string The hostname to use in requests.
-	 */
-	private function get_base_url($locale)
-	{
-		$AAWS_BASE_URL = array(
-			'us' => 'ecs.amazonaws.com',
-			'uk' => 'ecs.amazonaws.co.uk',
-			'ca' => 'ecs.amazonaws.ca',
-			'fr' => 'ecs.amazonaws.fr',
-			'de' => 'ecs.amazonaws.de',
-			'jp' => 'ecs.amazonaws.jp'
-		);
-
-		return $AAWS_BASE_URL[$locale];
+		// Return!
+		return $data;
 	}
 
 
@@ -170,20 +149,19 @@ class AmazonAAWS
 	 * browse node.
 	 *
 	 * @access public
-	 * @param integer $browse_node_id (Required) A positive integer assigned by Amazon that uniquely 
-	 * 			identifies a product category.
-	 * @param string $response_group (Optional) Specifies the types of values to return. You can 
-	 * 			specify multiple response groups in one request by separating them with commas. Allows 
-	 * 			'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
+	 * @param integer $browse_node_id (Required) A positive integer assigned by Amazon that uniquely identifies a product category.
+	 * @param string $response_group (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/BrowseNodeLookup.html
 	 */
 	public function browse_node_lookup($browse_node_id, $response_group = 'BrowseNodeInfo', $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
 		$opt['BrowseNodeId'] = $browse_node_id;
 		$opt['ResponseGroup'] = $response_group;
-		return $this->fetch_data('BrowseNodeLookup', $opt, $locale);
+
+		return $this->authenticate('BrowseNodeLookup', $opt, $locale);
 	}
 
 
@@ -207,38 +185,24 @@ class AmazonAAWS
 	 * in this API. You MUST use OfferListingId instead as this is preferred by Amazon.
 	 *
 	 * @access public
-	 * @param integer $offer_listing_id (Required) An offer listing ID is a token that uniquely 
-	 * 			identifies an item that is sold by any merchant, including Amazon. This parameter MUST be 
-	 * 			used as support for Amazon's ASIN parameter is not available in this API.
-	 * @param integer $cart_id (Required) Alphanumeric token returned by CartCreate that identifies 
-	 * 			a cart.
-	 * @param integer $hmac (Required) Hash Message Authentication Code returned by CartCreate that 
-	 * 			identifies a cart. This is an encrypted alphanumeric token that is used to authenticate cart 
-	 * 			operations.
+	 * @param integer $offer_listing_id (Required) An offer listing ID is a token that uniquely identifies an item that is sold by any merchant, including Amazon. This parameter MUST be used as support for Amazon's ASIN parameter is not available in this API.
+	 * @param integer $cart_id (Required) Alphanumeric token returned by CartCreate that identifies a cart.
+	 * @param integer $hmac (Required) Hash Message Authentication Code returned by CartCreate that identifies a cart. This is an encrypted alphanumeric token that is used to authenticate cart operations.
 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>string ListItemId - (Optional) The ListItemId value is returned by the ListItems response 
-	 * 		group. The value identifies an item on a list, such as a wishlist. To add this item to a 
-	 * 		cart, you must include in the CartAdd request the item's ASIN and ListItemId. The 
-	 * 		ListItemId attaches the name and address of the list owner, which the ASIN alone does not.</li>
-	 *   <li>boolean MergeCart - (Optional) A boolean value that when True specifies that the items 
-	 * 		in a customer's remote shopping cart are added to the customer’s Amazon retail shopping 
-	 * 		cart. This occurs when the customer elects to purchase the items in their remote shopping 
-	 * 		cart. When the value is False (the default) the remote shopping cart contents are not 
-	 * 		added to the retail shopping cart. Instead, the customer is sent directly to the Order 
-	 * 		Pipeline when they elect to purchase the items in their cart. This parameter is valid 
-	 * 		only in the US locale. In all other locales, the value is always False.</li>
-	 *   <li>integer Quantity - (Optional) Specifies number of items to be added to the cart where N is 
-	 * 		a positive integer between 1 and 999.</li>
-	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify 
-	 * 		multiple response groups in one request by separating them with commas.</li>
+	 *   <li>string ListItemId - (Optional) The ListItemId value is returned by the ListItems response group. The value identifies an item on a list, such as a wishlist. To add this item to a cart, you must include in the CartAdd request the item's ASIN and ListItemId. The ListItemId attaches the name and address of the list owner, which the ASIN alone does not.</li>
+	 *   <li>boolean MergeCart - (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer’s Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False (the default) the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the value is always False.</li>
+	 *   <li>integer Quantity - (Optional) Specifies number of items to be added to the cart where N is a positive integer between 1 and 999.</li>
+	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CartAdd.html
 	 */
 	public function cart_add($offer_listing_id, $cart_id, $hmac, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
+
 		// Convert the required values.
 		$opt['Item.1.OfferListingId'] = $offer_listing_id;
 		$opt['CartId'] = $cart_id;
@@ -259,7 +223,7 @@ class AmazonAAWS
 		}
 		unset($opt['ListItemId']);
 
-		return $this->fetch_data('CartAdd', $opt, $locale);
+		return $this->authenticate('CartAdd', $opt, $locale);
 	}
 
 	/**
@@ -304,33 +268,25 @@ class AmazonAAWS
 	 * CustomerContentSearch operation.
 	 *
 	 * @access public
-	 * @param string $customer_id (Required) An alphanumeric token assigned by Amazon that uniquely 
-	 * 			identifies a customer. Only one CustomerId can be submitted at a time in CustomerContentLookup.
+	 * @param string $customer_id (Required) An alphanumeric token assigned by Amazon that uniquely identifies a customer. Only one CustomerId can be submitted at a time in CustomerContentLookup.
 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>integer ReviewPage - (Optional) A positive integer that specifies the page of reviews 
-	 * 		to read. There are ten reviews per page. For example, to read reviews 11 through 20, 
-	 * 		specify ReviewPage=2. The total number of pages is returned in the TotalPages response 
-	 * 		tag.</li>
-	 *   <li>integer TagPage - (Optional) Specifies the page of results to return. There are ten 
-	 * 		results on a page. The maximum page number is 400.</li>
-	 *   <li>integer TagsPerPage - (Optional) The number of tags to return that are associated with 
-	 * 		a specified item.</li>
-	 *   <li>string TagSort - (Optional) Specifies the sorting order for the results. Allows 
-	 * 		'FirstUsed', 'LastUsed', 'Name', or 'Usages' (default).</li>
-	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can 
-	 * 		specify multiple response groups in one request by separating them with commas. Allows 
-	 * 		'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 
-	 * 		'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.</li>
+	 *   <li>integer ReviewPage - (Optional) A positive integer that specifies the page of reviews to read. There are ten reviews per page. For example, to read reviews 11 through 20, specify ReviewPage=2. The total number of pages is returned in the TotalPages response tag.</li>
+	 *   <li>integer TagPage - (Optional) Specifies the page of results to return. There are ten results on a page. The maximum page number is 400.</li>
+	 *   <li>integer TagsPerPage - (Optional) The number of tags to return that are associated with a specified item.</li>
+	 *   <li>string TagSort - (Optional) Specifies the sorting order for the results. Allows 'FirstUsed', 'LastUsed', 'Name', or 'Usages' (default).</li>
+	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentLookup.html
 	 */
 	public function customer_content_lookup($customer_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
 		$opt['CustomerId'] = $customer_id;
-		return $this->fetch_data('CustomerContentLookup', $opt, $locale);
+
+		return $this->authenticate('CustomerContentLookup', $opt, $locale);
 	}
 
 	/**
@@ -342,23 +298,22 @@ class AmazonAAWS
 	 * often returns multiple results.
 	 *
 	 * @access public
-	 * @param string $email_name (Required) Either the email address or the name of the customer you 
-	 * 			want to look up the ID for.
+	 * @param string $email_name (Required) Either the email address or the name of the customer you want to look up the ID for.
 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>integer CustomerPage - (Optional) A positive integer that specifies the page of customer 
-	 * 		IDs to return. Up to twenty customer IDs are returned per page. Defaults to 1.</li>
+	 *   <li>integer CustomerPage - (Optional) A positive integer that specifies the page of customer IDs to return. Up to twenty customer IDs are returned per page. Defaults to 1.</li>
 	 *   <li>string Email - (Optional) Besides the first parameter, you can set the email address here.</li>
 	 *   <li>string Name - (Optional) Besides the first parameter, you can set the name here.</li>
-	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify 
-	 * 		multiple response groups in one request by separating them with commas.</li>
+	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentSearch.html
 	 */
 	public function customer_content_search($email_name, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
+
 		if (!isset($opt['CustomerPage']) || empty($opt['CustomerPage']))
 		{
 			$opt['CustomerPage'] = 1;
@@ -373,7 +328,7 @@ class AmazonAAWS
 			$opt['Name'] = $email_name;
 		}
 
-		return $this->fetch_data('CustomerContentSearch', $opt, $locale);
+		return $this->authenticate('CustomerContentSearch', $opt, $locale);
 	}
 
 
@@ -391,22 +346,17 @@ class AmazonAAWS
 	 * @access public
 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>string About - (Optional) Specifies the operation or response group about which you want 
-	 * 		more information. Allows all AAWS operations, all AAWS response groups.</li>
-	 *   <li>string HelpType - (Optional) Specifies whether the help topic is an operation or response 
-	 * 		group. HelpType and About values must both be operations or response groups, not a mixture 
-	 * 		of the two. Allows 'Operation' or 'ResponseGroup'.</li>
-	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify 
-	 * 		multiple response groups in one request by separating them with commas. Allows 'Request' or 
-	 * 		'Help'.</li>
+	 *   <li>string About - (Optional) Specifies the operation or response group about which you want more information. Allows all AAWS operations, all AAWS response groups.</li>
+	 *   <li>string HelpType - (Optional) Specifies whether the help topic is an operation or response group. HelpType and About values must both be operations or response groups, not a mixture of the two. Allows 'Operation' or 'ResponseGroup'.</li>
+	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Request' or 'Help'.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/Help.html
 	 */
 	public function help($opt = null, $locale = AAWS_LOCALE_US)
 	{
-		return $this->fetch_data('Help', $opt, $locale);
+		return $this->authenticate('Help', $opt, $locale);
 	}
 
 
@@ -421,19 +371,18 @@ class AmazonAAWS
 	 * item’s ASIN, DetailPageURL, Manufacturer, ProductGroup, and Title of the item.
 	 *
 	 * @access public
-	 * @param string $item_id (Required) A positive integer that unique identifies an item. The 
-	 * 			meaning of the number is specified by IdType. That is, if IdType is ASIN, the ItemId value is 
-	 * 			an ASIN. If ItemId is an ASIN, a search index cannot be specified in the request.
-	 * @param array $opt (Optional) Associative array of parameters. There are a large number 
-	 * 			available, so check the Amazon documentation page for details.
+	 * @param string $item_id (Required) A positive integer that unique identifies an item. The meaning of the number is specified by IdType. That is, if IdType is ASIN, the ItemId value is an ASIN. If ItemId is an ASIN, a search index cannot be specified in the request.
+	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemLookup.html
 	 */
 	public function item_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
 		$opt['ItemId'] = $item_id;
-		return $this->fetch_data('ItemLookup', $opt, $locale);
+
+		return $this->authenticate('ItemLookup', $opt, $locale);
 	}
 
 	/**
@@ -446,18 +395,15 @@ class AmazonAAWS
 	 * find an item for sale, you use this operation.
 	 *
 	 * @access public
-	 * @param string $keywords (Required) A word or phrase associated with an item. The word or phrase 
-	 * 			can be in various product fields, including product title, author, artist, description, 
-	 * 			manufacturer, and so forth. When, for example, the search index equals "MusicTracks", the 
-	 * 			Keywords parameter enables you to search by song title.
-	 * @param array $opt (Optional) Associative array of parameters. There are a large number 
-	 * 			available, so check the Amazon documentation page for details.
+	 * @param string $keywords (Required) A word or phrase associated with an item. The word or phrase can be in various product fields, including product title, author, artist, description, manufacturer, and so forth. When, for example, the search index equals "MusicTracks", the Keywords parameter enables you to search by song title.
+	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemSearch.html
 	 */
 	public function item_search($keywords, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
 		$opt['Keywords'] = $keywords;
 
 		// Default to 'All' if nothing else has been sent.
@@ -466,7 +412,7 @@ class AmazonAAWS
 			$opt['SearchIndex'] = 'All';
 		}
 
-		return $this->fetch_data('ItemSearch', $opt, $locale);
+		return $this->authenticate('ItemSearch', $opt, $locale);
 	}
 
 
@@ -481,19 +427,19 @@ class AmazonAAWS
 	 *
 	 * @access public
 	 * @param string $list_id (Required) Number that uniquely identifies a list.
-	 * @param string $list_type (Required) Type of list. Accepts 'WeddingRegistry', 'Listmania', 
-	 * 			'WishList'
-	 * @param array $opt (Optional) Associative array of parameters. There are a large number 
-	 * 			available, so check the Amazon documentation page for details.
+	 * @param string $list_type (Required) Type of list. Accepts 'WeddingRegistry', 'Listmania', 'WishList'
+	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListLookup.html
 	 */
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = AAWS_LOCALE_US)
 	{
+		$opt = array();
 		$opt['ListId'] = $list_id;
 		$opt['ListType'] = $list_type;
-		return $this->fetch_data('ListLookup', $opt, $locale);
+
+		return $this->authenticate('ListLookup', $opt, $locale);
 	}
 
 	/**
@@ -507,15 +453,14 @@ class AmazonAAWS
 	 * lists belonging to different people. Using Email as the identifier produces more filtered results.
 	 *
 	 * @access public
-	 * @param array $opt (Optional; At least one is Required) Associative array of parameters. There 
-	 * 			are a large number available, so check the Amazon documentation page for details.
+	 * @param array $opt (Optional; At least one is Required) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object AmazonHTTPResponse
+	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListSearch.html
 	 */
 	public function list_search($opt = null, $locale = AAWS_LOCALE_US)
 	{
-		return $this->fetch_data('ListSearch', $opt, $locale);
+		return $this->authenticate('ListSearch', $opt, $locale);
 	}
 
 

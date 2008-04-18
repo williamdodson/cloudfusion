@@ -27,7 +27,7 @@ define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
 // MAIN CLASS
 
 /**
- * Container for all Amazon SQS-related methods.
+ * Container for all Amazon SDB-related methods.
  */
 class AmazonSDB extends TarzanCore
 {
