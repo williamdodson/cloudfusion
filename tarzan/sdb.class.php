@@ -270,7 +270,7 @@ class AmazonSDB extends TarzanCore
 	 * </ul>
 	 * @param string $expression (Optional) The SimpleDB query expression to use.
 	 * @return object A TarzanHTTPResponse response object.
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
+	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
 	 */
 	public function query($domain_name, $opt = null, $expression = null)
 	{
