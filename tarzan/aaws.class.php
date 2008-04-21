@@ -95,22 +95,22 @@ class AmazonAAWS extends TarzanCore
 				break;
 
 			// Canada
-			case AAWS_LOCALE_CA:
+			case AAWS_LOCALE_CANADA:
 				$hostname = 'http://ecs.amazonaws.ca/';
 				break;
 
 			// France
-			case AAWS_LOCALE_FR:
+			case AAWS_LOCALE_FRANCE:
 				$hostname = 'http://ecs.amazonaws.fr/';
 				break;
 
 			// Germany
-			case AAWS_LOCALE_DE:
+			case AAWS_LOCALE_GERMANY:
 				$hostname = 'http://ecs.amazonaws.de/';
 				break;
 
 			// Japan
-			case AAWS_LOCALE_JP:
+			case AAWS_LOCALE_JAPAN:
 				$hostname = 'http://ecs.amazonaws.jp/';
 				break;
 
@@ -121,7 +121,7 @@ class AmazonAAWS extends TarzanCore
 		}
 
 		// Send the request to the service.
-		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $operation . '&' . $this->util->to_query_string($opt);
+		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
 		$request =& new HTTP_Request($request_url);
 		$request->addHeader('User-Agent', TARZAN_USERAGENT);
 		$request->sendRequest();
@@ -201,7 +201,10 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function cart_add($offer_listing_id, $cart_id, $hmac, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
 
 		// Convert the required values.
 		$opt['Item.1.OfferListingId'] = $offer_listing_id;
@@ -283,7 +286,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function customer_content_lookup($customer_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		$opt['CustomerId'] = $customer_id;
 
 		return $this->authenticate('CustomerContentLookup', $opt, $locale);
@@ -312,7 +319,10 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function customer_content_search($email_name, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
 
 		if (!isset($opt['CustomerPage']) || empty($opt['CustomerPage']))
 		{
@@ -379,7 +389,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function item_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		$opt['ItemId'] = $item_id;
 
 		return $this->authenticate('ItemLookup', $opt, $locale);
@@ -403,7 +417,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function item_search($keywords, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		$opt['Keywords'] = $keywords;
 
 		// Default to 'All' if nothing else has been sent.
@@ -435,7 +453,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		$opt['ListId'] = $list_id;
 		$opt['ListType'] = $list_type;
 
