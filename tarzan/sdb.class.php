@@ -37,10 +37,10 @@ class AmazonSDB extends TarzanCore
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
 	{
 		$this->api_version = '2007-11-07';
-		parent::__construct();
+		parent::__construct($key, $secret_key, $account_id, $assoc_id);
 	}
 
 

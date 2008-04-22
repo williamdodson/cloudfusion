@@ -63,10 +63,10 @@ class AmazonAAWS extends TarzanCore
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
 	{
 		$this->api_version = '2007-10-29';
-		parent::__construct();
+		parent::__construct($key, $secret_key, $account_id, $assoc_id);
 	}
 
 
