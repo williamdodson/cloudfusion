@@ -520,21 +520,30 @@ class AmazonS3 extends TarzanCore
 	 * Store Remote File
 	 * 
 	 * Takes an existing remote file, stores it to S3, and returns a URL.
+	 * 
+	 * @param string $remote_file (Required) The full URL of the file to store on the S3 service.
+	 * @param string $bucket (Required) The name of the bucket that you want to store it in.
+	 * @param string $filename (Required) The name that you want to give to the file.
+ 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
+	 * <ul>
+	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. Defaults to S3_ACL_PUBLIC.</li>
+	 *   <li>string overwrite - (Optional) If set to true, checks to see if the file exists and will overwrite the old data with new data. Defaults to false.</li>
+	 *   <li>string cname - (Optional) If you're serving the file from a different hostname from s3.amazonaws.com (e.g. such as with a custom CNAME setting), return the URL with this hostname. Defaults to null.</li>
+	 * </ul>
+	 * @return string The S3 URL for the uploaded file. Returns null if unsuccessful.
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
+		// Set default values.
+		$acl = S3_ACL_PUBLIC;
+		$overwrite = false;
+		$cname = null;
+
 		// Break the options out.
 		extract($opt);
 
-		// Create a default response instance.
-		$object = new TarzanHTTPResponse(array(), '', 999);
-
-		if ($overwrite)
-		{
-			// Does the file already exist?
-			unset($object);
-			$object = $this->head_object($bucket, $filename);
-		}
+		// Does the file already exist?
+		$object = $this->head_object($bucket, $filename);
 
 		// As long as it doesn't already exist, fetch and store it.
 		if (!$object->isOK() || $overwrite)
