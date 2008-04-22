@@ -214,5 +214,21 @@ class AmazonSQS extends TarzanCore
 		$opt['ReceiptHandle'] = $receipt_handle;
 		return $this->authenticate('DeleteMessage', $opt, $queue_url);
 	}
+
+
+	/*%******************************************************************************************%*/
+	// HELPER/UTILITY METHODS
+
+	/**
+	 * Get Queue Size
+	 * 
+	 * Retrieves the approximate number of messages in the queue.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function get_queue_size()
+	{
+		
+	}
 }
 ?>

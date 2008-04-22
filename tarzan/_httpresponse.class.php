@@ -32,6 +32,11 @@ class TarzanHTTPResponse
 	var $body;
 
 	/**
+	 * Store the HTTP response code.
+	 */
+	var $status;
+
+	/**
 	 * Constructor
 	 *
 	 * Constructs a new instance of the TarzanHTTPResponse class.
@@ -41,10 +46,11 @@ class TarzanHTTPResponse
 	 * @param string $body XML content as returned from AWS by PEAR's HTTP_Request class.
 	 * @return object Contains an (array) 'header' property (containing HTTP headers) and a (SimpleXMLElement) 'body' property.
 	 */
-	public function __construct($header, $body)
+	public function __construct($header, $body, $status = null)
 	{
 		$this->header = $header;
 		$this->body = $body;
+		$this->status = $status;
 
 		if (TarzanUtilities::ready($body))
 		{
@@ -56,6 +62,26 @@ class TarzanHTTPResponse
 		}
 
 		return $this;
+	}
+
+	/**
+	 * isOK
+	 * 
+	 * Did we receive the status code we expected?
+	 * 
+	 * @param mixed $codes (Optional) The status code(s) to expect. Integer for a single accepted value, or an array of integers for multiple accepted values.
+	 * @return boolean Whether we received the expected code or not.
+	 */
+	public function isOK($codes = 200)
+	{
+		if (is_array($codes))
+		{
+			return in_array($this->status, $codes);
+		}
+		else
+		{
+			return ($this->status == $codes);
+		}
 	}
 }
 ?>

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.04.12
+ * @version 2008.04.21
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -226,7 +226,7 @@ class AmazonS3 extends TarzanCore
 			$headers['x-amz-redirects'] = $redirects;
 			$headers['x-amz-requesturl'] = $this->request_url;
 			$headers['x-amz-stringtosign'] = $stringToSign;
-			$data = new TarzanHTTPResponse($headers, $req->getResponseBody());
+			$data = new TarzanHTTPResponse($headers, $req->getResponseBody(), $req->getResponseCode());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html
@@ -291,8 +291,13 @@ class AmazonS3 extends TarzanCore
 	 * Get Bucket
 	 *
 	 * Referred to as "GET Bucket" in the AWS docs, but implemented here as AmazonS3::list_objects().
+	 * 
+	 * @see list_objects
 	 */
-	private function get_bucket() {}
+	public function get_bucket($bucket, $opt = null)
+	{
+		return $this->list_objects($bucket, $opt);
+	}
 
 
 	/**
@@ -342,7 +347,7 @@ class AmazonS3 extends TarzanCore
 	/**
 	 * Post Object
 	 *
-	 * Not yet implemented.
+	 * @todo Implement this method.
 	 */
 	private function post_object() {}
 
@@ -383,6 +388,8 @@ class AmazonS3 extends TarzanCore
 
 
 	/**
+	 * Get Object
+	 * 
 	 * Reads the contents of an object within a bucket.
 	 *
 	 * @access public
@@ -405,6 +412,8 @@ class AmazonS3 extends TarzanCore
 
 
 	/**
+	 * HEAD Object
+	 * 
 	 * Reads only the HTTP headers of an object within a bucket.
 	 *
 	 * @access public
@@ -427,6 +436,8 @@ class AmazonS3 extends TarzanCore
 
 
 	/**
+	 * Delete Object
+	 * 
 	 * Deletes an object within a bucket.
 	 *
 	 * @access public
@@ -434,6 +445,7 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @return object A TarzanHTTPResponse response object.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
+	 * @todo Support recursive deleting (including all or regex match)
 	 */
 	public function delete_object($bucket, $filename)
 	{
@@ -449,7 +461,9 @@ class AmazonS3 extends TarzanCore
 
 
 	/**
-	 * Lists the objects in a bucket
+	 * List Objects
+	 * 
+	 * Lists the objects in a bucket. Provided as the 'GetBucket' action in Amazon's REST API.
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
@@ -472,6 +486,93 @@ class AmazonS3 extends TarzanCore
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
+	}
+
+
+	/*%******************************************************************************************%*/
+	// HELPER/UTILITY METHODS
+
+	/**
+	 * Get Bucket Size
+	 * 
+	 * Gets the file size of the contents of the bucket.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function get_bucket_size($bucket, $friendly_format = false)
+	{
+		
+	}
+
+	/**
+	 * Bucket Exists
+	 * 
+	 * Checks whether this bucket already exists or not.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function bucket_exists($bucket)
+	{
+		
+	}
+
+	/**
+	 * Store Remote File
+	 * 
+	 * Takes an existing remote file, stores it to S3, and returns a URL.
+	 */
+	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
+	{
+		// Break the options out.
+		extract($opt);
+
+		// Create a default response instance.
+		$object = new TarzanHTTPResponse(array(), '', 999);
+
+		if ($overwrite)
+		{
+			// Does the file already exist?
+			unset($object);
+			$object = $this->head_object($bucket, $filename);
+		}
+
+		// As long as it doesn't already exist, fetch and store it.
+		if (!$object->isOK() || $overwrite)
+		{
+			// Fetch the file
+			$file = new HTTP_Request($remote_file);
+			$file->sendRequest();
+
+			// Store it in S3
+			unset($object);
+			$object = $this->create_object($bucket, array(
+				'filename' => $filename,
+				'body' => $file->getResponseBody(),
+				'contentType' => $file->getResponseHeader('content-type'),
+				'acl' => $acl
+			));
+		}
+
+		// Was the request successful?
+		if ($object->isOK())
+		{
+			$url = $object->header['x-amz-requesturl'];
+
+			// If we have a CNAME value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.
+			if ($cname)
+			{
+				$url = str_ireplace('http://', '', $url);
+				$url = explode('/', $url);
+				$url[0] = $cname;
+				$url = 'http://' . implode('/', $url);
+			}
+
+			return $url;
+		}
+		else
+		{
+			return null;
+		}
 	}
 }
 ?>

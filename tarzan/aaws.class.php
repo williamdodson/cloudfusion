@@ -130,7 +130,7 @@ class AmazonAAWS extends TarzanCore
 		$headers = $request->getResponseHeader();
 		$headers['x-amz-requesturl'] = $request_url;
 		$headers['x-amz-httpstatus'] = $request->getResponseCode();
-		$data = new TarzanHTTPResponse($headers, $request->getResponseBody());
+		$data = new TarzanHTTPResponse($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
 		return $data;
