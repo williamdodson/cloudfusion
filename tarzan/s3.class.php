@@ -99,6 +99,7 @@ class AmazonS3 extends TarzanCore
 		else
 		{
 			// Set default values
+			$bucket = strtolower($bucket);
 			$acl = null;
 			$body = null;
 			$contentType = null;
@@ -511,7 +512,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * @todo Implement this method.
 	 */
-	public function bucket_exists($bucket)
+	public function if_bucket_exists($bucket)
 	{
 		
 	}
