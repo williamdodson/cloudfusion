@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.04.21
+ * @version 2008.04.23
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -86,7 +86,7 @@ class AmazonS3 extends TarzanCore
 	 * @access private
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param array $opt Associative array of parameters for authenticating. See the individual methods for allowed keys.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
 	 */
 	public function authenticate($bucket, $opt = null, $location = null, $redirects = 0)
@@ -257,7 +257,7 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to create.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
 	 */
@@ -287,19 +287,18 @@ class AmazonS3 extends TarzanCore
 		));
 	}
 
-
 	/**
 	 * Get Bucket
 	 *
 	 * Referred to as "GET Bucket" in the AWS docs, but implemented here as AmazonS3::list_objects().
 	 * 
+	 * @return TarzanHTTPResponse
 	 * @see list_objects
 	 */
 	public function get_bucket($bucket, $opt = null)
 	{
 		return $this->list_objects($bucket, $opt);
 	}
-
 
 	/**
 	 * Get Bucket Locale
@@ -308,7 +307,7 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to check.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
 	 */
 	public function get_bucket_locale($bucket)
@@ -322,15 +321,14 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * Delete Bucket
 	 *
 	 * All objects in the bucket must be deleted before the bucket itself can be deleted.
 	 *
 	 * @access public
-	 * @param string $bucket (Required) The name of the bucket to create.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @param string $bucket (Required) The name of the bucket to delete.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
 	 */
 	public function delete_bucket($bucket)
@@ -344,7 +342,6 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * Copy Bucket
 	 * 
@@ -356,7 +353,6 @@ class AmazonS3 extends TarzanCore
 	{
 		
 	}
-
 
 	/**
 	 * Rename Bucket
@@ -377,7 +373,6 @@ class AmazonS3 extends TarzanCore
 		
 	}
 
-
 	/**
 	 * Bucket Exists
 	 * 
@@ -390,6 +385,17 @@ class AmazonS3 extends TarzanCore
 		
 	}
 
+	/**
+	 * Get Bucket Size
+	 * 
+	 * Gets the number of files in the bucket.
+	 * 
+	 * @return integer
+	 */
+	public function get_bucket_size($bucket)
+	{
+		return count($this->get_object_list($bucket));
+	}
 
 	/**
 	 * Get Bucket Size
@@ -398,11 +404,10 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * @todo Implement this method.
 	 */
-	public function get_bucket_size($bucket, $friendly_format = false)
+	public function get_bucket_filesize($bucket, $friendly_format = false)
 	{
 		
 	}
-
 
 	/**
 	 * Post Object
@@ -432,7 +437,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string contentType - (Required) The type of content that is being sent in the body.</li>
 	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.</li>
 	 * </ul>
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 */
@@ -446,7 +451,6 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * Get Object
 	 * 
@@ -455,7 +459,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) The filename for the content.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
 	 */
 	public function get_object($bucket, $filename)
@@ -470,7 +474,6 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * HEAD Object
 	 * 
@@ -479,7 +482,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) The filename for the content.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 */
 	public function head_object($bucket, $filename)
@@ -494,7 +497,6 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * Delete Object
 	 * 
@@ -503,7 +505,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) The filename for the content.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
 	 * @todo Support recursive deleting (including all or regex match)
 	 */
@@ -519,7 +521,6 @@ class AmazonS3 extends TarzanCore
 		return $this->authenticate($bucket, $opt);
 	}
 
-
 	/**
 	 * List Objects
 	 * 
@@ -534,7 +535,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string maxKeys - (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.</li>
 	 *   <li>string delimiter - (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.</li>
 	 * </ul>
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/gsg/ListKeys.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
 	 */
@@ -547,7 +548,6 @@ class AmazonS3 extends TarzanCore
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
 	}
-
 
 	/**
 	 * Get Object List
@@ -563,7 +563,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string maxKeys - (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.</li>
 	 *   <li>string delimiter - (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.</li>
 	 * </ul>
-	 * @return array An indexed array of filenames from the bucket.
+	 * @return array
 	 * @see list_objects
 	 */
 	public function get_object_list($bucket, $opt = null)
@@ -581,30 +581,25 @@ class AmazonS3 extends TarzanCore
 		return (count($filenames) > 0) ? $filenames : null;
 	}
 
-
 	public function delete_objects()
 	{
 		
 	}
-
 
 	public function copy_objects()
 	{
 		
 	}
 
-
 	public function move_objects()
 	{
 		
 	}
 
-
 	public function rename_objects()
 	{
 		
 	}
-
 
 	public function change_object_permissions()
 	{

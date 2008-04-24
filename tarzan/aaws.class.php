@@ -82,7 +82,7 @@ class AmazonAAWS extends TarzanCore
 	 * @param string $action (Required) Indicates the action to perform.
 	 * @param array $opt (Optional) Settings to use for the request.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 */
 	public function authenticate($action, $opt = null, $locale = AAWS_LOCALE_US)
 	{
@@ -152,7 +152,7 @@ class AmazonAAWS extends TarzanCore
 	 * @param integer $browse_node_id (Required) A positive integer assigned by Amazon that uniquely identifies a product category.
 	 * @param string $response_group (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/BrowseNodeLookup.html
 	 */
 	public function browse_node_lookup($browse_node_id, $response_group = 'BrowseNodeInfo', $locale = AAWS_LOCALE_US)
@@ -196,7 +196,7 @@ class AmazonAAWS extends TarzanCore
 	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CartAdd.html
 	 */
 	public function cart_add($offer_listing_id, $cart_id, $hmac, $opt = null, $locale = AAWS_LOCALE_US)
@@ -281,7 +281,7 @@ class AmazonAAWS extends TarzanCore
 	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentLookup.html
 	 */
 	public function customer_content_lookup($customer_id, $opt = null, $locale = AAWS_LOCALE_US)
@@ -314,7 +314,7 @@ class AmazonAAWS extends TarzanCore
 	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentSearch.html
 	 */
 	public function customer_content_search($email_name, $opt = null, $locale = AAWS_LOCALE_US)
@@ -361,7 +361,7 @@ class AmazonAAWS extends TarzanCore
 	 *   <li>string ResponseGroup - (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Request' or 'Help'.</li>
 	 * </ul>
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/Help.html
 	 */
 	public function help($opt = null, $locale = AAWS_LOCALE_US)
@@ -384,7 +384,7 @@ class AmazonAAWS extends TarzanCore
 	 * @param string $item_id (Required) A positive integer that unique identifies an item. The meaning of the number is specified by IdType. That is, if IdType is ASIN, the ItemId value is an ASIN. If ItemId is an ASIN, a search index cannot be specified in the request.
 	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemLookup.html
 	 */
 	public function item_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
@@ -412,7 +412,7 @@ class AmazonAAWS extends TarzanCore
 	 * @param string $keywords (Required) A word or phrase associated with an item. The word or phrase can be in various product fields, including product title, author, artist, description, manufacturer, and so forth. When, for example, the search index equals "MusicTracks", the Keywords parameter enables you to search by song title.
 	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemSearch.html
 	 */
 	public function item_search($keywords, $opt = null, $locale = AAWS_LOCALE_US)
@@ -448,7 +448,7 @@ class AmazonAAWS extends TarzanCore
 	 * @param string $list_type (Required) Type of list. Accepts 'WeddingRegistry', 'Listmania', 'WishList'
 	 * @param array $opt (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListLookup.html
 	 */
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = AAWS_LOCALE_US)
@@ -477,7 +477,7 @@ class AmazonAAWS extends TarzanCore
 	 * @access public
 	 * @param array $opt (Optional; At least one is Required) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
 	 * @param string $locale (Optional) Which Amazon-supported locale do we use?
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListSearch.html
 	 */
 	public function list_search($opt = null, $locale = AAWS_LOCALE_US)

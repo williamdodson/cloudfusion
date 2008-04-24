@@ -57,7 +57,7 @@ class AmazonEC2 extends TarzanCore
 	 * <ul>
 	 *   <li>string ZoneName.n - (Optional) Name of an availability zone.</li>
 	 * </ul>
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
 	 */
 	public function describe_availability_zones($opt = null)
@@ -95,7 +95,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $image_id (Required) Unique ID of a machine image, returned by a call to register_image() or describe_images().
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeregisterImage.html
 	 */
 	public function deregister_image($image_id)
@@ -122,7 +122,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>string ImageId.n - (Optional) A list of image descriptions.</li>
 	 *   <li>string Owner.n - (Optional) Owners of AMIs to describe.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImages.html
 	 */
 	public function describe_images($opt = null)
@@ -137,7 +137,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $image_location (Required) Full path to your AMI manifest in Amazon S3 storage (i.e. mybucket/myimage.manifest.xml).
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RegisterImage.html
 	 */
 	public function register_image($image_location)
@@ -161,7 +161,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $image_id (Required) Unique ID of a machine image, returned by a call to register_image() or describe_images().
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
 	 */
 	public function describe_image_attribute($image_id)
@@ -192,7 +192,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>string UserGroup.n - (Required for 'launchPermission' Attribute) User groups to add to or remove from the 'launchPermission' attribute. Currently, only the 'all' group is available, specifiying all Amazon EC2 users.</li>
 	 *   <li>string ProductCode.n - (Required for 'productCodes' Attribute) Attaches product codes to the AMI. Currently only one product code may be associated with an AMI. Once set, the product code can not be changed or reset.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
@@ -207,7 +207,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $image_id (Required) Unique ID of a machine image, returned by a call to register_image() or describe_images().
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
 	 */
 	public function reset_image_attribute($image_id)
@@ -236,7 +236,7 @@ class AmazonEC2 extends TarzanCore
 	 * @access public
 	 * @param string $product_code (Required) The product code to confirm is attached to the instance.
 	 * @param string $instance_id (Required) The instance to confirm.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
 	 */
 	public function confirm_product_instance($product_code, $instance_id)
@@ -264,7 +264,7 @@ class AmazonEC2 extends TarzanCore
 	 * <ul>
 	 *   <li>string InstanceId.n - (Optional) Set of instances IDs to get the status of.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeInstances.html
 	 */
 	public function describe_instances($opt = null)
@@ -291,7 +291,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>string UserData - (Optional) The user data available to the launched instances. This should be base64-encoded. See the UserDataType data type for encoding details.</li>
 	 *   <li>string AddressingType - (Optional) The addressing scheme to launch the instance with. The addressing type can be direct or public. In the direct scheme the instance has one IP address that is not NAT'd. For the public scheme the instance has a NAT'd IP address. See the section called "Instance Addressing" for more information on instance addressing.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RunInstances.html
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
@@ -326,7 +326,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>string InstanceId.1 - (Required) One instance ID returned from previous calls to RunInstances.</li>
 	 *   <li>string InstanceId.n - (Optional) More than one instance IDs returned from previous calls to RunInstances.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
 	 */
 	public function terminate_instances($opt = null)
@@ -346,7 +346,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $key_name (Required) Unique name for this key.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
 	 */
 	public function create_key_pair($key_name)
@@ -366,7 +366,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $key_name (Required) Unique name for this key.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
 	 */
 	public function delete_key_pair($key_name)
@@ -391,7 +391,7 @@ class AmazonEC2 extends TarzanCore
 	 * <ul>
 	 *   <li>string KeyName.n - (Optional) One or more keypair IDs to describe.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
 	 */
 	public function describe_key_pairs($opt = null)
@@ -433,7 +433,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>integer ToPort - (Required when authorizing CIDR IP permission) Top of port range to authorize access to when operating on a CIDR IP. This contains the ICMP code if ICMP is being authorized.</li>
 	 *   <li>string CidrIp - (Required when authorizing CIDR IP permission) CIDR IP range to authorize access to when operating on a CIDR IP.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
@@ -458,7 +458,7 @@ class AmazonEC2 extends TarzanCore
 	 * @access public
 	 * @param string $group_name (Required) Name for the new security group.
 	 * @param string $group_description (Required) Description of the new security group.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
 	 */
 	public function create_security_group($group_name, $group_description)
@@ -484,7 +484,7 @@ class AmazonEC2 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $group_name (Required) Name for the new security group.
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
 	 */
 	public function delete_security_group($group_name)
@@ -510,7 +510,7 @@ class AmazonEC2 extends TarzanCore
 	 * <ul>
 	 *   <li>string GroupName.n - (Optional) List of security groups to describe.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
 	 */
 	public function describe_security_groups($opt = null)
@@ -549,7 +549,7 @@ class AmazonEC2 extends TarzanCore
 	 *   <li>int ToPort - (Required when revoking CIDR IP permission) Top of port range to authorize access to when operating on a CIDR IP. This contains the ICMP code if ICMP is being authorized.</li>
 	 *   <li>string CidrIp - (Required when revoking CIDR IP permission) CIDR IP range to authorize access to when operating on a CIDR IP.</li>
 	 * </ul>
-	 * @return array Amazon's XML Web Service Response formatted as an array.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)

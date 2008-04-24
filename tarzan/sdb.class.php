@@ -56,7 +56,7 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to create.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
 	 */
 	public function create_domain($domain_name)
@@ -81,7 +81,7 @@ class AmazonSDB extends TarzanCore
 	 *   <li>integer MaxNumberOfDomains - (Optional) The maximum number of domain names you want returned. The range is 1 to 100.</li>
 	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
 	 * </ul>
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
 	 */
 	public function list_domains($opt = null)
@@ -99,7 +99,7 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to delete.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
 	 */
 	public function delete_domain($domain_name)
@@ -125,7 +125,7 @@ class AmazonSDB extends TarzanCore
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value pairs.
 	 * @param boolean $replace (Optional) Whether to replace an existing $item_name with this one. Defaults to false.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
 	 */
 	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null)
@@ -162,7 +162,7 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to create.
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param mixed $keys (Optional) The name of the key (attribute) in the key-value pair. Supports a string value (for single keys) or an indexed array (for multiple keys).
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
 	 */
 	public function get_attributes($domain_name, $item_name, $keys = null)
@@ -203,7 +203,7 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to create.
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param mixed $keys (Optional) The name of the key(s) (attribute(s)) to delete from the item. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
 	 */
 	public function delete_attributes($domain_name, $item_name, $keys = null)
@@ -269,7 +269,7 @@ class AmazonSDB extends TarzanCore
 	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
 	 * </ul>
 	 * @param string $expression (Optional) The SimpleDB query expression to use.
-	 * @return object A TarzanHTTPResponse response object.
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
 	 */
 	public function query($domain_name, $opt = null, $expression = null)
