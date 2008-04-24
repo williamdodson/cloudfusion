@@ -75,12 +75,17 @@ $file = $s3->create_object($bname, array(
 	'acl' => S3_ACL_PUBLIC
 ));
 
+// Store a remote file.
+$store_remote_file = $s3->store_remote_file('http://code.google.com/p/tarzan-aws/', $bname, '2'.$fname);
+
 // List the objects in the bucket.
 $list = $s3->list_objects($bname);
 
+// ONLY lists the object filenames in the bucket.
+$get_object_list = $s3->get_object_list($bname);
+
 // Get the headers for a file without downloading the entire file.
 $head = $s3->head_object($bname, $fname);
-//$head = new TarzanHTTPResponse(array('x-amz-httpstatus' => '0'), '');
 
 // Get the file.
 $get = $s3->get_object($bname, $fname);
@@ -168,8 +173,32 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				<?php get_result($file); ?>
 				<td><a href="#create_object">Create Object (US)</a></td></tr>
 
+				<?php
+				if ($store_remote_file)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#store_remote_file">Store Remote File (US)</a></td></tr>
+
 				<?php get_result($list); ?>
 				<td><a href="#list_objects">List Objects (Get Bucket) (US)</a></td></tr>
+
+				<?php
+				if ($get_object_list)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#get_object_list">Get Object List (US)</a></td></tr>
 
 				<?php get_result($head); ?>
 				<td><a href="#head_object">HEAD Object (US)</a></td></tr>
@@ -229,8 +258,14 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 			echo '<h2><a name="create_object">Create Object (US)</a></h2>';
 			echo '<pre>'; print_r($file); echo '</pre>';
 
+			echo '<h2><a name="store_remote_file">Store Remote File (US)</a></h2>';
+			echo '<pre>'; print_r($store_remote_file); echo '</pre>';
+
 			echo '<h2><a name="list_objects">List Objects (Get Bucket) (US)</a></h2>';
 			echo '<pre>'; print_r($list); echo '</pre>';
+
+			echo '<h2><a name="get_object_list">Get Object List (US)</a></h2>';
+			echo '<pre>'; print_r($get_object_list); echo '</pre>';
 
 			echo '<h2><a name="head_object">HEAD Object (US)</a></h2>';
 			echo '<pre>'; print_r($head); echo '</pre>';

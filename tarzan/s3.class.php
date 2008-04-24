@@ -346,6 +346,65 @@ class AmazonS3 extends TarzanCore
 
 
 	/**
+	 * Copy Bucket
+	 * 
+	 * Copies the contents of a bucket into a new bucket.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function copy_bucket()
+	{
+		
+	}
+
+
+	/**
+	 * Rename Bucket
+	 * 
+	 * Because renaming buckets isn't supported natively by S3, this method will create a new bucket, 
+	 * copy the contents of the current bucket into the new bucket, delete the contents of the old 
+	 * bucket, then delete the old bucket. This gives the end-result of a bucket being renamed, but 
+	 * involves a lot of data transfer. For larger buckets this can be costly in terms of time, CPU, 
+	 * and S3 billing costs.
+	 * 
+	 * You're better off picking a good name at the beginning, or living with a bucket name that 
+	 * already exists. ;)
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function rename_bucket()
+	{
+		
+	}
+
+
+	/**
+	 * Bucket Exists
+	 * 
+	 * Checks whether this bucket already exists or not.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function if_bucket_exists($bucket)
+	{
+		
+	}
+
+
+	/**
+	 * Get Bucket Size
+	 * 
+	 * Gets the file size of the contents of the bucket.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function get_bucket_size($bucket, $friendly_format = false)
+	{
+		
+	}
+
+
+	/**
 	 * Post Object
 	 *
 	 * @todo Implement this method.
@@ -490,32 +549,71 @@ class AmazonS3 extends TarzanCore
 	}
 
 
+	/**
+	 * Get Object List
+	 * 
+	 * ONLY lists the object filenames from a bucket.
+	 *
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+ 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
+	 * <ul>
+	 *   <li>string prefix - (Optional) Restricts the response to only contain results that begin with the specified prefix.</li>
+	 *   <li>string marker - (Optional) It restricts the response to only contain results that occur alphabetically after the value of marker.</li>
+	 *   <li>string maxKeys - (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.</li>
+	 *   <li>string delimiter - (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.</li>
+	 * </ul>
+	 * @return array An indexed array of filenames from the bucket.
+	 * @see list_objects
+	 */
+	public function get_object_list($bucket, $opt = null)
+	{
+		// Get a list of files.
+		$list = $this->list_objects($bucket, $opt);
+
+		// Loop through and find the filenames.
+		$filenames = array();
+		foreach ($list->body->Contents as $file)
+		{
+			$filenames[] = (string) $file->Key;
+		}
+
+		return (count($filenames) > 0) ? $filenames : null;
+	}
+
+
+	public function delete_objects()
+	{
+		
+	}
+
+
+	public function copy_objects()
+	{
+		
+	}
+
+
+	public function move_objects()
+	{
+		
+	}
+
+
+	public function rename_objects()
+	{
+		
+	}
+
+
+	public function change_object_permissions()
+	{
+		
+	}
+
+
 	/*%******************************************************************************************%*/
-	// HELPER/UTILITY METHODS
-
-	/**
-	 * Get Bucket Size
-	 * 
-	 * Gets the file size of the contents of the bucket.
-	 * 
-	 * @todo Implement this method.
-	 */
-	public function get_bucket_size($bucket, $friendly_format = false)
-	{
-		
-	}
-
-	/**
-	 * Bucket Exists
-	 * 
-	 * Checks whether this bucket already exists or not.
-	 * 
-	 * @todo Implement this method.
-	 */
-	public function if_bucket_exists($bucket)
-	{
-		
-	}
+	// MISCELLANEOUS METHODS
 
 	/**
 	 * Store Remote File
@@ -532,6 +630,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string cname - (Optional) If you're serving the file from a different hostname from s3.amazonaws.com (e.g. such as with a custom CNAME setting), return the URL with this hostname. Defaults to null.</li>
 	 * </ul>
 	 * @return string The S3 URL for the uploaded file. Returns null if unsuccessful.
+	 * @todo Create Unit Test
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
@@ -540,8 +639,11 @@ class AmazonS3 extends TarzanCore
 		$overwrite = false;
 		$cname = null;
 
-		// Break the options out.
-		extract($opt);
+		if ($opt)
+		{
+			// Break the options out.
+			extract($opt);
+		}
 
 		// Does the file already exist?
 		$object = $this->head_object($bucket, $filename);
