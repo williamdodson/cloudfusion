@@ -352,6 +352,42 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
+	 * HEAD Bucket
+	 * 
+	 * Reads only the HTTP headers of an object within a bucket.
+	 *
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
+	 */
+	public function head_bucket($bucket)
+	{
+		// Add this to our request
+		$opt = array();
+		$opt['verb'] = 'HEAD';
+		$opt['method'] = 'head_bucket';
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
+
+	/**
+	 * If Bucket Exists
+	 * 
+	 * Checks whether this bucket already exists in your account or not.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to check.
+	 * @return boolean Whether it exists or not.
+	 */
+	public function if_bucket_exists($bucket)
+	{
+		$header = $this->head_bucket($bucket);
+		return $header->isOK();
+	}
+
+	/**
 	 * Delete Bucket
 	 *
 	 * All objects in the bucket must be deleted before the bucket itself can be deleted.
@@ -421,19 +457,6 @@ class AmazonS3 extends TarzanCore
 	 * @todo Implement this method.
 	 */
 	public function rename_bucket()
-	{
-		
-	}
-
-	/**
-	 * Bucket Exists
-	 * 
-	 * Checks whether this bucket already exists in your account or not.
-	 * 
-	 * @access public
-	 * @todo Implement this method.
-	 */
-	public function if_bucket_exists($bucket)
 	{
 		
 	}
@@ -599,7 +622,7 @@ class AmazonS3 extends TarzanCore
 	 * Reads only the HTTP headers of an object within a bucket.
 	 *
 	 * @access public
-	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $bucket (Required) The name of the bucket check.
 	 * @param string $filename (Required) The filename for the content.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
@@ -614,6 +637,22 @@ class AmazonS3 extends TarzanCore
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
+	}
+
+	/**
+	 * If Object Exists
+	 * 
+	 * Checks whether this object already exists in this bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket check.
+	 * @param string $filename (Required) The filename for the content.
+	 * @return boolean Whether it exists or not.
+	 */
+	public function if_object_exists($bucket, $filename)
+	{
+		$header = $this->head_object($bucket, $filename);
+		return $header->isOK();
 	}
 
 	/**
@@ -782,11 +821,6 @@ class AmazonS3 extends TarzanCore
 	}
 
 	public function rename_object()
-	{
-		
-	}
-
-	public function if_object_exists()
 	{
 		
 	}

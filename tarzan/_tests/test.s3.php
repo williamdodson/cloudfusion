@@ -80,6 +80,12 @@ $list_buckets = $s3->list_buckets();
 // ONLY lists the bucket names on the account.
 $get_bucket_list = $s3->get_bucket_list();
 
+// HEAD bucket
+$head_bucket = $s3->head_bucket($bname);
+
+// If bucket exists
+$if_bucket_exists = $s3->if_bucket_exists($bname);
+
 // Create a new readable test file.
 $file = $s3->create_object($bname, array(
 	'filename' => $fname,
@@ -102,6 +108,9 @@ $get_bucket_size = $s3->get_bucket_size($bname);
 
 // Get the headers for a file without downloading the entire file.
 $head = $s3->head_object($bname, $fname);
+
+// If Object Exists
+$if_object_exists = $s3->if_object_exists($bname, $fname);
 
 // Get the file.
 $get = $s3->get_object($bname, $fname);
@@ -203,6 +212,21 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				?>
 				<td><a href="#get_bucket_list">Get Bucket List (US)</a></td></tr>
 
+				<?php get_result($head_bucket); ?>
+				<td><a href="#head_bucket">HEAD Bucket (US)</a></td></tr>
+
+				<?php
+				if ($if_bucket_exists)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#if_bucket_exists">If Bucket Exists (US)</a></td></tr>
+
 				<?php get_result($file); ?>
 				<td><a href="#create_object">Create Object (US)</a></td></tr>
 
@@ -247,6 +271,18 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 				<?php get_result($head); ?>
 				<td><a href="#head_object">HEAD Object (US)</a></td></tr>
+
+				<?php
+				if ($if_bucket_exists)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#if_bucket_exists">If Bucket Exists (US)</a></td></tr>
 
 				<?php get_result($get); ?>
 				<td><a href="#get_object">Get Object (US)</a></td></tr>
@@ -306,6 +342,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 		echo '<h2><a name="get_bucket_list">Get Bucket List (US)</a></h2>';
 		echo '<pre>'; print_r($get_bucket_list); echo '</pre>';
+
+		echo '<h2><a name="head_bucket">HEAD Bucket (US)</a></h2>';
+		echo '<pre>'; print_r($head_bucket); echo '</pre>';
+
+		echo '<h2><a name="if_bucket_exists">If Bucket Exists (US)</a></h2>';
+		echo '<pre>'; print_r($if_bucket_exists ? 'true' : 'false'); echo '</pre>';
 		?>
 			<div class="indent">
 			<?php
@@ -326,6 +368,9 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 			echo '<h2><a name="head_object">HEAD Object (US)</a></h2>';
 			echo '<pre>'; print_r($head); echo '</pre>';
+
+			echo '<h2><a name="if_object_exists">If Object Exists (US)</a></h2>';
+			echo '<pre>'; print_r($if_object_exists ? 'true' : 'false'); echo '</pre>';
 
 			echo '<h2><a name="get_object">Get Object (US)</a></h2>';
 			echo '<pre>'; print_r($get); echo '</pre>';
