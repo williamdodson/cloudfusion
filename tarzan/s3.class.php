@@ -47,6 +47,11 @@ define('S3_ACL_OPEN', 'public-read-write');
  */
 define('S3_ACL_AUTH_READ', 'authenticated-read');
 
+/**
+ * PCRE: Match all items
+ */
+define('S3_PCRE_ALL', '/.*/i');
+
 
 /*%******************************************************************************************%*/
 // MAIN CLASS
@@ -57,7 +62,7 @@ define('S3_ACL_AUTH_READ', 'authenticated-read');
 class AmazonS3 extends TarzanCore
 {
 	/**
-	 * The request URL.
+	 * @var The request URL.
 	 */
 	var $request_url;
 
@@ -67,11 +72,16 @@ class AmazonS3 extends TarzanCore
 
 	/**
 	 * Constructor
+	 * 
+	 * @access public
+	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
+	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * @return bool FALSE if no valid values are set, otherwise true.
 	 */
-	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
+	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2006-03-01';
-		parent::__construct($key, $secret_key, $account_id, $assoc_id);
+		parent::__construct($key, $secret_key);
 	}
 
 
@@ -328,18 +338,38 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to delete.
-	 * @return TarzanHTTPResponse
+	 * @param boolean $force (Optional) Whether to force-delete the bucket and all of its contents. Defaults to false.
+	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
 	 */
-	public function delete_bucket($bucket)
+	public function delete_bucket($bucket, $force = false)
 	{
-		// Add this to our request
-		$opt = array();
-		$opt['verb'] = 'DELETE';
-		$opt['method'] = 'delete_bucket';
+		// Set default value
+		$success = true;
 
-		// Authenticate to S3
-		return $this->authenticate($bucket, $opt);
+		if ($force)
+		{
+			// Delete all of the items from the bucket.
+			$success = $this->delete_object($bucket, S3_PCRE_ALL, true);
+		}
+
+		// As long as we were successful...
+		if ($success)
+		{
+			// Add this to our request
+			$opt = array();
+			$opt['verb'] = 'DELETE';
+			$opt['method'] = 'delete_bucket';
+
+			// Authenticate to S3
+			return $this->authenticate($bucket, $opt);
+		}
+
+		// Otherwise return false.
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -446,6 +476,7 @@ class AmazonS3 extends TarzanCore
 		// Add this to our request
 		$opt['verb'] = 'PUT';
 		$opt['method'] = 'create_object';
+		$opt['filename'] = rawurlencode($opt['filename']);
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -468,7 +499,7 @@ class AmazonS3 extends TarzanCore
 		$opt = array();
 		$opt['verb'] = 'GET';
 		$opt['method'] = 'get_object';
-		$opt['filename'] = $filename;
+		$opt['filename'] = rawurlencode($filename);
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -491,7 +522,7 @@ class AmazonS3 extends TarzanCore
 		$opt = array();
 		$opt['verb'] = 'HEAD';
 		$opt['method'] = 'head_object';
-		$opt['filename'] = $filename;
+		$opt['filename'] = rawurlencode($filename);
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -504,21 +535,41 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
-	 * @param string $filename (Required) The filename for the content.
-	 * @return TarzanHTTPResponse
+	 * @param string $filename (Required) Either the filename for the content, or a PCRE regular expression that matches the files you want to delete.
+	 * @param boolean $is_pcre (Optional) Tells the method whether you've passed a PCRE regular expression to the $filename parameter.
+	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if a single file deletion, a boolean value determining the success of deleting requested files.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
-	 * @todo Support recursive deleting (including all or regex match)
 	 */
-	public function delete_object($bucket, $filename)
+	public function delete_object($bucket, $filename, $is_pcre = false)
 	{
-		// Add this to our request
-		$opt = array();
-		$opt['verb'] = 'DELETE';
-		$opt['method'] = 'delete_object';
-		$opt['filename'] = $filename;
+		if ($is_pcre)
+		{
+			$success = true;
 
-		// Authenticate to S3
-		return $this->authenticate($bucket, $opt);
+			$list = $this->get_object_list($bucket, array('pcre', $filename));
+			foreach ($list as $item)
+			{
+				$del = $this->delete_object($bucket, $item);
+
+				if (!$del->isOK(204))
+				{
+					$success = false;
+				}
+			}
+
+			return $success;
+		}
+		else
+		{
+			// Add this to our request
+			$opt = array();
+			$opt['verb'] = 'DELETE';
+			$opt['method'] = 'delete_object';
+			$opt['filename'] = rawurlencode($filename);
+
+			// Authenticate to S3
+			return $this->authenticate($bucket, $opt);
+		}
 	}
 
 	/**
@@ -562,41 +613,63 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string marker - (Optional) It restricts the response to only contain results that occur alphabetically after the value of marker.</li>
 	 *   <li>string maxKeys - (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.</li>
 	 *   <li>string delimiter - (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.</li>
+	 *   <li>string pcre - (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the filenames against. This is applied AFTER any native S3 filtering from 'prefix', 'marker', 'maxKeys', or 'delimiter'.</li>
 	 * </ul>
 	 * @return array
 	 * @see list_objects
 	 */
 	public function get_object_list($bucket, $opt = null)
 	{
+		// Set some default values
+		$filenames = array();
+		$pcre = null;
+
 		// Get a list of files.
 		$list = $this->list_objects($bucket, $opt);
 
-		// Loop through and find the filenames.
-		$filenames = array();
-		foreach ($list->body->Contents as $file)
+		// Extract the options
+		if ($opt)
 		{
-			$filenames[] = (string) $file->Key;
+			extract($opt);
+		}
+
+		// If we have a PCRE regex, store it.
+		if ($pcre)
+		{
+			// Loop through and find the filenames.
+			foreach ($list->body->Contents as $file)
+			{
+				$file = (string) $file->Key;
+
+				if (preg_match($pcre, $file))
+				{
+					$filenames[] = $file;
+				}
+			}
+		}
+		else
+		{
+			// Loop through and find the filenames.
+			foreach ($list->body->Contents as $file)
+			{
+				$filenames[] = (string) $file->Key;
+			}
 		}
 
 		return (count($filenames) > 0) ? $filenames : null;
 	}
 
-	public function delete_objects()
+	public function copy_object()
 	{
 		
 	}
 
-	public function copy_objects()
+	public function move_object()
 	{
 		
 	}
 
-	public function move_objects()
-	{
-		
-	}
-
-	public function rename_objects()
+	public function rename_object()
 	{
 		
 	}
