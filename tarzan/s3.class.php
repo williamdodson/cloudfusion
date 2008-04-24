@@ -350,7 +350,7 @@ class AmazonS3 extends TarzanCore
 		if ($force)
 		{
 			// Delete all of the items from the bucket.
-			$success = $this->delete_object($bucket, S3_PCRE_ALL, true);
+			$success = $this->delete_all_objects($bucket);
 		}
 
 		// As long as we were successful...
@@ -406,7 +406,7 @@ class AmazonS3 extends TarzanCore
 	/**
 	 * Bucket Exists
 	 * 
-	 * Checks whether this bucket already exists or not.
+	 * Checks whether this bucket already exists in your account or not.
 	 * 
 	 * @todo Implement this method.
 	 */
@@ -573,6 +573,21 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
+	 * Delete All Objects
+	 * 
+	 * Delete all of the objects inside the specified bucket.
+	 *
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @return boolean Determines the success of deleting all files.
+	 * @see delete_object
+	 */
+	public function delete_all_objects($bucket)
+	{
+		return $this->delete_object($bucket, S3_PCRE_ALL, true);
+	}
+
+	/**
 	 * List Objects
 	 * 
 	 * Lists the objects in a bucket. Provided as the 'GetBucket' action in Amazon's REST API.
@@ -670,6 +685,11 @@ class AmazonS3 extends TarzanCore
 	}
 
 	public function rename_object()
+	{
+		
+	}
+
+	public function if_object_exists()
 	{
 		
 	}
