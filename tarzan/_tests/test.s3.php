@@ -106,6 +106,9 @@ $get_object_list = $s3->get_object_list($bname);
 // Get the number of items in the bucket
 $get_bucket_size = $s3->get_bucket_size($bname);
 
+// Get the filesize of the bucket
+$get_bucket_filesize = $s3->get_bucket_filesize($bname);
+
 // Get the headers for a file without downloading the entire file.
 $head = $s3->head_object($bname, $fname);
 
@@ -269,6 +272,18 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				?>
 				<td><a href="#get_bucket_size">Get Bucket Size (US)</a></td></tr>
 
+				<?php
+				if ($get_bucket_filesize)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#get_bucket_filesize">Get Bucket Filesize (US)</a></td></tr>
+
 				<?php get_result($head); ?>
 				<td><a href="#head_object">HEAD Object (US)</a></td></tr>
 
@@ -365,6 +380,9 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 			echo '<h2><a name="get_bucket_size">Get Bucket Size (US)</a></h2>';
 			echo '<pre>'; print_r($get_bucket_size); echo '</pre>';
+
+			echo '<h2><a name="get_bucket_filesize">Get Bucket Filesize (US)</a></h2>';
+			echo '<pre>'; print_r($get_bucket_filesize); echo '</pre>';
 
 			echo '<h2><a name="head_object">HEAD Object (US)</a></h2>';
 			echo '<pre>'; print_r($head); echo '</pre>';

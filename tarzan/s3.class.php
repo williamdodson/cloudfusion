@@ -476,16 +476,31 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Get Bucket Size
+	 * Get Bucket File Size
 	 * 
 	 * Gets the file size of the contents of the bucket.
 	 * 
 	 * @access public
-	 * @todo Implement this method.
+	 * @param string $bucket (Required) The name of the bucket to check.
+	 * @param boolean $friendly_format (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
+	 * @return integer|string The number of bytes as an integer, or the friendly format as a string.
 	 */
 	public function get_bucket_filesize($bucket, $friendly_format = false)
 	{
-		
+		$filesize = 0;
+		$list = $this->list_objects($bucket);
+
+		foreach ($list->body->Contents as $filename)
+		{
+			$filesize += (int) $filename->Size;
+		}
+
+		if ($friendly_format)
+		{
+			$filesize = $this->util->size_readable($filesize);
+		}
+
+		return $filesize;
 	}
 
 	/**
@@ -752,6 +767,30 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
+	 * Get Object File Size
+	 * 
+	 * Gets the file size of the object.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket check.
+	 * @param string $filename (Required) The filename for the content.
+	 * @param boolean $friendly_format (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
+	 * @return integer|string The number of bytes as an integer, or the friendly format as a string.
+	 */
+	public function get_object_filesize($bucket, $filename, $friendly_format = false)
+	{
+		$object = $this->head_object($bucket, $filename);
+		$filesize = (integer) $object->header['content-length'];
+
+		if ($friendly_format)
+		{
+			$filesize = $this->util->size_readable($filesize);
+		}
+
+		return $filesize;
+	}
+
+	/**
 	 * Get Object List
 	 * 
 	 * ONLY lists the object filenames from a bucket.
@@ -810,22 +849,34 @@ class AmazonS3 extends TarzanCore
 		return (count($filenames) > 0) ? $filenames : null;
 	}
 
-	public function copy_object()
+	/**
+	 * Copy Object
+	 */
+	public function copy_object($source, $target)
 	{
 		
 	}
 
-	public function move_object()
+	/**
+	 * Move Object
+	 */
+	public function move_object($source, $target)
 	{
 		
 	}
 
-	public function rename_object()
+	/**
+	 * Rename Object
+	 */
+	public function rename_object($bucket, $filename, $new_filename)
 	{
 		
 	}
 
-	public function change_object_permissions()
+	/**
+	 * Change Object Permissions
+	 */
+	public function change_object_permissions($bucket, $filename, $perms)
 	{
 		
 	}
