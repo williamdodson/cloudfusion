@@ -34,9 +34,16 @@ error_reporting(E_ALL);
  */
 function get_result($obj)
 {
-	if ((int) $obj->header['x-amz-httpstatus'] == 200 // OK
-		|| (int) $obj->header['x-amz-httpstatus'] == 204 // Deleted Successfully
-		)
+	if (is_bool($obj))
+	{
+		$result = $obj;
+	}
+	else
+	{
+		$result = $obj->isOK(array(200, 204));
+	}
+
+	if ($result)
 	{
 		echo '<tr class="pass"><td class="status">&#10004;</td>';
 	}
@@ -67,6 +74,12 @@ $bucket = $s3->create_bucket($bname, S3_LOCATION_US);
 // Get the locale of the bucket we just created
 $locale = $s3->get_bucket_locale($bname);
 
+// Get a list of all buckets on the account.
+$list_buckets = $s3->list_buckets();
+
+// ONLY lists the bucket names on the account.
+$get_bucket_list = $s3->get_bucket_list();
+
 // Create a new readable test file.
 $file = $s3->create_object($bname, array(
 	'filename' => $fname,
@@ -84,7 +97,7 @@ $list = $s3->list_objects($bname);
 // ONLY lists the object filenames in the bucket.
 $get_object_list = $s3->get_object_list($bname);
 
-// ONLY lists the object filenames in the bucket.
+// Get the number of items in the bucket
 $get_bucket_size = $s3->get_bucket_size($bname);
 
 // Get the headers for a file without downloading the entire file.
@@ -96,14 +109,16 @@ $get = $s3->get_object($bname, $fname);
 // Get the file publically, without Amazon. Tests ACL settings.
 $get_public = new HTTP_Request($get->header['x-amz-requesturl']);
 $get_public->sendRequest();
-$get_public->header = $get_public->getResponseHeader();
-$get_public->header['x-amz-httpstatus'] = $get_public->getResponseCode();
+$get_public = new TarzanHTTPResponse($get_public->getResponseHeader(), null, $get_public->getResponseCode());
 
 // Delete the file.
 $delf = $s3->delete_object($bname, $fname);
 
+// Delete ALL Files
+$delete_all_objects = $s3->delete_all_objects($bname);
+
 // Delete the bucket.
-$delb = $s3->delete_bucket($bname);
+$delb = $s3->delete_bucket($bname, true);
 
 
 /**
@@ -173,6 +188,21 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				<?php get_result($locale); ?>
 				<td><a href="#get_bucket_locale">Get Bucket Locale (US)</a></td></tr>
 
+				<?php get_result($list_buckets); ?>
+				<td><a href="#list_buckets">List Buckets (US)</a></td></tr>
+
+				<?php
+				if ($get_bucket_list)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
+				<td><a href="#get_bucket_list">Get Bucket List (US)</a></td></tr>
+
 				<?php get_result($file); ?>
 				<td><a href="#create_object">Create Object (US)</a></td></tr>
 
@@ -227,6 +257,9 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				<?php get_result($delf); ?>
 				<td><a href="#delete_object">Delete Object (US)</a></td></tr>
 
+				<?php get_result($delete_all_objects); ?>
+				<td><a href="#delete_all_objects">Delete ALL Objects (US)</a></td></tr>
+
 				<?php get_result($delb); ?>
 				<td><a href="#delete_bucket">Delete Bucket (US)</a></td></tr>
 			</tbody>
@@ -267,6 +300,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 		echo '<h2><a name="get_bucket_locale">Get Bucket Locale (US)</a></h2>';
 		echo '<pre>'; print_r($locale); echo '</pre>';
+
+		echo '<h2><a name="list_buckets">List Buckets (US)</a></h2>';
+		echo '<pre>'; print_r($list_buckets); echo '</pre>';
+
+		echo '<h2><a name="get_bucket_list">Get Bucket List (US)</a></h2>';
+		echo '<pre>'; print_r($get_bucket_list); echo '</pre>';
 		?>
 			<div class="indent">
 			<?php
@@ -296,6 +335,9 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 			echo '<h2><a name="delete_object">Delete Object (US)</a></h2>';
 			echo '<pre>'; print_r($delf); echo '</pre>';
+
+			echo '<h2><a name="delete_all_objects">Delete ALL Objects (US)</a></h2>';
+			echo '<pre>'; print_r($delete_all_objects ? 'true' : 'false'); echo '</pre>';
 			?>
 			</div>
 		<?php

@@ -95,7 +95,9 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access private
 	 * @param string $bucket (Required) The name of the bucket to be used.
-	 * @param array $opt Associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * @param array $opt (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * @param string $location (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
+	 * @param integer $redirects (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
 	 */
@@ -120,24 +122,32 @@ class AmazonS3 extends TarzanCore
 			$method = null;
 			$prefix = null;
 			$verb = null;
-			$hostname = $bucket . '.s3.amazonaws.com';
 
 			// Break the array into individual variables, while storing the original.
 			$_opt = $opt;
 			extract($opt);
 
+			// Set hostname
+			if ($method == 'list_buckets')
+			{
+				$hostname = 's3.amazonaws.com';
+			}
+			else
+			{
+				$hostname = $bucket . '.s3.amazonaws.com';
+			}
+
 			// Get the UTC timestamp in RFC 2616 format
 			$httpDate = gmdate(DATE_AWS_RFC2616, time());
 
 			// Generate the request string
-			//$request = $bucket;
 			$request = '';
 
 			// Append additional parameters
 			$request .= '/' . $filename;
 
 			// List Object settings
-			if (isset($method) && !empty($method) && $method == 'list_objects')
+			if ($method == 'list_objects')
 			{
 				if (isset($prefix) && !empty($prefix))
 				{
@@ -158,7 +168,7 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Get Bucket Locale settings
-			if (isset($method) && !empty($method) && $method == 'get_bucket_locale')
+			if ($method == 'get_bucket_locale')
 			{
 				$request = '/?location';
 				$filename = '?location';
@@ -217,6 +227,14 @@ class AmazonS3 extends TarzanCore
 
 			// Data that will be "signed".
 			$filename = '/' . $filename;
+
+			// If we're listing buckets, there is no filename value.
+			if ($method == 'list_buckets')
+			{
+				$filename = '';
+			}
+
+			// Prepare the string to sign
 			$stringToSign = "$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename";
 
 			// Hash the AWS secret key
@@ -267,6 +285,7 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to create.
+	 * @param string $locale (Optional) Sets the preferred geographical location for the bucket. Accepts S3_LOCATION_US or S3_LOCATION_EU. Defaults to S3_LOCATION_US.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
@@ -302,6 +321,7 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * Referred to as "GET Bucket" in the AWS docs, but implemented here as AmazonS3::list_objects().
 	 * 
+	 * @access public
 	 * @return TarzanHTTPResponse
 	 * @see list_objects
 	 */
@@ -377,6 +397,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Copies the contents of a bucket into a new bucket.
 	 * 
+	 * @access public
 	 * @todo Implement this method.
 	 */
 	public function copy_bucket()
@@ -396,6 +417,7 @@ class AmazonS3 extends TarzanCore
 	 * You're better off picking a good name at the beginning, or living with a bucket name that 
 	 * already exists. ;)
 	 * 
+	 * @access public
 	 * @todo Implement this method.
 	 */
 	public function rename_bucket()
@@ -408,6 +430,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Checks whether this bucket already exists in your account or not.
 	 * 
+	 * @access public
 	 * @todo Implement this method.
 	 */
 	public function if_bucket_exists($bucket)
@@ -420,7 +443,9 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Gets the number of files in the bucket.
 	 * 
-	 * @return integer
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to check.
+	 * @return integer The number of files in the bucket.
 	 */
 	public function get_bucket_size($bucket)
 	{
@@ -432,6 +457,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Gets the file size of the contents of the bucket.
 	 * 
+	 * @access public
 	 * @todo Implement this method.
 	 */
 	public function get_bucket_filesize($bucket, $friendly_format = false)
@@ -440,8 +466,70 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
+	 * List Buckets
+	 * 
+	 * Gets a list of all of the buckets on the S3 account.
+	 * 
+	 * @access public
+	 * @return TarzanHTTPResponse
+	 */
+	public function list_buckets()
+	{
+		// Add this to our request
+		$opt['verb'] = 'GET';
+		$opt['method'] = 'list_buckets';
+
+		// Authenticate to S3
+		return $this->authenticate('', $opt);
+	}
+
+	/**
+	 * Get Bucket List
+	 * 
+	 * ONLY lists the bucket names on the S3 account.
+	 * 
+	 * @access public
+	 * @param string $pcre (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the bucket names against.
+	 * @return TarzanHTTPResponse
+	 */
+	public function get_bucket_list($pcre = null)
+	{
+		// Set some default values
+		$bucketnames = array();
+
+		// Get a list of buckets.
+		$list = $this->list_buckets();
+
+		// If we have a PCRE regex, store it.
+		if ($pcre)
+		{
+			// Loop through and find the bucket names.
+			foreach ($list->body->Buckets->Bucket as $bucket)
+			{
+				$bucket = (string) $bucket->Name;
+
+				if (preg_match($pcre, $bucket))
+				{
+					$bucketnames[] = $bucket;
+				}
+			}
+		}
+		else
+		{
+			// Loop through and find the bucket names.
+			foreach ($list->body->Buckets->Bucket as $bucket)
+			{
+				$bucketnames[] = (string) $bucket->Name;
+			}
+		}
+
+		return (count($bucketnames) > 0) ? $bucketnames : null;
+	}
+
+	/**
 	 * Post Object
 	 *
+	 * @access public
 	 * @todo Implement this method.
 	 */
 	private function post_object() {}
@@ -544,16 +632,25 @@ class AmazonS3 extends TarzanCore
 	{
 		if ($is_pcre)
 		{
+			// Set default value
 			$success = true;
 
+			// Collect all matches
 			$list = $this->get_object_list($bucket, array('pcre', $filename));
-			foreach ($list as $item)
-			{
-				$del = $this->delete_object($bucket, $item);
 
-				if (!$del->isOK(204))
+			// As long as we have at least one match...
+			if (count($list) > 0)
+			{
+				// Go through all of the items and delete them.
+				foreach ($list as $item)
 				{
-					$success = false;
+					$del = $this->delete_object($bucket, $item);
+
+					// Do we have any failures?
+					if (!$del->isOK(204))
+					{
+						$success = false;
+					}
 				}
 			}
 
@@ -708,6 +805,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Takes an existing remote file, stores it to S3, and returns a URL.
 	 * 
+	 * @access public
 	 * @param string $remote_file (Required) The full URL of the file to store on the S3 service.
 	 * @param string $bucket (Required) The name of the bucket that you want to store it in.
 	 * @param string $filename (Required) The name that you want to give to the file.
@@ -718,7 +816,6 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string cname - (Optional) If you're serving the file from a different hostname from s3.amazonaws.com (e.g. such as with a custom CNAME setting), return the URL with this hostname. Defaults to null.</li>
 	 * </ul>
 	 * @return string The S3 URL for the uploaded file. Returns null if unsuccessful.
-	 * @todo Create Unit Test
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
