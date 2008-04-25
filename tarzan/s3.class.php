@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.04.23
+ * @version 2008.04.24
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -52,6 +52,21 @@ define('S3_ACL_AUTH_READ', 'authenticated-read');
  */
 define('S3_PCRE_ALL', '/.*/i');
 
+/**
+ * Copy: Overwrite all non-identical files while copying.
+ */
+define('S3_COPY_OVERWRITE', 'overwrite');
+
+/**
+ * Copy: Only copy new files, ignoring ones that already exist.
+ */
+define('S3_COPY_NEW', 'new');
+
+/**
+ * Copy: Only copy changed versions of existing files. No new files will be copied.
+ */
+define('S3_COPY_CHANGED', 'changed');
+
 
 /*%******************************************************************************************%*/
 // MAIN CLASS
@@ -91,7 +106,7 @@ class AmazonS3 extends TarzanCore
 	/**
 	 * Authenticate
 	 *
-	 * Authenticates a connection to AWS. Overridden from TarzanCore.
+	 * Authenticates a connection to S3.
 	 *
 	 * @access private
 	 * @param string $bucket (Required) The name of the bucket to be used.
@@ -851,32 +866,96 @@ class AmazonS3 extends TarzanCore
 
 	/**
 	 * Copy Object
+	 * 
+	 * Logic for determining if/when/how a file could/should be copied.
+	 * 
+	 * @access public
+	 * @param string $source_bucket (Required) The bucket for the source file.
+	 * @param string $source_filename (Required) The name of the source file.
+	 * @param string $target_bucket (Required) The bucket for the target file.
+	 * @param string $target_filename (Required) The name of the target file.
+	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
+	 * @param string $overwrite (Optional) Whether to overwrite existing files (S3_COPY_OVERWRITE) or to only copy new files (S3_COPY_NEW). Defaults to S3_COPY_NEW.
+	 * @return boolean Whether the copy was successful or not.
 	 */
-	public function copy_object($source, $target)
+	public function copy_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
 	{
-		
+		// Learn about the files/locations.
+		$source = $this->head_object($source_bucket, $source_filename);
+		$target = $this->head_object($target_bucket, $target_filename);
+
+		if ($source->isOK())
+		{
+			// Do we copy? Set a default.
+			$copy = true;
+
+			switch ($overwrite)
+			{
+				// Only copy if it's different.
+				case S3_COPY_OVERWRITE:
+				case S3_COPY_CHANGED:
+					if ($target->isOK())
+					{
+						// If it's identical, skip it.
+						if ($source->header['etag'] == $target->header['etag'])
+						{
+							$copy = false;
+						}
+					}
+					break;
+
+				// By default, only copy if it's not already there.
+				default:
+					$copy = (!$target->isOK());
+					break;
+			}
+
+			// Did we get clearance to copy?
+			if ($copy)
+			{
+				return $this->_copy($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl);
+			}
+
+			// The "copy" was "succesful" even though we didn't do anything.
+			return true;
+		}
+
+		// EPIC FAIL.
+		return false;
 	}
 
 	/**
 	 * Move Object
+	 * 
+	 * Logic for determining if/when/how a file could/should be moved.
+	 * 
+	 * @access public
+	 * @param string $source_bucket (Required) The bucket for the source file.
+	 * @param string $source_filename (Required) The name of the source file.
+	 * @param string $target_bucket (Required) The bucket for the target file.
+	 * @param string $target_filename (Required) The name of the target file.
+	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
+	 * @param string $overwrite (Optional) Whether to overwrite existing files (S3_COPY_OVERWRITE) or to only move new files (S3_COPY_NEW). Defaults to S3_COPY_NEW.
+	 * @return boolean Whether the move was successful or not.
 	 */
-	public function move_object($source, $target)
+	public function move_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
 	{
-		
-	}
+		// Copy the file.
+		if ($copy = $this->copy_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl, $overwrite))
+		{
+			// If copy was successful, delete the old file.
+			$delete = $this->delete_object($source_bucket, $source_filename);
 
-	/**
-	 * Rename Object
-	 */
-	public function rename_object($bucket, $filename, $new_filename)
-	{
+			return ($delete->isOK(204));
+		}
 		
+		return false;
 	}
 
 	/**
 	 * Change Object Permissions
 	 */
-	public function change_object_permissions($bucket, $filename, $perms)
+	public function change_object_permissions($bucket, $filename, $acl)
 	{
 		
 	}
@@ -955,6 +1034,37 @@ class AmazonS3 extends TarzanCore
 		{
 			return null;
 		}
+	}
+
+
+	/*%******************************************************************************************%*/
+	// INTERNAL-ONLY METHODS
+
+	/**
+	 * Copy
+	 * 
+	 * @access private
+	 * @param string $source_bucket (Required) The bucket for the source file.
+	 * @param string $source_filename (Required) The name of the source file.
+	 * @param string $target_bucket (Required) The bucket for the target file.
+	 * @param string $target_filename (Required) The name of the target file.
+	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
+	 * @return boolean Whether the copy was successful or not.
+	 */
+	private function _copy($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE)
+	{
+		// Fetch the source file.
+		$source = $this->get_object($source_bucket, $source_filename);
+
+		// Create the target file.
+		$target = $this->create_object($target_bucket, array(
+			'filename' => $target_filename,
+			'body' => $source->body,
+			'contentType' => $source->header['content-type'],
+			'acl' => $target_acl
+		));
+
+		return ($target->isOK());
 	}
 }
 ?>
