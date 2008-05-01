@@ -56,8 +56,9 @@ define('TARZAN_VERSION', '2.0b');
 
 /**
  * Tarzan Build
+ * @todo Hardcode for release.
  */
-define('TARZAN_BUILD', 20080412);
+define('TARZAN_BUILD', gmdate('YmdHis', strtotime(substr('$Date$', 7, 25)) ? strtotime(substr('$Date$', 7, 25)) : filemtime(__FILE__)));
 
 /**
  * Tarzan Website URL

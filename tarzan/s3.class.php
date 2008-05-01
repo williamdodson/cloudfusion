@@ -451,27 +451,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @todo Implement this method.
 	 */
-	public function copy_bucket()
-	{
-		
-	}
-
-	/**
-	 * Rename Bucket
-	 * 
-	 * Because renaming buckets isn't supported natively by S3, this method will create a new bucket, 
-	 * copy the contents of the current bucket into the new bucket, delete the contents of the old 
-	 * bucket, then delete the old bucket. This gives the end-result of a bucket being renamed, but 
-	 * involves a lot of data transfer. For larger buckets this can be costly in terms of time, CPU, 
-	 * and S3 billing costs.
-	 * 
-	 * You're better off picking a good name at the beginning, or living with a bucket name that 
-	 * already exists. ;)
-	 * 
-	 * @access public
-	 * @todo Implement this method.
-	 */
-	public function rename_bucket()
+	public function copy_bucket($source_bucket, $target_bucket, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
 	{
 		
 	}
@@ -870,6 +850,7 @@ class AmazonS3 extends TarzanCore
 	 * Logic for determining if/when/how a file could/should be copied.
 	 * 
 	 * @access public
+	 * @todo Use S3's native copy functionality whenever it becomes available.
 	 * @param string $source_bucket (Required) The bucket for the source file.
 	 * @param string $source_filename (Required) The name of the source file.
 	 * @param string $target_bucket (Required) The bucket for the target file.
@@ -922,42 +903,6 @@ class AmazonS3 extends TarzanCore
 
 		// EPIC FAIL.
 		return false;
-	}
-
-	/**
-	 * Move Object
-	 * 
-	 * Logic for determining if/when/how a file could/should be moved.
-	 * 
-	 * @access public
-	 * @param string $source_bucket (Required) The bucket for the source file.
-	 * @param string $source_filename (Required) The name of the source file.
-	 * @param string $target_bucket (Required) The bucket for the target file.
-	 * @param string $target_filename (Required) The name of the target file.
-	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
-	 * @param string $overwrite (Optional) Whether to overwrite existing files (S3_COPY_OVERWRITE) or to only move new files (S3_COPY_NEW). Defaults to S3_COPY_NEW.
-	 * @return boolean Whether the move was successful or not.
-	 */
-	public function move_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
-	{
-		// Copy the file.
-		if ($copy = $this->copy_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl, $overwrite))
-		{
-			// If copy was successful, delete the old file.
-			$delete = $this->delete_object($source_bucket, $source_filename);
-
-			return ($delete->isOK(204));
-		}
-		
-		return false;
-	}
-
-	/**
-	 * Change Object Permissions
-	 */
-	public function change_object_permissions($bucket, $filename, $acl)
-	{
-		
 	}
 
 
