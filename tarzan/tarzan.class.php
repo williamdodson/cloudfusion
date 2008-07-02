@@ -150,7 +150,7 @@ class TarzanCore
 		$this->service = get_class($this);
 
 		// Set a default value for the Account ID.
-		if (!$account_id && defined(AWS_ACCOUNT_ID))
+		if (!$account_id && defined('AWS_ACCOUNT_ID'))
 		{
 			$this->account_id = AWS_ACCOUNT_ID;
 		}
@@ -160,7 +160,7 @@ class TarzanCore
 		}
 
 		// Set a default value for the Associates ID.
-		if (!$assoc_id && defined(AWS_ASSOC_ID))
+		if (!$assoc_id && defined('AWS_ASSOC_ID'))
 		{
 			$this->assoc_id = AWS_ASSOC_ID;
 		}
