@@ -233,11 +233,8 @@ class TarzanCore
 		// Create the string that needs to be hashed.
 		$sign_query = $this->util->to_signable_string($query);
 
-		// Hash the AWS secret key
-		$hasher =& new Crypt_HMAC($this->secret_key, 'sha1');
-
-		// Generate a signature for the request.
-		$query['Signature'] = $this->util->hex_to_base64($hasher->hash($sign_query));
+		// Hash the AWS secret key and generate a signature for the request.
+		$query['Signature'] = $this->util->hex_to_base64(hash_hmac('sha1', $sign_query, $this->secret_key));
 
 		// Generate the querystring from $query
 		$querystring = $this->util->to_query_string($query);

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.04.24
+ * @version 2008.07.01
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -252,11 +252,8 @@ class AmazonS3 extends TarzanCore
 			// Prepare the string to sign
 			$stringToSign = "$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename";
 
-			// Hash the AWS secret key
-			$hasher =& new Crypt_HMAC($this->secret_key, 'sha1');
-
-			// Generate a signature for the request.
-			$signature = $this->util->hex_to_base64($hasher->hash($stringToSign));
+			// Hash the AWS secret key and generate a signature for the request.
+			$signature = $this->util->hex_to_base64(hash_hmac('sha1', $stringToSign, $this->secret_key));
 
 			// Pass the developer key and signature
 			$req->addHeader("Authorization", "AWS " . $this->key . ":" . $signature);
