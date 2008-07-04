@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package UnitTests
  * @subpackage EC2
- * @version 2008.04.12
+ * @version 2008.07.03
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -20,7 +20,7 @@
 
 require_once(dirname(dirname(__FILE__)) . '/tarzan.class.php');
 header('Content-type: text/html; charset=utf-8');
-error_reporting(0);
+error_reporting(E_ALL);
 
 
 /*%******************************************************************************************%*/

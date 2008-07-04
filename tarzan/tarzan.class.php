@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package TarzanCore
- * @version 2008.04.20
+ * @version 2008.07.03
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -33,10 +33,6 @@ function __autoload($class_name)
 	elseif (stristr($class_name, 'tarzan'))
 	{
 		require_once(dirname(__FILE__) . '/' . str_replace('tarzan', '_', strtolower($class_name)) . '.class.php');
-	}
-	else
-	{
-		require_once(dirname(dirname(__FILE__)) . '/pear/' . strtolower($class_name) . '.php');
 	}
 }
 
@@ -80,6 +76,14 @@ define('DATE_AWS_RFC2616', 'D, d M Y H:i:s \G\M\T');
  */
 define('DATE_AWS_ISO8601', 'Y-m-d\TH:i:s\Z');
 
+/**
+ * Define various method types.
+ */
+define('HTTP_GET', 'GET');
+define('HTTP_POST', 'POST');
+define('HTTP_PUT', 'PUT');
+define('HTTP_DELETE', 'DELETE');
+define('HTTP_HEAD', 'HEAD');
 
 
 /*%******************************************************************************************%*/
@@ -91,37 +95,37 @@ define('DATE_AWS_ISO8601', 'Y-m-d\TH:i:s\Z');
 class TarzanCore
 {
 	/**
-	 * The Amazon API Key
+	 * @var The Amazon API Key
 	 */
 	var $key;
 
 	/**
-	 * The Amazon API Secret Key
+	 * @var The Amazon API Secret Key
 	 */
 	var $secret_key;
 
 	/**
-	 * The Amazon Account ID, sans hyphens
+	 * @var The Amazon Account ID, sans hyphens
 	 */
 	var $account_id;
 
 	/**
-	 * The Amazon Associates ID
+	 * @var The Amazon Associates ID
 	 */
 	var $assoc_id;
 
 	/**
-	 * Handle for the utility functions
+	 * @var Handle for the utility functions
 	 */
 	var $util;
 
 	/**
-	 * An identifier for the current service.
+	 * @var An identifier for the current service.
 	 */
 	var $service = null;
 
 	/**
-	 * API version.
+	 * @var API version.
 	 */
 	var $api_version = null;
 
@@ -241,14 +245,13 @@ class TarzanCore
 
 		// Compose the request.
 		$request_url = $queue_url . '?' . $querystring;
-		$request =& new HTTP_Request($request_url);
-		$request->addHeader('User-Agent', TARZAN_USERAGENT);
+		$request =& new TarzanHTTPRequest($request_url);
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
 		{
 			$request->addHeader('Content-Type', 'text/plain');
-			$request->setMethod(HTTP_REQUEST_METHOD_POST);
+			$request->setMethod(HTTP_POST);
 			$request->setBody($message);
 		}
 
@@ -260,6 +263,7 @@ class TarzanCore
 		$headers['x-amz-requesturl'] = $request_url;
 		$headers['x-amz-httpstatus'] = $request->getResponseCode();
 		$headers['x-amz-stringtosign'] = $sign_query;
+		if ($message) $headers['x-amz-body'] = $message;
 		$data = new TarzanHTTPResponse($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!

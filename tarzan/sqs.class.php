@@ -160,7 +160,7 @@ class AmazonSQS extends TarzanCore
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
 	 * @param string $message (Required) Message size cannot exceed 256 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
- * @return TarzanHTTPResponse
+	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html
 	 */
 	public function send_message($queue_url, $message)

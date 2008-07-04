@@ -118,8 +118,8 @@ $if_object_exists = $s3->if_object_exists($bname, $fname);
 // Get the file.
 $get = $s3->get_object($bname, $fname);
 
-// Get the file publically, without Amazon. Tests ACL settings.
-$get_public = new HTTP_Request($get->header['x-amz-requesturl']);
+// Get the file publicly, without Amazon. Tests ACL settings.
+$get_public = new TarzanHTTPRequest($get->header['x-amz-requesturl']);
 $get_public->sendRequest();
 $get_public = new TarzanHTTPResponse($get_public->getResponseHeader(), null, $get_public->getResponseCode());
 

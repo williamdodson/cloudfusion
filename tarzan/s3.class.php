@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.01
+ * @version 2008.07.03
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -51,21 +51,6 @@ define('S3_ACL_AUTH_READ', 'authenticated-read');
  * PCRE: Match all items
  */
 define('S3_PCRE_ALL', '/.*/i');
-
-/**
- * Copy: Overwrite all non-identical files while copying.
- */
-define('S3_COPY_OVERWRITE', 'overwrite');
-
-/**
- * Copy: Only copy new files, ignoring ones that already exist.
- */
-define('S3_COPY_NEW', 'new');
-
-/**
- * Copy: Only copy changed versions of existing files. No new files will be copied.
- */
-define('S3_COPY_CHANGED', 'changed');
 
 
 /*%******************************************************************************************%*/
@@ -203,8 +188,8 @@ class AmazonS3 extends TarzanCore
 			{
 				$this->request_url = 'http://' . $hostname . $request;
 			}
-			$req =& new HTTP_Request($this->request_url);
-			$req->addHeader('User-Agent', TARZAN_USERAGENT);
+
+			$req =& new TarzanHTTPRequest($this->request_url);
 
 			// Do we have a verb?
 			if (isset($verb) && !empty($verb))
@@ -216,6 +201,10 @@ class AmazonS3 extends TarzanCore
 			if (isset($contentType) && !empty($contentType))
 			{
 				$req->addHeader("Content-Type", $contentType);
+			}
+			else if ($verb == HTTP_PUT) // Set a default value for HTTP_PUT
+			{
+				$contentType = 'application/x-www-form-urlencoded';
 			}
 
 			// Do we have a date?
@@ -321,7 +310,7 @@ class AmazonS3 extends TarzanCore
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, array(
-			'verb' => 'PUT',
+			'verb' => HTTP_PUT,
 			'method' => 'create_bucket',
 			'body' => $body,
 			'contentType' => $contentType
@@ -356,7 +345,7 @@ class AmazonS3 extends TarzanCore
 	{
 		// Add this to our request
 		$opt = array();
-		$opt['verb'] = 'GET';
+		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_bucket_locale';
 
 		// Authenticate to S3
@@ -377,7 +366,7 @@ class AmazonS3 extends TarzanCore
 	{
 		// Add this to our request
 		$opt = array();
-		$opt['verb'] = 'HEAD';
+		$opt['verb'] = HTTP_HEAD;
 		$opt['method'] = 'head_bucket';
 
 		// Authenticate to S3
@@ -426,7 +415,7 @@ class AmazonS3 extends TarzanCore
 		{
 			// Add this to our request
 			$opt = array();
-			$opt['verb'] = 'DELETE';
+			$opt['verb'] = HTTP_DELETE;
 			$opt['method'] = 'delete_bucket';
 
 			// Authenticate to S3
@@ -448,7 +437,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @todo Implement this method.
 	 */
-	public function copy_bucket($source_bucket, $target_bucket, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
+	public function copy_bucket()
 	{
 		
 	}
@@ -506,7 +495,7 @@ class AmazonS3 extends TarzanCore
 	public function list_buckets()
 	{
 		// Add this to our request
-		$opt['verb'] = 'GET';
+		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'list_buckets';
 
 		// Authenticate to S3
@@ -592,7 +581,7 @@ class AmazonS3 extends TarzanCore
 	public function create_object($bucket, $opt = null)
 	{
 		// Add this to our request
-		$opt['verb'] = 'PUT';
+		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'create_object';
 		$opt['filename'] = rawurlencode($opt['filename']);
 
@@ -615,7 +604,7 @@ class AmazonS3 extends TarzanCore
 	{
 		// Add this to our request
 		$opt = array();
-		$opt['verb'] = 'GET';
+		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object';
 		$opt['filename'] = rawurlencode($filename);
 
@@ -638,7 +627,7 @@ class AmazonS3 extends TarzanCore
 	{
 		// Add this to our request
 		$opt = array();
-		$opt['verb'] = 'HEAD';
+		$opt['verb'] = HTTP_HEAD;
 		$opt['method'] = 'head_object';
 		$opt['filename'] = rawurlencode($filename);
 
@@ -706,7 +695,7 @@ class AmazonS3 extends TarzanCore
 		{
 			// Add this to our request
 			$opt = array();
-			$opt['verb'] = 'DELETE';
+			$opt['verb'] = HTTP_DELETE;
 			$opt['method'] = 'delete_object';
 			$opt['filename'] = rawurlencode($filename);
 
@@ -751,7 +740,7 @@ class AmazonS3 extends TarzanCore
 	public function list_objects($bucket, $opt = null)
 	{
 		// Add this to our request
-		$opt['verb'] = 'GET';
+		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'list_objects';
 
 		// Authenticate to S3
@@ -844,62 +833,15 @@ class AmazonS3 extends TarzanCore
 	/**
 	 * Copy Object
 	 * 
-	 * Logic for determining if/when/how a file could/should be copied.
+	 * Copies an object to a new location.
 	 * 
 	 * @access public
-	 * @todo Use S3's native copy functionality whenever it becomes available.
-	 * @param string $source_bucket (Required) The bucket for the source file.
-	 * @param string $source_filename (Required) The name of the source file.
-	 * @param string $target_bucket (Required) The bucket for the target file.
-	 * @param string $target_filename (Required) The name of the target file.
-	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
-	 * @param string $overwrite (Optional) Whether to overwrite existing files (S3_COPY_OVERWRITE) or to only copy new files (S3_COPY_NEW). Defaults to S3_COPY_NEW.
-	 * @return boolean Whether the copy was successful or not.
+	 * @todo Implement this method.
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
 	 */
-	public function copy_object($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE, $overwrite = S3_COPY_NEW)
+	public function copy_object()
 	{
-		// Learn about the files/locations.
-		$source = $this->head_object($source_bucket, $source_filename);
-		$target = $this->head_object($target_bucket, $target_filename);
-
-		if ($source->isOK())
-		{
-			// Do we copy? Set a default.
-			$copy = true;
-
-			switch ($overwrite)
-			{
-				// Only copy if it's different.
-				case S3_COPY_OVERWRITE:
-				case S3_COPY_CHANGED:
-					if ($target->isOK())
-					{
-						// If it's identical, skip it.
-						if ($source->header['etag'] == $target->header['etag'])
-						{
-							$copy = false;
-						}
-					}
-					break;
-
-				// By default, only copy if it's not already there.
-				default:
-					$copy = (!$target->isOK());
-					break;
-			}
-
-			// Did we get clearance to copy?
-			if ($copy)
-			{
-				return $this->_copy($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl);
-			}
-
-			// The "copy" was "succesful" even though we didn't do anything.
-			return true;
-		}
-
-		// EPIC FAIL.
-		return false;
+		
 	}
 
 
@@ -943,7 +885,7 @@ class AmazonS3 extends TarzanCore
 		if (!$object->isOK() || $overwrite)
 		{
 			// Fetch the file
-			$file = new HTTP_Request($remote_file);
+			$file = new TarzanHTTPRequest($remote_file);
 			$file->sendRequest();
 
 			// Store it in S3
@@ -976,37 +918,6 @@ class AmazonS3 extends TarzanCore
 		{
 			return null;
 		}
-	}
-
-
-	/*%******************************************************************************************%*/
-	// INTERNAL-ONLY METHODS
-
-	/**
-	 * Copy
-	 * 
-	 * @access private
-	 * @param string $source_bucket (Required) The bucket for the source file.
-	 * @param string $source_filename (Required) The name of the source file.
-	 * @param string $target_bucket (Required) The bucket for the target file.
-	 * @param string $target_filename (Required) The name of the target file.
-	 * @param string $target_acl (Optional) The access control settings (i.e. permissions) for the new file. Defaults to S3_ACL_PRIVATE.
-	 * @return boolean Whether the copy was successful or not.
-	 */
-	private function _copy($source_bucket, $source_filename, $target_bucket, $target_filename, $target_acl = S3_ACL_PRIVATE)
-	{
-		// Fetch the source file.
-		$source = $this->get_object($source_bucket, $source_filename);
-
-		// Create the target file.
-		$target = $this->create_object($target_bucket, array(
-			'filename' => $target_filename,
-			'body' => $source->body,
-			'contentType' => $source->header['content-type'],
-			'acl' => $target_acl
-		));
-
-		return ($target->isOK());
 	}
 }
 ?>

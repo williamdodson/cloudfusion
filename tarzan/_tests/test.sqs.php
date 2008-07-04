@@ -20,7 +20,7 @@
 
 require_once(dirname(dirname(__FILE__)) . '/tarzan.class.php');
 header('Content-type: text/html; charset=utf-8');
-error_reporting(0);
+error_reporting(E_ALL);
 
 
 /*%******************************************************************************************%*/
