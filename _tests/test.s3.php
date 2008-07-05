@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package UnitTests
  * @subpackage S3
- * @version 2008.04.12
+ * @version 2008.07.05
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -96,6 +96,12 @@ $file = $s3->create_object($bname, array(
 
 // Store a remote file.
 $store_remote_file = $s3->store_remote_file('http://code.google.com/p/tarzan-aws/', $bname, '2'.$fname);
+
+// Copy/Duplicate a file.
+$copy_object = $s3->duplicate_object($bname, $fname, 'duplicate_of_' . $fname);
+
+// Move/Rename a file.
+$move_object = $s3->rename_object($bname, 'duplicate_of_' . $fname, 'renamed_duplicate_of_' . $fname);
 
 // List the objects in the bucket.
 $list = $s3->list_objects($bname);
@@ -245,8 +251,14 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				?>
 				<td><a href="#store_remote_file">Store Remote File (US)</a></td></tr>
 
+				<?php get_result($copy_object); ?>
+				<td><a href="#copy_object">Copy/Duplicate Object (US)</a></td></tr>
+
+				<?php get_result($move_object); ?>
+				<td><a href="#move_object">Move/Rename Object (US)</a></td></tr>
+
 				<?php get_result($list); ?>
-				<td><a href="#list_objects">List Objects (Get Bucket) (US)</a></td></tr>
+				<td><a href="#change_object_acl">List Objects (Get Bucket) (US)</a></td></tr>
 
 				<?php
 				if ($get_object_list)
@@ -371,6 +383,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 			echo '<h2><a name="store_remote_file">Store Remote File (US)</a></h2>';
 			echo '<pre>'; print_r($store_remote_file); echo '</pre>';
+
+			echo '<h2><a name="copy_object">Copy/Duplicate Object (US)</a></h2>';
+			echo '<pre>'; print_r($copy_object); echo '</pre>';
+
+			echo '<h2><a name="move_object">Move/Rename Object (US)</a></h2>';
+			echo '<pre>'; print_r($move_object); echo '</pre>';
 
 			echo '<h2><a name="list_objects">List Objects (Get Bucket) (US)</a></h2>';
 			echo '<pre>'; print_r($list); echo '</pre>';

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.03
+ * @version 2008.07.05
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -122,6 +122,7 @@ class AmazonS3 extends TarzanCore
 			$method = null;
 			$prefix = null;
 			$verb = null;
+			$returnCurlHandle = null;
 
 			// Break the array into individual variables, while storing the original.
 			$_opt = $opt;
@@ -220,6 +221,13 @@ class AmazonS3 extends TarzanCore
 				$acl = 'x-amz-acl:' . $acl . "\n";
 			}
 
+			// Do we have COPY settings?
+			if ($method == 'copy_object')
+			{
+				$acl .= 'x-amz-copy-source:/' . $sourceBucket . '/' . $sourceObject . "\n";
+				$req->addHeader('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
+			}
+
 			// Add a body if we're creating
 			if ($method == 'create_object' || $method == 'create_bucket')
 			{
@@ -246,6 +254,12 @@ class AmazonS3 extends TarzanCore
 
 			// Pass the developer key and signature
 			$req->addHeader("Authorization", "AWS " . $this->key . ":" . $signature);
+
+			// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
+			if ($returnCurlHandle)
+			{
+				return $req->prepRequest();
+			}
 
 			// Send!
 			$req->sendRequest();
@@ -287,11 +301,12 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to create.
 	 * @param string $locale (Optional) Sets the preferred geographical location for the bucket. Accepts S3_LOCATION_US or S3_LOCATION_EU. Defaults to S3_LOCATION_US.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
 	 */
-	public function create_bucket($bucket, $locale = null)
+	public function create_bucket($bucket, $locale = null, $returnCurlHandle = null)
 	{
 		// Defaults
 		$body = null;
@@ -313,7 +328,8 @@ class AmazonS3 extends TarzanCore
 			'verb' => HTTP_PUT,
 			'method' => 'create_bucket',
 			'body' => $body,
-			'contentType' => $contentType
+			'contentType' => $contentType,
+			'returnCurlHandle' => $returnCurlHandle
 		));
 	}
 
@@ -338,15 +354,17 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to check.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
 	 */
-	public function get_bucket_locale($bucket)
+	public function get_bucket_locale($bucket, $returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_bucket_locale';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -359,15 +377,17 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 */
-	public function head_bucket($bucket)
+	public function head_bucket($bucket, $returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt = array();
 		$opt['verb'] = HTTP_HEAD;
 		$opt['method'] = 'head_bucket';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -396,10 +416,11 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to delete.
 	 * @param boolean $force (Optional) Whether to force-delete the bucket and all of its contents. Defaults to false.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
 	 */
-	public function delete_bucket($bucket, $force = false)
+	public function delete_bucket($bucket, $force = false, $returnCurlHandle = null)
 	{
 		// Set default value
 		$success = true;
@@ -417,16 +438,13 @@ class AmazonS3 extends TarzanCore
 			$opt = array();
 			$opt['verb'] = HTTP_DELETE;
 			$opt['method'] = 'delete_bucket';
+			$opt['returnCurlHandle'] = $returnCurlHandle;
 
 			// Authenticate to S3
 			return $this->authenticate($bucket, $opt);
 		}
 
-		// Otherwise return false.
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	/**
@@ -490,13 +508,15 @@ class AmazonS3 extends TarzanCore
 	 * Gets a list of all of the buckets on the S3 account.
 	 * 
 	 * @access public
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 */
-	public function list_buckets()
+	public function list_buckets($returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'list_buckets';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate('', $opt);
@@ -573,10 +593,12 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string body - (Required) The data to be stored in the object.</li>
 	 *   <li>string contentType - (Required) The type of content that is being sent in the body.</li>
 	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
+	 * @todo Add support for custom metadata.
 	 */
 	public function create_object($bucket, $opt = null)
 	{
@@ -597,16 +619,18 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) The filename for the content.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
 	 */
-	public function get_object($bucket, $filename)
+	public function get_object($bucket, $filename, $returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object';
 		$opt['filename'] = rawurlencode($filename);
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -620,16 +644,18 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket check.
 	 * @param string $filename (Required) The filename for the content.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 */
-	public function head_object($bucket, $filename)
+	public function head_object($bucket, $filename, $returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt = array();
 		$opt['verb'] = HTTP_HEAD;
 		$opt['method'] = 'head_object';
 		$opt['filename'] = rawurlencode($filename);
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -660,10 +686,12 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) Either the filename for the content, or a PCRE regular expression that matches the files you want to delete.
 	 * @param boolean $is_pcre (Optional) Tells the method whether you've passed a PCRE regular expression to the $filename parameter.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if a single file deletion, a boolean value determining the success of deleting requested files.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
+	 * @todo Enhance with MultiCURL
 	 */
-	public function delete_object($bucket, $filename, $is_pcre = false)
+	public function delete_object($bucket, $filename, $is_pcre = false, $returnCurlHandle = null)
 	{
 		if ($is_pcre)
 		{
@@ -698,6 +726,7 @@ class AmazonS3 extends TarzanCore
 			$opt['verb'] = HTTP_DELETE;
 			$opt['method'] = 'delete_object';
 			$opt['filename'] = rawurlencode($filename);
+			$opt['returnCurlHandle'] = $returnCurlHandle;
 
 			// Authenticate to S3
 			return $this->authenticate($bucket, $opt);
@@ -732,6 +761,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string marker - (Optional) It restricts the response to only contain results that occur alphabetically after the value of marker.</li>
 	 *   <li>string maxKeys - (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.</li>
 	 *   <li>string delimiter - (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/gsg/ListKeys.html
@@ -836,12 +866,85 @@ class AmazonS3 extends TarzanCore
 	 * Copies an object to a new location.
 	 * 
 	 * @access public
-	 * @todo Implement this method.
+	 * @param string $source_bucket (Required) The name of the bucket that contains the source file.
+	 * @param string $source_filename (Required) The source filename that you want to copy.
+	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
+	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
+	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders
+	 * @todo Add support for custom metadata.
 	 */
-	public function copy_object()
+	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		
+		// Add this to our request
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'copy_object';
+		$opt['sourceBucket'] = $source_bucket;
+		$opt['sourceObject'] = $source_filename;
+		$opt['destinationBucket'] = $dest_bucket;
+		$opt['destinationObject'] = $dest_filename;
+		$opt['metadataDirective'] = 'COPY';
+		$opt['acl'] = $acl;
+		$opt['filename'] = rawurlencode($dest_filename);
+
+		// Authenticate to S3
+		return $this->authenticate($dest_bucket, $opt);
+	}
+
+	/**
+	 * Duplicate Object
+	 * 
+	 * Identical to copy_object(), except that it only copies within a single bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket that contains the file.
+	 * @param string $source_filename (Required) The source filename that you want to copy.
+	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
+	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @todo Add support for custom metadata.
+	 */
+	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
+	{
+		return $this->copy_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
+	}
+
+	/**
+	 * Move Object
+	 * 
+	 * Moves an object to a new location.
+	 * 
+	 * @access public
+	 * @param string $source_bucket (Required) The name of the bucket that contains the source file.
+	 * @param string $source_filename (Required) The source filename that you want to copy.
+	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
+	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
+	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @todo Add support for custom metadata.
+	 */
+	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
+	{
+		$copy = $this->copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl);
+		$del = $this->delete_object($source_bucket, $source_filename);
+		return $copy;
+	}
+
+	/**
+	 * Rename Object
+	 * 
+	 * Identical to move_object(), except that it only moves within a single bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket that contains the file.
+	 * @param string $source_filename (Required) The source filename that you want to copy.
+	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
+	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @todo Add support for custom metadata.
+	 */
+	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
+	{
+		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
 	}
 
 
@@ -859,7 +962,7 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The name that you want to give to the file.
  	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. Defaults to S3_ACL_PUBLIC.</li>
+	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PUBLIC.</li>
 	 *   <li>string overwrite - (Optional) If set to true, checks to see if the file exists and will overwrite the old data with new data. Defaults to false.</li>
 	 *   <li>string cname - (Optional) If you're serving the file from a different hostname from s3.amazonaws.com (e.g. such as with a custom CNAME setting), return the URL with this hostname. Defaults to null.</li>
 	 * </ul>
