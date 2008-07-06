@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package TarzanHTTPRequest
- * @version 2008.07.03
+ * @version 2008.07.05
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -231,8 +231,15 @@ class TarzanHTTPRequest
 	 * 
 	 * @return void
 	 */
-	public function processResponse()
+	public function processResponse($curl_handle = null, $response = null)
 	{
+		// Accept a custom one if it's passed.
+		if ($curl_handle && $response)
+		{
+			$this->curl_handle = $curl_handle;
+			$this->response = $response;
+		}
+
 		// Determine what's what.
 		$header_size = curl_getinfo($this->curl_handle, CURLINFO_HEADER_SIZE);
 		$this->response_headers = substr($this->response, 0, $header_size);
@@ -258,6 +265,11 @@ class TarzanHTTPRequest
 		$this->response_headers = $header_assoc;
 		$this->response_headers['_info'] = $this->response_info;
 		$this->response_headers['_info']['method'] = $this->method;
+
+		if ($curl_handle && $response)
+		{
+			return new TarzanHTTPResponse($this->response_headers, $this->response_body, $this->response_code);
+		}
 	}
 
 	/**

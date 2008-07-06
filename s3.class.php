@@ -266,15 +266,14 @@ class AmazonS3 extends TarzanCore
 
 			// Prepare the response.
 			$headers = $req->getResponseHeader();
-			$headers['x-amz-httpstatus'] = $req->getResponseCode();
-			$headers['x-amz-redirects'] = $redirects;
-			$headers['x-amz-requesturl'] = $this->request_url;
-			$headers['x-amz-stringtosign'] = $stringToSign;
+			$headers['x-tarzan-redirects'] = $redirects;
+			$headers['x-tarzan-requesturl'] = $this->request_url;
+			$headers['x-tarzan-stringtosign'] = $stringToSign;
 			$data = new TarzanHTTPResponse($headers, $req->getResponseBody(), $req->getResponseCode());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html
-			if ((int) $headers['x-amz-httpstatus'] == 307) // Temporary redirect to new endpoint.
+			if ((int) $req->getResponseCode() == 307) // Temporary redirect to new endpoint.
 			{
 				$redirects++;
 				$data = $this->authenticate($bucket, 
@@ -453,12 +452,52 @@ class AmazonS3 extends TarzanCore
 	 * Copies the contents of a bucket into a new bucket.
 	 * 
 	 * @access public
-	 * @todo Implement this method.
+	 * @todo Weird bug. Copies 213 files from my test bucket out of 408. Hmmm...
+	 * @todo Move the curl_multi_* calls into a TarzanHTTPRequest method.
+	 * @see http://developer.amazonwebservices.com/connect/thread.jspa?messageID=94413&#94413
 	 */
-	public function copy_bucket()
-	{
-		
-	}
+	// public function copy_bucket($source_bucket, $dest_bucket)
+	// {
+	// 	$dest = $this->create_bucket($dest_bucket);
+	// 
+	// 	if ($dest->isOK())
+	// 	{
+	// 		$list = $this->get_object_list($source_bucket);
+	// 		$multi_handle = curl_multi_init();
+	// 		$handles = array();
+	// 		$count = 0;
+	// 
+	// 		foreach ($list as $item)
+	// 		{
+	// 			$handles[$count] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, S3_ACL_PRIVATE, true);
+	// 			curl_multi_add_handle($multi_handle, $handles[$count]);
+	// 			$count++;
+	// 		}
+	// 
+	// 		// Execute
+	// 		do
+	// 		{
+	// 			$mrc = curl_multi_exec($multi_handle, $active);
+	// 		}
+	// 		while ($mrc == CURLM_CALL_MULTI_PERFORM  || $active);
+	// 
+	// 		// Retrieve each handle response
+	// 		foreach ($handles as $handle)
+	// 		{
+	// 			if (curl_errno($handle) == CURLE_OK)
+	// 			{
+	// 				$HTTPRequest = new TarzanHTTPRequest(null);
+	// 				$handles_post[] = $HTTPRequest->processResponse($handle, curl_multi_getcontent($handle));
+	// 			}
+	// 			else
+	// 			{
+	// 				echo "Err>>> ".curl_error($handle)."\n";
+	// 			}
+	// 		}
+	// 
+	// 		return $handles_post;
+	// 	}
+	// }
 
 	/**
 	 * Get Bucket Size
@@ -871,12 +910,13 @@ class AmazonS3 extends TarzanCore
 	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders
 	 * @todo Add support for custom metadata.
 	 */
-	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
+	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
 	{
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
@@ -888,6 +928,7 @@ class AmazonS3 extends TarzanCore
 		$opt['metadataDirective'] = 'COPY';
 		$opt['acl'] = $acl;
 		$opt['filename'] = rawurlencode($dest_filename);
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($dest_bucket, $opt);

@@ -260,10 +260,9 @@ class TarzanCore
 
 		// Prepare the response.
 		$headers = $request->getResponseHeader();
-		$headers['x-amz-requesturl'] = $request_url;
-		$headers['x-amz-httpstatus'] = $request->getResponseCode();
-		$headers['x-amz-stringtosign'] = $sign_query;
-		if ($message) $headers['x-amz-body'] = $message;
+		$headers['x-tarzan-requesturl'] = $request_url;
+		$headers['x-tarzan-stringtosign'] = $sign_query;
+		if ($message) $headers['x-tarzan-body'] = $message;
 		$data = new TarzanHTTPResponse($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
