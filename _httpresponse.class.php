@@ -52,7 +52,7 @@ class TarzanHTTPResponse
 		$this->body = $body;
 		$this->status = $status;
 
-		if (TarzanUtilities::ready($body))
+		if (isset($body))
 		{
 			// If the response is XML data, parse it.
 			if (substr(ltrim($body), 0, 5) == '<?xml')
