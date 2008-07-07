@@ -182,7 +182,7 @@ class TarzanHTTPRequest
 		curl_setopt($this->curl_handle, CURLOPT_HEADER, true);
 		curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->curl_handle, CURLOPT_TIMEOUT, 120);
-		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
+		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($this->curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($this->curl_handle, CURLOPT_REFERER, $this->request_url);
 		curl_setopt($this->curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);

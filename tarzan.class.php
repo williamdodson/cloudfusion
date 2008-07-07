@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package TarzanCore
- * @version 2008.07.03
+ * @version 2008.07.07
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -129,6 +129,21 @@ class TarzanCore
 	 */
 	var $api_version = null;
 
+	/**
+	 * @var The default class to use for Utilities.
+	 */
+	var $utilities_class = 'TarzanUtilities';
+
+	/**
+	 * @var The default class to use for HTTP Requests.
+	 */
+	var $request_class = 'TarzanHTTPRequest';
+
+	/**
+	 * @var The default class to use for HTTP Responses.
+	 */
+	var $response_class = 'TarzanHTTPResponse';
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -148,7 +163,7 @@ class TarzanCore
 	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
 	{
 		// Instantiate the utilities class.
-		$this->util = new TarzanUtilities();
+		$this->util = new $this->utilities_class();
 
 		// Determine the current service.
 		$this->service = get_class($this);
@@ -200,6 +215,50 @@ class TarzanCore
 
 
 	/*%******************************************************************************************%*/
+	// SET CUSTOM CLASSES
+
+	/**
+	 * Set Utilities Class
+	 * 
+	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 
+	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * @return void
+	 */
+	function set_utilities_class($class = 'TarzanUtilities')
+	{
+		$this->utilities_class = $class;
+		$this->util = new $this->utilities_class();
+	}
+
+	/**
+	 * Set Request Class
+	 * 
+	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 
+	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * @return void
+	 */
+	function set_request_class($class = 'TarzanHTTPRequest')
+	{
+		$this->request_class = $class;
+	}
+
+	/**
+	 * Set Response Class
+	 * 
+	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 
+	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * @return void
+	 */
+	function set_response_class($class = 'TarzanHTTPResponse')
+	{
+		$this->response_class = $class;
+	}
+
+
+	/*%******************************************************************************************%*/
 	// AUTHENTICATION
 
 	/**
@@ -245,7 +304,7 @@ class TarzanCore
 
 		// Compose the request.
 		$request_url = $queue_url . '?' . $querystring;
-		$request =& new TarzanHTTPRequest($request_url);
+		$request =& new $this->request_class($request_url);
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
@@ -269,7 +328,7 @@ class TarzanCore
 		$headers['x-tarzan-requesturl'] = $request_url;
 		$headers['x-tarzan-stringtosign'] = $sign_query;
 		if ($message) $headers['x-tarzan-body'] = $message;
-		$data = new TarzanHTTPResponse($headers, $request->getResponseBody(), $request->getResponseCode());
+		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
 		return $data;

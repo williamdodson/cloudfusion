@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.05
+ * @version 2008.07.07
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -190,7 +190,7 @@ class AmazonS3 extends TarzanCore
 				$this->request_url = 'http://' . $hostname . $request;
 			}
 
-			$req =& new TarzanHTTPRequest($this->request_url);
+			$req =& new $this->request_class($this->request_url);
 
 			// Do we have a verb?
 			if (isset($verb) && !empty($verb))
@@ -269,7 +269,7 @@ class AmazonS3 extends TarzanCore
 			$headers['x-tarzan-redirects'] = $redirects;
 			$headers['x-tarzan-requesturl'] = $this->request_url;
 			$headers['x-tarzan-stringtosign'] = $stringToSign;
-			$data = new TarzanHTTPResponse($headers, $req->getResponseBody(), $req->getResponseCode());
+			$data = new $this->response_class($headers, $req->getResponseBody(), $req->getResponseCode());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html
@@ -469,7 +469,8 @@ class AmazonS3 extends TarzanCore
 				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, S3_ACL_PRIVATE, true);
 			}
 
-			return TarzanHTTPRequest::sendMultiRequest($handles);
+			$request = new $this->request_class(null);
+			return $request->sendMultiRequest($handles);
 		}
 	}
 
@@ -743,7 +744,8 @@ class AmazonS3 extends TarzanCore
 				$handles[] = $this->delete_object($bucket, $item, true);
 			}
 
-			return TarzanHTTPRequest::sendMultiRequest($handles);				
+			$request = new $this->request_class(null);
+			return $request->sendMultiRequest($handles);
 		}
 
 		return false;
@@ -991,7 +993,7 @@ class AmazonS3 extends TarzanCore
 		if (!$object->isOK() || $overwrite)
 		{
 			// Fetch the file
-			$file = new TarzanHTTPRequest($remote_file);
+			$file = new $this->request_class($remote_file);
 			$file->sendRequest();
 
 			// Store it in S3
@@ -1007,7 +1009,7 @@ class AmazonS3 extends TarzanCore
 		// Was the request successful?
 		if ($object->isOK())
 		{
-			$url = $object->header['x-amz-requesturl'];
+			$url = $object->header['x-tarzan-requesturl'];
 
 			// If we have a CNAME value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.
 			if ($cname)

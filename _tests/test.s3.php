@@ -125,7 +125,7 @@ $if_object_exists = $s3->if_object_exists($bname, $fname);
 $get = $s3->get_object($bname, $fname);
 
 // Get the file publicly, without Amazon. Tests ACL settings.
-$get_public = new TarzanHTTPRequest($get->header['x-amz-requesturl']);
+$get_public = new TarzanHTTPRequest($get->header['x-tarzan-requesturl']);
 $get_public->sendRequest();
 $get_public = new TarzanHTTPResponse($get_public->getResponseHeader(), null, $get_public->getResponseCode());
 
@@ -136,7 +136,7 @@ $delf = $s3->delete_object($bname, $fname);
 $delete_all_objects = $s3->delete_all_objects($bname);
 
 // Delete the bucket.
-$delb = $s3->delete_bucket($bname, true);
+$delb = $s3->delete_bucket($bname);
 
 
 /**
@@ -166,7 +166,7 @@ $list_eu = $s3->list_objects($bname_eu);
 
 // Get the headers for a file without downloading the entire file.
 $head_eu = $s3->head_object($bname_eu, $fname_eu);
-//$head = new TarzanHTTPResponse(array('x-amz-httpstatus' => '0'), '');
+//$head = new TarzanHTTPResponse(array('x-tarzan-httpstatus' => '0'), '');
 
 // Get the file.
 $get_eu = $s3->get_object($bname_eu, $fname_eu);
@@ -320,7 +320,16 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				<?php get_result($delf); ?>
 				<td><a href="#delete_object">Delete Object (US)</a></td></tr>
 
-				<?php get_result($delete_all_objects); ?>
+				<?php
+				if ($delete_all_objects)
+				{
+					echo '<tr class="pass"><td class="status">&#10004;</td>';
+				}
+				else
+				{
+					echo '<tr class="fail"><td class="status">&#10008;</td>';
+				}
+				?>
 				<td><a href="#delete_all_objects">Delete ALL Objects (US)</a></td></tr>
 
 				<?php get_result($delb); ?>

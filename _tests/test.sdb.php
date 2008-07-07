@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package UnitTests
  * @subpackage SDB
- * @version 2008.07.01
+ * @version 2008.07.07
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -34,7 +34,7 @@ error_reporting(E_ALL);
  */
 function get_result($obj)
 {
-	if ((int) $obj->header['x-amz-httpstatus'] == 200)
+	if ((int) $obj->status == 200)
 	{
 		echo '<tr class="pass"><td class="status">&#10004;</td>';
 	}

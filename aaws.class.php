@@ -6,7 +6,7 @@
  *
  * @category Tarzan
  * @package AAWS
- * @version 2008.07.03
+ * @version 2008.07.07
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -122,14 +122,14 @@ class AmazonAAWS extends TarzanCore
 
 		// Send the request to the service.
 		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
-		$request =& new TarzanHTTPRequest($request_url);
+		$request =& new $this->request_class($request_url);
 		$request->sendRequest();
 
 		// Prepare the response.
 		$headers = $request->getResponseHeader();
-		$headers['x-amz-requesturl'] = $request_url;
-		$headers['x-amz-httpstatus'] = $request->getResponseCode();
-		$data = new TarzanHTTPResponse($headers, $request->getResponseBody(), $request->getResponseCode());
+		$headers['x-tarzan-requesturl'] = $request_url;
+		$headers['x-tarzan-httpstatus'] = $request->getResponseCode();
+		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
 		return $data;

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SDB
- * @version 2008.07.06
+ * @version 2008.07.07
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -301,7 +301,8 @@ class AmazonSDB extends TarzanCore
 				$handles[] = $this->get_attributes($domain_name, $item, null, true);
 			}
 
-			return TarzanHTTPRequest::sendMultiRequest($handles);
+			$request = new $this->request_class(null);
+			return $request->sendMultiRequest($handles);
 		}
 
 		return $query;
