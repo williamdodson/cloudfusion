@@ -123,7 +123,6 @@ class AmazonAAWS extends TarzanCore
 		// Send the request to the service.
 		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
 		$request =& new TarzanHTTPRequest($request_url);
-		$request->addHeader('User-Agent', TARZAN_USERAGENT);
 		$request->sendRequest();
 
 		// Prepare the response.

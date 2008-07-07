@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SDB
- * @version 2008.04.18
+ * @version 2008.07.06
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -56,13 +56,15 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to create.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
 	 */
-	public function create_domain($domain_name)
+	public function create_domain($domain_name, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		return $this->authenticate('CreateDomain', $opt, SDB_DEFAULT_URL);
 	}
@@ -80,6 +82,7 @@ class AmazonSDB extends TarzanCore
 	 * <ul>
 	 *   <li>integer MaxNumberOfDomains - (Optional) The maximum number of domain names you want returned. The range is 1 to 100.</li>
 	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
@@ -99,13 +102,15 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to delete.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
 	 */
-	public function delete_domain($domain_name)
+	public function delete_domain($domain_name, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		return $this->authenticate('DeleteDomain', $opt, SDB_DEFAULT_URL);
 	}
@@ -121,18 +126,20 @@ class AmazonSDB extends TarzanCore
 	 * the Attribute.X.Name and Attribute.X.Value parameters.
 	 * 
 	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to create.
+	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value pairs.
 	 * @param boolean $replace (Optional) Whether to replace an existing $item_name with this one. Defaults to false.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
 	 */
-	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null)
+	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
 		$opt['ItemName'] = $item_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		$count = 0;
 		foreach ($keypairs as $k => $v)
@@ -159,17 +166,19 @@ class AmazonSDB extends TarzanCore
 	 * does not return an error as it cannot guarantee the item does not exist on other replicas.
 	 * 
 	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to create.
+	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param mixed $keys (Optional) The name of the key (attribute) in the key-value pair. Supports a string value (for single keys) or an indexed array (for multiple keys).
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
 	 */
-	public function get_attributes($domain_name, $item_name, $keys = null)
+	public function get_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
 		$opt['ItemName'] = $item_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		if ($keys)
 		{
@@ -203,14 +212,16 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to create.
 	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
 	 * @param mixed $keys (Optional) The name of the key(s) (attribute(s)) to delete from the item. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
 	 */
-	public function delete_attributes($domain_name, $item_name, $keys = null)
+	public function delete_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
 		$opt['ItemName'] = $item_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Do we have a key?
 		if ($keys)
@@ -262,23 +273,38 @@ class AmazonSDB extends TarzanCore
 	 * QueryExpression matches all items in the domain.
 	 * 
 	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to create.
+	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param array $opt Associative array of parameters which can have the following keys:
 	 * <ul>
 	 *   <li>integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.</li>
 	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
 	 * </ul>
 	 * @param string $expression (Optional) The SimpleDB query expression to use.
+	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
 	 */
-	public function query($domain_name, $opt = null, $expression = null)
+	public function query($domain_name, $opt = null, $expression = null, $follow = null)
 	{
 		$opt = array();
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;
 
-		return $this->authenticate('Query', $opt, SDB_DEFAULT_URL);
+		$query = $this->authenticate('Query', $opt, SDB_DEFAULT_URL);
+
+		if ($follow)
+		{
+			$handles = array();
+
+			foreach ($query->body->QueryResult->ItemName as $item)
+			{
+				$handles[] = $this->get_attributes($domain_name, $item, null, true);
+			}
+
+			return TarzanHTTPRequest::sendMultiRequest($handles);
+		}
+
+		return $query;
 	}
 }
 ?>

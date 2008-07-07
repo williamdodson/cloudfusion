@@ -255,6 +255,12 @@ class TarzanCore
 			$request->setBody($message);
 		}
 
+		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
+		if (isset($opt['returnCurlHandle']))
+		{
+			return $request->prepRequest();
+		}
+
 		// Send!
 		$request->sendRequest();
 
