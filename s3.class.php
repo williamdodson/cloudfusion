@@ -453,51 +453,25 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * @access public
 	 * @todo Weird bug. Copies 213 files from my test bucket out of 408. Hmmm...
-	 * @todo Move the curl_multi_* calls into a TarzanHTTPRequest method.
 	 * @see http://developer.amazonwebservices.com/connect/thread.jspa?messageID=94413&#94413
 	 */
-	// public function copy_bucket($source_bucket, $dest_bucket)
-	// {
-	// 	$dest = $this->create_bucket($dest_bucket);
-	// 
-	// 	if ($dest->isOK())
-	// 	{
-	// 		$list = $this->get_object_list($source_bucket);
-	// 		$multi_handle = curl_multi_init();
-	// 		$handles = array();
-	// 		$count = 0;
-	// 
-	// 		foreach ($list as $item)
-	// 		{
-	// 			$handles[$count] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, S3_ACL_PRIVATE, true);
-	// 			curl_multi_add_handle($multi_handle, $handles[$count]);
-	// 			$count++;
-	// 		}
-	// 
-	// 		// Execute
-	// 		do
-	// 		{
-	// 			$mrc = curl_multi_exec($multi_handle, $active);
-	// 		}
-	// 		while ($mrc == CURLM_CALL_MULTI_PERFORM  || $active);
-	// 
-	// 		// Retrieve each handle response
-	// 		foreach ($handles as $handle)
-	// 		{
-	// 			if (curl_errno($handle) == CURLE_OK)
-	// 			{
-	// 				$HTTPRequest = new TarzanHTTPRequest(null);
-	// 				$handles_post[] = $HTTPRequest->processResponse($handle, curl_multi_getcontent($handle));
-	// 			}
-	// 			else
-	// 			{
-	// 				echo "Err>>> ".curl_error($handle)."\n";
-	// 			}
-	// 		}
-	// 
-	// 		return $handles_post;
-	// 	}
-	// }
+	public function copy_bucket($source_bucket, $dest_bucket)
+	{
+		$dest = $this->create_bucket($dest_bucket);
+	
+		if ($dest->isOK())
+		{
+			$list = $this->get_object_list($source_bucket);
+			$handles = array();
+	
+			foreach ($list as $item)
+			{
+				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, S3_ACL_PRIVATE, true);
+			}
+
+			return TarzanHTTPRequest::sendMultiRequest($handles);
+		}
+	}
 
 	/**
 	 * Get Bucket Size
@@ -723,53 +697,22 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
-	 * @param string $filename (Required) Either the filename for the content, or a PCRE regular expression that matches the files you want to delete.
-	 * @param boolean $is_pcre (Optional) Tells the method whether you've passed a PCRE regular expression to the $filename parameter.
+	 * @param string $filename (Required) The filename you want to delete.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if a single file deletion, a boolean value determining the success of deleting requested files.
+	 * @return TarzanHTTPResponse Standard TarzanHTTPResponse.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
-	 * @todo Enhance with MultiCURL
 	 */
-	public function delete_object($bucket, $filename, $is_pcre = false, $returnCurlHandle = null)
+	public function delete_object($bucket, $filename, $returnCurlHandle = null)
 	{
-		if ($is_pcre)
-		{
-			// Set default value
-			$success = true;
+		// Add this to our request
+		$opt = array();
+		$opt['verb'] = HTTP_DELETE;
+		$opt['method'] = 'delete_object';
+		$opt['filename'] = rawurlencode($filename);
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-			// Collect all matches
-			$list = $this->get_object_list($bucket, array('pcre', $filename));
-
-			// As long as we have at least one match...
-			if (count($list) > 0)
-			{
-				// Go through all of the items and delete them.
-				foreach ($list as $item)
-				{
-					$del = $this->delete_object($bucket, $item);
-
-					// Do we have any failures?
-					if (!$del->isOK(204))
-					{
-						$success = false;
-					}
-				}
-			}
-
-			return $success;
-		}
-		else
-		{
-			// Add this to our request
-			$opt = array();
-			$opt['verb'] = HTTP_DELETE;
-			$opt['method'] = 'delete_object';
-			$opt['filename'] = rawurlencode($filename);
-			$opt['returnCurlHandle'] = $returnCurlHandle;
-
-			// Authenticate to S3
-			return $this->authenticate($bucket, $opt);
-		}
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
 	}
 
 	/**
@@ -779,12 +722,31 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $pcre (Optional) PCRE regular expression to match filenames by. Defaults to S3_PCRE_ALL.
 	 * @return boolean Determines the success of deleting all files.
 	 * @see delete_object
 	 */
-	public function delete_all_objects($bucket)
+	public function delete_all_objects($bucket, $pcre = S3_PCRE_ALL)
 	{
-		return $this->delete_object($bucket, S3_PCRE_ALL, true);
+		// Collect all matches
+		$list = $this->get_object_list($bucket, array('pcre', $pcre));
+
+		// As long as we have at least one match...
+		if (count($list) > 0)
+		{
+			// Hold CURL handles
+			$handles = array();
+
+			// Go through all of the items and delete them.
+			foreach ($list as $item)
+			{
+				$handles[] = $this->delete_object($bucket, $item, true);
+			}
+
+			return TarzanHTTPRequest::sendMultiRequest($handles);				
+		}
+
+		return false;
 	}
 
 	/**

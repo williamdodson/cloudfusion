@@ -154,7 +154,7 @@ class TarzanHTTPRequest
 
 
 	/*%******************************************************************************************%*/
-	// SEND REQUEST
+	// PREPARE, SEND, AND PROCESS REQUEST
 
 	/**
 	 * Prepare Request
@@ -170,12 +170,19 @@ class TarzanHTTPRequest
 
 		// Set default options.
  		curl_setopt($this->curl_handle, CURLOPT_URL, $this->request_url);
+ 		curl_setopt($this->curl_handle, CURLOPT_FILETIME, true);
+ 		curl_setopt($this->curl_handle, CURLOPT_FRESH_CONNECT, true);
+ 		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+ 		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYHOST, false);
+ 		curl_setopt($this->curl_handle, CURLOPT_VERBOSE, true);
+ 		curl_setopt($this->curl_handle, CURLOPT_MAXCONNECTS, 50);
+ 		curl_setopt($this->curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
 		curl_setopt($this->curl_handle, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($this->curl_handle, CURLOPT_MAXREDIRS, 5);
 		curl_setopt($this->curl_handle, CURLOPT_HEADER, true);
 		curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->curl_handle, CURLOPT_TIMEOUT, 120);
-		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
+		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 0);
 		curl_setopt($this->curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($this->curl_handle, CURLOPT_REFERER, $this->request_url);
 		curl_setopt($this->curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);
@@ -287,6 +294,50 @@ class TarzanHTTPRequest
 
 		curl_close($this->curl_handle);
 		return $this->response;
+	}
+
+	/**
+	 * Send Multi Request
+	 * 
+	 * Sends CURL requests with MultiCURL.
+	 * 
+	 * @param array $handles (Required) An array of CURL handles to process simultaneously.
+	 */
+	public function sendMultiRequest($handles)
+	{
+		// Initialize MultiCURL
+		$multi_handle = curl_multi_init();
+
+		// Loop through each of the CURL handles and add them to the MultiCURL request.
+		foreach ($handles as $handle)
+		{
+			curl_multi_add_handle($multi_handle, $handle);
+		}
+
+		$count = 0;
+
+		// Execute
+		do
+		{
+			$status = curl_multi_exec($multi_handle, $active);
+		}
+		while ($status == CURLM_CALL_MULTI_PERFORM  || $active);
+
+		// Retrieve each handle response
+		foreach ($handles as $handle)
+		{
+			if (curl_errno($handle) == CURLE_OK)
+			{
+				$HTTPRequest = new TarzanHTTPRequest(null);
+				$handles_post[] = $HTTPRequest->processResponse($handle, curl_multi_getcontent($handle));
+			}
+			else
+			{
+				trigger_error(curl_error($handle));
+			}
+		}
+
+		return $handles_post;
 	}
 
 
