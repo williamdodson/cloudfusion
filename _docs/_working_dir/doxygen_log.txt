@@ -1,0 +1,597 @@
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:7: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/config-sample.inc.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:6: Warning: missing argument after \category.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:25: Warning: documented function `The URL being TarzanHTTPRequest::requested' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:30: Warning: documented function `The headers being sent in the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:35: Warning: documented function `The body being sent in the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:40: Warning: documented function `The response returned by the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:45: Warning: documented function `The headers returned by the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:50: Warning: documented function `The body returned by the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:55: Warning: documented function `The HTTP status code returned by the TarzanHTTPRequest::request' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:60: Warning: documented function `Additional response TarzanHTTPRequest::data' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:65: Warning: documented function `The handle for the CURL TarzanHTTPRequest::object' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:70: Warning: documented function `The method by which the request is being TarzanHTTPRequest::made' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:65: Warning: documented function `The request AmazonS3::URL' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:98: Warning: documented function `The Amazon API TarzanCore::Key' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:103: Warning: documented function `The Amazon API Secret TarzanCore::Key' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:108: Warning: documented function `The Amazon Account ID sans TarzanCore::hyphens' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:113: Warning: documented function `The Amazon Associates TarzanCore::ID' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:118: Warning: documented function `Handle for the utility TarzanCore::functions' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:123: Warning: documented function `An identifier for the current TarzanCore::service' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:128: Warning: documented function `API TarzanCore::version' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:133: Warning: documented function `The default class to use for TarzanCore::Utilities' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:138: Warning: documented function `The default class to use for HTTP TarzanCore::Requests' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:143: Warning: documented function `The default class to use for HTTP TarzanCore::Responses' was not declared or defined.
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:80: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:76: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::authenticate($action,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:76: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::authenticate($action,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:76: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::authenticate($action,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:76: Warning: The following parameters of AmazonAAWS::authenticate($action,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'action'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:149: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:142: Warning: argument 'integer' of command @param is not found in the argument list of AmazonAAWS::browse_node_lookup($browse_node_id,$response_group='BrowseNodeInfo',$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:142: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::browse_node_lookup($browse_node_id,$response_group='BrowseNodeInfo',$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:142: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::browse_node_lookup($browse_node_id,$response_group='BrowseNodeInfo',$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:142: Warning: The following parameters of AmazonAAWS::browse_node_lookup($browse_node_id,$response_group='BrowseNodeInfo',$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'browse_node_id'
+  parameter 'response_group'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:185: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: argument 'integer' of command @param is not found in the argument list of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: argument 'integer' of command @param is not found in the argument list of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: argument 'integer' of command @param is not found in the argument list of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:170: Warning: The following parameters of AmazonAAWS::cart_add($offer_listing_id,$cart_id,$hmac,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'offer_listing_id'
+  parameter 'cart_id'
+  parameter 'hmac'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:271: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:263: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::customer_content_lookup($customer_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:263: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::customer_content_lookup($customer_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:263: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::customer_content_lookup($customer_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:263: Warning: The following parameters of AmazonAAWS::customer_content_lookup($customer_id,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'customer_id'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:305: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:298: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::customer_content_search($email_name,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:298: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::customer_content_search($email_name,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:298: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::customer_content_search($email_name,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:298: Warning: The following parameters of AmazonAAWS::customer_content_search($email_name,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'email_name'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:354: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:347: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::help($opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:347: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::help($opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:347: Warning: The following parameters of AmazonAAWS::help($opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:381: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:375: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::item_lookup($item_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:375: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::item_lookup($item_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:375: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::item_lookup($item_id,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:375: Warning: The following parameters of AmazonAAWS::item_lookup($item_id,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'item_id'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:409: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:401: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::item_search($keywords,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:401: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::item_search($keywords,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:401: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::item_search($keywords,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:401: Warning: The following parameters of AmazonAAWS::item_search($keywords,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'keywords'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:444: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:439: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::list_lookup($list_id,$list_type,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:439: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::list_lookup($list_id,$list_type,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:439: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::list_lookup($list_id,$list_type,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:439: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::list_lookup($list_id,$list_type,$opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:439: Warning: The following parameters of AmazonAAWS::list_lookup($list_id,$list_type,$opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'list_id'
+  parameter 'list_type'
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:475: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:466: Warning: argument 'array' of command @param is not found in the argument list of AmazonAAWS::list_search($opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:466: Warning: argument 'string' of command @param is not found in the argument list of AmazonAAWS::list_search($opt=null,$locale=AAWS_LOCALE_US)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/aaws.class.php:466: Warning: The following parameters of AmazonAAWS::list_search($opt=null,$locale=AAWS_LOCALE_US) are not documented:
+  parameter 'opt'
+  parameter 'locale'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:424: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:406: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::authorize_security_group_ingress($group_name,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:406: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::authorize_security_group_ingress($group_name,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:406: Warning: The following parameters of AmazonEC2::authorize_security_group_ingress($group_name,$opt=null) are not documented:
+  parameter 'group_name'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:235: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:230: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::confirm_product_instance($product_code,$instance_id)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:230: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::confirm_product_instance($product_code,$instance_id)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:230: Warning: The following parameters of AmazonEC2::confirm_product_instance($product_code,$instance_id) are not documented:
+  parameter 'product_code'
+  parameter 'instance_id'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:346: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:341: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::create_key_pair($key_name)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:341: Warning: The following parameters of AmazonEC2::create_key_pair($key_name) are not documented:
+  parameter 'key_name'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:457: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:449: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::create_security_group($group_name,$group_description)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:449: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::create_security_group($group_name,$group_description)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:449: Warning: The following parameters of AmazonEC2::create_security_group($group_name,$group_description) are not documented:
+  parameter 'group_name'
+  parameter 'group_description'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:366: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:362: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::delete_key_pair($key_name)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:362: Warning: The following parameters of AmazonEC2::delete_key_pair($key_name) are not documented:
+  parameter 'key_name'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:484: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:479: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::delete_security_group($group_name)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:479: Warning: The following parameters of AmazonEC2::delete_security_group($group_name) are not documented:
+  parameter 'group_name'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:95: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:91: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::deregister_image($image_id)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:91: Warning: The following parameters of AmazonEC2::deregister_image($image_id) are not documented:
+  parameter 'image_id'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:54: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:50: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::describe_availability_zones($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:50: Warning: The following parameters of AmazonEC2::describe_availability_zones($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:161: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:157: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::describe_image_attribute($image_id)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:157: Warning: The following parameters of AmazonEC2::describe_image_attribute($image_id) are not documented:
+  parameter 'image_id'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:117: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:111: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::describe_images($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:111: Warning: The following parameters of AmazonEC2::describe_images($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:261: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:257: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::describe_instances($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:257: Warning: The following parameters of AmazonEC2::describe_instances($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:388: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:382: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::describe_key_pairs($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:382: Warning: The following parameters of AmazonEC2::describe_key_pairs($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:507: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:500: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::describe_security_groups($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:500: Warning: The following parameters of AmazonEC2::describe_security_groups($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:184: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:180: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::modify_image_attribute($image_id,$attribute,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:180: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::modify_image_attribute($image_id,$attribute,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:180: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::modify_image_attribute($image_id,$attribute,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:180: Warning: The following parameters of AmazonEC2::modify_image_attribute($image_id,$attribute,$opt=null) are not documented:
+  parameter 'image_id'
+  parameter 'attribute'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:137: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:133: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::register_image($image_location)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:133: Warning: The following parameters of AmazonEC2::register_image($image_location) are not documented:
+  parameter 'image_location'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:207: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:203: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::reset_image_attribute($image_id)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:203: Warning: The following parameters of AmazonEC2::reset_image_attribute($image_id) are not documented:
+  parameter 'image_id'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:540: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:521: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::revoke_security_group_ingress($group_name,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:521: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::revoke_security_group_ingress($group_name,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:521: Warning: The following parameters of AmazonEC2::revoke_security_group_ingress($group_name,$opt=null) are not documented:
+  parameter 'group_name'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:282: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:275: Warning: argument 'string' of command @param is not found in the argument list of AmazonEC2::run_instances($image_id,$min_count,$max_count,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:275: Warning: argument 'integer' of command @param is not found in the argument list of AmazonEC2::run_instances($image_id,$min_count,$max_count,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:275: Warning: argument 'integer' of command @param is not found in the argument list of AmazonEC2::run_instances($image_id,$min_count,$max_count,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:275: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::run_instances($image_id,$min_count,$max_count,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:275: Warning: The following parameters of AmazonEC2::run_instances($image_id,$min_count,$max_count,$opt=null) are not documented:
+  parameter 'image_id'
+  parameter 'min_count'
+  parameter 'max_count'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:322: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:317: Warning: argument 'array' of command @param is not found in the argument list of AmazonEC2::terminate_instances($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/ec2.class.php:317: Warning: The following parameters of AmazonEC2::terminate_instances($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:75: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:73: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::__construct($key=null,$secret_key=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:73: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::__construct($key=null,$secret_key=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:73: Warning: The following parameters of AmazonS3::__construct($key=null,$secret_key=null) are not documented:
+  parameter 'key'
+  parameter 'secret_key'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:95: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:91: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::authenticate($bucket,$opt=null,$location=null,$redirects=0)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:91: Warning: argument 'array' of command @param is not found in the argument list of AmazonS3::authenticate($bucket,$opt=null,$location=null,$redirects=0)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:91: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::authenticate($bucket,$opt=null,$location=null,$redirects=0)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:91: Warning: argument 'integer' of command @param is not found in the argument list of AmazonS3::authenticate($bucket,$opt=null,$location=null,$redirects=0)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:91: Warning: The following parameters of AmazonS3::authenticate($bucket,$opt=null,$location=null,$redirects=0) are not documented:
+  parameter 'bucket'
+  parameter 'opt'
+  parameter 'location'
+  parameter 'redirects'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:453: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:449: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_bucket($source_bucket,$dest_bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:449: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_bucket($source_bucket,$dest_bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:449: Warning: The following parameters of AmazonS3::copy_bucket($source_bucket,$dest_bucket) are not documented:
+  parameter 'source_bucket'
+  parameter 'dest_bucket'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:884: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:880: Warning: The following parameters of AmazonS3::copy_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE,$returnCurlHandle=null) are not documented:
+  parameter 'source_bucket'
+  parameter 'source_filename'
+  parameter 'dest_bucket'
+  parameter 'dest_filename'
+  parameter 'acl'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:299: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:294: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::create_bucket($bucket,$locale=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:294: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::create_bucket($bucket,$locale=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:294: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::create_bucket($bucket,$locale=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:294: Warning: The following parameters of AmazonS3::create_bucket($bucket,$locale=null,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'locale'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:615: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:608: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::create_object($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:608: Warning: argument 'array' of command @param is not found in the argument list of AmazonS3::create_object($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:608: Warning: The following parameters of AmazonS3::create_object($bucket,$opt=null) are not documented:
+  parameter 'bucket'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:737: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:733: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::delete_all_objects($bucket,$pcre=S3_PCRE_ALL)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:733: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::delete_all_objects($bucket,$pcre=S3_PCRE_ALL)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:733: Warning: The following parameters of AmazonS3::delete_all_objects($bucket,$pcre=S3_PCRE_ALL) are not documented:
+  parameter 'bucket'
+  parameter 'pcre'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:414: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:410: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::delete_bucket($bucket,$force=false,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:410: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::delete_bucket($bucket,$force=false,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:410: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::delete_bucket($bucket,$force=false,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:410: Warning: The following parameters of AmazonS3::delete_bucket($bucket,$force=false,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'force'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:712: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:708: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::delete_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:708: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::delete_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:708: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::delete_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:708: Warning: The following parameters of AmazonS3::delete_object($bucket,$filename,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'filename'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:919: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:915: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::duplicate_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:915: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::duplicate_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:915: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::duplicate_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:915: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::duplicate_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:915: Warning: The following parameters of AmazonS3::duplicate_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE) are not documented:
+  parameter 'bucket'
+  parameter 'source_filename'
+  parameter 'dest_filename'
+  parameter 'acl'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:339: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:517: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:513: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_bucket_filesize($bucket,$friendly_format=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:513: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::get_bucket_filesize($bucket,$friendly_format=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:513: Warning: The following parameters of AmazonS3::get_bucket_filesize($bucket,$friendly_format=false) are not documented:
+  parameter 'bucket'
+  parameter 'friendly_format'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:565: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:561: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_bucket_list($pcre=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:561: Warning: The following parameters of AmazonS3::get_bucket_list($pcre=null) are not documented:
+  parameter 'pcre'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:353: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:349: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_bucket_locale($bucket,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:349: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::get_bucket_locale($bucket,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:349: Warning: The following parameters of AmazonS3::get_bucket_locale($bucket,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:503: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:499: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_bucket_size($bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:499: Warning: The following parameters of AmazonS3::get_bucket_size($bucket) are not documented:
+  parameter 'bucket'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:646: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:642: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:642: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:642: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::get_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:642: Warning: The following parameters of AmazonS3::get_object($bucket,$filename,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'filename'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:801: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:797: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_object_filesize($bucket,$filename,$friendly_format=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:797: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_object_filesize($bucket,$filename,$friendly_format=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:797: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::get_object_filesize($bucket,$filename,$friendly_format=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:797: Warning: The following parameters of AmazonS3::get_object_filesize($bucket,$filename,$friendly_format=false) are not documented:
+  parameter 'bucket'
+  parameter 'filename'
+  parameter 'friendly_format'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:825: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:821: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::get_object_list($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:821: Warning: argument 'array' of command @param is not found in the argument list of AmazonS3::get_object_list($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:821: Warning: The following parameters of AmazonS3::get_object_list($bucket,$opt=null) are not documented:
+  parameter 'bucket'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:376: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:372: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::head_bucket($bucket,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:372: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::head_bucket($bucket,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:372: Warning: The following parameters of AmazonS3::head_bucket($bucket,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:671: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:667: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::head_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:667: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::head_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:667: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::head_object($bucket,$filename,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:667: Warning: The following parameters of AmazonS3::head_object($bucket,$filename,$returnCurlHandle=null) are not documented:
+  parameter 'bucket'
+  parameter 'filename'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:399: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:395: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::if_bucket_exists($bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:395: Warning: The following parameters of AmazonS3::if_bucket_exists($bucket) are not documented:
+  parameter 'bucket'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:696: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:692: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::if_object_exists($bucket,$filename)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:692: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::if_object_exists($bucket,$filename)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:692: Warning: The following parameters of AmazonS3::if_object_exists($bucket,$filename) are not documented:
+  parameter 'bucket'
+  parameter 'filename'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:545: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:541: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonS3::list_buckets($returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:541: Warning: The following parameters of AmazonS3::list_buckets($returnCurlHandle=null) are not documented:
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:772: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:768: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::list_objects($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:768: Warning: argument 'array' of command @param is not found in the argument list of AmazonS3::list_objects($bucket,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:768: Warning: The following parameters of AmazonS3::list_objects($bucket,$opt=null) are not documented:
+  parameter 'bucket'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:936: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:932: Warning: The following parameters of AmazonS3::move_object($source_bucket,$source_filename,$dest_bucket,$dest_filename,$acl=S3_ACL_PRIVATE) are not documented:
+  parameter 'source_bucket'
+  parameter 'source_filename'
+  parameter 'dest_bucket'
+  parameter 'dest_filename'
+  parameter 'acl'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:484: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:480: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_bucket($source_bucket,$dest_bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:480: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_bucket($source_bucket,$dest_bucket)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:480: Warning: The following parameters of AmazonS3::rename_bucket($source_bucket,$dest_bucket) are not documented:
+  parameter 'source_bucket'
+  parameter 'dest_bucket'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:956: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:952: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:952: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:952: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:952: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::rename_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:952: Warning: The following parameters of AmazonS3::rename_object($bucket,$source_filename,$dest_filename,$acl=S3_ACL_PRIVATE) are not documented:
+  parameter 'bucket'
+  parameter 'source_filename'
+  parameter 'dest_filename'
+  parameter 'acl'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:977: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:973: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::store_remote_file($remote_file,$bucket,$filename,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:973: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::store_remote_file($remote_file,$bucket,$filename,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:973: Warning: argument 'string' of command @param is not found in the argument list of AmazonS3::store_remote_file($remote_file,$bucket,$filename,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:973: Warning: argument 'array' of command @param is not found in the argument list of AmazonS3::store_remote_file($remote_file,$bucket,$filename,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/s3.class.php:973: Warning: The following parameters of AmazonS3::store_remote_file($remote_file,$bucket,$filename,$opt=null) are not documented:
+  parameter 'remote_file'
+  parameter 'bucket'
+  parameter 'filename'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:56: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:50: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::create_domain($domain_name,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:50: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::create_domain($domain_name,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:50: Warning: The following parameters of AmazonSDB::create_domain($domain_name,$returnCurlHandle=null) are not documented:
+  parameter 'domain_name'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:210: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:203: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::delete_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:203: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::delete_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:203: Warning: argument 'mixed' of command @param is not found in the argument list of AmazonSDB::delete_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:203: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::delete_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:203: Warning: The following parameters of AmazonSDB::delete_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null) are not documented:
+  parameter 'domain_name'
+  parameter 'item_name'
+  parameter 'keys'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:102: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:95: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::delete_domain($domain_name,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:95: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::delete_domain($domain_name,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:95: Warning: The following parameters of AmazonSDB::delete_domain($domain_name,$returnCurlHandle=null) are not documented:
+  parameter 'domain_name'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:167: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:160: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::get_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:160: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::get_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:160: Warning: argument 'mixed' of command @param is not found in the argument list of AmazonSDB::get_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:160: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::get_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:160: Warning: The following parameters of AmazonSDB::get_attributes($domain_name,$item_name,$keys=null,$returnCurlHandle=null) are not documented:
+  parameter 'domain_name'
+  parameter 'item_name'
+  parameter 'keys'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:79: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:72: Warning: argument 'array' of command @param is not found in the argument list of AmazonSDB::list_domains($opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:72: Warning: The following parameters of AmazonSDB::list_domains($opt=null) are not documented:
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:127: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: argument 'array' of command @param is not found in the argument list of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:122: Warning: The following parameters of AmazonSDB::put_attributes($domain_name,$item_name,$keypairs,$replace=null,$returnCurlHandle=null) are not documented:
+  parameter 'domain_name'
+  parameter 'item_name'
+  parameter 'keypairs'
+  parameter 'replace'
+  parameter 'returnCurlHandle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:274: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:268: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::query($domain_name,$opt=null,$expression=null,$follow=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:268: Warning: argument 'array' of command @param is not found in the argument list of AmazonSDB::query($domain_name,$opt=null,$expression=null,$follow=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:268: Warning: argument 'string' of command @param is not found in the argument list of AmazonSDB::query($domain_name,$opt=null,$expression=null,$follow=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:268: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSDB::query($domain_name,$opt=null,$expression=null,$follow=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sdb.class.php:268: Warning: The following parameters of AmazonSDB::query($domain_name,$opt=null,$expression=null,$follow=null) are not documented:
+  parameter 'domain_name'
+  parameter 'opt'
+  parameter 'expression'
+  parameter 'follow'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:57: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:50: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::create_queue($queue_name)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:50: Warning: The following parameters of AmazonSQS::create_queue($queue_name) are not documented:
+  parameter 'queue_name'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:204: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:198: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::delete_message($queue_url,$receipt_handle)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:198: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::delete_message($queue_url,$receipt_handle)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:198: Warning: The following parameters of AmazonSQS::delete_message($queue_url,$receipt_handle) are not documented:
+  parameter 'queue_url'
+  parameter 'receipt_handle'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:75: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:69: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::delete_queue($queue_url,$force_deletion=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:69: Warning: argument 'boolean' of command @param is not found in the argument list of AmazonSQS::delete_queue($queue_url,$force_deletion=false)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:69: Warning: The following parameters of AmazonSQS::delete_queue($queue_url,$force_deletion=false) are not documented:
+  parameter 'queue_url'
+  parameter 'force_deletion'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:118: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:114: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::get_queue_attributes($queue_url)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:114: Warning: The following parameters of AmazonSQS::get_queue_attributes($queue_url) are not documented:
+  parameter 'queue_url'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:98: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:92: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::list_queues($queue_name_prefix=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:92: Warning: The following parameters of AmazonSQS::list_queues($queue_name_prefix=null) are not documented:
+  parameter 'queue_name_prefix'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:182: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:171: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::receive_message($queue_url,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:171: Warning: argument 'array' of command @param is not found in the argument list of AmazonSQS::receive_message($queue_url,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:171: Warning: The following parameters of AmazonSQS::receive_message($queue_url,$opt=null) are not documented:
+  parameter 'queue_url'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:159: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:155: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::send_message($queue_url,$message)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:155: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::send_message($queue_url,$message)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'x9' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'xA' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'xD' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'x20' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'xD7FF' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'xE000' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'xFFFD' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'x10000' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:161: Warning: explicit link request to 'x10FFFF' could not be resolved
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:155: Warning: The following parameters of AmazonSQS::send_message($queue_url,$message) are not documented:
+  parameter 'queue_url'
+  parameter 'message'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:136: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:131: Warning: argument 'string' of command @param is not found in the argument list of AmazonSQS::set_queue_attributes($queue_url,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:131: Warning: argument 'array' of command @param is not found in the argument list of AmazonSQS::set_queue_attributes($queue_url,$opt=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/sqs.class.php:131: Warning: The following parameters of AmazonSQS::set_queue_attributes($queue_url,$opt=null) are not documented:
+  parameter 'queue_url'
+  parameter 'opt'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:155: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:151: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::__construct($key=null,$secret_key=null,$account_id=null,$assoc_id=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:151: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::__construct($key=null,$secret_key=null,$account_id=null,$assoc_id=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:151: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::__construct($key=null,$secret_key=null,$account_id=null,$assoc_id=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:151: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::__construct($key=null,$secret_key=null,$account_id=null,$assoc_id=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:151: Warning: The following parameters of TarzanCore::__construct($key=null,$secret_key=null,$account_id=null,$assoc_id=null) are not documented:
+  parameter 'key'
+  parameter 'secret_key'
+  parameter 'account_id'
+  parameter 'assoc_id'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:269: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:264: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::authenticate($action,$opt=null,$queue_url=null,$message=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:264: Warning: argument 'array' of command @param is not found in the argument list of TarzanCore::authenticate($action,$opt=null,$queue_url=null,$message=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:264: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::authenticate($action,$opt=null,$queue_url=null,$message=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:264: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::authenticate($action,$opt=null,$queue_url=null,$message=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:264: Warning: The following parameters of TarzanCore::authenticate($action,$opt=null,$queue_url=null,$message=null) are not documented:
+  parameter 'action'
+  parameter 'opt'
+  parameter 'queue_url'
+  parameter 'message'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:234: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::set_request_class($class='TarzanHTTPRequest')
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:234: Warning: The following parameters of TarzanCore::set_request_class($class='TarzanHTTPRequest') are not documented:
+  parameter 'class'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:247: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::set_response_class($class='TarzanHTTPResponse')
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:247: Warning: The following parameters of TarzanCore::set_response_class($class='TarzanHTTPResponse') are not documented:
+  parameter 'class'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:220: Warning: argument 'string' of command @param is not found in the argument list of TarzanCore::set_utilities_class($class='TarzanUtilities')
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/tarzan.class.php:220: Warning: The following parameters of TarzanCore::set_utilities_class($class='TarzanUtilities') are not documented:
+  parameter 'class'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:82: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:99: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPRequest::addHeader($key,$value)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:99: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPRequest::addHeader($key,$value)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:99: Warning: The following parameters of TarzanHTTPRequest::addHeader($key,$value) are not documented:
+  parameter 'key'
+  parameter 'value'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:113: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPRequest::removeHeader($key)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:113: Warning: The following parameters of TarzanHTTPRequest::removeHeader($key) are not documented:
+  parameter 'key'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:299: Warning: argument 'array' of command @param is not found in the argument list of TarzanHTTPRequest::sendMultiRequest($handles)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:299: Warning: The following parameters of TarzanHTTPRequest::sendMultiRequest($handles) are not documented:
+  parameter 'handles'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:142: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPRequest::setBody($body)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:142: Warning: The following parameters of TarzanHTTPRequest::setBody($body) are not documented:
+  parameter 'body'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:129: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPRequest::setMethod($method)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httprequest.class.php:129: Warning: The following parameters of TarzanHTTPRequest::setMethod($method) are not documented:
+  parameter 'method'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:43: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:39: Warning: argument 'array' of command @param is not found in the argument list of TarzanHTTPResponse::__construct($header,$body,$status=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:39: Warning: argument 'string' of command @param is not found in the argument list of TarzanHTTPResponse::__construct($header,$body,$status=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:39: Warning: The following parameters of TarzanHTTPResponse::__construct($header,$body,$status=null) are not documented:
+  parameter 'header'
+  parameter 'body'
+  parameter 'status'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:67: Warning: argument 'mixed' of command @param is not found in the argument list of TarzanHTTPResponse::isOK($codes=200)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_httpresponse.class.php:67: Warning: The following parameters of TarzanHTTPResponse::isOK($codes=200) are not documented:
+  parameter 'codes'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:46: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:44: Warning: argument 'string' of command @param is not found in the argument list of TarzanUtilities::hex_to_base64($str)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:44: Warning: The following parameters of TarzanUtilities::hex_to_base64($str) are not documented:
+  parameter 'str'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:111: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:93: Warning: argument 'array' of command @param is not found in the argument list of TarzanUtilities::query_to_array($qs)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:93: Warning: The following parameters of TarzanUtilities::query_to_array($qs) are not documented:
+  parameter 'qs'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:34: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:32: Warning: argument 'array' of command @param is not found in the argument list of TarzanUtilities::ready($var)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:32: Warning: The following parameters of TarzanUtilities::ready($var) are not documented:
+  parameter 'var'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:142: Warning: argument 'int' of command @param is not found in the argument list of TarzanUtilities::size_readable($size,$unit=null,$retstring=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:142: Warning: argument 'int' of command @param is not found in the argument list of TarzanUtilities::size_readable($size,$unit=null,$retstring=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:142: Warning: argument 'int' of command @param is not found in the argument list of TarzanUtilities::size_readable($size,$unit=null,$retstring=null)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:149: Warning: unable to resolve link to `http://aidanlister.com/repos/v/function.size_readable.php' for \link command
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:150: Warning: Unexpected end of comment while inside link command
+
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:142: Warning: The following parameters of TarzanUtilities::size_readable($size,$unit=null,$retstring=null) are not documented:
+  parameter 'size'
+  parameter 'unit'
+  parameter 'retstring'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:183: Warning: argument 'int' of command @param is not found in the argument list of TarzanUtilities::time_hms($seconds)
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:183: Warning: The following parameters of TarzanUtilities::time_hms($seconds) are not documented:
+  parameter 'seconds'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:61: Warning: Found unknown command `\access'
+/Library/WebServer/Documents/dev/tarzan-aws/trunk/_utilities.class.php:78: Warning: Found unknown command `\access'
