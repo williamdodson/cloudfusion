@@ -601,14 +601,6 @@ class AmazonS3 extends TarzanCore
 		return (count($bucketnames) > 0) ? $bucketnames : null;
 	}
 
-	/**
-	 * Post Object
-	 *
-	 * @access public
-	 * @todo Implement this method.
-	 */
-	private function post_object() {}
-
 
 	/*%******************************************************************************************%*/
 	// OBJECT METHODS
