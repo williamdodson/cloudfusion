@@ -135,36 +135,36 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>TarzanHTTPResponse|boolean Standard <a class="el" href="a00008.html">TarzanHTTPResponse</a> if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful. </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00429">429</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00431">431</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00104">authenticate()</a>, and <a class="el" href="a00038.html#l00796">delete_all_objects()</a>.</p>
 
 <p>Referenced by <a class="el" href="a00038.html#l00497">rename_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00430"></a>00430         {
-<a name="l00431"></a>00431                 <span class="comment">// Set default value</span>
-<a name="l00432"></a>00432                 $success = <span class="keyword">true</span>;
-<a name="l00433"></a>00433 
-<a name="l00434"></a>00434                 <span class="keywordflow">if</span> ($force)
-<a name="l00435"></a>00435                 {
-<a name="l00436"></a>00436                         <span class="comment">// Delete all of the items from the bucket.</span>
-<a name="l00437"></a>00437                         $success = $this-&gt;<a class="code" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a>($bucket);
-<a name="l00438"></a>00438                 }
-<a name="l00439"></a>00439 
-<a name="l00440"></a>00440                 <span class="comment">// As long as we were successful...</span>
-<a name="l00441"></a>00441                 <span class="keywordflow">if</span> ($success)
-<a name="l00442"></a>00442                 {
-<a name="l00443"></a>00443                         <span class="comment">// Add this to our request</span>
-<a name="l00444"></a>00444                         $opt = array();
-<a name="l00445"></a>00445                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
-<a name="l00446"></a>00446                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_bucket'</span>;
-<a name="l00447"></a>00447                         $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00448"></a>00448 
-<a name="l00449"></a>00449                         <span class="comment">// Authenticate to S3</span>
-<a name="l00450"></a>00450                         <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00451"></a>00451                 }
-<a name="l00452"></a>00452 
-<a name="l00453"></a>00453                 <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00454"></a>00454         }
+<div class="fragment"><pre class="fragment"><a name="l00432"></a>00432         {
+<a name="l00433"></a>00433                 <span class="comment">// Set default value</span>
+<a name="l00434"></a>00434                 $success = <span class="keyword">true</span>;
+<a name="l00435"></a>00435 
+<a name="l00436"></a>00436                 <span class="keywordflow">if</span> ($force)
+<a name="l00437"></a>00437                 {
+<a name="l00438"></a>00438                         <span class="comment">// Delete all of the items from the bucket.</span>
+<a name="l00439"></a>00439                         $success = $this-&gt;<a class="code" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a>($bucket);
+<a name="l00440"></a>00440                 }
+<a name="l00441"></a>00441 
+<a name="l00442"></a>00442                 <span class="comment">// As long as we were successful...</span>
+<a name="l00443"></a>00443                 <span class="keywordflow">if</span> ($success)
+<a name="l00444"></a>00444                 {
+<a name="l00445"></a>00445                         <span class="comment">// Add this to our request</span>
+<a name="l00446"></a>00446                         $opt = array();
+<a name="l00447"></a>00447                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
+<a name="l00448"></a>00448                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_bucket'</span>;
+<a name="l00449"></a>00449                         $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00450"></a>00450 
+<a name="l00451"></a>00451                         <span class="comment">// Authenticate to S3</span>
+<a name="l00452"></a>00452                         <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00453"></a>00453                 }
+<a name="l00454"></a>00454 
+<a name="l00455"></a>00455                 <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00456"></a>00456         }
 </pre></div>
 <p>
 
@@ -174,7 +174,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jul 12 17:59:14 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jul 12 20:55:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

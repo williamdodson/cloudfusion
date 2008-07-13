@@ -464,8 +464,6 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_bucket (Required) The name of the source bucket.
 	 * @param string $dest_bucket (Required) The name of the destination bucket.
 	 * @return TarzanHTTPResponse
-	 * @todo Fix weird issue with curl_multi_exec() on Mac OS X 10.5.x capping at 213 requests. See issue #19 for more details.
-	 * @see http://code.google.com/p/tarzan-aws/issues/detail?id=19
 	 */
 	public function copy_bucket($source_bucket, $dest_bucket)
 	{
