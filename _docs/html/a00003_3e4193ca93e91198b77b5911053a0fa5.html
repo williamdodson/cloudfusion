@@ -66,11 +66,13 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_6767267f6da7fe2a65db3e9e3c599b20.html#6767267f6da7fe2a65db3e9e3c599b20">duplicate_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d03623972b65d945063cb06906c90595.html#d03623972b65d945063cb06906c90595">get_bucket</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83">get_bucket_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd">get_bucket_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a">get_bucket_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5">get_bucket_size</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6d5c99740ac735573ef22ccc874c1ac.html#f6d5c99740ac735573ef22ccc874c1ac">get_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
@@ -82,6 +84,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b">move_object</a></td></tr>
           <tr><td class="navtab"><a class="qindexHL" href="a00003_3e4193ca93e91198b77b5911053a0fa5.html#3e4193ca93e91198b77b5911053a0fa5">rename_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_a16bc5f1ce9d8eb41e3155361ac984f7.html#a16bc5f1ce9d8eb41e3155361ac984f7">rename_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_8ec09395f69ddde158eb75d790bf839c.html#8ec09395f69ddde158eb75d790bf839c">set_bucket_acl</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_1e5fe3f4f0a133b53ce5729a33755961.html#1e5fe3f4f0a133b53ce5729a33755961">set_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579">store_remote_file</a></td></tr>
         </table>
       </div>
@@ -123,16 +127,16 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00490">490</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00497">497</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00461">copy_bucket()</a>, and <a class="el" href="a00038.html#l00422">delete_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00491"></a>00491         {
-<a name="l00492"></a>00492                 $responses = array();
-<a name="l00493"></a>00493                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
-<a name="l00494"></a>00494                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
-<a name="l00495"></a>00495 
-<a name="l00496"></a>00496                 <span class="keywordflow">return</span> $responses;
-<a name="l00497"></a>00497         }
+<p>References <a class="el" href="a00038.html#l00468">copy_bucket()</a>, and <a class="el" href="a00038.html#l00429">delete_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00498"></a>00498         {
+<a name="l00499"></a>00499                 $responses = array();
+<a name="l00500"></a>00500                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
+<a name="l00501"></a>00501                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
+<a name="l00502"></a>00502 
+<a name="l00503"></a>00503                 <span class="keywordflow">return</span> $responses;
+<a name="l00504"></a>00504         }
 </pre></div>
 <p>
 
@@ -142,7 +146,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 7 22:58:22 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jul 12 17:59:14 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

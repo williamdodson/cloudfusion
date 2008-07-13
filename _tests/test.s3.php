@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package UnitTests
  * @subpackage S3
- * @version 2008.07.05
+ * @version 2008.07.12
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -80,6 +80,12 @@ $list_buckets = $s3->list_buckets();
 // ONLY lists the bucket names on the account.
 $get_bucket_list = $s3->get_bucket_list();
 
+// Set bucket ACL
+$set_bucket_acl = $s3->set_bucket_acl($bname, S3_ACL_PRIVATE);
+
+// Get bucket ACL
+$get_bucket_acl = $s3->get_bucket_acl($bname);
+
 // HEAD bucket
 $head_bucket = $s3->head_bucket($bname);
 
@@ -123,6 +129,12 @@ $if_object_exists = $s3->if_object_exists($bname, $fname);
 
 // Get the file.
 $get = $s3->get_object($bname, $fname);
+
+// Set object ACL
+$set_object_acl = $s3->set_object_acl($bname, $fname, S3_ACL_PUBLIC);
+
+// Get object ACL
+$get_object_acl = $s3->get_object_acl($bname, $fname);
 
 // Get the file publicly, without Amazon. Tests ACL settings.
 $get_public = new TarzanHTTPRequest($get->header['x-tarzan-requesturl']);
@@ -221,6 +233,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				?>
 				<td><a href="#get_bucket_list">Get Bucket List (US)</a></td></tr>
 
+				<?php get_result($set_bucket_acl); ?>
+				<td><a href="#set_bucket_acl">Set Bucket ACL (US)</a></td></tr>
+
+				<?php get_result($get_bucket_acl); ?>
+				<td><a href="#get_bucket_acl">Get Bucket ACL (US)</a></td></tr>
+
 				<?php get_result($head_bucket); ?>
 				<td><a href="#head_bucket">HEAD Bucket (US)</a></td></tr>
 
@@ -314,6 +332,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 				<?php get_result($get); ?>
 				<td><a href="#get_object">Get Object (US)</a></td></tr>
 
+				<?php get_result($set_object_acl); ?>
+				<td><a href="#set_object_acl">Set Object ACL (US)</a></td></tr>
+
+				<?php get_result($get_object_acl); ?>
+				<td><a href="#get_object_acl">Get Object ACL (US)</a></td></tr>
+
 				<?php get_result($get_public); ?>
 				<td><a href="#get_public">Fetch the file without S3 to test ACL support (US)</a></td></tr>
 
@@ -379,6 +403,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 		echo '<h2><a name="get_bucket_list">Get Bucket List (US)</a></h2>';
 		echo '<pre>'; print_r($get_bucket_list); echo '</pre>';
 
+		echo '<h2><a name="set_bucket_acl">Set Bucket ACL (US)</a></h2>';
+		echo '<pre>'; print_r($set_bucket_acl); echo '</pre>';
+
+		echo '<h2><a name="get_bucket_acl">Get Bucket ACL (US)</a></h2>';
+		echo '<pre>'; print_r($get_bucket_acl); echo '</pre>';
+
 		echo '<h2><a name="head_bucket">HEAD Bucket (US)</a></h2>';
 		echo '<pre>'; print_r($head_bucket); echo '</pre>';
 
@@ -419,6 +449,12 @@ $delb_eu = $s3->delete_bucket($bname_eu);
 
 			echo '<h2><a name="get_object">Get Object (US)</a></h2>';
 			echo '<pre>'; print_r($get); echo '</pre>';
+
+			echo '<h2><a name="set_object_acl">Set Object ACL (US)</a></h2>';
+			echo '<pre>'; print_r($set_object_acl); echo '</pre>';
+
+			echo '<h2><a name="get_object_acl">Get Object ACL (US)</a></h2>';
+			echo '<pre>'; print_r($get_object_acl); echo '</pre>';
 
 			echo '<h2><a name="get_public">Fetch the file without S3 to test ACL support (US)</a></h2>';
 			echo '<pre>'; print_r($get_public->header); echo '</pre>';

@@ -112,11 +112,13 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c"><param name="Name" value="delete_object"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_6767267f6da7fe2a65db3e9e3c599b20.html#6767267f6da7fe2a65db3e9e3c599b20"><param name="Name" value="duplicate_object"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_d03623972b65d945063cb06906c90595.html#d03623972b65d945063cb06906c90595"><param name="Name" value="get_bucket"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83"><param name="Name" value="get_bucket_acl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd"><param name="Name" value="get_bucket_filesize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a"><param name="Name" value="get_bucket_list"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6"><param name="Name" value="get_bucket_locale"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5"><param name="Name" value="get_bucket_size"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f6d5c99740ac735573ef22ccc874c1ac.html#f6d5c99740ac735573ef22ccc874c1ac"><param name="Name" value="get_object"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482"><param name="Name" value="get_object_acl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0"><param name="Name" value="get_object_filesize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be"><param name="Name" value="get_object_list"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070"><param name="Name" value="head_bucket"></OBJECT>
@@ -128,6 +130,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b"><param name="Name" value="move_object"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_3e4193ca93e91198b77b5911053a0fa5.html#3e4193ca93e91198b77b5911053a0fa5"><param name="Name" value="rename_bucket"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_a16bc5f1ce9d8eb41e3155361ac984f7.html#a16bc5f1ce9d8eb41e3155361ac984f7"><param name="Name" value="rename_object"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_8ec09395f69ddde158eb75d790bf839c.html#8ec09395f69ddde158eb75d790bf839c"><param name="Name" value="set_bucket_acl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_1e5fe3f4f0a133b53ce5729a33755961.html#1e5fe3f4f0a133b53ce5729a33755961"><param name="Name" value="set_object_acl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579"><param name="Name" value="store_remote_file"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_40f115514c1664a50b11848b116df5a0.html"><param name="Name" value="AmazonSDB"></OBJECT>
@@ -200,11 +204,13 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_6767267f6da7fe2a65db3e9e3c599b20.html#6767267f6da7fe2a65db3e9e3c599b20"><param name="Name" value="duplicate_object"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_8291d13e0983869c762759337a395e9d.html#8291d13e0983869c762759337a395e9d"><param name="Name" value="get_attributes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_d03623972b65d945063cb06906c90595.html#d03623972b65d945063cb06906c90595"><param name="Name" value="get_bucket"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83"><param name="Name" value="get_bucket_acl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd"><param name="Name" value="get_bucket_filesize"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a"><param name="Name" value="get_bucket_list"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6"><param name="Name" value="get_bucket_locale"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5"><param name="Name" value="get_bucket_size"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f6d5c99740ac735573ef22ccc874c1ac.html#f6d5c99740ac735573ef22ccc874c1ac"><param name="Name" value="get_object"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482"><param name="Name" value="get_object_acl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0"><param name="Name" value="get_object_filesize"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be"><param name="Name" value="get_object_list"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_bed32505184e50f8c5eac2d51e94539b.html#bed32505184e50f8c5eac2d51e94539b"><param name="Name" value="get_queue_attributes"></OBJECT>
@@ -250,6 +256,8 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_070d25a0ae66885572befaaf8d46acb1.html#070d25a0ae66885572befaaf8d46acb1"><param name="Name" value="send_message"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_9bbf8c889f1b9b943d991d2f1c0846bc.html#9bbf8c889f1b9b943d991d2f1c0846bc"><param name="Name" value="sendMultiRequest"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_de31130758b9040f292d1b841792c961.html#de31130758b9040f292d1b841792c961"><param name="Name" value="sendRequest"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_8ec09395f69ddde158eb75d790bf839c.html#8ec09395f69ddde158eb75d790bf839c"><param name="Name" value="set_bucket_acl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_1e5fe3f4f0a133b53ce5729a33755961.html#1e5fe3f4f0a133b53ce5729a33755961"><param name="Name" value="set_object_acl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf"><param name="Name" value="set_queue_attributes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_f56f3217836735d01724b813519249ba.html#f56f3217836735d01724b813519249ba"><param name="Name" value="set_request_class"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_fa1dafc4f1df96220645f738cf42c812.html#fa1dafc4f1df96220645f738cf42c812"><param name="Name" value="set_response_class"></OBJECT>

@@ -66,11 +66,13 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_6767267f6da7fe2a65db3e9e3c599b20.html#6767267f6da7fe2a65db3e9e3c599b20">duplicate_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d03623972b65d945063cb06906c90595.html#d03623972b65d945063cb06906c90595">get_bucket</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83">get_bucket_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd">get_bucket_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a">get_bucket_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5">get_bucket_size</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6d5c99740ac735573ef22ccc874c1ac.html#f6d5c99740ac735573ef22ccc874c1ac">get_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
@@ -82,6 +84,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b">move_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3e4193ca93e91198b77b5911053a0fa5.html#3e4193ca93e91198b77b5911053a0fa5">rename_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_a16bc5f1ce9d8eb41e3155361ac984f7.html#a16bc5f1ce9d8eb41e3155361ac984f7">rename_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_8ec09395f69ddde158eb75d790bf839c.html#8ec09395f69ddde158eb75d790bf839c">set_bucket_acl</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_1e5fe3f4f0a133b53ce5729a33755961.html#1e5fe3f4f0a133b53ce5729a33755961">set_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579">store_remote_file</a></td></tr>
         </table>
       </div>
@@ -132,36 +136,36 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00308">308</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00315">315</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00104">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00461">copy_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00309"></a>00309         {
-<a name="l00310"></a>00310                 <span class="comment">// Defaults</span>
-<a name="l00311"></a>00311                 $body = null;
-<a name="l00312"></a>00312                 $contentType = null;
-<a name="l00313"></a>00313 
-<a name="l00314"></a>00314                 <span class="keywordflow">if</span> ($locale)
-<a name="l00315"></a>00315                 {
-<a name="l00316"></a>00316                         <span class="keywordflow">switch</span>(strtolower($locale))
-<a name="l00317"></a>00317                         {
-<a name="l00318"></a>00318                                 <span class="keywordflow">case</span> <span class="stringliteral">'eu'</span>:
-<a name="l00319"></a>00319                                         $body = <span class="stringliteral">'&lt;CreateBucketConfiguration&gt;&lt;LocationConstraint&gt;'</span> . strtoupper($locale) . <span class="stringliteral">'&lt;/LocationConstraint&gt;&lt;/CreateBucketConfiguration&gt;'</span>;
-<a name="l00320"></a>00320                                         $contentType = <span class="stringliteral">'application/xml'</span>;
-<a name="l00321"></a>00321                                         <span class="keywordflow">break</span>;
-<a name="l00322"></a>00322                         }
-<a name="l00323"></a>00323                 }
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325                 <span class="comment">// Authenticate to S3</span>
-<a name="l00326"></a>00326                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, array(
-<a name="l00327"></a>00327                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
-<a name="l00328"></a>00328                         <span class="stringliteral">'method'</span> =&gt; <span class="stringliteral">'create_bucket'</span>,
-<a name="l00329"></a>00329                         <span class="stringliteral">'body'</span> =&gt; $body,
-<a name="l00330"></a>00330                         <span class="stringliteral">'contentType'</span> =&gt; $contentType,
-<a name="l00331"></a>00331                         <span class="stringliteral">'returnCurlHandle'</span> =&gt; $returnCurlHandle
-<a name="l00332"></a>00332                 ));
-<a name="l00333"></a>00333         }
+<p>Referenced by <a class="el" href="a00038.html#l00468">copy_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00316"></a>00316         {
+<a name="l00317"></a>00317                 <span class="comment">// Defaults</span>
+<a name="l00318"></a>00318                 $body = null;
+<a name="l00319"></a>00319                 $contentType = null;
+<a name="l00320"></a>00320 
+<a name="l00321"></a>00321                 <span class="keywordflow">if</span> ($locale)
+<a name="l00322"></a>00322                 {
+<a name="l00323"></a>00323                         <span class="keywordflow">switch</span>(strtolower($locale))
+<a name="l00324"></a>00324                         {
+<a name="l00325"></a>00325                                 <span class="keywordflow">case</span> <span class="stringliteral">'eu'</span>:
+<a name="l00326"></a>00326                                         $body = <span class="stringliteral">'&lt;CreateBucketConfiguration&gt;&lt;LocationConstraint&gt;'</span> . strtoupper($locale) . <span class="stringliteral">'&lt;/LocationConstraint&gt;&lt;/CreateBucketConfiguration&gt;'</span>;
+<a name="l00327"></a>00327                                         $contentType = <span class="stringliteral">'application/xml'</span>;
+<a name="l00328"></a>00328                                         <span class="keywordflow">break</span>;
+<a name="l00329"></a>00329                         }
+<a name="l00330"></a>00330                 }
+<a name="l00331"></a>00331 
+<a name="l00332"></a>00332                 <span class="comment">// Authenticate to S3</span>
+<a name="l00333"></a>00333                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, array(
+<a name="l00334"></a>00334                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
+<a name="l00335"></a>00335                         <span class="stringliteral">'method'</span> =&gt; <span class="stringliteral">'create_bucket'</span>,
+<a name="l00336"></a>00336                         <span class="stringliteral">'body'</span> =&gt; $body,
+<a name="l00337"></a>00337                         <span class="stringliteral">'contentType'</span> =&gt; $contentType,
+<a name="l00338"></a>00338                         <span class="stringliteral">'returnCurlHandle'</span> =&gt; $returnCurlHandle
+<a name="l00339"></a>00339                 ));
+<a name="l00340"></a>00340         }
 </pre></div>
 <p>
 
@@ -171,7 +175,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 7 22:58:21 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jul 12 17:59:14 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

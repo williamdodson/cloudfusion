@@ -645,6 +645,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_bucket_acl</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_6312ae42a9d57aba65a54fe72f524a83.html</Path>
+    <Anchor>6312ae42a9d57aba65a54fe72f524a83</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_bucket_filesize</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -692,6 +702,16 @@
     </TokenIdentifier>
     <Path>a00003_f6d5c99740ac735573ef22ccc874c1ac.html</Path>
     <Anchor>f6d5c99740ac735573ef22ccc874c1ac</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get_object_acl</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_389b71935845272272e0a72577eca482.html</Path>
+    <Anchor>389b71935845272272e0a72577eca482</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -802,6 +822,26 @@
     </TokenIdentifier>
     <Path>a00003_a16bc5f1ce9d8eb41e3155361ac984f7.html</Path>
     <Anchor>a16bc5f1ce9d8eb41e3155361ac984f7</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>set_bucket_acl</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_8ec09395f69ddde158eb75d790bf839c.html</Path>
+    <Anchor>8ec09395f69ddde158eb75d790bf839c</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>set_object_acl</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_1e5fe3f4f0a133b53ce5729a33755961.html</Path>
+    <Anchor>1e5fe3f4f0a133b53ce5729a33755961</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>

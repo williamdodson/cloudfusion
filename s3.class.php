@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.07
+ * @version 2008.07.12
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.googlecode.com Tarzan
@@ -188,6 +188,13 @@ class AmazonS3 extends TarzanCore
 			else
 			{
 				$this->request_url = 'http://' . $hostname . $request;
+			}
+
+			// Add ACL stuff if we're getting/setting ACL preferences.
+			if ($method == 'get_bucket_acl' || $method == 'set_bucket_acl' || $method == 'get_object_acl' || $method == 'set_object_acl')
+			{
+				$this->request_url .= '?acl';
+				$filename .= '?acl';
 			}
 
 			$req = new $this->request_class($this->request_url);
@@ -601,6 +608,51 @@ class AmazonS3 extends TarzanCore
 		return (count($bucketnames) > 0) ? $bucketnames : null;
 	}
 
+	/**
+	 * Get Bucket ACL
+	 * 
+	 * Gets the ACL settings for a bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
+	 */
+	public function get_bucket_acl($bucket, $returnCurlHandle = null)
+	{
+		// Add this to our request
+		$opt['verb'] = HTTP_GET;
+		$opt['method'] = 'get_bucket_acl';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
+
+	/**
+	 * Set Bucket ACL
+	 * 
+	 * Sets the ACL settings for a bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
+	 */
+	public function set_bucket_acl($bucket, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
+	{
+		// Add this to our request
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'set_bucket_acl';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+		$opt['acl'] = $acl;
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
+
 
 	/*%******************************************************************************************%*/
 	// OBJECT METHODS
@@ -964,6 +1016,55 @@ class AmazonS3 extends TarzanCore
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
 		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
+	}
+
+	/**
+	 * Get Object ACL
+	 * 
+	 * Gets the ACL settings for a object.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $filename (Required) The filename for the content.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
+	 */
+	public function get_object_acl($bucket, $filename, $returnCurlHandle = null)
+	{
+		// Add this to our request
+		$opt['verb'] = HTTP_GET;
+		$opt['method'] = 'get_object_acl';
+		$opt['filename'] = $filename;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
+
+	/**
+	 * Set Object ACL
+	 * 
+	 * Sets the ACL settings for a object.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $filename (Required) The filename for the content.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
+	 */
+	public function set_object_acl($bucket, $filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
+	{
+		// Add this to our request
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'set_object_acl';
+		$opt['filename'] = $filename;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+		$opt['acl'] = $acl;
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
 	}
 
 

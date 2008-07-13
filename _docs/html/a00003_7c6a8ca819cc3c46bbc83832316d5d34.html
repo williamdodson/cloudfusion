@@ -66,11 +66,13 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_6767267f6da7fe2a65db3e9e3c599b20.html#6767267f6da7fe2a65db3e9e3c599b20">duplicate_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d03623972b65d945063cb06906c90595.html#d03623972b65d945063cb06906c90595">get_bucket</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83">get_bucket_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd">get_bucket_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a">get_bucket_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5">get_bucket_size</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6d5c99740ac735573ef22ccc874c1ac.html#f6d5c99740ac735573ef22ccc874c1ac">get_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
@@ -82,6 +84,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b">move_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3e4193ca93e91198b77b5911053a0fa5.html#3e4193ca93e91198b77b5911053a0fa5">rename_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_a16bc5f1ce9d8eb41e3155361ac984f7.html#a16bc5f1ce9d8eb41e3155361ac984f7">rename_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_8ec09395f69ddde158eb75d790bf839c.html#8ec09395f69ddde158eb75d790bf839c">set_bucket_acl</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_1e5fe3f4f0a133b53ce5729a33755961.html#1e5fe3f4f0a133b53ce5729a33755961">set_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579">store_remote_file</a></td></tr>
         </table>
       </div>
@@ -142,7 +146,7 @@ private <dl compact><dt><b>Parameters:</b></dt><dd>
 
 <p>Definition at line <a class="el" href="a00038.html#l00104">104</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00897">copy_object()</a>, <a class="el" href="a00038.html#l00308">create_bucket()</a>, <a class="el" href="a00038.html#l00631">create_object()</a>, <a class="el" href="a00038.html#l00422">delete_bucket()</a>, <a class="el" href="a00038.html#l00720">delete_object()</a>, <a class="el" href="a00038.html#l00360">get_bucket_locale()</a>, <a class="el" href="a00038.html#l00654">get_object()</a>, <a class="el" href="a00038.html#l00383">head_bucket()</a>, <a class="el" href="a00038.html#l00679">head_object()</a>, <a class="el" href="a00038.html#l00550">list_buckets()</a>, and <a class="el" href="a00038.html#l00787">list_objects()</a>.</p>
+<p>Referenced by <a class="el" href="a00038.html#l00949">copy_object()</a>, <a class="el" href="a00038.html#l00315">create_bucket()</a>, <a class="el" href="a00038.html#l00683">create_object()</a>, <a class="el" href="a00038.html#l00429">delete_bucket()</a>, <a class="el" href="a00038.html#l00772">delete_object()</a>, <a class="el" href="a00038.html#l00622">get_bucket_acl()</a>, <a class="el" href="a00038.html#l00367">get_bucket_locale()</a>, <a class="el" href="a00038.html#l00706">get_object()</a>, <a class="el" href="a00038.html#l01033">get_object_acl()</a>, <a class="el" href="a00038.html#l00390">head_bucket()</a>, <a class="el" href="a00038.html#l00731">head_object()</a>, <a class="el" href="a00038.html#l00557">list_buckets()</a>, <a class="el" href="a00038.html#l00839">list_objects()</a>, <a class="el" href="a00038.html#l00644">set_bucket_acl()</a>, and <a class="el" href="a00038.html#l01057">set_object_acl()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00105"></a>00105         {
 <a name="l00106"></a>00106                 <span class="comment">// If nothing was passed in, don't do anything.</span>
 <a name="l00107"></a>00107                 <span class="keywordflow">if</span> (!$opt)
@@ -231,102 +235,109 @@ private <dl compact><dt><b>Parameters:</b></dt><dd>
 <a name="l00190"></a>00190                                 $this-&gt;request_url = <span class="stringliteral">'http://'</span> . $hostname . $request;
 <a name="l00191"></a>00191                         }
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193                         $req = <span class="keyword">new</span> $this-&gt;request_class($this-&gt;request_url);
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195                         <span class="comment">// Do we have a verb?</span>
-<a name="l00196"></a>00196                         <span class="keywordflow">if</span> (isset($verb) &amp;&amp; !empty($verb))
-<a name="l00197"></a>00197                         {
-<a name="l00198"></a>00198                                 $req-&gt;setMethod($verb);
-<a name="l00199"></a>00199                         }
-<a name="l00200"></a>00200 
-<a name="l00201"></a>00201                         <span class="comment">// Do we have a contentType?</span>
-<a name="l00202"></a>00202                         <span class="keywordflow">if</span> (isset($contentType) &amp;&amp; !empty($contentType))
-<a name="l00203"></a>00203                         {
-<a name="l00204"></a>00204                                 $req-&gt;addHeader(<span class="stringliteral">"Content-Type"</span>, $contentType);
-<a name="l00205"></a>00205                         }
-<a name="l00206"></a>00206                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
-<a name="l00207"></a>00207                         {
-<a name="l00208"></a>00208                                 $contentType = <span class="stringliteral">'application/x-www-form-urlencoded'</span>;
-<a name="l00209"></a>00209                         }
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211                         <span class="comment">// Do we have a date?</span>
-<a name="l00212"></a>00212                         <span class="keywordflow">if</span> (isset($httpDate) &amp;&amp; !empty($httpDate))
-<a name="l00213"></a>00213                         {
-<a name="l00214"></a>00214                                 $req-&gt;addHeader(<span class="stringliteral">"Date"</span>, $httpDate);
-<a name="l00215"></a>00215                         }
-<a name="l00216"></a>00216 
-<a name="l00217"></a>00217                         <span class="comment">// Do we have ACL settings? (Optional in signed string)</span>
-<a name="l00218"></a>00218                         <span class="keywordflow">if</span> (isset($acl) &amp;&amp; !empty($acl))
-<a name="l00219"></a>00219                         {
-<a name="l00220"></a>00220                                 $req-&gt;addHeader(<span class="stringliteral">"x-amz-acl"</span>, $acl);
-<a name="l00221"></a>00221                                 $acl = <span class="stringliteral">'x-amz-acl:'</span> . $acl . <span class="stringliteral">"\n"</span>;
+<a name="l00193"></a>00193                         <span class="comment">// Add ACL stuff if we're getting/setting ACL preferences.</span>
+<a name="l00194"></a>00194                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'get_bucket_acl'</span> || $method == <span class="stringliteral">'set_bucket_acl'</span> || $method == <span class="stringliteral">'get_object_acl'</span> || $method == <span class="stringliteral">'set_object_acl'</span>)
+<a name="l00195"></a>00195                         {
+<a name="l00196"></a>00196                                 $this-&gt;request_url .= <span class="stringliteral">'?acl'</span>;
+<a name="l00197"></a>00197                                 $filename .= <span class="stringliteral">'?acl'</span>;
+<a name="l00198"></a>00198                         }
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200                         $req = <span class="keyword">new</span> $this-&gt;request_class($this-&gt;request_url);
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202                         <span class="comment">// Do we have a verb?</span>
+<a name="l00203"></a>00203                         <span class="keywordflow">if</span> (isset($verb) &amp;&amp; !empty($verb))
+<a name="l00204"></a>00204                         {
+<a name="l00205"></a>00205                                 $req-&gt;setMethod($verb);
+<a name="l00206"></a>00206                         }
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208                         <span class="comment">// Do we have a contentType?</span>
+<a name="l00209"></a>00209                         <span class="keywordflow">if</span> (isset($contentType) &amp;&amp; !empty($contentType))
+<a name="l00210"></a>00210                         {
+<a name="l00211"></a>00211                                 $req-&gt;addHeader(<span class="stringliteral">"Content-Type"</span>, $contentType);
+<a name="l00212"></a>00212                         }
+<a name="l00213"></a>00213                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
+<a name="l00214"></a>00214                         {
+<a name="l00215"></a>00215                                 $contentType = <span class="stringliteral">'application/x-www-form-urlencoded'</span>;
+<a name="l00216"></a>00216                         }
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218                         <span class="comment">// Do we have a date?</span>
+<a name="l00219"></a>00219                         <span class="keywordflow">if</span> (isset($httpDate) &amp;&amp; !empty($httpDate))
+<a name="l00220"></a>00220                         {
+<a name="l00221"></a>00221                                 $req-&gt;addHeader(<span class="stringliteral">"Date"</span>, $httpDate);
 <a name="l00222"></a>00222                         }
 <a name="l00223"></a>00223 
-<a name="l00224"></a>00224                         <span class="comment">// Do we have COPY settings?</span>
-<a name="l00225"></a>00225                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'copy_object'</span>)
+<a name="l00224"></a>00224                         <span class="comment">// Do we have ACL settings? (Optional in signed string)</span>
+<a name="l00225"></a>00225                         <span class="keywordflow">if</span> (isset($acl) &amp;&amp; !empty($acl))
 <a name="l00226"></a>00226                         {
-<a name="l00227"></a>00227                                 $acl .= <span class="stringliteral">'x-amz-copy-source:/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject . <span class="stringliteral">"\n"</span>;
-<a name="l00228"></a>00228                                 $req-&gt;addHeader(<span class="stringliteral">'x-amz-copy-source'</span>, <span class="charliteral">'/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject);
+<a name="l00227"></a>00227                                 $req-&gt;addHeader(<span class="stringliteral">"x-amz-acl"</span>, $acl);
+<a name="l00228"></a>00228                                 $acl = <span class="stringliteral">'x-amz-acl:'</span> . $acl . <span class="stringliteral">"\n"</span>;
 <a name="l00229"></a>00229                         }
 <a name="l00230"></a>00230 
-<a name="l00231"></a>00231                         <span class="comment">// Add a body if we're creating</span>
-<a name="l00232"></a>00232                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'create_object'</span> || $method == <span class="stringliteral">'create_bucket'</span>)
+<a name="l00231"></a>00231                         <span class="comment">// Do we have COPY settings?</span>
+<a name="l00232"></a>00232                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'copy_object'</span>)
 <a name="l00233"></a>00233                         {
-<a name="l00234"></a>00234                                 <span class="keywordflow">if</span> (isset($body) &amp;&amp; !empty($body))
-<a name="l00235"></a>00235                                 {
-<a name="l00236"></a>00236                                         $req-&gt;setBody($body);
-<a name="l00237"></a>00237                                 }
-<a name="l00238"></a>00238                         }
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240                         <span class="comment">// Data that will be "signed".</span>
-<a name="l00241"></a>00241                         $filename = <span class="charliteral">'/'</span> . $filename;
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243                         <span class="comment">// If we're listing buckets, there is no filename value.</span>
-<a name="l00244"></a>00244                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_buckets'</span>)
-<a name="l00245"></a>00245                         {
-<a name="l00246"></a>00246                                 $filename = <span class="stringliteral">''</span>;
-<a name="l00247"></a>00247                         }
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249                         <span class="comment">// Prepare the string to sign</span>
-<a name="l00250"></a>00250                         $stringToSign = <span class="stringliteral">"$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename"</span>;
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252                         <span class="comment">// Hash the AWS secret key and generate a signature for the request.</span>
-<a name="l00253"></a>00253                         $signature = $this-&gt;util-&gt;hex_to_base64(hash_hmac(<span class="stringliteral">'sha1'</span>, $stringToSign, $this-&gt;secret_key));
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255                         <span class="comment">// Pass the developer key and signature</span>
-<a name="l00256"></a>00256                         $req-&gt;addHeader(<span class="stringliteral">"Authorization"</span>, <span class="stringliteral">"AWS "</span> . $this-&gt;key . <span class="stringliteral">":"</span> . $signature);
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258                         <span class="comment">// If we have a "true" value for returnCurlHandle, do that instead of completing the request.</span>
-<a name="l00259"></a>00259                         <span class="keywordflow">if</span> ($returnCurlHandle)
-<a name="l00260"></a>00260                         {
-<a name="l00261"></a>00261                                 <span class="keywordflow">return</span> $req-&gt;prepRequest();
-<a name="l00262"></a>00262                         }
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264                         <span class="comment">// Send!</span>
-<a name="l00265"></a>00265                         $req-&gt;sendRequest();
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267                         <span class="comment">// Prepare the response.</span>
-<a name="l00268"></a>00268                         $headers = $req-&gt;getResponseHeader();
-<a name="l00269"></a>00269                         $headers[<span class="stringliteral">'x-tarzan-redirects'</span>] = $redirects;
-<a name="l00270"></a>00270                         $headers[<span class="stringliteral">'x-tarzan-requesturl'</span>] = $this-&gt;request_url;
-<a name="l00271"></a>00271                         $headers[<span class="stringliteral">'x-tarzan-stringtosign'</span>] = $stringToSign;
-<a name="l00272"></a>00272                         $data = <span class="keyword">new</span> $this-&gt;response_class($headers, $req-&gt;getResponseBody(), $req-&gt;getResponseCode());
+<a name="l00234"></a>00234                                 $acl .= <span class="stringliteral">'x-amz-copy-source:/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject . <span class="stringliteral">"\n"</span>;
+<a name="l00235"></a>00235                                 $req-&gt;addHeader(<span class="stringliteral">'x-amz-copy-source'</span>, <span class="charliteral">'/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject);
+<a name="l00236"></a>00236                         }
+<a name="l00237"></a>00237 
+<a name="l00238"></a>00238                         <span class="comment">// Add a body if we're creating</span>
+<a name="l00239"></a>00239                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'create_object'</span> || $method == <span class="stringliteral">'create_bucket'</span>)
+<a name="l00240"></a>00240                         {
+<a name="l00241"></a>00241                                 <span class="keywordflow">if</span> (isset($body) &amp;&amp; !empty($body))
+<a name="l00242"></a>00242                                 {
+<a name="l00243"></a>00243                                         $req-&gt;setBody($body);
+<a name="l00244"></a>00244                                 }
+<a name="l00245"></a>00245                         }
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247                         <span class="comment">// Data that will be "signed".</span>
+<a name="l00248"></a>00248                         $filename = <span class="charliteral">'/'</span> . $filename;
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250                         <span class="comment">// If we're listing buckets, there is no filename value.</span>
+<a name="l00251"></a>00251                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_buckets'</span>)
+<a name="l00252"></a>00252                         {
+<a name="l00253"></a>00253                                 $filename = <span class="stringliteral">''</span>;
+<a name="l00254"></a>00254                         }
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256                         <span class="comment">// Prepare the string to sign</span>
+<a name="l00257"></a>00257                         $stringToSign = <span class="stringliteral">"$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename"</span>;
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259                         <span class="comment">// Hash the AWS secret key and generate a signature for the request.</span>
+<a name="l00260"></a>00260                         $signature = $this-&gt;util-&gt;hex_to_base64(hash_hmac(<span class="stringliteral">'sha1'</span>, $stringToSign, $this-&gt;secret_key));
+<a name="l00261"></a>00261 
+<a name="l00262"></a>00262                         <span class="comment">// Pass the developer key and signature</span>
+<a name="l00263"></a>00263                         $req-&gt;addHeader(<span class="stringliteral">"Authorization"</span>, <span class="stringliteral">"AWS "</span> . $this-&gt;key . <span class="stringliteral">":"</span> . $signature);
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265                         <span class="comment">// If we have a "true" value for returnCurlHandle, do that instead of completing the request.</span>
+<a name="l00266"></a>00266                         <span class="keywordflow">if</span> ($returnCurlHandle)
+<a name="l00267"></a>00267                         {
+<a name="l00268"></a>00268                                 <span class="keywordflow">return</span> $req-&gt;prepRequest();
+<a name="l00269"></a>00269                         }
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271                         <span class="comment">// Send!</span>
+<a name="l00272"></a>00272                         $req-&gt;sendRequest();
 <a name="l00273"></a>00273 
-<a name="l00274"></a>00274                         <span class="comment">// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.</span>
-<a name="l00275"></a>00275                         <span class="comment">// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html</span>
-<a name="l00276"></a>00276                         <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>) $req-&gt;getResponseCode() == 307) <span class="comment">// Temporary redirect to new endpoint.</span>
-<a name="l00277"></a>00277                         {
-<a name="l00278"></a>00278                                 $redirects++;
-<a name="l00279"></a>00279                                 $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, 
-<a name="l00280"></a>00280                                         $_opt, 
-<a name="l00281"></a>00281                                         $headers[<span class="stringliteral">'location'</span>], 
-<a name="l00282"></a>00282                                         $redirects);
-<a name="l00283"></a>00283                         }
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285                         <span class="comment">// Return!</span>
-<a name="l00286"></a>00286                         <span class="keywordflow">return</span> $data;
-<a name="l00287"></a>00287                 }
-<a name="l00288"></a>00288         }
+<a name="l00274"></a>00274                         <span class="comment">// Prepare the response.</span>
+<a name="l00275"></a>00275                         $headers = $req-&gt;getResponseHeader();
+<a name="l00276"></a>00276                         $headers[<span class="stringliteral">'x-tarzan-redirects'</span>] = $redirects;
+<a name="l00277"></a>00277                         $headers[<span class="stringliteral">'x-tarzan-requesturl'</span>] = $this-&gt;request_url;
+<a name="l00278"></a>00278                         $headers[<span class="stringliteral">'x-tarzan-stringtosign'</span>] = $stringToSign;
+<a name="l00279"></a>00279                         $data = <span class="keyword">new</span> $this-&gt;response_class($headers, $req-&gt;getResponseBody(), $req-&gt;getResponseCode());
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281                         <span class="comment">// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.</span>
+<a name="l00282"></a>00282                         <span class="comment">// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html</span>
+<a name="l00283"></a>00283                         <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>) $req-&gt;getResponseCode() == 307) <span class="comment">// Temporary redirect to new endpoint.</span>
+<a name="l00284"></a>00284                         {
+<a name="l00285"></a>00285                                 $redirects++;
+<a name="l00286"></a>00286                                 $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, 
+<a name="l00287"></a>00287                                         $_opt, 
+<a name="l00288"></a>00288                                         $headers[<span class="stringliteral">'location'</span>], 
+<a name="l00289"></a>00289                                         $redirects);
+<a name="l00290"></a>00290                         }
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292                         <span class="comment">// Return!</span>
+<a name="l00293"></a>00293                         <span class="keywordflow">return</span> $data;
+<a name="l00294"></a>00294                 }
+<a name="l00295"></a>00295         }
 </pre></div>
 <p>
 
@@ -336,7 +347,7 @@ private <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 7 22:58:21 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Jul 12 17:59:14 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
