@@ -8,7 +8,7 @@
  * @version 2008.07.12
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.googlecode.com Tarzan
+ * @link http://tarzan-aws.com Tarzan
  * @link http://s3.amazonaws.com Amazon S3
  * @see README
  */
