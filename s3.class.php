@@ -128,6 +128,8 @@ class AmazonS3 extends TarzanCore
 			$method = null;
 			$prefix = null;
 			$verb = null;
+			$lastmodified = null;
+			$etag = null;
 			$returnCurlHandle = null;
 
 			// Break the array into individual variables, while storing the original.
@@ -151,7 +153,8 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Get the UTC timestamp in RFC 2616 format
-			$httpDate = gmdate(DATE_AWS_RFC2616, time());
+			$since_epoch = time() + $this->adjust_offset;
+			$httpDate = gmdate(DATE_AWS_RFC2616, $since_epoch);
 
 			// Generate the request string
 			$request = '';
@@ -180,23 +183,30 @@ class AmazonS3 extends TarzanCore
 				}
 			}
 
+			// Logging
+			elseif ($method == 'get_logs')
+			{
+				$request .= '?logging';
+				$filename .= '?logging';
+			}
+
 			// Get Bucket Locale settings
-			if ($method == 'get_bucket_locale')
+			elseif ($method == 'get_bucket_locale')
 			{
 				$request = '/?location';
 				$filename = '?location';
 			}
 
-			if (!$request == '/')
-			{
-				$request = '/' . $request;
-			}
-
 			// Add ACL stuff if we're getting/setting ACL preferences.
-			if ($method == 'get_bucket_acl' || $method == 'get_object_acl')
+			elseif ($method == 'get_bucket_acl' || $method == 'get_object_acl')
 			{
 				$request .= '?acl';
 				$filename .= '?acl';
+			}
+
+			if (!$request == '/')
+			{
+				$request = '/' . $request;
 			}
 
 			// Prepare the request.
@@ -247,6 +257,13 @@ class AmazonS3 extends TarzanCore
 				$req->addHeader('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
 			}
 
+			// Are we checking for changes?
+			if ($lastmodified && $etag)
+			{
+				$req->addHeader('If-Modified-Since', $lastmodified);
+				$req->addHeader('If-None-Match', $etag);
+			}
+
 			// Add a body if we're creating
 			if ($method == 'create_object' || $method == 'create_bucket')
 			{
@@ -265,8 +282,16 @@ class AmazonS3 extends TarzanCore
 				$filename = '';
 			}
 
-			// Prepare the string to sign
-			$stringToSign = "$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename";
+			if ($qsa)
+			{
+				// Prepare the string to sign
+				$stringToSign = "$verb\n\n$contentType\n$since_epoch\n$acl/$bucket$filename";
+			}
+			else
+			{
+				// Prepare the string to sign
+				$stringToSign = "$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename";
+			}
 
 			// Hash the AWS secret key and generate a signature for the request.
 			$signature = $this->util->hex_to_base64(hash_hmac('sha1', $stringToSign, $this->secret_key));
@@ -280,6 +305,18 @@ class AmazonS3 extends TarzanCore
 				return $req->prepRequest();
 			}
 
+			// Are we getting a Query String Auth?
+			if ($qsa)
+			{
+				return array(
+					'bucket' => $bucket,
+					'filename' => $filename,
+					'key' => $this->key,
+					'expires' => $since_epoch,
+					'signature' => $signature,
+				);
+			}
+
 			// Send!
 			$req->sendRequest();
 
@@ -288,6 +325,7 @@ class AmazonS3 extends TarzanCore
 			$headers['x-tarzan-redirects'] = $redirects;
 			$headers['x-tarzan-requesturl'] = $this->request_url;
 			$headers['x-tarzan-stringtosign'] = $stringToSign;
+			$headers['x-tarzan-requestheaders'] = $req->request_headers;
 			$data = new $this->response_class($headers, $req->getResponseBody(), $req->getResponseCode());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
@@ -314,6 +352,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $vhost (Required) The hostname to use instead of bucket.s3.amazonaws.com.
 	 * @return void
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
 	 */
 	public function set_vhost($vhost)
 	{
@@ -723,18 +762,21 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $filename (Required) The filename for the content.
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+ 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
+	 * <ul>
+	 *   <li>string lastmodified - (Optional) The LastModified header passed in from a previous request. If used, requires 'etag' as well. Will return a 304 if file hasn't changed.</li>
+	 *   <li>string etag - (Optional) The ETag header passed in from a previous request. If used, requires 'lastmodified' as well. Will return a 304 if file hasn't changed.</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
+	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
 	 */
-	public function get_object($bucket, $filename, $returnCurlHandle = null)
+	public function get_object($bucket, $filename, $opt = null)
 	{
 		// Add this to our request
-		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object';
 		$opt['filename'] = rawurlencode($filename);
-		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -1093,6 +1135,54 @@ class AmazonS3 extends TarzanCore
 
 
 	/*%******************************************************************************************%*/
+	// LOGGING METHODS
+
+	/**
+	 * Get Logs
+	 * 
+	 * Get the access logs associated with a given bucket.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
+	 * @return TarzanHTTPResponse
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?ServerLogs.html
+	 */
+	public function get_logs($bucket)
+	{
+		// Add this to our request
+		$opt['verb'] = HTTP_GET;
+		$opt['method'] = 'get_logs';
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
+
+	/**
+	 * Toggle Logging
+	 * 
+	 * Enable/Disable bucket logging.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function toggle_logging()
+	{
+		
+	}
+
+	/**
+	 * Set Logging Permissions
+	 * 
+	 * Determine the permissions for managing the logging process.
+	 * 
+	 * @todo Implement this method.
+	 */
+	public function set_logging_permissions()
+	{
+		
+	}
+
+
+	/*%******************************************************************************************%*/
 	// MISCELLANEOUS METHODS
 
 	/**
@@ -1172,18 +1262,48 @@ class AmazonS3 extends TarzanCore
 	 * Gets the URL for the file.
 	 * 
 	 * @access public
-	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
-	 * @return string The file URL.
+	 * @param integer $qsa (Required) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
+	 * @return string The file URL, with authentication parameters if requested.
 	 */
-	public function get_object_url($bucket, $filename)
+	public function get_object_url($bucket, $filename, $qsa = 0)
 	{
-		// If we're using a virtual host, use that instead.
-		if ($this->vhost)
+		if ($qsa)
 		{
-			return 'http://' . $this->vhost . '/' . $filename;
+			// Add this to our request
+			$opt['verb'] = HTTP_GET;
+			$opt['method'] = 'get_object_url';
+			$opt['filename'] = $filename;
+			$opt['qsa'] = $qsa;
+
+			// Adjust the clock
+			$old_offset = $this->adjust_offset;
+			$this->adjust_offset($qsa);
+
+			// Authenticate to S3
+			$data = $this->authenticate($bucket, $opt);
+
+			// Reset the clock
+			$this->adjust_offset = $old_offset;
+
+			if ($this->vhost)
+			{
+				return 'http://' . $this->vhost . $data['filename'] . '?AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
+			}
+			
+			return 'http://' . $data['bucket'] . '.s3.amazonaws.com' . $data['filename'] . '?AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
 		}
-		return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename;
+		else
+		{
+			// If we're using a virtual host, use that instead.
+			if ($this->vhost)
+			{
+				return 'http://' . $this->vhost . '/' . $filename;
+			}
+
+			return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename;
+		}
 	}
 
 	/**
@@ -1192,7 +1312,7 @@ class AmazonS3 extends TarzanCore
 	 * Gets the URL for the torrent file for the file.
 	 * 
 	 * @access public
-	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
 	 * @return string The Torrent URL.
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html

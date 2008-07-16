@@ -695,13 +695,23 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_logs</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_c5e0d8a7c97a676793db8f6c2864df0d.html</Path>
+    <Anchor>c5e0d8a7c97a676793db8f6c2864df0d</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>get_object</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
       <Scope>AmazonS3</Scope>
     </TokenIdentifier>
-    <Path>a00003_f6d5c99740ac735573ef22ccc874c1ac.html</Path>
-    <Anchor>f6d5c99740ac735573ef22ccc874c1ac</Anchor>
+    <Path>a00003_c910dc680460ad26d60cd9d138c3e534.html</Path>
+    <Anchor>c910dc680460ad26d60cd9d138c3e534</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -732,6 +742,26 @@
     </TokenIdentifier>
     <Path>a00003_58758d28b2b11c5a98c635c34092f7be.html</Path>
     <Anchor>58758d28b2b11c5a98c635c34092f7be</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get_object_url</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_ba6cfbdb199890da7f752826901b41bc.html</Path>
+    <Anchor>ba6cfbdb199890da7f752826901b41bc</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>get_torrent_url</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_caec29c4ea275db8b682ff6ecca1cec2.html</Path>
+    <Anchor>caec29c4ea275db8b682ff6ecca1cec2</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -835,6 +865,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>set_logging_permissions</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_24e1a7d3591af5fc2240eba51cd619a3.html</Path>
+    <Anchor>24e1a7d3591af5fc2240eba51cd619a3</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>set_object_acl</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -842,6 +882,16 @@
     </TokenIdentifier>
     <Path>a00003_1e5fe3f4f0a133b53ce5729a33755961.html</Path>
     <Anchor>1e5fe3f4f0a133b53ce5729a33755961</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>set_vhost</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_77c40f0c3d121a4d981544e13d9b4c6c.html</Path>
+    <Anchor>77c40f0c3d121a4d981544e13d9b4c6c</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -855,6 +905,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>toggle_logging</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_929091a637100249ce35a2eecbc1a348.html</Path>
+    <Anchor>929091a637100249ce35a2eecbc1a348</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>$request_url</Name>
       <APILanguage>cpp</APILanguage>
       <Type>data</Type>
@@ -862,6 +922,16 @@
     </TokenIdentifier>
     <Path>a00003_9c8e8b2bcab16a0cc56e6d5e248fa184.html</Path>
     <Anchor>9c8e8b2bcab16a0cc56e6d5e248fa184</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>$vhost</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>AmazonS3</Scope>
+    </TokenIdentifier>
+    <Path>a00003_294af23ca36464b7a5661d8080ce43d1.html</Path>
+    <Anchor>294af23ca36464b7a5661d8080ce43d1</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1100,6 +1170,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>adjust_offset</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>TarzanCore</Scope>
+    </TokenIdentifier>
+    <Path>a00006_442c34311e9a195e3dff6ac7dbdd903d.html</Path>
+    <Anchor>442c34311e9a195e3dff6ac7dbdd903d</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>authenticate</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -1147,6 +1227,16 @@
     </TokenIdentifier>
     <Path>a00006_4cef61f6f9842dbb0f5b8b11d1b54de5.html</Path>
     <Anchor>4cef61f6f9842dbb0f5b8b11d1b54de5</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>$adjust_offset</Name>
+      <APILanguage>cpp</APILanguage>
+      <Type>data</Type>
+      <Scope>TarzanCore</Scope>
+    </TokenIdentifier>
+    <Path>a00006_053f937e9f27d6db023ca120e763126c.html</Path>
+    <Anchor>053f937e9f27d6db023ca120e763126c</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package TarzanCore
- * @version 2008.07.07
+ * @version 2008.07.15
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -144,6 +144,11 @@ class TarzanCore
 	 */
 	var $response_class = 'TarzanHTTPResponse';
 
+	/**
+	 * @var The number of seconds to adjust the request timestamp by.
+	 */
+	var $adjust_offset = 0;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -215,6 +220,24 @@ class TarzanCore
 
 
 	/*%******************************************************************************************%*/
+	// SET CUSTOM SETTINGS
+
+	/**
+	 * Adjust Offset
+	 * 
+	 * Allows you to adjust the current time, for occasions when your server is out of sync with 
+	 * Amazon's servers.
+	 * 
+	 * @param string $seconds (Required) The number of seconds to adjust the sent timestamp by.
+	 * @return void
+	 */
+	public function adjust_offset($seconds)
+	{
+		$this->adjust_offset = $seconds;
+	}
+
+
+	/*%******************************************************************************************%*/
 	// SET CUSTOM CLASSES
 
 	/**
@@ -281,7 +304,7 @@ class TarzanCore
 		$query['Action'] = $action;
 		$query['AWSAccessKeyId'] = $this->key;
 		$query['SignatureVersion'] = 1;
-		$query['Timestamp'] = gmdate(DATE_AWS_ISO8601, time());
+		$query['Timestamp'] = gmdate(DATE_AWS_ISO8601, time() + $this->adjust_offset);
 		$query['Version'] = $this->api_version;
 
 		// Merge in any options that were passed in
