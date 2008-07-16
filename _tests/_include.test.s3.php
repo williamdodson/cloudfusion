@@ -234,7 +234,7 @@ class S3Base extends UnitTestCase
 	public function test_get_bucket_filesize()
 	{
 		$get_bucket_filesize = $this->class->get_bucket_filesize($this->bucket);
-		$this->assertEqual($get_bucket_filesize, 13627);
+		$this->assertEqual($get_bucket_filesize, 13679);
 	}
 	
 	public function test_head_object()
@@ -274,6 +274,18 @@ class S3Base extends UnitTestCase
 		}
 	}
 	
+	public function test_get_object_url()
+	{
+		$get_object_url = $this->class->get_object_url($this->bucket, $this->file);
+		$this->assertEqual($get_object_url, 'http://' . $this->bucket . '.s3.amazonaws.com/' . $this->file);
+	}
+
+	public function test_get_torrent_url()
+	{
+		$get_torrent_url = $this->class->get_torrent_url($this->bucket, $this->file);
+		$this->assertEqual($get_torrent_url, 'http://' . $this->bucket . '.s3.amazonaws.com/' . $this->file . '?torrent');
+	}
+
 	public function test_set_object_acl()
 	{
 		$set_object_acl = $this->class->set_object_acl($this->bucket, $this->file, S3_ACL_PUBLIC);

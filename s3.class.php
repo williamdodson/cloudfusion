@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.12
+ * @version 2008.07.15
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -66,6 +66,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	var $request_url;
 
+	/**
+	 * @var The virtual host setting.
+	 */
+	var $vhost;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -80,6 +85,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
+		$this->vhost = null;
 		$this->api_version = '2006-03-01';
 		parent::__construct($key, $secret_key);
 	}
@@ -93,7 +99,7 @@ class AmazonS3 extends TarzanCore
 	 *
 	 * Authenticates a connection to S3.
 	 *
-	 * @access private
+	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param array $opt (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * @param string $location (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
@@ -131,7 +137,11 @@ class AmazonS3 extends TarzanCore
 			$filename = rawurlencode($filename);
 
 			// Set hostname
-			if ($method == 'list_buckets')
+			if ($this->vhost)
+			{
+				$hostname = $this->vhost;
+			}
+			elseif ($method == 'list_buckets')
 			{
 				$hostname = 's3.amazonaws.com';
 			}
@@ -294,6 +304,20 @@ class AmazonS3 extends TarzanCore
 			// Return!
 			return $data;
 		}
+	}
+
+	/**
+	 * Set Virtual Host
+	 * 
+	 * Use this virtual host instead of the normal bucket.s3.amazonaws.com domain.
+	 * 
+	 * @access public
+	 * @param string $vhost (Required) The hostname to use instead of bucket.s3.amazonaws.com.
+	 * @return void
+	 */
+	public function set_vhost($vhost)
+	{
+		$this->vhost = $vhost;
 	}
 
 
@@ -1084,7 +1108,6 @@ class AmazonS3 extends TarzanCore
 	 * <ul>
 	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PUBLIC.</li>
 	 *   <li>string overwrite - (Optional) If set to true, checks to see if the file exists and will overwrite the old data with new data. Defaults to false.</li>
-	 *   <li>string cname - (Optional) If you're serving the file from a different hostname from s3.amazonaws.com (e.g. such as with a custom CNAME setting), return the URL with this hostname. Defaults to null.</li>
 	 * </ul>
 	 * @return string The S3 URL for the uploaded file. Returns null if unsuccessful.
 	 */
@@ -1126,12 +1149,12 @@ class AmazonS3 extends TarzanCore
 		{
 			$url = $object->header['x-tarzan-requesturl'];
 
-			// If we have a CNAME value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.
-			if ($cname)
+			// If we have a virtual host value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.
+			if ($this->vhost)
 			{
 				$url = str_ireplace('http://', '', $url);
 				$url = explode('/', $url);
-				$url[0] = $cname;
+				$url[0] = $this->vhost;
 				$url = 'http://' . implode('/', $url);
 			}
 
@@ -1141,6 +1164,47 @@ class AmazonS3 extends TarzanCore
 		{
 			return null;
 		}
+	}
+
+	/**
+	 * Get Object URL
+	 * 
+	 * Gets the URL for the file.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $filename (Required) The filename for the content.
+	 * @return string The file URL.
+	 */
+	public function get_object_url($bucket, $filename)
+	{
+		// If we're using a virtual host, use that instead.
+		if ($this->vhost)
+		{
+			return 'http://' . $this->vhost . '/' . $filename;
+		}
+		return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename;
+	}
+
+	/**
+	 * Get Torrent URL
+	 * 
+	 * Gets the URL for the torrent file for the file.
+	 * 
+	 * @access public
+	 * @param string $bucket (Required) The name of the bucket to be used.
+	 * @param string $filename (Required) The filename for the content.
+	 * @return string The Torrent URL.
+	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html
+	 */
+	public function get_torrent_url($bucket, $filename)
+	{
+		// If we're using a virtual host, use that instead.
+		if ($this->vhost)
+		{
+			return 'http://' . $this->vhost . '/' . $filename . '?torrent';
+		}
+		return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename . '?torrent';
 	}
 }
 ?>
