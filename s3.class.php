@@ -132,6 +132,8 @@ class AmazonS3 extends TarzanCore
 			$etag = null;
 			$qsa = null;
 			$md5 = null;
+			$meta = null;
+			$hmeta = null;
 			$returnCurlHandle = null;
 
 			// Break the array into individual variables, while storing the original.
@@ -276,6 +278,18 @@ class AmazonS3 extends TarzanCore
 					$md5 = $this->util->hex_to_base64(md5($body));
 					$req->addHeader('Content-MD5', $md5);
 				}
+
+				// Add any meta headers.
+				if ($meta)
+				{
+					uksort($meta, 'strnatcasecmp');
+
+					foreach ($meta as $k => $v)
+					{
+						$req->addHeader('x-amz-meta-' . strtolower($k), $v);
+						$hmeta .= 'x-amz-meta-' . strtolower($k) . ':' . $v . "\n";
+					}
+				}
 			}
 
 			// Data that will be "signed".
@@ -290,12 +304,12 @@ class AmazonS3 extends TarzanCore
 			if ($qsa)
 			{
 				// Prepare the string to sign
-				$stringToSign = "$verb\n$md5\n$contentType\n$since_epoch\n$acl/$bucket$filename";
+				$stringToSign = "$verb\n$md5\n$contentType\n$since_epoch\n$acl$hmeta/$bucket$filename";
 			}
 			else
 			{
 				// Prepare the string to sign
-				$stringToSign = "$verb\n$md5\n$contentType\n$httpDate\n$acl/$bucket$filename";
+				$stringToSign = "$verb\n$md5\n$contentType\n$httpDate\n$acl$hmeta/$bucket$filename";
 			}
 
 			// Hash the AWS secret key and generate a signature for the request.
@@ -742,11 +756,11 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string contentType - (Required) The type of content that is being sent in the body.</li>
 	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.</li>
 	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
+	 *   <li>array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * @todo Add support for custom metadata.
 	 */
 	public function create_object($bucket, $opt = null)
 	{
