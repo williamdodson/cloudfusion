@@ -130,6 +130,8 @@ class AmazonS3 extends TarzanCore
 			$verb = null;
 			$lastmodified = null;
 			$etag = null;
+			$qsa = null;
+			$md5 = null;
 			$returnCurlHandle = null;
 
 			// Break the array into individual variables, while storing the original.
@@ -219,6 +221,7 @@ class AmazonS3 extends TarzanCore
 				$this->request_url = 'http://' . $hostname . $request;
 			}
 
+			// Instantiate the request class
 			$req = new $this->request_class($this->request_url);
 
 			// Do we have a verb?
@@ -230,11 +233,17 @@ class AmazonS3 extends TarzanCore
 			// Do we have a contentType?
 			if (isset($contentType) && !empty($contentType))
 			{
-				$req->addHeader("Content-Type", $contentType);
+				$req->addHeader('Content-Type', $contentType);
 			}
 			else if ($verb == HTTP_PUT) // Set a default value for HTTP_PUT
 			{
 				$contentType = 'application/x-www-form-urlencoded';
+			}
+
+			// Do we have an MD5 header?
+			if ($md5)
+			{
+				$req->addHeader('Content-MD5', $md5);
 			}
 
 			// Do we have a date?
@@ -285,12 +294,12 @@ class AmazonS3 extends TarzanCore
 			if ($qsa)
 			{
 				// Prepare the string to sign
-				$stringToSign = "$verb\n\n$contentType\n$since_epoch\n$acl/$bucket$filename";
+				$stringToSign = "$verb\n$md5\n$contentType\n$since_epoch\n$acl/$bucket$filename";
 			}
 			else
 			{
 				// Prepare the string to sign
-				$stringToSign = "$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename";
+				$stringToSign = "$verb\n$md5\n$contentType\n$httpDate\n$acl/$bucket$filename";
 			}
 
 			// Hash the AWS secret key and generate a signature for the request.
@@ -749,6 +758,7 @@ class AmazonS3 extends TarzanCore
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'create_object';
 		$opt['filename'] = rawurlencode($opt['filename']);
+		$opt['md5'] = $this->util->hex_to_base64(md5($opt['body']));
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
