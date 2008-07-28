@@ -558,7 +558,10 @@ class AmazonS3 extends TarzanCore
 	
 			foreach ($list as $item)
 			{
-				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, S3_ACL_PRIVATE, true);
+				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, array(
+					'acl' => S3_ACL_PRIVATE, 
+					'returnCurlHandle' => true
+				));
 			}
 
 			$request = new $this->request_class(null);
@@ -1024,14 +1027,18 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_filename (Required) The source filename that you want to copy.
 	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
-	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+ 	 * @param array $opt (Optional) Associative array of parameters which can have the following keys:
+	 * <ul>
+	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.</li>
+	 *   <li>boolean returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
+	 *   <li>array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.</li>
+	 * </ul>
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders
 	 * @todo Add support for custom metadata.
 	 */
-	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
+	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
 	{
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
@@ -1040,10 +1047,14 @@ class AmazonS3 extends TarzanCore
 		$opt['sourceObject'] = $source_filename;
 		$opt['destinationBucket'] = $dest_bucket;
 		$opt['destinationObject'] = $dest_filename;
-		$opt['metadataDirective'] = 'COPY';
-		$opt['acl'] = $acl;
 		$opt['filename'] = rawurlencode($dest_filename);
-		$opt['returnCurlHandle'] = $returnCurlHandle;
+		$opt['metadataDirective'] = 'COPY';
+
+		// Do we have metadata?
+		if (isset($opt['meta']) && is_array($opt['meta']))
+		{
+			$opt['metadataDirective'] = 'REPLACE';
+		}
 
 		// Authenticate to S3
 		return $this->authenticate($dest_bucket, $opt);
@@ -1063,7 +1074,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		return $this->copy_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
+		return $this->copy_object($bucket, $source_filename, $bucket, $dest_filename, array('acl' => $acl));
 	}
 
 	/**
@@ -1081,7 +1092,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		$copy = $this->copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl);
+		$copy = $this->copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, array('acl' => $acl));
 		$del = $this->delete_object($source_bucket, $source_filename);
 		return $copy;
 	}
@@ -1100,7 +1111,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
+		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, array('acl' => $acl));
 	}
 
 	/**
