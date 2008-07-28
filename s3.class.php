@@ -240,12 +240,6 @@ class AmazonS3 extends TarzanCore
 				$contentType = 'application/x-www-form-urlencoded';
 			}
 
-			// Do we have an MD5 header?
-			if ($md5)
-			{
-				$req->addHeader('Content-MD5', $md5);
-			}
-
 			// Do we have a date?
 			if (isset($httpDate) && !empty($httpDate))
 			{
@@ -279,6 +273,8 @@ class AmazonS3 extends TarzanCore
 				if (isset($body) && !empty($body))
 				{
 					$req->setBody($body);
+					$md5 = $this->util->hex_to_base64(md5($body));
+					$req->addHeader('Content-MD5', $md5);
 				}
 			}
 
@@ -758,7 +754,6 @@ class AmazonS3 extends TarzanCore
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'create_object';
 		$opt['filename'] = rawurlencode($opt['filename']);
-		$opt['md5'] = $this->util->hex_to_base64(md5($opt['body']));
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
