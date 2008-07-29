@@ -57,12 +57,14 @@ class AmazonSQS extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $queue_name (Required) The name to use for the queue created. The queue name must be unique within the scope of all your queues.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryCreateQueue.html
 	 */
-	public function create_queue($queue_name)
+	public function create_queue($queue_name, $returnCurlHandle = null)
 	{
 		$opt['QueueName'] = $queue_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		return $this->authenticate('CreateQueue', $opt, SQS_DEFAULT_URL);
 	}
 
@@ -76,12 +78,14 @@ class AmazonSQS extends TarzanCore
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
 	 * @param boolean $force_deletion (Optional) When set to true, the queue is deleted even if it is not empty. If this parameter is omitted or set to false, the queue must be empty for the DeleteQueue action to succeed. Use this parameter with care, because once you delete your messages, you cannot access them again.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html
 	 */
-	public function delete_queue($queue_url, $force_deletion = false)
+	public function delete_queue($queue_url, $force_deletion = false, $returnCurlHandle = null)
 	{
 		$opt = array();
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		if ($force_deletion)
 		{
 			$opt['ForceDeletion'] = (string) $force_deletion;
@@ -98,12 +102,14 @@ class AmazonSQS extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $queue_name_prefix (Optional) String to use for filtering the list results. Only those queues whose name begins with the specified string are returned.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryListQueues.html
 	 */
-	public function list_queues($queue_name_prefix = null)
+	public function list_queues($queue_name_prefix = null, $returnCurlHandle = null)
 	{
 		$opt = array();
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		if ($queue_name_prefix)
 		{
 			$opt['QueueNamePrefix'] = $queue_name_prefix;
@@ -118,13 +124,15 @@ class AmazonSQS extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
 	 */
-	public function get_queue_attributes($queue_url)
+	public function get_queue_attributes($queue_url, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['AttributeName'] = 'All';
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		return $this->authenticate('GetQueueAttributes', $opt, $queue_url);
 	}
 
@@ -139,6 +147,7 @@ class AmazonSQS extends TarzanCore
 	 * @param array $opt Associative array of parameters which can have the following keys:
 	 * <ul>
 	 *   <li>integer VisibilityTimeout - (Optional) Must be an integer from 0 to 7200 (2 hours).</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
@@ -160,11 +169,14 @@ class AmazonSQS extends TarzanCore
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
 	 * @param string $message (Required) Message size cannot exceed 256 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+ 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html
 	 */
-	public function send_message($queue_url, $message)
+	public function send_message($queue_url, $message, $returnCurlHandle = null)
 	{
+		$opt = array();
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		return $this->authenticate('SendMessage', null, $queue_url, $message);
 	}
 
@@ -186,6 +198,7 @@ class AmazonSQS extends TarzanCore
 	 * <ul>
 	 *   <li>integer NumberOfMessages - (Optional) Maximum number of messages to return, from 1 to 256. Not necessarily all the messages in the queue are returned. If there are fewer messages in the queue than NumberOfMessages, the maximum number of messages returned is the current number of messages in the queue. Defaults to 1 message.</li>
 	 *   <li>integer VisibilityTimeout - (Optional) An integer from 0 to 86400 (24 hours). Defaults to 30 seconds.</li>
+	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryReceiveMessage.html
@@ -205,13 +218,15 @@ class AmazonSQS extends TarzanCore
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
 	 * @param string $receipt_handle (Required) The receipt handle of the message to return.
+	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteMessage.html
 	 */
-	public function delete_message($queue_url, $receipt_handle)
+	public function delete_message($queue_url, $receipt_handle, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['ReceiptHandle'] = $receipt_handle;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
 		return $this->authenticate('DeleteMessage', $opt, $queue_url);
 	}
 
