@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SQS
- * @version 2008.07.28
+ * @version 2008.07.29
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -77,19 +77,14 @@ class AmazonSQS extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
-	 * @param boolean $force_deletion (Optional) When set to true, the queue is deleted even if it is not empty. If this parameter is omitted or set to false, the queue must be empty for the DeleteQueue action to succeed. Use this parameter with care, because once you delete your messages, you cannot access them again.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html
 	 */
-	public function delete_queue($queue_url, $force_deletion = false, $returnCurlHandle = null)
+	public function delete_queue($queue_url, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		if ($force_deletion)
-		{
-			$opt['ForceDeletion'] = (string) $force_deletion;
-		}
 		return $this->authenticate('DeleteQueue', $opt, $queue_url);
 	}
 
@@ -177,7 +172,7 @@ class AmazonSQS extends TarzanCore
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('SendMessage', null, $queue_url, $message);
+		return $this->authenticate('SendMessage', $opt, $queue_url, $message);
 	}
 
 	/**
@@ -196,7 +191,7 @@ class AmazonSQS extends TarzanCore
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
 	 * @param array $opt Associative array of parameters which can have the following keys:
 	 * <ul>
-	 *   <li>integer NumberOfMessages - (Optional) Maximum number of messages to return, from 1 to 256. Not necessarily all the messages in the queue are returned. If there are fewer messages in the queue than NumberOfMessages, the maximum number of messages returned is the current number of messages in the queue. Defaults to 1 message.</li>
+	 *   <li>integer MaxNumberOfMessages - (Optional) Maximum number of messages to return, from 1 to 10. Not necessarily all the messages in the queue are returned. If there are fewer messages in the queue than NumberOfMessages, the maximum number of messages returned is the current number of messages in the queue. Defaults to 1 message.</li>
 	 *   <li>integer VisibilityTimeout - (Optional) An integer from 0 to 86400 (24 hours). Defaults to 30 seconds.</li>
 	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>

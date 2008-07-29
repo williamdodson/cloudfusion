@@ -1044,7 +1044,6 @@ class AmazonS3 extends TarzanCore
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders
-	 * @todo Add support for custom metadata.
 	 */
 	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
 	{
@@ -1078,7 +1077,6 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_filename (Required) The source filename that you want to copy.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
-	 * @todo Add support for custom metadata.
 	 */
 	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
@@ -1096,7 +1094,6 @@ class AmazonS3 extends TarzanCore
 	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
-	 * @todo Add support for custom metadata.
 	 */
 	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
@@ -1115,7 +1112,6 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_filename (Required) The source filename that you want to copy.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
-	 * @todo Add support for custom metadata.
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
