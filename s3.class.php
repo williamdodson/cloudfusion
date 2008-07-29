@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.15
+ * @version 2008.07.28
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan

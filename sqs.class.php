@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SQS
- * @version 2008.07.07
+ * @version 2008.07.28
  * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -124,7 +124,7 @@ class AmazonSQS extends TarzanCore
 	public function get_queue_attributes($queue_url)
 	{
 		$opt = array();
-		$opt['Attribute'] = 'All';
+		$opt['AttributeName'] = 'All';
 		return $this->authenticate('GetQueueAttributes', $opt, $queue_url);
 	}
 
@@ -223,12 +223,17 @@ class AmazonSQS extends TarzanCore
 	 * Get Queue Size
 	 * 
 	 * Retrieves the approximate number of messages in the queue.
-	 * 
-	 * @todo Implement this method.
+	 *
+	 * @access public
+	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
+	 * @return integer The Approximate number of messages.
 	 */
-	public function get_queue_size()
+	public function get_queue_size($queue_url)
 	{
-		
+		$opt = array();
+		$opt['AttributeName'] = 'ApproximateNumberOfMessages';
+		$response = $this->authenticate('GetQueueAttributes', $opt, $queue_url);
+		return (integer) $response->body->GetQueueAttributesResult->Attribute->Value;
 	}
 }
 ?>
