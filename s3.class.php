@@ -134,6 +134,7 @@ class AmazonS3 extends TarzanCore
 			$md5 = null;
 			$meta = null;
 			$hmeta = null;
+			$range = null;
 			$returnCurlHandle = null;
 
 			// Break the array into individual variables, while storing the original.
@@ -267,6 +268,12 @@ class AmazonS3 extends TarzanCore
 			{
 				$req->addHeader('If-Modified-Since', $lastmodified);
 				$req->addHeader('If-None-Match', $etag);
+			}
+
+			// Partial content range
+			if ($range)
+			{
+				$req->addHeader('Range', 'bytes=' . $range);
 			}
 
 			// Add a body if we're creating
@@ -789,6 +796,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string lastmodified - (Optional) The LastModified header passed in from a previous request. If used, requires 'etag' as well. Will return a 304 if file hasn't changed.</li>
 	 *   <li>string etag - (Optional) The ETag header passed in from a previous request. If used, requires 'lastmodified' as well. Will return a 304 if file hasn't changed.</li>
 	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
+	 *   <li>string $range - (Optional) A range of bytes to fetch from the file. Useful for downloading partial bits or completing incomplete files. Range notated with a hyphen (e.g. 0-10485759). Defaults to the complete file.
 	 * </ul>
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
