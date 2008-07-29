@@ -1119,7 +1119,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, array('acl' => $acl));
+		return $this->move_object($bucket, $source_filename, $bucket, $dest_filename, $acl);
 	}
 
 	/**

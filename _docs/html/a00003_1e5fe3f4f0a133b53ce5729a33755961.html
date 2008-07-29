@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -148,20 +148,20 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01123">1123</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l01161">1161</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01124"></a>01124         {
-<a name="l01125"></a>01125                 <span class="comment">// Add this to our request</span>
-<a name="l01126"></a>01126                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l01127"></a>01127                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'set_object_acl'</span>;
-<a name="l01128"></a>01128                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
-<a name="l01129"></a>01129                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l01130"></a>01130                 $opt[<span class="stringliteral">'acl'</span>] = $acl;
-<a name="l01131"></a>01131 
-<a name="l01132"></a>01132                 <span class="comment">// Authenticate to S3</span>
-<a name="l01133"></a>01133                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l01134"></a>01134         }
+<div class="fragment"><pre class="fragment"><a name="l01162"></a>01162         {
+<a name="l01163"></a>01163                 <span class="comment">// Add this to our request</span>
+<a name="l01164"></a>01164                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l01165"></a>01165                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'set_object_acl'</span>;
+<a name="l01166"></a>01166                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
+<a name="l01167"></a>01167                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l01168"></a>01168                 $opt[<span class="stringliteral">'acl'</span>] = $acl;
+<a name="l01169"></a>01169 
+<a name="l01170"></a>01170                 <span class="comment">// Authenticate to S3</span>
+<a name="l01171"></a>01171                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01172"></a>01172         }
 </pre></div>
 <p>
 
@@ -171,7 +171,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

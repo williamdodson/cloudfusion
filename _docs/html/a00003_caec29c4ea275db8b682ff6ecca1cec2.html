@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -135,15 +135,15 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>string The Torrent URL. </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01320">1320</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01321"></a>01321         {
-<a name="l01322"></a>01322                 <span class="comment">// If we're using a virtual host, use that instead.</span>
-<a name="l01323"></a>01323                 <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01324"></a>01324                 {
-<a name="l01325"></a>01325                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01326"></a>01326                 }
-<a name="l01327"></a>01327                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01328"></a>01328         }
+<p>Definition at line <a class="el" href="a00038.html#l01358">1358</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01359"></a>01359         {
+<a name="l01360"></a>01360                 <span class="comment">// If we're using a virtual host, use that instead.</span>
+<a name="l01361"></a>01361                 <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01362"></a>01362                 {
+<a name="l01363"></a>01363                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01364"></a>01364                 }
+<a name="l01365"></a>01365                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01366"></a>01366         }
 </pre></div>
 <p>
 
@@ -153,7 +153,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

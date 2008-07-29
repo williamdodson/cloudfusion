@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -141,46 +141,46 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>string The file URL, with authentication parameters if requested. </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01270">1270</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l01308">1308</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00234">TarzanCore::adjust_offset()</a>, and <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01271"></a>01271         {
-<a name="l01272"></a>01272                 <span class="keywordflow">if</span> ($qsa)
-<a name="l01273"></a>01273                 {
-<a name="l01274"></a>01274                         <span class="comment">// Add this to our request</span>
-<a name="l01275"></a>01275                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l01276"></a>01276                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_url'</span>;
-<a name="l01277"></a>01277                         $opt[<span class="stringliteral">'filename'</span>] = $filename;
-<a name="l01278"></a>01278                         $opt[<span class="stringliteral">'qsa'</span>] = $qsa;
-<a name="l01279"></a>01279 
-<a name="l01280"></a>01280                         <span class="comment">// Adjust the clock</span>
-<a name="l01281"></a>01281                         $old_offset = $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
-<a name="l01282"></a>01282                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>($qsa);
-<a name="l01283"></a>01283 
-<a name="l01284"></a>01284                         <span class="comment">// Authenticate to S3</span>
-<a name="l01285"></a>01285                         $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l01286"></a>01286 
-<a name="l01287"></a>01287                         <span class="comment">// Reset the clock</span>
-<a name="l01288"></a>01288                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a> = $old_offset;
-<a name="l01289"></a>01289 
-<a name="l01290"></a>01290                         <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01291"></a>01291                         {
-<a name="l01292"></a>01292                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . $data[<span class="stringliteral">'filename'</span>] . <span class="stringliteral">'?AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
-<a name="l01293"></a>01293                         }
-<a name="l01294"></a>01294                         
-<a name="l01295"></a>01295                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $data[<span class="stringliteral">'bucket'</span>] . <span class="stringliteral">'.s3.amazonaws.com'</span> . $data[<span class="stringliteral">'filename'</span>] . <span class="stringliteral">'?AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
-<a name="l01296"></a>01296                 }
-<a name="l01297"></a>01297                 <span class="keywordflow">else</span>
-<a name="l01298"></a>01298                 {
-<a name="l01299"></a>01299                         <span class="comment">// If we're using a virtual host, use that instead.</span>
-<a name="l01300"></a>01300                         <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01301"></a>01301                         {
-<a name="l01302"></a>01302                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename;
-<a name="l01303"></a>01303                         }
-<a name="l01304"></a>01304 
-<a name="l01305"></a>01305                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename;
-<a name="l01306"></a>01306                 }
-<a name="l01307"></a>01307         }
+<div class="fragment"><pre class="fragment"><a name="l01309"></a>01309         {
+<a name="l01310"></a>01310                 <span class="keywordflow">if</span> ($qsa)
+<a name="l01311"></a>01311                 {
+<a name="l01312"></a>01312                         <span class="comment">// Add this to our request</span>
+<a name="l01313"></a>01313                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l01314"></a>01314                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_url'</span>;
+<a name="l01315"></a>01315                         $opt[<span class="stringliteral">'filename'</span>] = $filename;
+<a name="l01316"></a>01316                         $opt[<span class="stringliteral">'qsa'</span>] = $qsa;
+<a name="l01317"></a>01317 
+<a name="l01318"></a>01318                         <span class="comment">// Adjust the clock</span>
+<a name="l01319"></a>01319                         $old_offset = $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
+<a name="l01320"></a>01320                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>($qsa);
+<a name="l01321"></a>01321 
+<a name="l01322"></a>01322                         <span class="comment">// Authenticate to S3</span>
+<a name="l01323"></a>01323                         $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01324"></a>01324 
+<a name="l01325"></a>01325                         <span class="comment">// Reset the clock</span>
+<a name="l01326"></a>01326                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a> = $old_offset;
+<a name="l01327"></a>01327 
+<a name="l01328"></a>01328                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01329"></a>01329                         {
+<a name="l01330"></a>01330                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . $data[<span class="stringliteral">'filename'</span>] . <span class="stringliteral">'?AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
+<a name="l01331"></a>01331                         }
+<a name="l01332"></a>01332                         
+<a name="l01333"></a>01333                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $data[<span class="stringliteral">'bucket'</span>] . <span class="stringliteral">'.s3.amazonaws.com'</span> . $data[<span class="stringliteral">'filename'</span>] . <span class="stringliteral">'?AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
+<a name="l01334"></a>01334                 }
+<a name="l01335"></a>01335                 <span class="keywordflow">else</span>
+<a name="l01336"></a>01336                 {
+<a name="l01337"></a>01337                         <span class="comment">// If we're using a virtual host, use that instead.</span>
+<a name="l01338"></a>01338                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01339"></a>01339                         {
+<a name="l01340"></a>01340                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename;
+<a name="l01341"></a>01341                         }
+<a name="l01342"></a>01342 
+<a name="l01343"></a>01343                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename;
+<a name="l01344"></a>01344                 }
+<a name="l01345"></a>01345         }
 </pre></div>
 <p>
 
@@ -190,7 +190,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

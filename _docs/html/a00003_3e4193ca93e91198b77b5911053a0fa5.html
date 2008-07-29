@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -134,16 +134,16 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00560">560</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00589">589</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00531">copy_bucket()</a>, and <a class="el" href="a00038.html#l00494">delete_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00561"></a>00561         {
-<a name="l00562"></a>00562                 $responses = array();
-<a name="l00563"></a>00563                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
-<a name="l00564"></a>00564                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
-<a name="l00565"></a>00565 
-<a name="l00566"></a>00566                 <span class="keywordflow">return</span> $responses;
-<a name="l00567"></a>00567         }
+<p>References <a class="el" href="a00038.html#l00557">copy_bucket()</a>, and <a class="el" href="a00038.html#l00520">delete_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00590"></a>00590         {
+<a name="l00591"></a>00591                 $responses = array();
+<a name="l00592"></a>00592                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
+<a name="l00593"></a>00593                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
+<a name="l00594"></a>00594 
+<a name="l00595"></a>00595                 <span class="keywordflow">return</span> $responses;
+<a name="l00596"></a>00596         }
 </pre></div>
 <p>
 
@@ -153,7 +153,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -153,18 +153,18 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. </td></tr>
   </table>
 </dl>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Add support for custom metadata. </dd></dl>
+<dl compact><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Add support for custom metadata. </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01063">1063</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l01101">1101</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l01015">copy_object()</a>, and <a class="el" href="a00038.html#l00838">delete_object()</a>.</p>
+<p>References <a class="el" href="a00038.html#l01049">copy_object()</a>, and <a class="el" href="a00038.html#l00868">delete_object()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01082">rename_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01064"></a>01064         {
-<a name="l01065"></a>01065                 $copy = $this-&gt;<a class="code" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a>($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl);
-<a name="l01066"></a>01066                 $del = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($source_bucket, $source_filename);
-<a name="l01067"></a>01067                 <span class="keywordflow">return</span> $copy;
-<a name="l01068"></a>01068         }
+<p>Referenced by <a class="el" href="a00038.html#l01120">rename_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01102"></a>01102         {
+<a name="l01103"></a>01103                 $copy = $this-&gt;<a class="code" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a>($source_bucket, $source_filename, $dest_bucket, $dest_filename, array(<span class="stringliteral">'acl'</span> =&gt; $acl));
+<a name="l01104"></a>01104                 $del = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($source_bucket, $source_filename);
+<a name="l01105"></a>01105                 <span class="keywordflow">return</span> $copy;
+<a name="l01106"></a>01106         }
 </pre></div>
 <p>
 
@@ -174,7 +174,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

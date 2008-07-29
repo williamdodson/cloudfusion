@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindexHL" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -155,7 +155,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 
 <p>References <a class="el" href="a00041.html#l00234">TarzanCore::adjust_offset()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01015">copy_object()</a>, <a class="el" href="a00038.html#l00380">create_bucket()</a>, <a class="el" href="a00038.html#l00746">create_object()</a>, <a class="el" href="a00038.html#l00494">delete_bucket()</a>, <a class="el" href="a00038.html#l00838">delete_object()</a>, <a class="el" href="a00038.html#l00685">get_bucket_acl()</a>, <a class="el" href="a00038.html#l00432">get_bucket_locale()</a>, <a class="el" href="a00038.html#l01150">get_logs()</a>, <a class="el" href="a00038.html#l00774">get_object()</a>, <a class="el" href="a00038.html#l01099">get_object_acl()</a>, <a class="el" href="a00038.html#l01270">get_object_url()</a>, <a class="el" href="a00038.html#l00455">head_bucket()</a>, <a class="el" href="a00038.html#l00797">head_object()</a>, <a class="el" href="a00038.html#l00620">list_buckets()</a>, <a class="el" href="a00038.html#l00905">list_objects()</a>, <a class="el" href="a00038.html#l00707">set_bucket_acl()</a>, and <a class="el" href="a00038.html#l01123">set_object_acl()</a>.</p>
+<p>Referenced by <a class="el" href="a00038.html#l01049">copy_object()</a>, <a class="el" href="a00038.html#l00406">create_bucket()</a>, <a class="el" href="a00038.html#l00775">create_object()</a>, <a class="el" href="a00038.html#l00520">delete_bucket()</a>, <a class="el" href="a00038.html#l00868">delete_object()</a>, <a class="el" href="a00038.html#l00714">get_bucket_acl()</a>, <a class="el" href="a00038.html#l00458">get_bucket_locale()</a>, <a class="el" href="a00038.html#l01188">get_logs()</a>, <a class="el" href="a00038.html#l00804">get_object()</a>, <a class="el" href="a00038.html#l01137">get_object_acl()</a>, <a class="el" href="a00038.html#l01308">get_object_url()</a>, <a class="el" href="a00038.html#l00481">head_bucket()</a>, <a class="el" href="a00038.html#l00827">head_object()</a>, <a class="el" href="a00038.html#l00649">list_buckets()</a>, <a class="el" href="a00038.html#l00935">list_objects()</a>, <a class="el" href="a00038.html#l00736">set_bucket_acl()</a>, and <a class="el" href="a00038.html#l01161">set_object_acl()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00111"></a>00111         {
 <a name="l00112"></a>00112                 <span class="comment">// If nothing was passed in, don't do anything.</span>
 <a name="l00113"></a>00113                 <span class="keywordflow">if</span> (!$opt)
@@ -178,219 +178,245 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <a name="l00130"></a>00130                         $verb = null;
 <a name="l00131"></a>00131                         $lastmodified = null;
 <a name="l00132"></a>00132                         $etag = null;
-<a name="l00133"></a>00133                         $returnCurlHandle = null;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135                         <span class="comment">// Break the array into individual variables, while storing the original.</span>
-<a name="l00136"></a>00136                         $_opt = $opt;
-<a name="l00137"></a>00137                         extract($opt);
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139                         $filename = rawurlencode($filename);
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141                         <span class="comment">// Set hostname</span>
-<a name="l00142"></a>00142                         <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l00143"></a>00143                         {
-<a name="l00144"></a>00144                                 $hostname = $this-&gt;vhost;
-<a name="l00145"></a>00145                         }
-<a name="l00146"></a>00146                         elseif ($method == <span class="stringliteral">'list_buckets'</span>)
-<a name="l00147"></a>00147                         {
-<a name="l00148"></a>00148                                 $hostname = <span class="stringliteral">'s3.amazonaws.com'</span>;
-<a name="l00149"></a>00149                         }
-<a name="l00150"></a>00150                         <span class="keywordflow">else</span>
-<a name="l00151"></a>00151                         {
-<a name="l00152"></a>00152                                 $hostname = $bucket . <span class="stringliteral">'.s3.amazonaws.com'</span>;
-<a name="l00153"></a>00153                         }
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155                         <span class="comment">// Get the UTC timestamp in RFC 2616 format</span>
-<a name="l00156"></a>00156                         $since_epoch = time() + $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
-<a name="l00157"></a>00157                         $httpDate = gmdate(<a class="code" href="a00020_1d895bd8986515e3792a30ea36777b45.html#1d895bd8986515e3792a30ea36777b45">DATE_AWS_RFC2616</a>, $since_epoch);
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159                         <span class="comment">// Generate the request string</span>
-<a name="l00160"></a>00160                         $request = <span class="stringliteral">''</span>;
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162                         <span class="comment">// Append additional parameters</span>
-<a name="l00163"></a>00163                         $request .= <span class="charliteral">'/'</span> . $filename;
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165                         <span class="comment">// List Object settings</span>
-<a name="l00166"></a>00166                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_objects'</span>)
-<a name="l00167"></a>00167                         {
-<a name="l00168"></a>00168                                 <span class="keywordflow">if</span> (isset($prefix) &amp;&amp; !empty($prefix))
-<a name="l00169"></a>00169                                 {
-<a name="l00170"></a>00170                                         $request = <span class="stringliteral">'/?prefix='</span> . $prefix;
-<a name="l00171"></a>00171                                 }
-<a name="l00172"></a>00172                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($marker) &amp;&amp; !empty($marker))
-<a name="l00173"></a>00173                                 {
-<a name="l00174"></a>00174                                         $request = <span class="stringliteral">'/?marker='</span> . $marker;
-<a name="l00175"></a>00175                                 }
-<a name="l00176"></a>00176                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($maxKeys) &amp;&amp; !empty($maxKeys))
-<a name="l00177"></a>00177                                 {
-<a name="l00178"></a>00178                                         $request = <span class="stringliteral">'/?max-keys='</span> . $maxKeys;
-<a name="l00179"></a>00179                                 }
-<a name="l00180"></a>00180                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($delimiter) &amp;&amp; !empty($delimiter))
-<a name="l00181"></a>00181                                 {
-<a name="l00182"></a>00182                                         $request = <span class="stringliteral">'/?delimiter='</span> . $delimiter;
-<a name="l00183"></a>00183                                 }
-<a name="l00184"></a>00184                         }
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186                         <span class="comment">// Logging</span>
-<a name="l00187"></a>00187                         elseif ($method == <span class="stringliteral">'get_logs'</span>)
-<a name="l00188"></a>00188                         {
-<a name="l00189"></a>00189                                 $request .= <span class="stringliteral">'?logging'</span>;
-<a name="l00190"></a>00190                                 $filename .= <span class="stringliteral">'?logging'</span>;
-<a name="l00191"></a>00191                         }
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193                         <span class="comment">// Get Bucket Locale settings</span>
-<a name="l00194"></a>00194                         elseif ($method == <span class="stringliteral">'get_bucket_locale'</span>)
-<a name="l00195"></a>00195                         {
-<a name="l00196"></a>00196                                 $request = <span class="stringliteral">'/?location'</span>;
-<a name="l00197"></a>00197                                 $filename = <span class="stringliteral">'?location'</span>;
-<a name="l00198"></a>00198                         }
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200                         <span class="comment">// Add ACL stuff if we're getting/setting ACL preferences.</span>
-<a name="l00201"></a>00201                         elseif ($method == <span class="stringliteral">'get_bucket_acl'</span> || $method == <span class="stringliteral">'get_object_acl'</span>)
-<a name="l00202"></a>00202                         {
-<a name="l00203"></a>00203                                 $request .= <span class="stringliteral">'?acl'</span>;
-<a name="l00204"></a>00204                                 $filename .= <span class="stringliteral">'?acl'</span>;
-<a name="l00205"></a>00205                         }
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207                         <span class="keywordflow">if</span> (!$request == <span class="charliteral">'/'</span>)
-<a name="l00208"></a>00208                         {
-<a name="l00209"></a>00209                                 $request = <span class="charliteral">'/'</span> . $request;
+<a name="l00133"></a>00133                         $qsa = null;
+<a name="l00134"></a>00134                         $md5 = null;
+<a name="l00135"></a>00135                         $meta = null;
+<a name="l00136"></a>00136                         $hmeta = null;
+<a name="l00137"></a>00137                         $range = null;
+<a name="l00138"></a>00138                         $returnCurlHandle = null;
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140                         <span class="comment">// Break the array into individual variables, while storing the original.</span>
+<a name="l00141"></a>00141                         $_opt = $opt;
+<a name="l00142"></a>00142                         extract($opt);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144                         $filename = rawurlencode($filename);
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146                         <span class="comment">// Set hostname</span>
+<a name="l00147"></a>00147                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l00148"></a>00148                         {
+<a name="l00149"></a>00149                                 $hostname = $this-&gt;vhost;
+<a name="l00150"></a>00150                         }
+<a name="l00151"></a>00151                         elseif ($method == <span class="stringliteral">'list_buckets'</span>)
+<a name="l00152"></a>00152                         {
+<a name="l00153"></a>00153                                 $hostname = <span class="stringliteral">'s3.amazonaws.com'</span>;
+<a name="l00154"></a>00154                         }
+<a name="l00155"></a>00155                         <span class="keywordflow">else</span>
+<a name="l00156"></a>00156                         {
+<a name="l00157"></a>00157                                 $hostname = $bucket . <span class="stringliteral">'.s3.amazonaws.com'</span>;
+<a name="l00158"></a>00158                         }
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160                         <span class="comment">// Get the UTC timestamp in RFC 2616 format</span>
+<a name="l00161"></a>00161                         $since_epoch = time() + $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
+<a name="l00162"></a>00162                         $httpDate = gmdate(<a class="code" href="a00020_1d895bd8986515e3792a30ea36777b45.html#1d895bd8986515e3792a30ea36777b45">DATE_AWS_RFC2616</a>, $since_epoch);
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164                         <span class="comment">// Generate the request string</span>
+<a name="l00165"></a>00165                         $request = <span class="stringliteral">''</span>;
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167                         <span class="comment">// Append additional parameters</span>
+<a name="l00168"></a>00168                         $request .= <span class="charliteral">'/'</span> . $filename;
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170                         <span class="comment">// List Object settings</span>
+<a name="l00171"></a>00171                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_objects'</span>)
+<a name="l00172"></a>00172                         {
+<a name="l00173"></a>00173                                 <span class="keywordflow">if</span> (isset($prefix) &amp;&amp; !empty($prefix))
+<a name="l00174"></a>00174                                 {
+<a name="l00175"></a>00175                                         $request = <span class="stringliteral">'/?prefix='</span> . $prefix;
+<a name="l00176"></a>00176                                 }
+<a name="l00177"></a>00177                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($marker) &amp;&amp; !empty($marker))
+<a name="l00178"></a>00178                                 {
+<a name="l00179"></a>00179                                         $request = <span class="stringliteral">'/?marker='</span> . $marker;
+<a name="l00180"></a>00180                                 }
+<a name="l00181"></a>00181                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($maxKeys) &amp;&amp; !empty($maxKeys))
+<a name="l00182"></a>00182                                 {
+<a name="l00183"></a>00183                                         $request = <span class="stringliteral">'/?max-keys='</span> . $maxKeys;
+<a name="l00184"></a>00184                                 }
+<a name="l00185"></a>00185                                 <span class="keywordflow">else</span> <span class="keywordflow">if</span> (isset($delimiter) &amp;&amp; !empty($delimiter))
+<a name="l00186"></a>00186                                 {
+<a name="l00187"></a>00187                                         $request = <span class="stringliteral">'/?delimiter='</span> . $delimiter;
+<a name="l00188"></a>00188                                 }
+<a name="l00189"></a>00189                         }
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191                         <span class="comment">// Logging</span>
+<a name="l00192"></a>00192                         elseif ($method == <span class="stringliteral">'get_logs'</span>)
+<a name="l00193"></a>00193                         {
+<a name="l00194"></a>00194                                 $request .= <span class="stringliteral">'?logging'</span>;
+<a name="l00195"></a>00195                                 $filename .= <span class="stringliteral">'?logging'</span>;
+<a name="l00196"></a>00196                         }
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198                         <span class="comment">// Get Bucket Locale settings</span>
+<a name="l00199"></a>00199                         elseif ($method == <span class="stringliteral">'get_bucket_locale'</span>)
+<a name="l00200"></a>00200                         {
+<a name="l00201"></a>00201                                 $request = <span class="stringliteral">'/?location'</span>;
+<a name="l00202"></a>00202                                 $filename = <span class="stringliteral">'?location'</span>;
+<a name="l00203"></a>00203                         }
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205                         <span class="comment">// Add ACL stuff if we're getting/setting ACL preferences.</span>
+<a name="l00206"></a>00206                         elseif ($method == <span class="stringliteral">'get_bucket_acl'</span> || $method == <span class="stringliteral">'get_object_acl'</span>)
+<a name="l00207"></a>00207                         {
+<a name="l00208"></a>00208                                 $request .= <span class="stringliteral">'?acl'</span>;
+<a name="l00209"></a>00209                                 $filename .= <span class="stringliteral">'?acl'</span>;
 <a name="l00210"></a>00210                         }
 <a name="l00211"></a>00211 
-<a name="l00212"></a>00212                         <span class="comment">// Prepare the request.</span>
-<a name="l00213"></a>00213                         <span class="keywordflow">if</span> ($location)
-<a name="l00214"></a>00214                         {
-<a name="l00215"></a>00215                                 $this-&gt;request_url = $location;
-<a name="l00216"></a>00216                         }
-<a name="l00217"></a>00217                         <span class="keywordflow">else</span>
-<a name="l00218"></a>00218                         {
-<a name="l00219"></a>00219                                 $this-&gt;request_url = <span class="stringliteral">'http://'</span> . $hostname . $request;
-<a name="l00220"></a>00220                         }
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222                         $req = <span class="keyword">new</span> $this-&gt;request_class($this-&gt;request_url);
-<a name="l00223"></a>00223 
-<a name="l00224"></a>00224                         <span class="comment">// Do we have a verb?</span>
-<a name="l00225"></a>00225                         <span class="keywordflow">if</span> (isset($verb) &amp;&amp; !empty($verb))
-<a name="l00226"></a>00226                         {
-<a name="l00227"></a>00227                                 $req-&gt;setMethod($verb);
-<a name="l00228"></a>00228                         }
+<a name="l00212"></a>00212                         <span class="keywordflow">if</span> (!$request == <span class="charliteral">'/'</span>)
+<a name="l00213"></a>00213                         {
+<a name="l00214"></a>00214                                 $request = <span class="charliteral">'/'</span> . $request;
+<a name="l00215"></a>00215                         }
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217                         <span class="comment">// Prepare the request.</span>
+<a name="l00218"></a>00218                         <span class="keywordflow">if</span> ($location)
+<a name="l00219"></a>00219                         {
+<a name="l00220"></a>00220                                 $this-&gt;request_url = $location;
+<a name="l00221"></a>00221                         }
+<a name="l00222"></a>00222                         <span class="keywordflow">else</span>
+<a name="l00223"></a>00223                         {
+<a name="l00224"></a>00224                                 $this-&gt;request_url = <span class="stringliteral">'http://'</span> . $hostname . $request;
+<a name="l00225"></a>00225                         }
+<a name="l00226"></a>00226 
+<a name="l00227"></a>00227                         <span class="comment">// Instantiate the request class</span>
+<a name="l00228"></a>00228                         $req = <span class="keyword">new</span> $this-&gt;request_class($this-&gt;request_url);
 <a name="l00229"></a>00229 
-<a name="l00230"></a>00230                         <span class="comment">// Do we have a contentType?</span>
-<a name="l00231"></a>00231                         <span class="keywordflow">if</span> (isset($contentType) &amp;&amp; !empty($contentType))
+<a name="l00230"></a>00230                         <span class="comment">// Do we have a verb?</span>
+<a name="l00231"></a>00231                         <span class="keywordflow">if</span> (isset($verb) &amp;&amp; !empty($verb))
 <a name="l00232"></a>00232                         {
-<a name="l00233"></a>00233                                 $req-&gt;addHeader(<span class="stringliteral">"Content-Type"</span>, $contentType);
+<a name="l00233"></a>00233                                 $req-&gt;setMethod($verb);
 <a name="l00234"></a>00234                         }
-<a name="l00235"></a>00235                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
-<a name="l00236"></a>00236                         {
-<a name="l00237"></a>00237                                 $contentType = <span class="stringliteral">'application/x-www-form-urlencoded'</span>;
-<a name="l00238"></a>00238                         }
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240                         <span class="comment">// Do we have a date?</span>
-<a name="l00241"></a>00241                         <span class="keywordflow">if</span> (isset($httpDate) &amp;&amp; !empty($httpDate))
+<a name="l00235"></a>00235 
+<a name="l00236"></a>00236                         <span class="comment">// Do we have a contentType?</span>
+<a name="l00237"></a>00237                         <span class="keywordflow">if</span> (isset($contentType) &amp;&amp; !empty($contentType))
+<a name="l00238"></a>00238                         {
+<a name="l00239"></a>00239                                 $req-&gt;addHeader(<span class="stringliteral">'Content-Type'</span>, $contentType);
+<a name="l00240"></a>00240                         }
+<a name="l00241"></a>00241                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
 <a name="l00242"></a>00242                         {
-<a name="l00243"></a>00243                                 $req-&gt;addHeader(<span class="stringliteral">"Date"</span>, $httpDate);
+<a name="l00243"></a>00243                                 $contentType = <span class="stringliteral">'application/x-www-form-urlencoded'</span>;
 <a name="l00244"></a>00244                         }
 <a name="l00245"></a>00245 
-<a name="l00246"></a>00246                         <span class="comment">// Do we have ACL settings? (Optional in signed string)</span>
-<a name="l00247"></a>00247                         <span class="keywordflow">if</span> (isset($acl) &amp;&amp; !empty($acl))
+<a name="l00246"></a>00246                         <span class="comment">// Do we have a date?</span>
+<a name="l00247"></a>00247                         <span class="keywordflow">if</span> (isset($httpDate) &amp;&amp; !empty($httpDate))
 <a name="l00248"></a>00248                         {
-<a name="l00249"></a>00249                                 $req-&gt;addHeader(<span class="stringliteral">"x-amz-acl"</span>, $acl);
-<a name="l00250"></a>00250                                 $acl = <span class="stringliteral">'x-amz-acl:'</span> . $acl . <span class="stringliteral">"\n"</span>;
-<a name="l00251"></a>00251                         }
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253                         <span class="comment">// Do we have COPY settings?</span>
-<a name="l00254"></a>00254                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'copy_object'</span>)
-<a name="l00255"></a>00255                         {
-<a name="l00256"></a>00256                                 $acl .= <span class="stringliteral">'x-amz-copy-source:/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject . <span class="stringliteral">"\n"</span>;
-<a name="l00257"></a>00257                                 $req-&gt;addHeader(<span class="stringliteral">'x-amz-copy-source'</span>, <span class="charliteral">'/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject);
-<a name="l00258"></a>00258                         }
-<a name="l00259"></a>00259 
-<a name="l00260"></a>00260                         <span class="comment">// Are we checking for changes?</span>
-<a name="l00261"></a>00261                         <span class="keywordflow">if</span> ($lastmodified &amp;&amp; $etag)
-<a name="l00262"></a>00262                         {
-<a name="l00263"></a>00263                                 $req-&gt;addHeader(<span class="stringliteral">'If-Modified-Since'</span>, $lastmodified);
-<a name="l00264"></a>00264                                 $req-&gt;addHeader(<span class="stringliteral">'If-None-Match'</span>, $etag);
-<a name="l00265"></a>00265                         }
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267                         <span class="comment">// Add a body if we're creating</span>
-<a name="l00268"></a>00268                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'create_object'</span> || $method == <span class="stringliteral">'create_bucket'</span>)
-<a name="l00269"></a>00269                         {
-<a name="l00270"></a>00270                                 <span class="keywordflow">if</span> (isset($body) &amp;&amp; !empty($body))
-<a name="l00271"></a>00271                                 {
-<a name="l00272"></a>00272                                         $req-&gt;setBody($body);
-<a name="l00273"></a>00273                                 }
-<a name="l00274"></a>00274                         }
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276                         <span class="comment">// Data that will be "signed".</span>
-<a name="l00277"></a>00277                         $filename = <span class="charliteral">'/'</span> . $filename;
+<a name="l00249"></a>00249                                 $req-&gt;addHeader(<span class="stringliteral">"Date"</span>, $httpDate);
+<a name="l00250"></a>00250                         }
+<a name="l00251"></a>00251 
+<a name="l00252"></a>00252                         <span class="comment">// Do we have ACL settings? (Optional in signed string)</span>
+<a name="l00253"></a>00253                         <span class="keywordflow">if</span> (isset($acl) &amp;&amp; !empty($acl))
+<a name="l00254"></a>00254                         {
+<a name="l00255"></a>00255                                 $req-&gt;addHeader(<span class="stringliteral">"x-amz-acl"</span>, $acl);
+<a name="l00256"></a>00256                                 $acl = <span class="stringliteral">'x-amz-acl:'</span> . $acl . <span class="stringliteral">"\n"</span>;
+<a name="l00257"></a>00257                         }
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259                         <span class="comment">// Do we have COPY settings?</span>
+<a name="l00260"></a>00260                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'copy_object'</span>)
+<a name="l00261"></a>00261                         {
+<a name="l00262"></a>00262                                 $acl .= <span class="stringliteral">'x-amz-copy-source:/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject . <span class="stringliteral">"\n"</span>;
+<a name="l00263"></a>00263                                 $req-&gt;addHeader(<span class="stringliteral">'x-amz-copy-source'</span>, <span class="charliteral">'/'</span> . $sourceBucket . <span class="charliteral">'/'</span> . $sourceObject);
+<a name="l00264"></a>00264                         }
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266                         <span class="comment">// Are we checking for changes?</span>
+<a name="l00267"></a>00267                         <span class="keywordflow">if</span> ($lastmodified &amp;&amp; $etag)
+<a name="l00268"></a>00268                         {
+<a name="l00269"></a>00269                                 $req-&gt;addHeader(<span class="stringliteral">'If-Modified-Since'</span>, $lastmodified);
+<a name="l00270"></a>00270                                 $req-&gt;addHeader(<span class="stringliteral">'If-None-Match'</span>, $etag);
+<a name="l00271"></a>00271                         }
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273                         <span class="comment">// Partial content range</span>
+<a name="l00274"></a>00274                         <span class="keywordflow">if</span> ($range)
+<a name="l00275"></a>00275                         {
+<a name="l00276"></a>00276                                 $req-&gt;addHeader(<span class="stringliteral">'Range'</span>, <span class="stringliteral">'bytes='</span> . $range);
+<a name="l00277"></a>00277                         }
 <a name="l00278"></a>00278 
-<a name="l00279"></a>00279                         <span class="comment">// If we're listing buckets, there is no filename value.</span>
-<a name="l00280"></a>00280                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_buckets'</span>)
+<a name="l00279"></a>00279                         <span class="comment">// Add a body if we're creating</span>
+<a name="l00280"></a>00280                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'create_object'</span> || $method == <span class="stringliteral">'create_bucket'</span>)
 <a name="l00281"></a>00281                         {
-<a name="l00282"></a>00282                                 $filename = <span class="stringliteral">''</span>;
-<a name="l00283"></a>00283                         }
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285                         <span class="keywordflow">if</span> ($qsa)
-<a name="l00286"></a>00286                         {
-<a name="l00287"></a>00287                                 <span class="comment">// Prepare the string to sign</span>
-<a name="l00288"></a>00288                                 $stringToSign = <span class="stringliteral">"$verb\n\n$contentType\n$since_epoch\n$acl/$bucket$filename"</span>;
-<a name="l00289"></a>00289                         }
-<a name="l00290"></a>00290                         <span class="keywordflow">else</span>
-<a name="l00291"></a>00291                         {
-<a name="l00292"></a>00292                                 <span class="comment">// Prepare the string to sign</span>
-<a name="l00293"></a>00293                                 $stringToSign = <span class="stringliteral">"$verb\n\n$contentType\n$httpDate\n$acl/$bucket$filename"</span>;
-<a name="l00294"></a>00294                         }
-<a name="l00295"></a>00295 
-<a name="l00296"></a>00296                         <span class="comment">// Hash the AWS secret key and generate a signature for the request.</span>
-<a name="l00297"></a>00297                         $signature = $this-&gt;util-&gt;hex_to_base64(hash_hmac(<span class="stringliteral">'sha1'</span>, $stringToSign, $this-&gt;secret_key));
-<a name="l00298"></a>00298 
-<a name="l00299"></a>00299                         <span class="comment">// Pass the developer key and signature</span>
-<a name="l00300"></a>00300                         $req-&gt;addHeader(<span class="stringliteral">"Authorization"</span>, <span class="stringliteral">"AWS "</span> . $this-&gt;key . <span class="stringliteral">":"</span> . $signature);
+<a name="l00282"></a>00282                                 <span class="keywordflow">if</span> (isset($body) &amp;&amp; !empty($body))
+<a name="l00283"></a>00283                                 {
+<a name="l00284"></a>00284                                         $req-&gt;setBody($body);
+<a name="l00285"></a>00285                                         $md5 = $this-&gt;util-&gt;hex_to_base64(md5($body));
+<a name="l00286"></a>00286                                         $req-&gt;addHeader(<span class="stringliteral">'Content-MD5'</span>, $md5);
+<a name="l00287"></a>00287                                 }
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289                                 <span class="comment">// Add any meta headers.</span>
+<a name="l00290"></a>00290                                 <span class="keywordflow">if</span> ($meta)
+<a name="l00291"></a>00291                                 {
+<a name="l00292"></a>00292                                         uksort($meta, <span class="stringliteral">'strnatcasecmp'</span>);
+<a name="l00293"></a>00293 
+<a name="l00294"></a>00294                                         <span class="keywordflow">foreach</span> ($meta as $k =&gt; $v)
+<a name="l00295"></a>00295                                         {
+<a name="l00296"></a>00296                                                 $req-&gt;addHeader(<span class="stringliteral">'x-amz-meta-'</span> . strtolower($k), $v);
+<a name="l00297"></a>00297                                                 $hmeta .= <span class="stringliteral">'x-amz-meta-'</span> . strtolower($k) . <span class="charliteral">':'</span> . $v . <span class="stringliteral">"\n"</span>;
+<a name="l00298"></a>00298                                         }
+<a name="l00299"></a>00299                                 }
+<a name="l00300"></a>00300                         }
 <a name="l00301"></a>00301 
-<a name="l00302"></a>00302                         <span class="comment">// If we have a "true" value for returnCurlHandle, do that instead of completing the request.</span>
-<a name="l00303"></a>00303                         <span class="keywordflow">if</span> ($returnCurlHandle)
-<a name="l00304"></a>00304                         {
-<a name="l00305"></a>00305                                 <span class="keywordflow">return</span> $req-&gt;prepRequest();
-<a name="l00306"></a>00306                         }
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308                         <span class="comment">// Are we getting a Query String Auth?</span>
-<a name="l00309"></a>00309                         <span class="keywordflow">if</span> ($qsa)
-<a name="l00310"></a>00310                         {
-<a name="l00311"></a>00311                                 <span class="keywordflow">return</span> array(
-<a name="l00312"></a>00312                                         <span class="stringliteral">'bucket'</span> =&gt; $bucket,
-<a name="l00313"></a>00313                                         <span class="stringliteral">'filename'</span> =&gt; $filename,
-<a name="l00314"></a>00314                                         <span class="stringliteral">'key'</span> =&gt; $this-&gt;key,
-<a name="l00315"></a>00315                                         <span class="stringliteral">'expires'</span> =&gt; $since_epoch,
-<a name="l00316"></a>00316                                         <span class="stringliteral">'signature'</span> =&gt; $signature,
-<a name="l00317"></a>00317                                 );
-<a name="l00318"></a>00318                         }
-<a name="l00319"></a>00319 
-<a name="l00320"></a>00320                         <span class="comment">// Send!</span>
-<a name="l00321"></a>00321                         $req-&gt;sendRequest();
-<a name="l00322"></a>00322 
-<a name="l00323"></a>00323                         <span class="comment">// Prepare the response.</span>
-<a name="l00324"></a>00324                         $headers = $req-&gt;getResponseHeader();
-<a name="l00325"></a>00325                         $headers[<span class="stringliteral">'x-tarzan-redirects'</span>] = $redirects;
-<a name="l00326"></a>00326                         $headers[<span class="stringliteral">'x-tarzan-requesturl'</span>] = $this-&gt;request_url;
-<a name="l00327"></a>00327                         $headers[<span class="stringliteral">'x-tarzan-stringtosign'</span>] = $stringToSign;
-<a name="l00328"></a>00328                         $headers[<span class="stringliteral">'x-tarzan-requestheaders'</span>] = $req-&gt;request_headers;
-<a name="l00329"></a>00329                         $data = <span class="keyword">new</span> $this-&gt;response_class($headers, $req-&gt;getResponseBody(), $req-&gt;getResponseCode());
-<a name="l00330"></a>00330 
-<a name="l00331"></a>00331                         <span class="comment">// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.</span>
-<a name="l00332"></a>00332                         <span class="comment">// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html</span>
-<a name="l00333"></a>00333                         <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>) $req-&gt;getResponseCode() == 307) <span class="comment">// Temporary redirect to new endpoint.</span>
-<a name="l00334"></a>00334                         {
-<a name="l00335"></a>00335                                 $redirects++;
-<a name="l00336"></a>00336                                 $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, 
-<a name="l00337"></a>00337                                         $_opt, 
-<a name="l00338"></a>00338                                         $headers[<span class="stringliteral">'location'</span>], 
-<a name="l00339"></a>00339                                         $redirects);
-<a name="l00340"></a>00340                         }
-<a name="l00341"></a>00341 
-<a name="l00342"></a>00342                         <span class="comment">// Return!</span>
-<a name="l00343"></a>00343                         <span class="keywordflow">return</span> $data;
-<a name="l00344"></a>00344                 }
-<a name="l00345"></a>00345         }
+<a name="l00302"></a>00302                         <span class="comment">// Data that will be "signed".</span>
+<a name="l00303"></a>00303                         $filename = <span class="charliteral">'/'</span> . $filename;
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305                         <span class="comment">// If we're listing buckets, there is no filename value.</span>
+<a name="l00306"></a>00306                         <span class="keywordflow">if</span> ($method == <span class="stringliteral">'list_buckets'</span>)
+<a name="l00307"></a>00307                         {
+<a name="l00308"></a>00308                                 $filename = <span class="stringliteral">''</span>;
+<a name="l00309"></a>00309                         }
+<a name="l00310"></a>00310 
+<a name="l00311"></a>00311                         <span class="keywordflow">if</span> ($qsa)
+<a name="l00312"></a>00312                         {
+<a name="l00313"></a>00313                                 <span class="comment">// Prepare the string to sign</span>
+<a name="l00314"></a>00314                                 $stringToSign = <span class="stringliteral">"$verb\n$md5\n$contentType\n$since_epoch\n$acl$hmeta/$bucket$filename"</span>;
+<a name="l00315"></a>00315                         }
+<a name="l00316"></a>00316                         <span class="keywordflow">else</span>
+<a name="l00317"></a>00317                         {
+<a name="l00318"></a>00318                                 <span class="comment">// Prepare the string to sign</span>
+<a name="l00319"></a>00319                                 $stringToSign = <span class="stringliteral">"$verb\n$md5\n$contentType\n$httpDate\n$acl$hmeta/$bucket$filename"</span>;
+<a name="l00320"></a>00320                         }
+<a name="l00321"></a>00321 
+<a name="l00322"></a>00322                         <span class="comment">// Hash the AWS secret key and generate a signature for the request.</span>
+<a name="l00323"></a>00323                         $signature = $this-&gt;util-&gt;hex_to_base64(hash_hmac(<span class="stringliteral">'sha1'</span>, $stringToSign, $this-&gt;secret_key));
+<a name="l00324"></a>00324 
+<a name="l00325"></a>00325                         <span class="comment">// Pass the developer key and signature</span>
+<a name="l00326"></a>00326                         $req-&gt;addHeader(<span class="stringliteral">"Authorization"</span>, <span class="stringliteral">"AWS "</span> . $this-&gt;key . <span class="stringliteral">":"</span> . $signature);
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328                         <span class="comment">// If we have a "true" value for returnCurlHandle, do that instead of completing the request.</span>
+<a name="l00329"></a>00329                         <span class="keywordflow">if</span> ($returnCurlHandle)
+<a name="l00330"></a>00330                         {
+<a name="l00331"></a>00331                                 <span class="keywordflow">return</span> $req-&gt;prepRequest();
+<a name="l00332"></a>00332                         }
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334                         <span class="comment">// Are we getting a Query String Auth?</span>
+<a name="l00335"></a>00335                         <span class="keywordflow">if</span> ($qsa)
+<a name="l00336"></a>00336                         {
+<a name="l00337"></a>00337                                 <span class="keywordflow">return</span> array(
+<a name="l00338"></a>00338                                         <span class="stringliteral">'bucket'</span> =&gt; $bucket,
+<a name="l00339"></a>00339                                         <span class="stringliteral">'filename'</span> =&gt; $filename,
+<a name="l00340"></a>00340                                         <span class="stringliteral">'key'</span> =&gt; $this-&gt;key,
+<a name="l00341"></a>00341                                         <span class="stringliteral">'expires'</span> =&gt; $since_epoch,
+<a name="l00342"></a>00342                                         <span class="stringliteral">'signature'</span> =&gt; $signature,
+<a name="l00343"></a>00343                                 );
+<a name="l00344"></a>00344                         }
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346                         <span class="comment">// Send!</span>
+<a name="l00347"></a>00347                         $req-&gt;sendRequest();
+<a name="l00348"></a>00348 
+<a name="l00349"></a>00349                         <span class="comment">// Prepare the response.</span>
+<a name="l00350"></a>00350                         $headers = $req-&gt;getResponseHeader();
+<a name="l00351"></a>00351                         $headers[<span class="stringliteral">'x-tarzan-redirects'</span>] = $redirects;
+<a name="l00352"></a>00352                         $headers[<span class="stringliteral">'x-tarzan-requesturl'</span>] = $this-&gt;request_url;
+<a name="l00353"></a>00353                         $headers[<span class="stringliteral">'x-tarzan-stringtosign'</span>] = $stringToSign;
+<a name="l00354"></a>00354                         $headers[<span class="stringliteral">'x-tarzan-requestheaders'</span>] = $req-&gt;request_headers;
+<a name="l00355"></a>00355                         $data = <span class="keyword">new</span> $this-&gt;response_class($headers, $req-&gt;getResponseBody(), $req-&gt;getResponseCode());
+<a name="l00356"></a>00356 
+<a name="l00357"></a>00357                         <span class="comment">// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.</span>
+<a name="l00358"></a>00358                         <span class="comment">// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html</span>
+<a name="l00359"></a>00359                         <span class="keywordflow">if</span> ((<span class="keywordtype">int</span>) $req-&gt;getResponseCode() == 307) <span class="comment">// Temporary redirect to new endpoint.</span>
+<a name="l00360"></a>00360                         {
+<a name="l00361"></a>00361                                 $redirects++;
+<a name="l00362"></a>00362                                 $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, 
+<a name="l00363"></a>00363                                         $_opt, 
+<a name="l00364"></a>00364                                         $headers[<span class="stringliteral">'location'</span>], 
+<a name="l00365"></a>00365                                         $redirects);
+<a name="l00366"></a>00366                         }
+<a name="l00367"></a>00367 
+<a name="l00368"></a>00368                         <span class="comment">// Return!</span>
+<a name="l00369"></a>00369                         <span class="keywordflow">return</span> $data;
+<a name="l00370"></a>00370                 }
+<a name="l00371"></a>00371         }
 </pre></div>
 <p>
 
@@ -400,7 +426,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

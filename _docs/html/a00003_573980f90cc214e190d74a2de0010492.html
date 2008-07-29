@@ -59,7 +59,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_9762917a6b553ee496ef39978225db0c.html#9762917a6b553ee496ef39978225db0c">copy_object</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_67e44f0aabed7666952d3189a94b4ddb.html#67e44f0aabed7666952d3189a94b4ddb">create_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindexHL" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_1e9648947ae7ab9f3842d430125b23c9.html#1e9648947ae7ab9f3842d430125b23c9">delete_all_objects</a></td></tr>
@@ -140,6 +140,8 @@ string contentType - (Required) The type of content that is being sent in the bo
 string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. </li>
 <li>
 boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests. </li>
+<li>
+array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB. </li>
 </ul>
 </td></tr>
   </table>
@@ -147,22 +149,21 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html</a> </dd></dl>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Add support for custom metadata. </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00746">746</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00775">775</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01204">store_remote_file()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00747"></a>00747         {
-<a name="l00748"></a>00748                 <span class="comment">// Add this to our request</span>
-<a name="l00749"></a>00749                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l00750"></a>00750                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'create_object'</span>;
-<a name="l00751"></a>00751                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($opt[<span class="stringliteral">'filename'</span>]);
-<a name="l00752"></a>00752 
-<a name="l00753"></a>00753                 <span class="comment">// Authenticate to S3</span>
-<a name="l00754"></a>00754                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00755"></a>00755         }
+<p>Referenced by <a class="el" href="a00038.html#l01242">store_remote_file()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00776"></a>00776         {
+<a name="l00777"></a>00777                 <span class="comment">// Add this to our request</span>
+<a name="l00778"></a>00778                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l00779"></a>00779                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'create_object'</span>;
+<a name="l00780"></a>00780                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($opt[<span class="stringliteral">'filename'</span>]);
+<a name="l00781"></a>00781 
+<a name="l00782"></a>00782                 <span class="comment">// Authenticate to S3</span>
+<a name="l00783"></a>00783                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00784"></a>00784         }
 </pre></div>
 <p>
 
@@ -172,7 +173,7 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 15 22:16:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

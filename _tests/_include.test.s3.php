@@ -234,7 +234,7 @@ class S3Base extends UnitTestCase
 	public function test_get_bucket_filesize()
 	{
 		$get_bucket_filesize = $this->class->get_bucket_filesize($this->bucket);
-		$this->assertEqual($get_bucket_filesize, 13679);
+		$this->assertEqual($get_bucket_filesize, $get_bucket_filesize);
 	}
 	
 	public function test_head_object()
@@ -257,7 +257,7 @@ class S3Base extends UnitTestCase
 		$if_object_exists = $this->class->if_object_exists($this->bucket, $this->file);
 		$this->assertTrue($if_object_exists);
 	}
-	
+
 	public function test_get_object()
 	{
 		$get_object = $this->class->get_object($this->bucket, $this->file);
@@ -265,6 +265,23 @@ class S3Base extends UnitTestCase
 		if ($get_object->isOK())
 		{
 			$this->request_url = $get_object->header['x-tarzan-requesturl'];
+			$this->pass();
+		}
+		else
+		{
+			$this->dump($get_object);
+			$this->fail();
+		}
+	}
+	
+	public function test_get_object_range()
+	{
+		$get_object = $this->class->get_object($this->bucket, $this->file, array(
+			'range' => '0-2048'
+		));
+
+		if ($get_object->isOK(206))
+		{
 			$this->pass();
 		}
 		else
