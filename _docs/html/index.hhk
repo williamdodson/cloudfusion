@@ -160,7 +160,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_3e353537326710b42882c991da3bcdfa.html#3e353537326710b42882c991da3bcdfa"><param name="Name" value="__construct"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_4a8f14c591483faeb3b8f12534385839.html#4a8f14c591483faeb3b8f12534385839"><param name="Name" value="create_queue"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa"><param name="Name" value="delete_message"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_d128e8af366f19b37e917940b9f6b676.html#d128e8af366f19b37e917940b9f6b676"><param name="Name" value="delete_queue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9"><param name="Name" value="delete_queue"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c"><param name="Name" value="get_queue_attributes"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84"><param name="Name" value="get_queue_size"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167"><param name="Name" value="list_queues"></OBJECT>
@@ -200,7 +200,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002_8c2772839b4f810899f2b0cdb2e71538.html#8c2772839b4f810899f2b0cdb2e71538"><param name="Name" value="delete_key_pair"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa"><param name="Name" value="delete_message"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c"><param name="Name" value="delete_object"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_d128e8af366f19b37e917940b9f6b676.html#d128e8af366f19b37e917940b9f6b676"><param name="Name" value="delete_queue"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9"><param name="Name" value="delete_queue"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002_4a45805199891166068e2aae364c37d0.html#4a45805199891166068e2aae364c37d0"><param name="Name" value="delete_security_group"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002_2cc74f568df48dadb3c9cb3022693b61.html#2cc74f568df48dadb3c9cb3022693b61"><param name="Name" value="deregister_image"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002_0aae0e3ab3a71117189c7618155988ee.html#0aae0e3ab3a71117189c7618155988ee"><param name="Name" value="describe_addresses"></OBJECT>

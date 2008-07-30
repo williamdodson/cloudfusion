@@ -135,15 +135,15 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>string The Torrent URL. </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01358">1358</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01359"></a>01359         {
-<a name="l01360"></a>01360                 <span class="comment">// If we're using a virtual host, use that instead.</span>
-<a name="l01361"></a>01361                 <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01362"></a>01362                 {
-<a name="l01363"></a>01363                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01364"></a>01364                 }
-<a name="l01365"></a>01365                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01366"></a>01366         }
+<p>Definition at line <a class="el" href="a00038.html#l01354">1354</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01355"></a>01355         {
+<a name="l01356"></a>01356                 <span class="comment">// If we're using a virtual host, use that instead.</span>
+<a name="l01357"></a>01357                 <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01358"></a>01358                 {
+<a name="l01359"></a>01359                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01360"></a>01360                 }
+<a name="l01361"></a>01361                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01362"></a>01362         }
 </pre></div>
 <p>
 
@@ -153,7 +153,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 29 17:20:38 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

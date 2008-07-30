@@ -142,19 +142,19 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01137">1137</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l01133">1133</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01138"></a>01138         {
-<a name="l01139"></a>01139                 <span class="comment">// Add this to our request</span>
-<a name="l01140"></a>01140                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l01141"></a>01141                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_acl'</span>;
-<a name="l01142"></a>01142                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
-<a name="l01143"></a>01143                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l01144"></a>01144 
-<a name="l01145"></a>01145                 <span class="comment">// Authenticate to S3</span>
-<a name="l01146"></a>01146                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l01147"></a>01147         }
+<div class="fragment"><pre class="fragment"><a name="l01134"></a>01134         {
+<a name="l01135"></a>01135                 <span class="comment">// Add this to our request</span>
+<a name="l01136"></a>01136                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l01137"></a>01137                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_acl'</span>;
+<a name="l01138"></a>01138                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
+<a name="l01139"></a>01139                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l01140"></a>01140 
+<a name="l01141"></a>01141                 <span class="comment">// Authenticate to S3</span>
+<a name="l01142"></a>01142                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01143"></a>01143         }
 </pre></div>
 <p>
 
@@ -164,7 +164,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 29 17:20:38 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

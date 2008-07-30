@@ -164,33 +164,32 @@ array meta - (Optional) Associative array of key-value pairs. Represented by x-a
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders</a> </dd></dl>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Add support for custom metadata. </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01049">1049</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l01048">1048</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00557">copy_bucket()</a>, <a class="el" href="a00038.html#l01083">duplicate_object()</a>, and <a class="el" href="a00038.html#l01101">move_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01050"></a>01050         {
-<a name="l01051"></a>01051                 <span class="comment">// Add this to our request</span>
-<a name="l01052"></a>01052                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l01053"></a>01053                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'copy_object'</span>;
-<a name="l01054"></a>01054                 $opt[<span class="stringliteral">'sourceBucket'</span>] = $source_bucket;
-<a name="l01055"></a>01055                 $opt[<span class="stringliteral">'sourceObject'</span>] = $source_filename;
-<a name="l01056"></a>01056                 $opt[<span class="stringliteral">'destinationBucket'</span>] = $dest_bucket;
-<a name="l01057"></a>01057                 $opt[<span class="stringliteral">'destinationObject'</span>] = $dest_filename;
-<a name="l01058"></a>01058                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($dest_filename);
-<a name="l01059"></a>01059                 $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'COPY'</span>;
-<a name="l01060"></a>01060 
-<a name="l01061"></a>01061                 <span class="comment">// Do we have metadata?</span>
-<a name="l01062"></a>01062                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'meta'</span>]) &amp;&amp; is_array($opt[<span class="stringliteral">'meta'</span>]))
-<a name="l01063"></a>01063                 {
-<a name="l01064"></a>01064                         $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'REPLACE'</span>;
-<a name="l01065"></a>01065                 }
-<a name="l01066"></a>01066 
-<a name="l01067"></a>01067                 <span class="comment">// Authenticate to S3</span>
-<a name="l01068"></a>01068                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($dest_bucket, $opt);
-<a name="l01069"></a>01069         }
+<p>Referenced by <a class="el" href="a00038.html#l00557">copy_bucket()</a>, <a class="el" href="a00038.html#l01081">duplicate_object()</a>, and <a class="el" href="a00038.html#l01098">move_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01049"></a>01049         {
+<a name="l01050"></a>01050                 <span class="comment">// Add this to our request</span>
+<a name="l01051"></a>01051                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l01052"></a>01052                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'copy_object'</span>;
+<a name="l01053"></a>01053                 $opt[<span class="stringliteral">'sourceBucket'</span>] = $source_bucket;
+<a name="l01054"></a>01054                 $opt[<span class="stringliteral">'sourceObject'</span>] = $source_filename;
+<a name="l01055"></a>01055                 $opt[<span class="stringliteral">'destinationBucket'</span>] = $dest_bucket;
+<a name="l01056"></a>01056                 $opt[<span class="stringliteral">'destinationObject'</span>] = $dest_filename;
+<a name="l01057"></a>01057                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($dest_filename);
+<a name="l01058"></a>01058                 $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'COPY'</span>;
+<a name="l01059"></a>01059 
+<a name="l01060"></a>01060                 <span class="comment">// Do we have metadata?</span>
+<a name="l01061"></a>01061                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'meta'</span>]) &amp;&amp; is_array($opt[<span class="stringliteral">'meta'</span>]))
+<a name="l01062"></a>01062                 {
+<a name="l01063"></a>01063                         $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'REPLACE'</span>;
+<a name="l01064"></a>01064                 }
+<a name="l01065"></a>01065 
+<a name="l01066"></a>01066                 <span class="comment">// Authenticate to S3</span>
+<a name="l01067"></a>01067                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($dest_bucket, $opt);
+<a name="l01068"></a>01068         }
 </pre></div>
 <p>
 
@@ -200,7 +199,7 @@ array meta - (Optional) Associative array of key-value pairs. Represented by x-a
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Jul 28 23:36:40 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 29 17:20:38 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
