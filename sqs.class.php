@@ -71,9 +71,7 @@ class AmazonSQS extends TarzanCore
 	/**
 	 * Delete Queue
 	 *
-	 * Deletes the queue specified by the queue URL. Normally, a queue must be empty before you can 
-	 * delete it. However, you can set the request parameter ForceDeletion to true to force the deletion 
-	 * of a queue even if it's not empty.
+	 * Deletes the queue specified by the queue URL. This will delete the queue, even if it's not empty.
 	 *
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
@@ -149,6 +147,12 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function set_queue_attributes($queue_url, $opt = null)
 	{
+		if (isset($opt['VisibilityTimeout']))
+		{
+			$opt['Attribute.Name'] = 'VisibilityTimeout';
+			$opt['Attribute.Value'] = $opt['VisibilityTimeout'];
+			unset($opt['VisibilityTimeout']);
+		}
 		return $this->authenticate('SetQueueAttributes', $opt, $queue_url);
 	}
 
@@ -163,7 +167,7 @@ class AmazonSQS extends TarzanCore
 	 *
 	 * @access public
 	 * @param string $queue_url (Required) The URL of the queue to perform the action on.
-	 * @param string $message (Required) Message size cannot exceed 256 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+	 * @param string $message (Required) Message size cannot exceed 8 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
  	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html

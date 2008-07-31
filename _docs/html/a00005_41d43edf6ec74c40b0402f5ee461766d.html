@@ -105,21 +105,21 @@ The SendMessage action delivers a message to the specified queue.<p>
 public <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$queue_url (Required) The URL of the queue to perform the action on. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$message (Required) Message size cannot exceed 256 KB. Allowed Unicode characters (according to <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>): x9 | xA | xD | [x20-xD7FF] | [xE000-xFFFD] | [x10000-x10FFFF] </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$message (Required) Message size cannot exceed 8 KB. Allowed Unicode characters (according to <a href="http://www.w3.org/TR/REC-xml/#charsets">http://www.w3.org/TR/REC-xml/#charsets</a>): x9 | xA | xD | [x20-xD7FF] | [xE000-xFFFD] | [x10000-x10FFFF] </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>boolean</em>&nbsp;</td><td>$returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests. </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html">http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00040.html#l00171">171</a> of file <a class="el" href="a00040.html">sqs.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00040.html#l00175">175</a> of file <a class="el" href="a00040.html">sqs.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00172"></a>00172         {
-<a name="l00173"></a>00173                 $opt = array();
-<a name="l00174"></a>00174                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00175"></a>00175                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SendMessage'</span>, $opt, $queue_url, $message);
-<a name="l00176"></a>00176         }
+<div class="fragment"><pre class="fragment"><a name="l00176"></a>00176         {
+<a name="l00177"></a>00177                 $opt = array();
+<a name="l00178"></a>00178                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00179"></a>00179                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SendMessage'</span>, $opt, $queue_url, $message);
+<a name="l00180"></a>00180         }
 </pre></div>
 <p>
 
@@ -129,7 +129,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 29 17:20:39 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:02 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

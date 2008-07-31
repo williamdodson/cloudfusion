@@ -78,76 +78,82 @@ window.onload = initDynSections;
 <a name="l00068"></a>00068                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'CreateQueue'</span>, $opt, <a class="code" href="a00019_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">SQS_DEFAULT_URL</a>);
 <a name="l00069"></a>00069         }
 <a name="l00070"></a>00070 
-<a name="l00084"></a><a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">00084</a>         <span class="keyword">public</span> function <a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">delete_queue</a>($queue_url, $returnCurlHandle = null)
-<a name="l00085"></a>00085         {
-<a name="l00086"></a>00086                 $opt = array();
-<a name="l00087"></a>00087                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00088"></a>00088                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteQueue'</span>, $opt, $queue_url);
-<a name="l00089"></a>00089         }
-<a name="l00090"></a>00090 
-<a name="l00104"></a><a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">00104</a>         <span class="keyword">public</span> function <a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">list_queues</a>($queue_name_prefix = null, $returnCurlHandle = null)
-<a name="l00105"></a>00105         {
-<a name="l00106"></a>00106                 $opt = array();
-<a name="l00107"></a>00107                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00108"></a>00108                 <span class="keywordflow">if</span> ($queue_name_prefix)
-<a name="l00109"></a>00109                 {
-<a name="l00110"></a>00110                         $opt[<span class="stringliteral">'QueueNamePrefix'</span>] = $queue_name_prefix;
-<a name="l00111"></a>00111                 }
-<a name="l00112"></a>00112                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListQueues'</span>, $opt, <a class="code" href="a00019_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">SQS_DEFAULT_URL</a>);
-<a name="l00113"></a>00113         }
-<a name="l00114"></a>00114 
-<a name="l00126"></a><a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">00126</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">get_queue_attributes</a>($queue_url, $returnCurlHandle = null)
-<a name="l00127"></a>00127         {
-<a name="l00128"></a>00128                 $opt = array();
-<a name="l00129"></a>00129                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'All'</span>;
-<a name="l00130"></a>00130                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00131"></a>00131                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
-<a name="l00132"></a>00132         }
-<a name="l00133"></a>00133 
-<a name="l00150"></a><a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">00150</a>         <span class="keyword">public</span> function <a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">set_queue_attributes</a>($queue_url, $opt = null)
-<a name="l00151"></a>00151         {
-<a name="l00152"></a>00152                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SetQueueAttributes'</span>, $opt, $queue_url);
-<a name="l00153"></a>00153         }
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00157"></a>00157         <span class="comment">// MESSAGES</span>
+<a name="l00082"></a><a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">00082</a>         <span class="keyword">public</span> function <a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">delete_queue</a>($queue_url, $returnCurlHandle = null)
+<a name="l00083"></a>00083         {
+<a name="l00084"></a>00084                 $opt = array();
+<a name="l00085"></a>00085                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00086"></a>00086                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteQueue'</span>, $opt, $queue_url);
+<a name="l00087"></a>00087         }
+<a name="l00088"></a>00088 
+<a name="l00102"></a><a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">00102</a>         <span class="keyword">public</span> function <a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">list_queues</a>($queue_name_prefix = null, $returnCurlHandle = null)
+<a name="l00103"></a>00103         {
+<a name="l00104"></a>00104                 $opt = array();
+<a name="l00105"></a>00105                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00106"></a>00106                 <span class="keywordflow">if</span> ($queue_name_prefix)
+<a name="l00107"></a>00107                 {
+<a name="l00108"></a>00108                         $opt[<span class="stringliteral">'QueueNamePrefix'</span>] = $queue_name_prefix;
+<a name="l00109"></a>00109                 }
+<a name="l00110"></a>00110                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListQueues'</span>, $opt, <a class="code" href="a00019_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">SQS_DEFAULT_URL</a>);
+<a name="l00111"></a>00111         }
+<a name="l00112"></a>00112 
+<a name="l00124"></a><a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">00124</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">get_queue_attributes</a>($queue_url, $returnCurlHandle = null)
+<a name="l00125"></a>00125         {
+<a name="l00126"></a>00126                 $opt = array();
+<a name="l00127"></a>00127                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'All'</span>;
+<a name="l00128"></a>00128                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00129"></a>00129                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00130"></a>00130         }
+<a name="l00131"></a>00131 
+<a name="l00148"></a><a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">00148</a>         <span class="keyword">public</span> function <a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">set_queue_attributes</a>($queue_url, $opt = null)
+<a name="l00149"></a>00149         {
+<a name="l00150"></a>00150                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]))
+<a name="l00151"></a>00151                 {
+<a name="l00152"></a>00152                         $opt[<span class="stringliteral">'Attribute.Name'</span>] = <span class="stringliteral">'VisibilityTimeout'</span>;
+<a name="l00153"></a>00153                         $opt[<span class="stringliteral">'Attribute.Value'</span>] = $opt[<span class="stringliteral">'VisibilityTimeout'</span>];
+<a name="l00154"></a>00154                         unset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]);
+<a name="l00155"></a>00155                 }
+<a name="l00156"></a>00156                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00157"></a>00157         }
 <a name="l00158"></a>00158 
-<a name="l00171"></a><a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">00171</a>         <span class="keyword">public</span> function <a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">send_message</a>($queue_url, $message, $returnCurlHandle = null)
-<a name="l00172"></a>00172         {
-<a name="l00173"></a>00173                 $opt = array();
-<a name="l00174"></a>00174                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00175"></a>00175                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SendMessage'</span>, $opt, $queue_url, $message);
-<a name="l00176"></a>00176         }
-<a name="l00177"></a>00177 
-<a name="l00201"></a><a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">00201</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">receive_message</a>($queue_url, $opt = null)
-<a name="l00202"></a>00202         {
-<a name="l00203"></a>00203                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ReceiveMessage'</span>, $opt, $queue_url);
-<a name="l00204"></a>00204         }
-<a name="l00205"></a>00205 
-<a name="l00220"></a><a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">00220</a>         <span class="keyword">public</span> function <a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">delete_message</a>($queue_url, $receipt_handle, $returnCurlHandle = null)
-<a name="l00221"></a>00221         {
-<a name="l00222"></a>00222                 $opt = array();
-<a name="l00223"></a>00223                 $opt[<span class="stringliteral">'ReceiptHandle'</span>] = $receipt_handle;
-<a name="l00224"></a>00224                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00225"></a>00225                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteMessage'</span>, $opt, $queue_url);
-<a name="l00226"></a>00226         }
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228 
-<a name="l00229"></a>00229         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00230"></a>00230         <span class="comment">// HELPER/UTILITY METHODS</span>
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00161"></a>00161         <span class="comment">// MESSAGES</span>
+<a name="l00162"></a>00162 
+<a name="l00175"></a><a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">00175</a>         <span class="keyword">public</span> function <a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">send_message</a>($queue_url, $message, $returnCurlHandle = null)
+<a name="l00176"></a>00176         {
+<a name="l00177"></a>00177                 $opt = array();
+<a name="l00178"></a>00178                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00179"></a>00179                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SendMessage'</span>, $opt, $queue_url, $message);
+<a name="l00180"></a>00180         }
+<a name="l00181"></a>00181 
+<a name="l00205"></a><a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">00205</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">receive_message</a>($queue_url, $opt = null)
+<a name="l00206"></a>00206         {
+<a name="l00207"></a>00207                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ReceiveMessage'</span>, $opt, $queue_url);
+<a name="l00208"></a>00208         }
+<a name="l00209"></a>00209 
+<a name="l00224"></a><a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">00224</a>         <span class="keyword">public</span> function <a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">delete_message</a>($queue_url, $receipt_handle, $returnCurlHandle = null)
+<a name="l00225"></a>00225         {
+<a name="l00226"></a>00226                 $opt = array();
+<a name="l00227"></a>00227                 $opt[<span class="stringliteral">'ReceiptHandle'</span>] = $receipt_handle;
+<a name="l00228"></a>00228                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00229"></a>00229                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteMessage'</span>, $opt, $queue_url);
+<a name="l00230"></a>00230         }
 <a name="l00231"></a>00231 
-<a name="l00241"></a><a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">00241</a>         <span class="keyword">public</span> function <a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">get_queue_size</a>($queue_url)
-<a name="l00242"></a>00242         {
-<a name="l00243"></a>00243                 $opt = array();
-<a name="l00244"></a>00244                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'ApproximateNumberOfMessages'</span>;
-<a name="l00245"></a>00245                 $response = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
-<a name="l00246"></a>00246                 <span class="keywordflow">return</span> (integer) $response-&gt;body-&gt;GetQueueAttributesResult-&gt;Attribute-&gt;Value;
-<a name="l00247"></a>00247         }
-<a name="l00248"></a>00248 }
-<a name="l00249"></a>00249 ?&gt;
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00234"></a>00234         <span class="comment">// HELPER/UTILITY METHODS</span>
+<a name="l00235"></a>00235 
+<a name="l00245"></a><a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">00245</a>         <span class="keyword">public</span> function <a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">get_queue_size</a>($queue_url)
+<a name="l00246"></a>00246         {
+<a name="l00247"></a>00247                 $opt = array();
+<a name="l00248"></a>00248                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'ApproximateNumberOfMessages'</span>;
+<a name="l00249"></a>00249                 $response = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00250"></a>00250                 <span class="keywordflow">return</span> (integer) $response-&gt;body-&gt;GetQueueAttributesResult-&gt;Attribute-&gt;Value;
+<a name="l00251"></a>00251         }
+<a name="l00252"></a>00252 }
+<a name="l00253"></a>00253 ?&gt;
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jul 29 17:20:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:44:59 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
