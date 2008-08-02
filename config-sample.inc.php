@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package Config
  * @version 2008.04.12
- * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
+ * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
  * @see README

@@ -6,7 +6,7 @@
  * @category Tarzan
  * @package EC2
  * @version 2008.04.13
- * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
+ * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
  * @link http://ec2.amazonaws.com Amazon EC2

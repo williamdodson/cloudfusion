@@ -5,8 +5,8 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.07.28
- * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
+ * @version 2008.08.02
+ * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
  * @link http://s3.amazonaws.com Amazon S3
@@ -58,6 +58,8 @@ define('S3_PCRE_ALL', '/.*/i');
 
 /**
  * Container for all Amazon S3-related methods.
+ * 
+ * @example s3/__construct
  */
 class AmazonS3 extends TarzanCore
 {
@@ -82,6 +84,7 @@ class AmazonS3 extends TarzanCore
 	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
 	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
 	 * @return bool FALSE if no valid values are set, otherwise true.
+	 * @example s3/__construct
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -379,6 +382,7 @@ class AmazonS3 extends TarzanCore
 	 * @param string $vhost (Required) The hostname to use instead of bucket.s3.amazonaws.com.
 	 * @return void
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
+	 * @example s3/set_vhost
 	 */
 	public function set_vhost($vhost)
 	{
@@ -402,6 +406,7 @@ class AmazonS3 extends TarzanCore
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
+	 * @example s3/create_bucket
 	 */
 	public function create_bucket($bucket, $locale = null, $returnCurlHandle = null)
 	{
@@ -454,6 +459,7 @@ class AmazonS3 extends TarzanCore
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
+	 * @example s3/get_bucket_locale
 	 */
 	public function get_bucket_locale($bucket, $returnCurlHandle = null)
 	{
@@ -477,6 +483,7 @@ class AmazonS3 extends TarzanCore
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
+	 * @example s3/head_bucket
 	 */
 	public function head_bucket($bucket, $returnCurlHandle = null)
 	{
@@ -498,6 +505,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to check.
 	 * @return boolean Whether it exists or not.
+	 * @example s3/if_bucket_exists
 	 */
 	public function if_bucket_exists($bucket)
 	{

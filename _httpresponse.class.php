@@ -5,8 +5,8 @@
  *
  * @category Tarzan
  * @package TarzanHTTPResponse
- * @version 2008.04.20
- * @copyright 2006-2008 LifeNexus Digital, Inc. and contributors.
+ * @version 2008.08.02
+ * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
  * @see README
@@ -72,7 +72,7 @@ class TarzanHTTPResponse
 	 * @param mixed $codes (Optional) The status code(s) to expect. Integer for a single accepted value, or an array of integers for multiple accepted values.
 	 * @return boolean Whether we received the expected code or not.
 	 */
-	public function isOK($codes = 200)
+	public function isOK($codes = array(200, 204))
 	{
 		if (is_array($codes))
 		{
