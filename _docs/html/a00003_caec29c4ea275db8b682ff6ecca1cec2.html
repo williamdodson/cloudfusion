@@ -133,17 +133,35 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>string The Torrent URL. </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l01354">1354</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01355"></a>01355         {
-<a name="l01356"></a>01356                 <span class="comment">// If we're using a virtual host, use that instead.</span>
-<a name="l01357"></a>01357                 <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01358"></a>01358                 {
-<a name="l01359"></a>01359                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01360"></a>01360                 }
-<a name="l01361"></a>01361                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
-<a name="l01362"></a>01362         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Display the URL for accessing the .torrent for this file in this bucket.</span>
+<span class="comment"> */</span>
+echo $s3-&gt;get_torrent_url(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>);
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00038.html#l01442">1442</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01443"></a>01443         {
+<a name="l01444"></a>01444                 <span class="comment">// If we're using a virtual host, use that instead.</span>
+<a name="l01445"></a>01445                 <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01446"></a>01446                 {
+<a name="l01447"></a>01447                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01448"></a>01448                 }
+<a name="l01449"></a>01449                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . <span class="stringliteral">'?torrent'</span>;
+<a name="l01450"></a>01450         }
 </pre></div>
 <p>
 
@@ -153,7 +171,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

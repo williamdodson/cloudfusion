@@ -59,7 +59,8 @@ define('S3_PCRE_ALL', '/.*/i');
 /**
  * Container for all Amazon S3-related methods.
  * 
- * @example s3/__construct
+ * @section example Example Usage:
+ * @include s3/__construct.phps
  */
 class AmazonS3 extends TarzanCore
 {
@@ -80,11 +81,12 @@ class AmazonS3 extends TarzanCore
 	/**
 	 * Constructor
 	 * 
-	 * @access public
+	 * @public
 	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
 	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
 	 * @return bool FALSE if no valid values are set, otherwise true.
-	 * @example s3/__construct
+	 * @section example Example Usage:
+	 * @include s3/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -381,8 +383,9 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $vhost (Required) The hostname to use instead of bucket.s3.amazonaws.com.
 	 * @return void
+ 	 * @section example Example Usage:
+	 * @include s3/set_vhost.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
-	 * @example s3/set_vhost
 	 */
 	public function set_vhost($vhost)
 	{
@@ -404,9 +407,10 @@ class AmazonS3 extends TarzanCore
 	 * @param string $locale (Optional) Sets the preferred geographical location for the bucket. Accepts S3_LOCATION_US or S3_LOCATION_EU. Defaults to S3_LOCATION_US.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+ 	 * @section example Example Usage:
+	 * @include s3/create_bucket.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
-	 * @example s3/create_bucket
 	 */
 	public function create_bucket($bucket, $locale = null, $returnCurlHandle = null)
 	{
@@ -458,8 +462,9 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to check.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+ 	 * @section example Example Usage:
+	 * @include s3/get_bucket_locale.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
-	 * @example s3/get_bucket_locale
 	 */
 	public function get_bucket_locale($bucket, $returnCurlHandle = null)
 	{
@@ -482,8 +487,9 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+ 	 * @section example Example Usage:
+	 * @include s3/head_bucket.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
-	 * @example s3/head_bucket
 	 */
 	public function head_bucket($bucket, $returnCurlHandle = null)
 	{
@@ -505,7 +511,8 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to check.
 	 * @return boolean Whether it exists or not.
-	 * @example s3/if_bucket_exists
+	 * @section example Example Usage:
+	 * @include s3/if_bucket_exists.phps
 	 */
 	public function if_bucket_exists($bucket)
 	{
@@ -523,6 +530,8 @@ class AmazonS3 extends TarzanCore
 	 * @param boolean $force (Optional) Whether to force-delete the bucket and all of its contents. Defaults to false.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse|boolean Standard TarzanHTTPResponse if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
+	 * @section example Example Usage:
+	 * @include s3/delete_bucket.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
 	 */
 	public function delete_bucket($bucket, $force = false, $returnCurlHandle = null)
@@ -561,10 +570,25 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_bucket (Required) The name of the source bucket.
 	 * @param string $dest_bucket (Required) The name of the destination bucket.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/copy_bucket.phps
 	 */
 	public function copy_bucket($source_bucket, $dest_bucket)
 	{
-		$dest = $this->create_bucket($dest_bucket);
+		// Since S3 can't yet copy across geographical locations, make sure that the new bucket matches the existing bucket.
+		$locale = $this->get_bucket_locale($source_bucket);
+		switch ($locale->body)
+		{
+			case S3_LOCATION_EU:
+				$locale = S3_LOCATION_EU;
+				break;
+
+			default:
+				$locale = S3_LOCATION_US;
+				break;
+		}
+
+		$dest = $this->create_bucket($dest_bucket, $locale);
 
 		if ($dest->isOK())
 		{
@@ -582,6 +606,8 @@ class AmazonS3 extends TarzanCore
 			$request = new $this->request_class(null);
 			return $request->sendMultiRequest($handles);
 		}
+
+		return false;
 	}
 
 	/**
@@ -593,6 +619,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_bucket (Required) The name of the source bucket.
 	 * @param string $dest_bucket (Required) The name of the destination bucket.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/rename_bucket.phps
 	 */
 	public function rename_bucket($source_bucket, $dest_bucket)
 	{
@@ -611,6 +639,8 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to check.
 	 * @return integer The number of files in the bucket.
+	 * @section example Example Usage:
+	 * @include s3/get_bucket_size.phps
 	 */
 	public function get_bucket_size($bucket)
 	{
@@ -626,6 +656,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to check.
 	 * @param boolean $friendly_format (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
 	 * @return integer|string The number of bytes as an integer, or the friendly format as a string.
+	 * @section example Example Usage:
+	 * @include s3/get_bucket_filesize.phps
 	 */
 	public function get_bucket_filesize($bucket, $friendly_format = false)
 	{
@@ -653,6 +685,8 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/list_buckets.phps
 	 */
 	public function list_buckets($returnCurlHandle = null)
 	{
@@ -673,6 +707,8 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $pcre (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the bucket names against.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/get_bucket_list.phps
 	 */
 	public function get_bucket_list($pcre = null)
 	{
@@ -717,6 +753,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/get_bucket_acl.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
 	 */
 	public function get_bucket_acl($bucket, $returnCurlHandle = null)
@@ -739,6 +777,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/set_bucket_acl.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
 	 */
 	public function set_bucket_acl($bucket, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -777,6 +817,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/create_object.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 */
@@ -807,6 +849,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string $range - (Optional) A range of bytes to fetch from the file. Useful for downloading partial bits or completing incomplete files. Range notated with a hyphen (e.g. 0-10485759). Defaults to the complete file.
 	 * </ul>
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/get_object.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
 	 */
 	public function get_object($bucket, $filename, $opt = null)
@@ -830,6 +874,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/head_object.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 */
 	public function head_object($bucket, $filename, $returnCurlHandle = null)
@@ -854,6 +900,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket check.
 	 * @param string $filename (Required) The filename for the content.
 	 * @return boolean Whether it exists or not.
+	 * @section example Example Usage:
+	 * @include s3/if_object_exists.phps
 	 */
 	public function if_object_exists($bucket, $filename)
 	{
@@ -871,6 +919,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename you want to delete.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse Standard TarzanHTTPResponse.
+	 * @section example Example Usage:
+	 * @include s3/delete_object.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
 	 */
 	public function delete_object($bucket, $filename, $returnCurlHandle = null)
@@ -895,6 +945,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used.
 	 * @param string $pcre (Optional) PCRE regular expression to match filenames by. Defaults to S3_PCRE_ALL.
 	 * @return boolean Determines the success of deleting all files.
+	 * @section example Example Usage:
+	 * @include s3/delete_all_objects.phps
 	 * @see delete_object
 	 */
 	public function delete_all_objects($bucket, $pcre = S3_PCRE_ALL)
@@ -937,6 +989,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/list_objects.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/gsg/ListKeys.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
 	 */
@@ -960,6 +1014,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @param boolean $friendly_format (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
 	 * @return integer|string The number of bytes as an integer, or the friendly format as a string.
+	 * @section example Example Usage:
+	 * @include s3/get_object_filesize.phps
 	 */
 	public function get_object_filesize($bucket, $filename, $friendly_format = false)
 	{
@@ -990,6 +1046,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string pcre - (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the filenames against. This is applied AFTER any native S3 filtering from 'prefix', 'marker', 'maxKeys', or 'delimiter'.</li>
 	 * </ul>
 	 * @return array
+	 * @section example Example Usage:
+	 * @include s3/get_object_list.phps
 	 * @see list_objects
 	 */
 	public function get_object_list($bucket, $opt = null)
@@ -1049,6 +1107,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>boolean returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 *   <li>array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.</li>
 	 * </ul>
+	 * @section example Example Usage:
+	 * @include s3/copy_object.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectCOPY.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders
@@ -1085,6 +1145,9 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_filename (Required) The source filename that you want to copy.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/duplicate_object.phps
 	 */
 	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
@@ -1102,12 +1165,16 @@ class AmazonS3 extends TarzanCore
 	 * @param string $dest_bucket (Required) The name of the bucket that you want to copy the file to.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @return array
+	 * @section example Example Usage:
+	 * @include s3/move_object.phps
 	 */
 	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
-		$copy = $this->copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, array('acl' => $acl));
-		$del = $this->delete_object($source_bucket, $source_filename);
-		return $copy;
+		$return = array();
+		$return['copy'] = $this->copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, array('acl' => $acl));
+		$return['delete'] = $this->delete_object($source_bucket, $source_filename);
+		return $return;
 	}
 
 	/**
@@ -1120,6 +1187,9 @@ class AmazonS3 extends TarzanCore
 	 * @param string $source_filename (Required) The source filename that you want to copy.
 	 * @param string $dest_filename (Required) The filename that you want to give to the copy.
 	 * @param string $acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.
+	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/rename_object.phps
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
 	{
@@ -1136,6 +1206,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/get_object_acl.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
 	 */
 	public function get_object_acl($bucket, $filename, $returnCurlHandle = null)
@@ -1160,6 +1232,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include s3/set_object_acl.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html
 	 */
 	public function set_object_acl($bucket, $filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -1242,6 +1316,8 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string overwrite - (Optional) If set to true, checks to see if the file exists and will overwrite the old data with new data. Defaults to false.</li>
 	 * </ul>
 	 * @return string The S3 URL for the uploaded file. Returns null if unsuccessful.
+	 * @section example Example Usage:
+	 * @include s3/store_remote_file.phps
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
@@ -1308,6 +1384,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $filename (Required) The filename for the content.
 	 * @param integer $qsa (Required) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
 	 * @return string The file URL, with authentication parameters if requested.
+	 * @section example Example Usage:
+	 * @include s3/get_object_url.phps
 	 */
 	public function get_object_url($bucket, $filename, $qsa = 0)
 	{
@@ -1357,6 +1435,8 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
 	 * @return string The Torrent URL.
+	 * @section example Example Usage:
+	 * @include s3/get_torrent_url.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html
 	 */
 	public function get_torrent_url($bucket, $filename)

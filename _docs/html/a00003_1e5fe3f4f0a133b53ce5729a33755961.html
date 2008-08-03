@@ -146,22 +146,51 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l01157">1157</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Set the access control settings for the bucket.</span>
+<span class="comment"> */</span>
+$acl = $s3-&gt;set_object_acl(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>);
 
-<p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01158"></a>01158         {
-<a name="l01159"></a>01159                 <span class="comment">// Add this to our request</span>
-<a name="l01160"></a>01160                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l01161"></a>01161                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'set_object_acl'</span>;
-<a name="l01162"></a>01162                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
-<a name="l01163"></a>01163                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l01164"></a>01164                 $opt[<span class="stringliteral">'acl'</span>] = $acl;
-<a name="l01165"></a>01165 
-<a name="l01166"></a>01166                 <span class="comment">// Authenticate to S3</span>
-<a name="l01167"></a>01167                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l01168"></a>01168         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($acl);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00038.html#l01239">1239</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01240"></a>01240         {
+<a name="l01241"></a>01241                 <span class="comment">// Add this to our request</span>
+<a name="l01242"></a>01242                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l01243"></a>01243                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'set_object_acl'</span>;
+<a name="l01244"></a>01244                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
+<a name="l01245"></a>01245                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l01246"></a>01246                 $opt[<span class="stringliteral">'acl'</span>] = $acl;
+<a name="l01247"></a>01247 
+<a name="l01248"></a>01248                 <span class="comment">// Authenticate to S3</span>
+<a name="l01249"></a>01249                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01250"></a>01250         }
 </pre></div>
 <p>
 
@@ -171,7 +200,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

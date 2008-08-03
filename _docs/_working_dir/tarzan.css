@@ -240,6 +240,10 @@ table a.anchor {
 	height:0;
 }
 
+h2 a.anchor {
+	display:inline;
+}
+
 table.memname td {
 	border:none;
 }

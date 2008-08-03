@@ -123,21 +123,50 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00649">649</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns a TarzanHTTPResponse object listing all of the buckets for your account.</span>
+<span class="comment"> */</span>
+$list = $s3-&gt;list_buckets();
 
-<p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($list);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 
-<p>Referenced by <a class="el" href="a00038.html#l00669">get_bucket_list()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00650"></a>00650         {
-<a name="l00651"></a>00651                 <span class="comment">// Add this to our request</span>
-<a name="l00652"></a>00652                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l00653"></a>00653                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'list_buckets'</span>;
-<a name="l00654"></a>00654                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00655"></a>00655 
-<a name="l00656"></a>00656                 <span class="comment">// Authenticate to S3</span>
-<a name="l00657"></a>00657                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>(<span class="stringliteral">''</span>, $opt);
-<a name="l00658"></a>00658         }
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00691">691</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+
+<p>Referenced by <a class="el" href="a00038.html#l00713">get_bucket_list()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00692"></a>00692         {
+<a name="l00693"></a>00693                 <span class="comment">// Add this to our request</span>
+<a name="l00694"></a>00694                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l00695"></a>00695                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'list_buckets'</span>;
+<a name="l00696"></a>00696                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00697"></a>00697 
+<a name="l00698"></a>00698                 <span class="comment">// Authenticate to S3</span>
+<a name="l00699"></a>00699                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>(<span class="stringliteral">''</span>, $opt);
+<a name="l00700"></a>00700         }
 </pre></div>
 <p>
 
@@ -147,7 +176,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

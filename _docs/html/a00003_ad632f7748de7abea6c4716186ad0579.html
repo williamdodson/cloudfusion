@@ -153,63 +153,89 @@ string overwrite - (Optional) If set to true, checks to see if the file exists a
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>string The S3 URL for the uploaded file. Returns null if unsuccessful. </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l01238">1238</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Store a remote file in S3.</span>
+<span class="comment"> */</span>
+$file_url = $s3-&gt;store_remote_file(<span class="stringliteral">'http://yahoo.com'</span>, <span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'yahoo_home.html'</span>, array(
+        <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>
+));
 
-<p>References <a class="el" href="a00038.html#l00775">create_object()</a>, and <a class="el" href="a00038.html#l00827">head_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01239"></a>01239         {
-<a name="l01240"></a>01240                 <span class="comment">// Set default values.</span>
-<a name="l01241"></a>01241                 $acl = <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>;
-<a name="l01242"></a>01242                 $overwrite = <span class="keyword">false</span>;
-<a name="l01243"></a>01243                 $cname = null;
-<a name="l01244"></a>01244 
-<a name="l01245"></a>01245                 <span class="keywordflow">if</span> ($opt)
-<a name="l01246"></a>01246                 {
-<a name="l01247"></a>01247                         <span class="comment">// Break the options out.</span>
-<a name="l01248"></a>01248                         extract($opt);
-<a name="l01249"></a>01249                 }
-<a name="l01250"></a>01250 
-<a name="l01251"></a>01251                 <span class="comment">// Does the file already exist?</span>
-<a name="l01252"></a>01252                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
-<a name="l01253"></a>01253 
-<a name="l01254"></a>01254                 <span class="comment">// As long as it doesn't already exist, fetch and store it.</span>
-<a name="l01255"></a>01255                 <span class="keywordflow">if</span> (!$object-&gt;isOK() || $overwrite)
-<a name="l01256"></a>01256                 {
-<a name="l01257"></a>01257                         <span class="comment">// Fetch the file</span>
-<a name="l01258"></a>01258                         $file = <span class="keyword">new</span> $this-&gt;request_class($remote_file);
-<a name="l01259"></a>01259                         $file-&gt;sendRequest();
-<a name="l01260"></a>01260 
-<a name="l01261"></a>01261                         <span class="comment">// Store it in S3</span>
-<a name="l01262"></a>01262                         unset($object);
-<a name="l01263"></a>01263                         $object = $this-&gt;<a class="code" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a>($bucket, array(
-<a name="l01264"></a>01264                                 <span class="stringliteral">'filename'</span> =&gt; $filename,
-<a name="l01265"></a>01265                                 <span class="stringliteral">'body'</span> =&gt; $file-&gt;getResponseBody(),
-<a name="l01266"></a>01266                                 <span class="stringliteral">'contentType'</span> =&gt; $file-&gt;getResponseHeader(<span class="stringliteral">'content-type'</span>),
-<a name="l01267"></a>01267                                 <span class="stringliteral">'acl'</span> =&gt; $acl
-<a name="l01268"></a>01268                         ));
-<a name="l01269"></a>01269                 }
-<a name="l01270"></a>01270 
-<a name="l01271"></a>01271                 <span class="comment">// Was the request successful?</span>
-<a name="l01272"></a>01272                 <span class="keywordflow">if</span> ($object-&gt;isOK())
-<a name="l01273"></a>01273                 {
-<a name="l01274"></a>01274                         $url = $object-&gt;header[<span class="stringliteral">'x-tarzan-requesturl'</span>];
-<a name="l01275"></a>01275 
-<a name="l01276"></a>01276                         <span class="comment">// If we have a virtual host value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.</span>
-<a name="l01277"></a>01277                         <span class="keywordflow">if</span> ($this-&gt;vhost)
-<a name="l01278"></a>01278                         {
-<a name="l01279"></a>01279                                 $url = str_ireplace(<span class="stringliteral">'http://'</span>, <span class="stringliteral">''</span>, $url);
-<a name="l01280"></a>01280                                 $url = explode(<span class="charliteral">'/'</span>, $url);
-<a name="l01281"></a>01281                                 $url[0] = $this-&gt;vhost;
-<a name="l01282"></a>01282                                 $url = <span class="stringliteral">'http://'</span> . implode(<span class="charliteral">'/'</span>, $url);
-<a name="l01283"></a>01283                         }
-<a name="l01284"></a>01284 
-<a name="l01285"></a>01285                         <span class="keywordflow">return</span> $url;
-<a name="l01286"></a>01286                 }
-<a name="l01287"></a>01287                 <span class="keywordflow">else</span>
-<a name="l01288"></a>01288                 {
-<a name="l01289"></a>01289                         <span class="keywordflow">return</span> null;
-<a name="l01290"></a>01290                 }
-<a name="l01291"></a>01291         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Display the new S3 URL for the stored file. (http://warpshare.test.eu.s3.amazonaws.com/yahoo_home.html)</span>
+<span class="comment"> */</span>
+echo $file_url;
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l01322">1322</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00825">create_object()</a>, and <a class="el" href="a00038.html#l00881">head_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01323"></a>01323         {
+<a name="l01324"></a>01324                 <span class="comment">// Set default values.</span>
+<a name="l01325"></a>01325                 $acl = <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>;
+<a name="l01326"></a>01326                 $overwrite = <span class="keyword">false</span>;
+<a name="l01327"></a>01327                 $cname = null;
+<a name="l01328"></a>01328 
+<a name="l01329"></a>01329                 <span class="keywordflow">if</span> ($opt)
+<a name="l01330"></a>01330                 {
+<a name="l01331"></a>01331                         <span class="comment">// Break the options out.</span>
+<a name="l01332"></a>01332                         extract($opt);
+<a name="l01333"></a>01333                 }
+<a name="l01334"></a>01334 
+<a name="l01335"></a>01335                 <span class="comment">// Does the file already exist?</span>
+<a name="l01336"></a>01336                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
+<a name="l01337"></a>01337 
+<a name="l01338"></a>01338                 <span class="comment">// As long as it doesn't already exist, fetch and store it.</span>
+<a name="l01339"></a>01339                 <span class="keywordflow">if</span> (!$object-&gt;isOK() || $overwrite)
+<a name="l01340"></a>01340                 {
+<a name="l01341"></a>01341                         <span class="comment">// Fetch the file</span>
+<a name="l01342"></a>01342                         $file = <span class="keyword">new</span> $this-&gt;request_class($remote_file);
+<a name="l01343"></a>01343                         $file-&gt;sendRequest();
+<a name="l01344"></a>01344 
+<a name="l01345"></a>01345                         <span class="comment">// Store it in S3</span>
+<a name="l01346"></a>01346                         unset($object);
+<a name="l01347"></a>01347                         $object = $this-&gt;<a class="code" href="a00003_573980f90cc214e190d74a2de0010492.html#573980f90cc214e190d74a2de0010492">create_object</a>($bucket, array(
+<a name="l01348"></a>01348                                 <span class="stringliteral">'filename'</span> =&gt; $filename,
+<a name="l01349"></a>01349                                 <span class="stringliteral">'body'</span> =&gt; $file-&gt;getResponseBody(),
+<a name="l01350"></a>01350                                 <span class="stringliteral">'contentType'</span> =&gt; $file-&gt;getResponseHeader(<span class="stringliteral">'content-type'</span>),
+<a name="l01351"></a>01351                                 <span class="stringliteral">'acl'</span> =&gt; $acl
+<a name="l01352"></a>01352                         ));
+<a name="l01353"></a>01353                 }
+<a name="l01354"></a>01354 
+<a name="l01355"></a>01355                 <span class="comment">// Was the request successful?</span>
+<a name="l01356"></a>01356                 <span class="keywordflow">if</span> ($object-&gt;isOK())
+<a name="l01357"></a>01357                 {
+<a name="l01358"></a>01358                         $url = $object-&gt;header[<span class="stringliteral">'x-tarzan-requesturl'</span>];
+<a name="l01359"></a>01359 
+<a name="l01360"></a>01360                         <span class="comment">// If we have a virtual host value, use that instead of Amazon's hostname. There are better ways of doing this, but it works for now.</span>
+<a name="l01361"></a>01361                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01362"></a>01362                         {
+<a name="l01363"></a>01363                                 $url = str_ireplace(<span class="stringliteral">'http://'</span>, <span class="stringliteral">''</span>, $url);
+<a name="l01364"></a>01364                                 $url = explode(<span class="charliteral">'/'</span>, $url);
+<a name="l01365"></a>01365                                 $url[0] = $this-&gt;vhost;
+<a name="l01366"></a>01366                                 $url = <span class="stringliteral">'http://'</span> . implode(<span class="charliteral">'/'</span>, $url);
+<a name="l01367"></a>01367                         }
+<a name="l01368"></a>01368 
+<a name="l01369"></a>01369                         <span class="keywordflow">return</span> $url;
+<a name="l01370"></a>01370                 }
+<a name="l01371"></a>01371                 <span class="keywordflow">else</span>
+<a name="l01372"></a>01372                 {
+<a name="l01373"></a>01373                         <span class="keywordflow">return</span> null;
+<a name="l01374"></a>01374                 }
+<a name="l01375"></a>01375         }
 </pre></div>
 <p>
 
@@ -219,7 +245,7 @@ string overwrite - (Optional) If set to true, checks to see if the file exists a
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

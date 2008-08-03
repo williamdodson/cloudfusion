@@ -123,42 +123,68 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00669">669</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns a simple array of the names of the buckets for your account.</span>
+<span class="comment"> */</span>
+$list = $s3-&gt;get_bucket_list();
 
-<p>References <a class="el" href="a00038.html#l00649">list_buckets()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00670"></a>00670         {
-<a name="l00671"></a>00671                 <span class="comment">// Set some default values</span>
-<a name="l00672"></a>00672                 $bucketnames = array();
-<a name="l00673"></a>00673 
-<a name="l00674"></a>00674                 <span class="comment">// Get a list of buckets.</span>
-<a name="l00675"></a>00675                 $list = $this-&gt;<a class="code" href="a00003_56b297c1c80ff878da36ef1fa868c38f.html#56b297c1c80ff878da36ef1fa868c38f">list_buckets</a>();
-<a name="l00676"></a>00676 
-<a name="l00677"></a>00677                 <span class="comment">// If we have a PCRE regex, store it.</span>
-<a name="l00678"></a>00678                 <span class="keywordflow">if</span> ($pcre)
-<a name="l00679"></a>00679                 {
-<a name="l00680"></a>00680                         <span class="comment">// Loop through and find the bucket names.</span>
-<a name="l00681"></a>00681                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Buckets-&gt;Bucket as $bucket)
-<a name="l00682"></a>00682                         {
-<a name="l00683"></a>00683                                 $bucket = (string) $bucket-&gt;Name;
-<a name="l00684"></a>00684 
-<a name="l00685"></a>00685                                 <span class="keywordflow">if</span> (preg_match($pcre, $bucket))
-<a name="l00686"></a>00686                                 {
-<a name="l00687"></a>00687                                         $bucketnames[] = $bucket;
-<a name="l00688"></a>00688                                 }
-<a name="l00689"></a>00689                         }
-<a name="l00690"></a>00690                 }
-<a name="l00691"></a>00691                 <span class="keywordflow">else</span>
-<a name="l00692"></a>00692                 {
-<a name="l00693"></a>00693                         <span class="comment">// Loop through and find the bucket names.</span>
-<a name="l00694"></a>00694                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Buckets-&gt;Bucket as $bucket)
-<a name="l00695"></a>00695                         {
-<a name="l00696"></a>00696                                 $bucketnames[] = (string) $bucket-&gt;Name;
-<a name="l00697"></a>00697                         }
-<a name="l00698"></a>00698                 }
-<a name="l00699"></a>00699 
-<a name="l00700"></a>00700                 <span class="keywordflow">return</span> (count($bucketnames) &gt; 0) ? $bucketnames : null;
-<a name="l00701"></a>00701         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($list);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00713">713</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00691">list_buckets()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00714"></a>00714         {
+<a name="l00715"></a>00715                 <span class="comment">// Set some default values</span>
+<a name="l00716"></a>00716                 $bucketnames = array();
+<a name="l00717"></a>00717 
+<a name="l00718"></a>00718                 <span class="comment">// Get a list of buckets.</span>
+<a name="l00719"></a>00719                 $list = $this-&gt;<a class="code" href="a00003_56b297c1c80ff878da36ef1fa868c38f.html#56b297c1c80ff878da36ef1fa868c38f">list_buckets</a>();
+<a name="l00720"></a>00720 
+<a name="l00721"></a>00721                 <span class="comment">// If we have a PCRE regex, store it.</span>
+<a name="l00722"></a>00722                 <span class="keywordflow">if</span> ($pcre)
+<a name="l00723"></a>00723                 {
+<a name="l00724"></a>00724                         <span class="comment">// Loop through and find the bucket names.</span>
+<a name="l00725"></a>00725                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Buckets-&gt;Bucket as $bucket)
+<a name="l00726"></a>00726                         {
+<a name="l00727"></a>00727                                 $bucket = (string) $bucket-&gt;Name;
+<a name="l00728"></a>00728 
+<a name="l00729"></a>00729                                 <span class="keywordflow">if</span> (preg_match($pcre, $bucket))
+<a name="l00730"></a>00730                                 {
+<a name="l00731"></a>00731                                         $bucketnames[] = $bucket;
+<a name="l00732"></a>00732                                 }
+<a name="l00733"></a>00733                         }
+<a name="l00734"></a>00734                 }
+<a name="l00735"></a>00735                 <span class="keywordflow">else</span>
+<a name="l00736"></a>00736                 {
+<a name="l00737"></a>00737                         <span class="comment">// Loop through and find the bucket names.</span>
+<a name="l00738"></a>00738                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Buckets-&gt;Bucket as $bucket)
+<a name="l00739"></a>00739                         {
+<a name="l00740"></a>00740                                 $bucketnames[] = (string) $bucket-&gt;Name;
+<a name="l00741"></a>00741                         }
+<a name="l00742"></a>00742                 }
+<a name="l00743"></a>00743 
+<a name="l00744"></a>00744                 <span class="keywordflow">return</span> (count($bucketnames) &gt; 0) ? $bucketnames : null;
+<a name="l00745"></a>00745         }
 </pre></div>
 <p>
 
@@ -168,7 +194,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

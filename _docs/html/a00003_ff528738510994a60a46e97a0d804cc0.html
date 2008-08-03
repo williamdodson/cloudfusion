@@ -140,21 +140,45 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>integer|string The number of bytes as an integer, or the friendly format as a string. </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00956">956</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns the file size of the bucket, in bytes (e.g. 849666).</span>
+<span class="comment"> */</span>
+echo $s3-&gt;get_object_filesize(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>);
 
-<p>References <a class="el" href="a00038.html#l00827">head_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00957"></a>00957         {
-<a name="l00958"></a>00958                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
-<a name="l00959"></a>00959                 $filesize = (integer) $object-&gt;header[<span class="stringliteral">'content-length'</span>];
-<a name="l00960"></a>00960 
-<a name="l00961"></a>00961                 <span class="keywordflow">if</span> ($friendly_format)
-<a name="l00962"></a>00962                 {
-<a name="l00963"></a>00963                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
-<a name="l00964"></a>00964                 }
-<a name="l00965"></a>00965 
-<a name="l00966"></a>00966                 <span class="keywordflow">return</span> $filesize;
-<a name="l00967"></a>00967         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns the file size of the bucket, in the largest "friendly" units that make sense (e.g. 829.75 kB).</span>
+<span class="comment"> */</span>
+echo $s3-&gt;get_object_filesize(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <span class="keyword">true</span>);
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l01020">1020</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00881">head_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01021"></a>01021         {
+<a name="l01022"></a>01022                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
+<a name="l01023"></a>01023                 $filesize = (integer) $object-&gt;header[<span class="stringliteral">'content-length'</span>];
+<a name="l01024"></a>01024 
+<a name="l01025"></a>01025                 <span class="keywordflow">if</span> ($friendly_format)
+<a name="l01026"></a>01026                 {
+<a name="l01027"></a>01027                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
+<a name="l01028"></a>01028                 }
+<a name="l01029"></a>01029 
+<a name="l01030"></a>01030                 <span class="keywordflow">return</span> $filesize;
+<a name="l01031"></a>01031         }
 </pre></div>
 <p>
 
@@ -164,7 +188,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -153,17 +153,48 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. </td></tr>
   </table>
 </dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>array </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l01098">1098</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Move the object to a new name/bucket.</span>
+<span class="comment"> */</span>
+$copy = $s3-&gt;move_object(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <span class="stringliteral">'warpshare.test.eu.backup'</span>, <span class="stringliteral">'sample.txt'</span>);
 
-<p>References <a class="el" href="a00038.html#l01048">copy_object()</a>, and <a class="el" href="a00038.html#l00868">delete_object()</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($copy);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 
-<p>Referenced by <a class="el" href="a00038.html#l01116">rename_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01099"></a>01099         {
-<a name="l01100"></a>01100                 $copy = $this-&gt;<a class="code" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a>($source_bucket, $source_filename, $dest_bucket, $dest_filename, array(<span class="stringliteral">'acl'</span> =&gt; $acl));
-<a name="l01101"></a>01101                 $del = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($source_bucket, $source_filename);
-<a name="l01102"></a>01102                 <span class="keywordflow">return</span> $copy;
-<a name="l01103"></a>01103         }
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l01172">1172</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l01116">copy_object()</a>, and <a class="el" href="a00038.html#l00926">delete_object()</a>.</p>
+
+<p>Referenced by <a class="el" href="a00038.html#l01194">rename_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01173"></a>01173         {
+<a name="l01174"></a>01174                 $return = array();
+<a name="l01175"></a>01175                 $return[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a>($source_bucket, $source_filename, $dest_bucket, $dest_filename, array(<span class="stringliteral">'acl'</span> =&gt; $acl));
+<a name="l01176"></a>01176                 $return[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($source_bucket, $source_filename);
+<a name="l01177"></a>01177                 <span class="keywordflow">return</span> $return;
+<a name="l01178"></a>01178         }
 </pre></div>
 <p>
 
@@ -173,7 +204,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

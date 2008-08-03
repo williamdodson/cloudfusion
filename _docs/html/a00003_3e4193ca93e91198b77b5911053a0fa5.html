@@ -133,17 +133,46 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00589">589</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Rename an existing bucket to something else.</span>
+<span class="comment"> */</span>
+$rename = $s3-&gt;rename_bucket(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'warpshare.test.eu.new'</span>);
 
-<p>References <a class="el" href="a00038.html#l00557">copy_bucket()</a>, and <a class="el" href="a00038.html#l00520">delete_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00590"></a>00590         {
-<a name="l00591"></a>00591                 $responses = array();
-<a name="l00592"></a>00592                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
-<a name="l00593"></a>00593                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
-<a name="l00594"></a>00594 
-<a name="l00595"></a>00595                 <span class="keywordflow">return</span> $responses;
-<a name="l00596"></a>00596         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($rename);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00625">625</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00576">copy_bucket()</a>, and <a class="el" href="a00038.html#l00537">delete_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00626"></a>00626         {
+<a name="l00627"></a>00627                 $responses = array();
+<a name="l00628"></a>00628                 $responses[<span class="stringliteral">'copy'</span>] = $this-&gt;<a class="code" href="a00003_1fa4f66eebde9030b61e55a5c3f7b91b.html#1fa4f66eebde9030b61e55a5c3f7b91b">copy_bucket</a>($source_bucket, $dest_bucket);
+<a name="l00629"></a>00629                 $responses[<span class="stringliteral">'delete'</span>] = $this-&gt;<a class="code" href="a00003_c4773c6d6a161c0baef522c4f47eca16.html#c4773c6d6a161c0baef522c4f47eca16">delete_bucket</a>($source_bucket, <span class="keyword">true</span>);
+<a name="l00630"></a>00630 
+<a name="l00631"></a>00631                 <span class="keywordflow">return</span> $responses;
+<a name="l00632"></a>00632         }
 </pre></div>
 <p>
 
@@ -153,7 +182,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

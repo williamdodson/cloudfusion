@@ -46,36 +46,90 @@ function initDynSections(){
 window.onload = initDynSections;
 -->
 </script>
-<h1>_httprequest.class.php</h1><a href="a00011.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php
+<h1>_httprequest.class.php</h1><a href="a00011.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php<span class="comment"></span>
+<a name="l00002"></a>00002 <span class="comment">/**</span>
+<a name="l00003"></a>00003 <span class="comment"> * TARZAN HTTP REQUEST</span>
+<a name="l00004"></a>00004 <span class="comment"> * HTTP Requests using CURL.</span>
+<a name="l00005"></a>00005 <span class="comment"> *</span>
+<a name="l00006"></a>00006 <span class="comment"> * @category Tarzan</span>
+<a name="l00007"></a>00007 <span class="comment"> * @package TarzanHTTPRequest</span>
+<a name="l00008"></a>00008 <span class="comment"> * @version 2008.07.05</span>
+<a name="l00009"></a>00009 <span class="comment"> * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.</span>
+<a name="l00010"></a>00010 <span class="comment"> * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License</span>
+<a name="l00011"></a>00011 <span class="comment"> * @link http://tarzan-aws.com Tarzan</span>
+<a name="l00012"></a>00012 <span class="comment"> * @see README</span>
+<a name="l00013"></a>00013 <span class="comment"> */</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 
 <a name="l00016"></a>00016 <span class="comment">/*%******************************************************************************************%*/</span>
 <a name="l00017"></a>00017 <span class="comment">// CLASS</span>
-<a name="l00018"></a>00018 
+<a name="l00018"></a>00018 <span class="comment"></span>
+<a name="l00019"></a>00019 <span class="comment">/**</span>
+<a name="l00020"></a>00020 <span class="comment"> * Request data via CURL.</span>
+<a name="l00021"></a>00021 <span class="comment"> */</span>
 <a name="l00022"></a><a class="code" href="a00007.html">00022</a> <span class="keyword">class </span><a class="code" href="a00007.html">TarzanHTTPRequest</a>
-<a name="l00023"></a>00023 {
+<a name="l00023"></a>00023 {<span class="comment"></span>
+<a name="l00024"></a>00024 <span class="comment">        /**</span>
+<a name="l00025"></a>00025 <span class="comment">         * @var The URL being requested.</span>
+<a name="l00026"></a>00026 <span class="comment">         */</span>
 <a name="l00027"></a><a class="code" href="a00007_be8f47e19f8085311aebec52596072f5.html#be8f47e19f8085311aebec52596072f5">00027</a>         var <a class="code" href="a00007_be8f47e19f8085311aebec52596072f5.html#be8f47e19f8085311aebec52596072f5">$request_url</a>;
-<a name="l00028"></a>00028 
+<a name="l00028"></a>00028 <span class="comment"></span>
+<a name="l00029"></a>00029 <span class="comment">        /**</span>
+<a name="l00030"></a>00030 <span class="comment">         * @var The headers being sent in the request.</span>
+<a name="l00031"></a>00031 <span class="comment">         */</span>
 <a name="l00032"></a><a class="code" href="a00007_379de856908f312882f78af9927d8c26.html#379de856908f312882f78af9927d8c26">00032</a>         var <a class="code" href="a00007_379de856908f312882f78af9927d8c26.html#379de856908f312882f78af9927d8c26">$request_headers</a>;
-<a name="l00033"></a>00033 
+<a name="l00033"></a>00033 <span class="comment"></span>
+<a name="l00034"></a>00034 <span class="comment">        /**</span>
+<a name="l00035"></a>00035 <span class="comment">         * @var The body being sent in the request.</span>
+<a name="l00036"></a>00036 <span class="comment">         */</span>
 <a name="l00037"></a><a class="code" href="a00007_5733ebbf78d44dba533973a4cd437220.html#5733ebbf78d44dba533973a4cd437220">00037</a>         var <a class="code" href="a00007_5733ebbf78d44dba533973a4cd437220.html#5733ebbf78d44dba533973a4cd437220">$request_body</a>;
-<a name="l00038"></a>00038 
+<a name="l00038"></a>00038 <span class="comment"></span>
+<a name="l00039"></a>00039 <span class="comment">        /**</span>
+<a name="l00040"></a>00040 <span class="comment">         * @var The response returned by the request.</span>
+<a name="l00041"></a>00041 <span class="comment">         */</span>
 <a name="l00042"></a><a class="code" href="a00007_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">00042</a>         var <a class="code" href="a00007_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a>;
-<a name="l00043"></a>00043 
+<a name="l00043"></a>00043 <span class="comment"></span>
+<a name="l00044"></a>00044 <span class="comment">        /**</span>
+<a name="l00045"></a>00045 <span class="comment">         * @var The headers returned by the request.</span>
+<a name="l00046"></a>00046 <span class="comment">         */</span>
 <a name="l00047"></a><a class="code" href="a00007_305643f38c931be79adfa4340ad9f820.html#305643f38c931be79adfa4340ad9f820">00047</a>         var <a class="code" href="a00007_305643f38c931be79adfa4340ad9f820.html#305643f38c931be79adfa4340ad9f820">$response_headers</a>;
-<a name="l00048"></a>00048 
+<a name="l00048"></a>00048 <span class="comment"></span>
+<a name="l00049"></a>00049 <span class="comment">        /**</span>
+<a name="l00050"></a>00050 <span class="comment">         * @var The body returned by the request.</span>
+<a name="l00051"></a>00051 <span class="comment">         */</span>
 <a name="l00052"></a><a class="code" href="a00007_723b997e3227a51b23aaafe6e3e9203f.html#723b997e3227a51b23aaafe6e3e9203f">00052</a>         var <a class="code" href="a00007_723b997e3227a51b23aaafe6e3e9203f.html#723b997e3227a51b23aaafe6e3e9203f">$response_body</a>;
-<a name="l00053"></a>00053 
+<a name="l00053"></a>00053 <span class="comment"></span>
+<a name="l00054"></a>00054 <span class="comment">        /**</span>
+<a name="l00055"></a>00055 <span class="comment">         * @var The HTTP status code returned by the request.</span>
+<a name="l00056"></a>00056 <span class="comment">         */</span>
 <a name="l00057"></a><a class="code" href="a00007_47aea25610f40d7cde87729bac49e078.html#47aea25610f40d7cde87729bac49e078">00057</a>         var <a class="code" href="a00007_47aea25610f40d7cde87729bac49e078.html#47aea25610f40d7cde87729bac49e078">$response_code</a>;
-<a name="l00058"></a>00058 
+<a name="l00058"></a>00058 <span class="comment"></span>
+<a name="l00059"></a>00059 <span class="comment">        /**</span>
+<a name="l00060"></a>00060 <span class="comment">         * @var Additional response data.</span>
+<a name="l00061"></a>00061 <span class="comment">         */</span>
 <a name="l00062"></a><a class="code" href="a00007_4df1426d7f700b0eec27c2c6f26f8f28.html#4df1426d7f700b0eec27c2c6f26f8f28">00062</a>         var <a class="code" href="a00007_4df1426d7f700b0eec27c2c6f26f8f28.html#4df1426d7f700b0eec27c2c6f26f8f28">$response_info</a>;
-<a name="l00063"></a>00063 
+<a name="l00063"></a>00063 <span class="comment"></span>
+<a name="l00064"></a>00064 <span class="comment">        /**</span>
+<a name="l00065"></a>00065 <span class="comment">         * @var The handle for the CURL object.</span>
+<a name="l00066"></a>00066 <span class="comment">         */</span>
 <a name="l00067"></a><a class="code" href="a00007_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">00067</a>         var <a class="code" href="a00007_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a>;
-<a name="l00068"></a>00068 
+<a name="l00068"></a>00068 <span class="comment"></span>
+<a name="l00069"></a>00069 <span class="comment">        /**</span>
+<a name="l00070"></a>00070 <span class="comment">         * @var The method by which the request is being made.</span>
+<a name="l00071"></a>00071 <span class="comment">         */</span>
 <a name="l00072"></a><a class="code" href="a00007_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">00072</a>         var <a class="code" href="a00007_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>;
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074 
 <a name="l00075"></a>00075         <span class="comment">/*%******************************************************************************************%*/</span>
 <a name="l00076"></a>00076         <span class="comment">// CONSTRUCTOR</span>
-<a name="l00077"></a>00077 
+<a name="l00077"></a>00077 <span class="comment"></span>
+<a name="l00078"></a>00078 <span class="comment">        /**</span>
+<a name="l00079"></a>00079 <span class="comment">         * Constructor</span>
+<a name="l00080"></a>00080 <span class="comment">         *</span>
+<a name="l00081"></a>00081 <span class="comment">         * Constructs a new instance of the TarzanHTTPRequest class.</span>
+<a name="l00082"></a>00082 <span class="comment">         *</span>
+<a name="l00083"></a>00083 <span class="comment">         * @access public</span>
+<a name="l00084"></a>00084 <span class="comment">         */</span>
 <a name="l00085"></a><a class="code" href="a00007_73d18f7fd113b4e76c89ff8ea02209d2.html#73d18f7fd113b4e76c89ff8ea02209d2">00085</a>         <span class="keyword">public</span> function <a class="code" href="a00007_73d18f7fd113b4e76c89ff8ea02209d2.html#73d18f7fd113b4e76c89ff8ea02209d2">__construct</a>($url)
 <a name="l00086"></a>00086         {
 <a name="l00087"></a>00087                 <span class="comment">// Set some default values.</span>
@@ -89,12 +143,29 @@ window.onload = initDynSections;
 <a name="l00095"></a>00095 
 <a name="l00096"></a>00096         <span class="comment">/*%******************************************************************************************%*/</span>
 <a name="l00097"></a>00097         <span class="comment">// REQUEST METHODS</span>
-<a name="l00098"></a>00098 
+<a name="l00098"></a>00098 <span class="comment"></span>
+<a name="l00099"></a>00099 <span class="comment">        /**</span>
+<a name="l00100"></a>00100 <span class="comment">         * Add Header</span>
+<a name="l00101"></a>00101 <span class="comment">         * </span>
+<a name="l00102"></a>00102 <span class="comment">         * Add a header to the CURL request.</span>
+<a name="l00103"></a>00103 <span class="comment">         * </span>
+<a name="l00104"></a>00104 <span class="comment">         * @param string $key (Required) The HTTP header to set.</span>
+<a name="l00105"></a>00105 <span class="comment">         * @param string $value (Required) The value to set for the HTTP header.</span>
+<a name="l00106"></a>00106 <span class="comment">         * @return void</span>
+<a name="l00107"></a>00107 <span class="comment">         */</span>
 <a name="l00108"></a><a class="code" href="a00007_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">00108</a>         <span class="keyword">public</span> function <a class="code" href="a00007_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>($key, $value)
 <a name="l00109"></a>00109         {
 <a name="l00110"></a>00110                 $this-&gt;request_headers[$key] = $value;
 <a name="l00111"></a>00111         }
-<a name="l00112"></a>00112 
+<a name="l00112"></a>00112 <span class="comment"></span>
+<a name="l00113"></a>00113 <span class="comment">        /**</span>
+<a name="l00114"></a>00114 <span class="comment">         * Remove Header</span>
+<a name="l00115"></a>00115 <span class="comment">         * </span>
+<a name="l00116"></a>00116 <span class="comment">         * Remove a header from the CURL request.</span>
+<a name="l00117"></a>00117 <span class="comment">         * </span>
+<a name="l00118"></a>00118 <span class="comment">         * @param string $key (Required) The HTTP header to set.</span>
+<a name="l00119"></a>00119 <span class="comment">         * @return void</span>
+<a name="l00120"></a>00120 <span class="comment">         */</span>
 <a name="l00121"></a><a class="code" href="a00007_304a010c39a9936275740cab46e8b419.html#304a010c39a9936275740cab46e8b419">00121</a>         <span class="keyword">public</span> function <a class="code" href="a00007_304a010c39a9936275740cab46e8b419.html#304a010c39a9936275740cab46e8b419">removeHeader</a>($key)
 <a name="l00122"></a>00122         {
 <a name="l00123"></a>00123                 <span class="keywordflow">if</span> (isset($this-&gt;request_headers[$key]))
@@ -102,12 +173,28 @@ window.onload = initDynSections;
 <a name="l00125"></a>00125                         unset($this-&gt;request_headers[$key]);
 <a name="l00126"></a>00126                 }
 <a name="l00127"></a>00127         }
-<a name="l00128"></a>00128 
+<a name="l00128"></a>00128 <span class="comment"></span>
+<a name="l00129"></a>00129 <span class="comment">        /**</span>
+<a name="l00130"></a>00130 <span class="comment">         * Set Method</span>
+<a name="l00131"></a>00131 <span class="comment">         * </span>
+<a name="l00132"></a>00132 <span class="comment">         * Set the method by which to make the request.</span>
+<a name="l00133"></a>00133 <span class="comment">         * </span>
+<a name="l00134"></a>00134 <span class="comment">         * @param string $method (Required) One of the following constants: HTTP_GET, HTTP_POST, HTTP_PUT, HTTP_HEAD, HTTP_DELETE.</span>
+<a name="l00135"></a>00135 <span class="comment">         * @return void</span>
+<a name="l00136"></a>00136 <span class="comment">         */</span>
 <a name="l00137"></a><a class="code" href="a00007_b9db71913906e65980e6602945c9d08f.html#b9db71913906e65980e6602945c9d08f">00137</a>         <span class="keyword">public</span> function <a class="code" href="a00007_b9db71913906e65980e6602945c9d08f.html#b9db71913906e65980e6602945c9d08f">setMethod</a>(<a class="code" href="a00007_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>)
 <a name="l00138"></a>00138         {
 <a name="l00139"></a>00139                 $this-&gt;method = strtoupper(<a class="code" href="a00007_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>);
 <a name="l00140"></a>00140         }
-<a name="l00141"></a>00141 
+<a name="l00141"></a>00141 <span class="comment"></span>
+<a name="l00142"></a>00142 <span class="comment">        /**</span>
+<a name="l00143"></a>00143 <span class="comment">         * Set Body</span>
+<a name="l00144"></a>00144 <span class="comment">         * </span>
+<a name="l00145"></a>00145 <span class="comment">         * Set the body to send in the request.</span>
+<a name="l00146"></a>00146 <span class="comment">         * </span>
+<a name="l00147"></a>00147 <span class="comment">         * @param string $body (Required) The text to send along in the body.</span>
+<a name="l00148"></a>00148 <span class="comment">         * @return void</span>
+<a name="l00149"></a>00149 <span class="comment">         */</span>
 <a name="l00150"></a><a class="code" href="a00007_57e9b59835310648dd072b3bb52dabac.html#57e9b59835310648dd072b3bb52dabac">00150</a>         <span class="keyword">public</span> function <a class="code" href="a00007_57e9b59835310648dd072b3bb52dabac.html#57e9b59835310648dd072b3bb52dabac">setBody</a>($body)
 <a name="l00151"></a>00151         {
 <a name="l00152"></a>00152                 $this-&gt;request_body = $body;
@@ -116,7 +203,14 @@ window.onload = initDynSections;
 <a name="l00155"></a>00155 
 <a name="l00156"></a>00156         <span class="comment">/*%******************************************************************************************%*/</span>
 <a name="l00157"></a>00157         <span class="comment">// PREPARE, SEND, AND PROCESS REQUEST</span>
-<a name="l00158"></a>00158 
+<a name="l00158"></a>00158 <span class="comment"></span>
+<a name="l00159"></a>00159 <span class="comment">        /**</span>
+<a name="l00160"></a>00160 <span class="comment">         * Prepare Request</span>
+<a name="l00161"></a>00161 <span class="comment">         * </span>
+<a name="l00162"></a>00162 <span class="comment">         * Determine the details of the CURL request to make. This can be passed along to a curl_multi_exec() function.</span>
+<a name="l00163"></a>00163 <span class="comment">         * </span>
+<a name="l00164"></a>00164 <span class="comment">         * @return The handle for the CURL object.</span>
+<a name="l00165"></a>00165 <span class="comment">         */</span>
 <a name="l00166"></a><a class="code" href="a00007_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">00166</a>         <span class="keyword">public</span> function <a class="code" href="a00007_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">prepRequest</a>()
 <a name="l00167"></a>00167         {
 <a name="l00168"></a>00168                 $this-&gt;<a class="code" href="a00007_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>(<span class="stringliteral">'Expect'</span>, <span class="stringliteral">'100-continue'</span>);
@@ -184,7 +278,14 @@ window.onload = initDynSections;
 <a name="l00230"></a>00230 
 <a name="l00231"></a>00231                 <span class="keywordflow">return</span> $this-&gt;curl_handle;
 <a name="l00232"></a>00232         }
-<a name="l00233"></a>00233 
+<a name="l00233"></a>00233 <span class="comment"></span>
+<a name="l00234"></a>00234 <span class="comment">        /**</span>
+<a name="l00235"></a>00235 <span class="comment">         * Process Response</span>
+<a name="l00236"></a>00236 <span class="comment">         * </span>
+<a name="l00237"></a>00237 <span class="comment">         * Take the post-processed CURL data and break it down into useful header/body/info chunks.</span>
+<a name="l00238"></a>00238 <span class="comment">         * </span>
+<a name="l00239"></a>00239 <span class="comment">         * @return void</span>
+<a name="l00240"></a>00240 <span class="comment">         */</span>
 <a name="l00241"></a><a class="code" href="a00007_e9c72581ca0c82407180696432e15ba4.html#e9c72581ca0c82407180696432e15ba4">00241</a>         <span class="keyword">public</span> function <a class="code" href="a00007_e9c72581ca0c82407180696432e15ba4.html#e9c72581ca0c82407180696432e15ba4">processResponse</a>(<a class="code" href="a00007_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a> = null, <a class="code" href="a00007_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a> = null)
 <a name="l00242"></a>00242         {
 <a name="l00243"></a>00243                 <span class="comment">// Accept a custom one if it's passed.</span>
@@ -225,7 +326,14 @@ window.onload = initDynSections;
 <a name="l00278"></a>00278                         <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="a00008.html">TarzanHTTPResponse</a>($this-&gt;response_headers, $this-&gt;response_body, $this-&gt;response_code);
 <a name="l00279"></a>00279                 }
 <a name="l00280"></a>00280         }
-<a name="l00281"></a>00281 
+<a name="l00281"></a>00281 <span class="comment"></span>
+<a name="l00282"></a>00282 <span class="comment">        /**</span>
+<a name="l00283"></a>00283 <span class="comment">         * Send Request</span>
+<a name="l00284"></a>00284 <span class="comment">         * </span>
+<a name="l00285"></a>00285 <span class="comment">         * Sends the request, calling necessary utility functions to update built-in properties.</span>
+<a name="l00286"></a>00286 <span class="comment">         * </span>
+<a name="l00287"></a>00287 <span class="comment">         * @return The resulting unparsed data from the request.</span>
+<a name="l00288"></a>00288 <span class="comment">         */</span>
 <a name="l00289"></a><a class="code" href="a00007_de31130758b9040f292d1b841792c961.html#de31130758b9040f292d1b841792c961">00289</a>         <span class="keyword">public</span> function <a class="code" href="a00007_de31130758b9040f292d1b841792c961.html#de31130758b9040f292d1b841792c961">sendRequest</a>()
 <a name="l00290"></a>00290         {
 <a name="l00291"></a>00291                 $this-&gt;<a class="code" href="a00007_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">prepRequest</a>();
@@ -235,7 +343,14 @@ window.onload = initDynSections;
 <a name="l00295"></a>00295                 curl_close($this-&gt;curl_handle);
 <a name="l00296"></a>00296                 <span class="keywordflow">return</span> $this-&gt;response;
 <a name="l00297"></a>00297         }
-<a name="l00298"></a>00298 
+<a name="l00298"></a>00298 <span class="comment"></span>
+<a name="l00299"></a>00299 <span class="comment">        /**</span>
+<a name="l00300"></a>00300 <span class="comment">         * Send Multi Request</span>
+<a name="l00301"></a>00301 <span class="comment">         * </span>
+<a name="l00302"></a>00302 <span class="comment">         * Sends CURL requests with MultiCURL.</span>
+<a name="l00303"></a>00303 <span class="comment">         * </span>
+<a name="l00304"></a>00304 <span class="comment">         * @param array $handles (Required) An array of CURL handles to process simultaneously.</span>
+<a name="l00305"></a>00305 <span class="comment">         */</span>
 <a name="l00306"></a><a class="code" href="a00007_9bbf8c889f1b9b943d991d2f1c0846bc.html#9bbf8c889f1b9b943d991d2f1c0846bc">00306</a>         <span class="keyword">public</span> function <a class="code" href="a00007_9bbf8c889f1b9b943d991d2f1c0846bc.html#9bbf8c889f1b9b943d991d2f1c0846bc">sendMultiRequest</a>($handles)
 <a name="l00307"></a>00307         {
 <a name="l00308"></a>00308                 <span class="comment">// Initialize MultiCURL</span>
@@ -276,7 +391,14 @@ window.onload = initDynSections;
 <a name="l00343"></a>00343 
 <a name="l00344"></a>00344         <span class="comment">/*%******************************************************************************************%*/</span>
 <a name="l00345"></a>00345         <span class="comment">// RESPONSE METHODS</span>
-<a name="l00346"></a>00346 
+<a name="l00346"></a>00346 <span class="comment"></span>
+<a name="l00347"></a>00347 <span class="comment">        /**</span>
+<a name="l00348"></a>00348 <span class="comment">         * Get Response Header</span>
+<a name="l00349"></a>00349 <span class="comment">         * </span>
+<a name="l00350"></a>00350 <span class="comment">         * Get the response headers from the request.</span>
+<a name="l00351"></a>00351 <span class="comment">         * </span>
+<a name="l00352"></a>00352 <span class="comment">         * @return array The response headers.</span>
+<a name="l00353"></a>00353 <span class="comment">         */</span>
 <a name="l00354"></a><a class="code" href="a00007_85867c194a4199dc31e2ffef07d8cd63.html#85867c194a4199dc31e2ffef07d8cd63">00354</a>         <span class="keyword">public</span> function <a class="code" href="a00007_85867c194a4199dc31e2ffef07d8cd63.html#85867c194a4199dc31e2ffef07d8cd63">getResponseHeader</a>($header = null)
 <a name="l00355"></a>00355         {
 <a name="l00356"></a>00356                 <span class="keywordflow">if</span> ($header)
@@ -285,12 +407,26 @@ window.onload = initDynSections;
 <a name="l00359"></a>00359                 }
 <a name="l00360"></a>00360                 <span class="keywordflow">return</span> $this-&gt;response_headers;
 <a name="l00361"></a>00361         }
-<a name="l00362"></a>00362 
+<a name="l00362"></a>00362 <span class="comment"></span>
+<a name="l00363"></a>00363 <span class="comment">        /**</span>
+<a name="l00364"></a>00364 <span class="comment">         * Get Response Body</span>
+<a name="l00365"></a>00365 <span class="comment">         * </span>
+<a name="l00366"></a>00366 <span class="comment">         * Get the response body from the request.</span>
+<a name="l00367"></a>00367 <span class="comment">         * </span>
+<a name="l00368"></a>00368 <span class="comment">         * @return string The response body.</span>
+<a name="l00369"></a>00369 <span class="comment">         */</span>
 <a name="l00370"></a><a class="code" href="a00007_28b694ac430e29b4148aa5dd1f947466.html#28b694ac430e29b4148aa5dd1f947466">00370</a>         <span class="keyword">public</span> function <a class="code" href="a00007_28b694ac430e29b4148aa5dd1f947466.html#28b694ac430e29b4148aa5dd1f947466">getResponseBody</a>()
 <a name="l00371"></a>00371         {
 <a name="l00372"></a>00372                 <span class="keywordflow">return</span> $this-&gt;response_body;
 <a name="l00373"></a>00373         }
-<a name="l00374"></a>00374 
+<a name="l00374"></a>00374 <span class="comment"></span>
+<a name="l00375"></a>00375 <span class="comment">        /**</span>
+<a name="l00376"></a>00376 <span class="comment">         * Get Response Code</span>
+<a name="l00377"></a>00377 <span class="comment">         * </span>
+<a name="l00378"></a>00378 <span class="comment">         * Get the HTTP response code from the request.</span>
+<a name="l00379"></a>00379 <span class="comment">         * </span>
+<a name="l00380"></a>00380 <span class="comment">         * @return string The HTTP response code.</span>
+<a name="l00381"></a>00381 <span class="comment">         */</span>
 <a name="l00382"></a><a class="code" href="a00007_7b03a800932569df89678308bba66066.html#7b03a800932569df89678308bba66066">00382</a>         <span class="keyword">public</span> function <a class="code" href="a00007_7b03a800932569df89678308bba66066.html#7b03a800932569df89678308bba66066">getResponseCode</a>()
 <a name="l00383"></a>00383         {
 <a name="l00384"></a>00384                 <span class="keywordflow">return</span> $this-&gt;response_code;
@@ -299,7 +435,7 @@ window.onload = initDynSections;
 <a name="l00387"></a>00387 
 <a name="l00388"></a>00388 ?&gt;
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:44:58 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -140,24 +140,55 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> Standard <a class="el" href="a00008.html">TarzanHTTPResponse</a>. </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00868">868</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Delete an object.</span>
+<span class="comment"> */</span>
+$delete = $s3-&gt;delete_object(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>);
 
-<p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Check the status of the bucket.</span>
+<span class="comment"> */</span>
+<span class="keywordflow">if</span> ($delete-&gt;isOK())
+{
+        echo <span class="stringliteral">'File deleted!'</span>;
+}
+<span class="keywordflow">else</span>
+{
+        echo <span class="stringliteral">'File deletion failed!'</span>;
+}
 
-<p>Referenced by <a class="el" href="a00038.html#l00892">delete_all_objects()</a>, and <a class="el" href="a00038.html#l01098">move_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00869"></a>00869         {
-<a name="l00870"></a>00870                 <span class="comment">// Add this to our request</span>
-<a name="l00871"></a>00871                 $opt = array();
-<a name="l00872"></a>00872                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
-<a name="l00873"></a>00873                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_object'</span>;
-<a name="l00874"></a>00874                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
-<a name="l00875"></a>00875                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00876"></a>00876 
-<a name="l00877"></a>00877                 <span class="comment">// Authenticate to S3</span>
-<a name="l00878"></a>00878                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00879"></a>00879         }
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00038.html#l00926">926</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+
+<p>Referenced by <a class="el" href="a00038.html#l00952">delete_all_objects()</a>, and <a class="el" href="a00038.html#l01172">move_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00927"></a>00927         {
+<a name="l00928"></a>00928                 <span class="comment">// Add this to our request</span>
+<a name="l00929"></a>00929                 $opt = array();
+<a name="l00930"></a>00930                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
+<a name="l00931"></a>00931                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_object'</span>;
+<a name="l00932"></a>00932                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
+<a name="l00933"></a>00933                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00934"></a>00934 
+<a name="l00935"></a>00935                 <span class="comment">// Authenticate to S3</span>
+<a name="l00936"></a>00936                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00937"></a>00937         }
 </pre></div>
 <p>
 
@@ -167,7 +198,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

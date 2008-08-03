@@ -133,26 +133,50 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>integer|string The number of bytes as an integer, or the friendly format as a string. </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00622">622</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns the file size of the bucket, in bytes (e.g. 849666).</span>
+<span class="comment"> */</span>
+echo $s3-&gt;get_bucket_filesize(<span class="stringliteral">'warpshare.test.eu'</span>);
 
-<p>References <a class="el" href="a00038.html#l00935">list_objects()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00623"></a>00623         {
-<a name="l00624"></a>00624                 $filesize = 0;
-<a name="l00625"></a>00625                 $list = $this-&gt;<a class="code" href="a00003_db502170660cf3cd5d19b337bfbc8382.html#db502170660cf3cd5d19b337bfbc8382">list_objects</a>($bucket);
-<a name="l00626"></a>00626 
-<a name="l00627"></a>00627                 <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $filename)
-<a name="l00628"></a>00628                 {
-<a name="l00629"></a>00629                         $filesize += (int) $filename-&gt;Size;
-<a name="l00630"></a>00630                 }
-<a name="l00631"></a>00631 
-<a name="l00632"></a>00632                 <span class="keywordflow">if</span> ($friendly_format)
-<a name="l00633"></a>00633                 {
-<a name="l00634"></a>00634                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
-<a name="l00635"></a>00635                 }
-<a name="l00636"></a>00636 
-<a name="l00637"></a>00637                 <span class="keywordflow">return</span> $filesize;
-<a name="l00638"></a>00638         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Returns the file size of the bucket, in the largest "friendly" units that make sense (e.g. 829.75 kB).</span>
+<span class="comment"> */</span>
+echo $s3-&gt;get_bucket_filesize(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="keyword">true</span>);
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00662">662</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00997">list_objects()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00663"></a>00663         {
+<a name="l00664"></a>00664                 $filesize = 0;
+<a name="l00665"></a>00665                 $list = $this-&gt;<a class="code" href="a00003_db502170660cf3cd5d19b337bfbc8382.html#db502170660cf3cd5d19b337bfbc8382">list_objects</a>($bucket);
+<a name="l00666"></a>00666 
+<a name="l00667"></a>00667                 <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $filename)
+<a name="l00668"></a>00668                 {
+<a name="l00669"></a>00669                         $filesize += (int) $filename-&gt;Size;
+<a name="l00670"></a>00670                 }
+<a name="l00671"></a>00671 
+<a name="l00672"></a>00672                 <span class="keywordflow">if</span> ($friendly_format)
+<a name="l00673"></a>00673                 {
+<a name="l00674"></a>00674                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
+<a name="l00675"></a>00675                 }
+<a name="l00676"></a>00676 
+<a name="l00677"></a>00677                 <span class="keywordflow">return</span> $filesize;
+<a name="l00678"></a>00678         }
 </pre></div>
 <p>
 
@@ -162,7 +186,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

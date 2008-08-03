@@ -125,22 +125,39 @@ window.onload = initDynSections;
 
 <p>
 Constructor<p>
-public <dl compact><dt><b>Parameters:</b></dt><dd>
+<dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$key Your Amazon API Key. If blank, it will look for the AWS_KEY constant. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant. </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>bool FALSE if no valid values are set, otherwise true. </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00086">86</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using these specific settings.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>);
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00091">91</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00100">TarzanCore::$key</a>, and <a class="el" href="a00041.html#l00105">TarzanCore::$secret_key</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00087"></a>00087         {
-<a name="l00088"></a>00088                 $this-&gt;vhost = null;
-<a name="l00089"></a>00089                 $this-&gt;api_version = <span class="stringliteral">'2006-03-01'</span>;
-<a name="l00090"></a>00090                 parent::__construct(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>);
-<a name="l00091"></a>00091         }
+<div class="fragment"><pre class="fragment"><a name="l00092"></a>00092         {
+<a name="l00093"></a>00093                 $this-&gt;vhost = null;
+<a name="l00094"></a>00094                 $this-&gt;api_version = <span class="stringliteral">'2006-03-01'</span>;
+<a name="l00095"></a>00095                 parent::__construct(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>);
+<a name="l00096"></a>00096         }
 </pre></div>
 <p>
 
@@ -150,7 +167,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

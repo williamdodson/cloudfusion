@@ -133,21 +133,77 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00458">458</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * For the sake of example, let's create a bucket that we know is in the European Union.</span>
+<span class="comment"> */</span>
+$bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'</span>, <a class="code" href="a00017_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
 
-<p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00459"></a>00459         {
-<a name="l00460"></a>00460                 <span class="comment">// Add this to our request</span>
-<a name="l00461"></a>00461                 $opt = array();
-<a name="l00462"></a>00462                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l00463"></a>00463                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_bucket_locale'</span>;
-<a name="l00464"></a>00464                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00465"></a>00465 
-<a name="l00466"></a>00466                 <span class="comment">// Authenticate to S3</span>
-<a name="l00467"></a>00467                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00468"></a>00468         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * As long as the request came back with a positive response (HTTP Status Code 200)...</span>
+<span class="comment"> */</span>
+<span class="keywordflow">if</span> ($bucket-&gt;isOK())
+{
+<span class="comment"></span>
+<span class="comment">        /**</span>
+<span class="comment">         * Let's get the locale of the bucket we just created. Remember that this returns a </span>
+<span class="comment">         * TarzanHTTPResponse object.</span>
+<span class="comment">         */</span>
+        $locale = $s3-&gt;get_bucket_locale(<span class="stringliteral">'warpshare.test.eu'</span>);
+
+<span class="comment"></span>
+<span class="comment">        /**</span>
+<span class="comment">         * We can look at the resulting data if we want to.</span>
+<span class="comment">         */</span>
+        echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+        print_r($locale);
+        echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+<span class="comment"></span>
+<span class="comment">        /**</span>
+<span class="comment">         * If there is no body, it's a US bucket. Otherwise, the bucket is from a different </span>
+<span class="comment">         * geographical location (currently only the EU).</span>
+<span class="comment">         */</span>
+        <span class="keywordflow">if</span> (empty($locale-&gt;body))
+        {
+                echo <span class="stringliteral">'US'</span>;
+        }
+        <span class="keywordflow">else</span>
+        {
+                echo $locale-&gt;body;
+        }
+}
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00038.html#l00469">469</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+
+<p>Referenced by <a class="el" href="a00038.html#l00576">copy_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00470"></a>00470         {
+<a name="l00471"></a>00471                 <span class="comment">// Add this to our request</span>
+<a name="l00472"></a>00472                 $opt = array();
+<a name="l00473"></a>00473                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l00474"></a>00474                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_bucket_locale'</span>;
+<a name="l00475"></a>00475                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00476"></a>00476 
+<a name="l00477"></a>00477                 <span class="comment">// Authenticate to S3</span>
+<a name="l00478"></a>00478                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00479"></a>00479         }
 </pre></div>
 <p>
 
@@ -157,7 +213,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

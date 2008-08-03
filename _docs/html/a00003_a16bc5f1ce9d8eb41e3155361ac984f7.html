@@ -146,13 +146,43 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE. </td></tr>
   </table>
 </dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l01116">1116</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Rename a file.</span>
+<span class="comment"> */</span>
+$rename = $s3-&gt;rename_object(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <span class="stringliteral">'sample2.txt'</span>);
 
-<p>References <a class="el" href="a00038.html#l01098">move_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01117"></a>01117         {
-<a name="l01118"></a>01118                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b">move_object</a>($bucket, $source_filename, $bucket, $dest_filename, $acl);
-<a name="l01119"></a>01119         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($rename);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l01194">1194</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l01172">move_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01195"></a>01195         {
+<a name="l01196"></a>01196                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_76f97be3d6668ca18c22ec5b9177977b.html#76f97be3d6668ca18c22ec5b9177977b">move_object</a>($bucket, $source_filename, $bucket, $dest_filename, $acl);
+<a name="l01197"></a>01197         }
 </pre></div>
 <p>
 
@@ -162,7 +192,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

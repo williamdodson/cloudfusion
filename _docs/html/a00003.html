@@ -149,12 +149,29 @@ Collaboration diagram for AmazonS3:</div>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-Container for all Amazon S3-related methods. 
-<p>Definition at line <a class="el" href="a00038.html#l00062">62</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+Container for all Amazon S3-related methods.<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using these specific settings.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>);
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00065">65</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="a00038.html">s3.class.php</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

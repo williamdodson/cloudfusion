@@ -133,14 +133,39 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>boolean Whether it exists or not. </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00850">850</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * A simpler, faster way of checking if a bucket exists as opposed to using head_bucket().</span>
+<span class="comment"> */</span>
+<span class="keywordflow">if</span> ($s3-&gt;<a class="code" href="a00003_655832691ee2eb3b7c7e72f8e7758bb8.html#655832691ee2eb3b7c7e72f8e7758bb8">if_object_exists</a>(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>))
+{
+        echo <span class="stringliteral">'File exists!'</span>;
+}
+<span class="keywordflow">else</span>
+{
+        echo <span class="stringliteral">'File doesn\'t exist!'</span>;
+}
 
-<p>References <a class="el" href="a00038.html#l00827">head_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00851"></a>00851         {
-<a name="l00852"></a>00852                 $header = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
-<a name="l00853"></a>00853                 <span class="keywordflow">return</span> $header-&gt;isOK();
-<a name="l00854"></a>00854         }
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00038.html#l00906">906</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00881">head_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00907"></a>00907         {
+<a name="l00908"></a>00908                 $header = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
+<a name="l00909"></a>00909                 <span class="keywordflow">return</span> $header-&gt;isOK();
+<a name="l00910"></a>00910         }
 </pre></div>
 <p>
 
@@ -150,7 +175,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

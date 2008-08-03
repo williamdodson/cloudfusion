@@ -147,23 +147,59 @@ array meta - (Optional) Associative array of key-value pairs. Represented by x-a
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html</a> <p>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Store a file inside a bucket.</span>
+<span class="comment"> */</span>
+$file = $s3-&gt;create_object(<span class="stringliteral">'warpshare.test.eu'</span>, array(
+        <span class="stringliteral">'filename'</span> =&gt; <span class="stringliteral">'sample.txt'</span>,
+        <span class="stringliteral">'body'</span> =&gt; <span class="stringliteral">'This is some sample text that will go into the file.'</span>,
+        <span class="stringliteral">'contentType'</span> =&gt; <span class="stringliteral">'text/plain'</span>,
+        <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>
+));
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Was the file creation successful?</span>
+<span class="comment"> */</span>
+<span class="keywordflow">if</span> ($file-&gt;isOK())
+{
+        echo <span class="stringliteral">'Success!'</span>;
+}
+<span class="keywordflow">else</span>
+{
+        echo <span class="stringliteral">'EPIC FAILURE!'</span>;
+}
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00775">775</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00038.html#l00825">825</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00110">authenticate()</a>.</p>
+<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01238">store_remote_file()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00776"></a>00776         {
-<a name="l00777"></a>00777                 <span class="comment">// Add this to our request</span>
-<a name="l00778"></a>00778                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l00779"></a>00779                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'create_object'</span>;
-<a name="l00780"></a>00780                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($opt[<span class="stringliteral">'filename'</span>]);
-<a name="l00781"></a>00781 
-<a name="l00782"></a>00782                 <span class="comment">// Authenticate to S3</span>
-<a name="l00783"></a>00783                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00784"></a>00784         }
+<p>Referenced by <a class="el" href="a00038.html#l01322">store_remote_file()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00826"></a>00826         {
+<a name="l00827"></a>00827                 <span class="comment">// Add this to our request</span>
+<a name="l00828"></a>00828                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l00829"></a>00829                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'create_object'</span>;
+<a name="l00830"></a>00830                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($opt[<span class="stringliteral">'filename'</span>]);
+<a name="l00831"></a>00831 
+<a name="l00832"></a>00832                 <span class="comment">// Authenticate to S3</span>
+<a name="l00833"></a>00833                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00834"></a>00834         }
 </pre></div>
 <p>
 
@@ -173,7 +209,7 @@ array meta - (Optional) Associative array of key-value pairs. Represented by x-a
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:00 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

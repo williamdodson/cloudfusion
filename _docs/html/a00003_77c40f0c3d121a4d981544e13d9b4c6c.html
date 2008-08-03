@@ -123,14 +123,32 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>void </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonS3 object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">AmazonS3</a>();
 
-<p>Definition at line <a class="el" href="a00038.html#l00383">383</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Use a virtual host address for URLs and other HTTP requests instead of the &lt;bucket&gt;.s3.amazonaws.com URL.</span>
+<span class="comment"> * http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html</span>
+<span class="comment"> */</span>
+$s3-&gt;set_vhost(<span class="stringliteral">'s3.warpshare.com'</span>);
 
-<p>References <a class="el" href="a00038.html#l00072">$vhost</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00384"></a>00384         {
-<a name="l00385"></a>00385                 $this-&gt;vhost = <a class="code" href="a00003_294af23ca36464b7a5661d8080ce43d1.html#294af23ca36464b7a5661d8080ce43d1">$vhost</a>;
-<a name="l00386"></a>00386         }
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00038.html#l00390">390</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+
+<p>References <a class="el" href="a00038.html#l00075">$vhost</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00391"></a>00391         {
+<a name="l00392"></a>00392                 $this-&gt;vhost = <a class="code" href="a00003_294af23ca36464b7a5661d8080ce43d1.html#294af23ca36464b7a5661d8080ce43d1">$vhost</a>;
+<a name="l00393"></a>00393         }
 </pre></div>
 <p>
 
@@ -140,7 +158,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jul 31 08:45:01 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 22:17:42 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

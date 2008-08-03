@@ -237,7 +237,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009_8d189786d22306d81787287bb685c0ef.html#8d189786d22306d81787287bb685c0ef"><param name="Name" value="hex_to_base64"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315"><param name="Name" value="if_bucket_exists"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_655832691ee2eb3b7c7e72f8e7758bb8.html#655832691ee2eb3b7c7e72f8e7758bb8"><param name="Name" value="if_object_exists"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_a4e8b1777375fa108d1c8e6098696a5f.html#a4e8b1777375fa108d1c8e6098696a5f"><param name="Name" value="isOK"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_110df5aebb11032541142f939a37bf5a.html#110df5aebb11032541142f939a37bf5a"><param name="Name" value="isOK"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_39f3ae1fe1dfe8215f278b3c76d74293.html#39f3ae1fe1dfe8215f278b3c76d74293"><param name="Name" value="item_lookup"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_0cef3f86d337307971e0cf9509145e1d.html#0cef3f86d337307971e0cf9509145e1d"><param name="Name" value="item_search"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_56b297c1c80ff878da36ef1fa868c38f.html#56b297c1c80ff878da36ef1fa868c38f"><param name="Name" value="list_buckets"></OBJECT>
@@ -335,7 +335,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_a9048f7a24a8928c8676b84fc7f86886.html#a9048f7a24a8928c8676b84fc7f86886"><param name="Name" value="$header"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_57b09bbc464c499c1f3af5d935ab15bb.html#57b09bbc464c499c1f3af5d935ab15bb"><param name="Name" value="$status"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_2b77bf107406b533b61c601a736031d5.html#2b77bf107406b533b61c601a736031d5"><param name="Name" value="__construct"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_a4e8b1777375fa108d1c8e6098696a5f.html#a4e8b1777375fa108d1c8e6098696a5f"><param name="Name" value="isOK"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00008_110df5aebb11032541142f939a37bf5a.html#110df5aebb11032541142f939a37bf5a"><param name="Name" value="isOK"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009_dce787f97b4c3f097f8f7c4bae429381.html"><param name="Name" value="TarzanUtilities"></OBJECT>
   <UL>
