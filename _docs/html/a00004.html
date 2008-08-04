@@ -66,7 +66,7 @@ Collaboration diagram for AmazonSDB:</div>
 <a href="a00062.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0">__construct</a> ($key=null, $secret_key=null, $account_id=null, $assoc_id=null)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69">__construct</a> ($key=null, $secret_key=null)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00004_91adb5f512c9e2f6225663bc3daea021.html#91adb5f512c9e2f6225663bc3daea021">create_domain</a> ($domain_name, $returnCurlHandle=null)</td></tr>
 
@@ -84,12 +84,30 @@ Collaboration diagram for AmazonSDB:</div>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-Container for all Amazon SDB-related methods. 
-<p>Definition at line <a class="el" href="a00039.html#l00032">32</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+Container for all Amazon SDB-related methods.<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonSDB object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$sdb = <span class="keyword">new</span> <a class="code" href="a00004.html">AmazonSDB</a>();
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonSDB object using these specific settings.</span>
+<span class="comment"> */</span>
+$sdb = <span class="keyword">new</span> <a class="code" href="a00004.html">AmazonSDB</a>(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>);
+
+
+?&gt;
+</pre></div> 
+<p>Definition at line <a class="el" href="a00039.html#l00035">35</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="a00039.html">sdb.class.php</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 23:37:50 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

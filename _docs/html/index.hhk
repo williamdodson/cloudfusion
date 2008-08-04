@@ -39,7 +39,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_bba68f341b86ee6559df8104e2861cde.html#bba68f341b86ee6559df8104e2861cde"><param name="Name" value="AmazonAAWS"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00002_d7fc735144b39112fe0bc30ef62c8581.html#d7fc735144b39112fe0bc30ef62c8581"><param name="Name" value="AmazonEC2"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_a9de91fc68b91819d5cdff8bd0cfe422.html#a9de91fc68b91819d5cdff8bd0cfe422"><param name="Name" value="AmazonS3"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0"><param name="Name" value="AmazonSDB"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69"><param name="Name" value="AmazonSDB"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_3e353537326710b42882c991da3bcdfa.html#3e353537326710b42882c991da3bcdfa"><param name="Name" value="AmazonSQS"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_5f7b11dbf8fe7cf976a658f24485a645.html#5f7b11dbf8fe7cf976a658f24485a645"><param name="Name" value="TarzanCore"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_73d18f7fd113b4e76c89ff8ea02209d2.html#73d18f7fd113b4e76c89ff8ea02209d2"><param name="Name" value="TarzanHTTPRequest"></OBJECT>
@@ -144,9 +144,9 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579"><param name="Name" value="store_remote_file"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_929091a637100249ce35a2eecbc1a348.html#929091a637100249ce35a2eecbc1a348"><param name="Name" value="toggle_logging"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_40f115514c1664a50b11848b116df5a0.html"><param name="Name" value="AmazonSDB"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_c8e126eeec8a04b7693da7175af39d69.html"><param name="Name" value="AmazonSDB"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0"><param name="Name" value="__construct"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69"><param name="Name" value="__construct"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_91adb5f512c9e2f6225663bc3daea021.html#91adb5f512c9e2f6225663bc3daea021"><param name="Name" value="create_domain"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_78594f382e633f8432115b2dd5b0e9cc.html#78594f382e633f8432115b2dd5b0e9cc"><param name="Name" value="delete_attributes"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00004_ff027b1b53382a6292d9fe0101064174.html#ff027b1b53382a6292d9fe0101064174"><param name="Name" value="delete_domain"></OBJECT>

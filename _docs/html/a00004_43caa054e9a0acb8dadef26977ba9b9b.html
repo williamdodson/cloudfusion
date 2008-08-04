@@ -54,7 +54,7 @@ window.onload = initDynSections;
    <td valign="top">
       <div class="navtab">
         <table>
-          <tr><td class="navtab"><a class="qindex" href="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0">__construct</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_91adb5f512c9e2f6225663bc3daea021.html#91adb5f512c9e2f6225663bc3daea021">create_domain</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_78594f382e633f8432115b2dd5b0e9cc.html#78594f382e633f8432115b2dd5b0e9cc">delete_attributes</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_ff027b1b53382a6292d9fe0101064174.html#ff027b1b53382a6292d9fe0101064174">delete_domain</a></td></tr>
@@ -122,32 +122,70 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonSDB object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$sdb = <span class="keyword">new</span> <a class="code" href="a00004.html">AmazonSDB</a>();
 
-<p>Definition at line <a class="el" href="a00039.html#l00137">137</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Add some key-value pairs to a SimpleDB item in a SimpleDB domain. Each "domain" </span>
+<span class="comment"> * can have several "items", when then contain several key-value pairs ("attributes"). </span>
+<span class="comment"> * You can set up to 100 key-value pairs at a time via the standard SimpleDB web </span>
+<span class="comment"> * service API.</span>
+<span class="comment"> */</span>
+$put = $sdb-&gt;put_attributes(<span class="stringliteral">'warpshare_test'</span>, <span class="stringliteral">'user_data'</span>, array(
+        <span class="stringliteral">'name'</span> =&gt; <span class="stringliteral">'Ryan Parman'</span>,
+        <span class="stringliteral">'email'</span> =&gt; <span class="stringliteral">'ryan.lists.warpshare@gmail.com'</span>,
+        <span class="stringliteral">'url'</span> =&gt; <span class="stringliteral">'http://warpshare.com'</span>,
+        <span class="stringliteral">'gravatar'</span> =&gt; <span class="stringliteral">'http://en.gravatar.com/avatar/066da34008adb924c115df7a39779d8d?s=80&amp;r=any'</span>,
+        <span class="stringliteral">'openid'</span> =&gt; <span class="stringliteral">'http://ryanparman.com'</span>
+));
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($put);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00039.html#l00155">155</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00138"></a>00138         {
-<a name="l00139"></a>00139                 $opt = array();
-<a name="l00140"></a>00140                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00141"></a>00141                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
-<a name="l00142"></a>00142                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144                 $count = 0;
-<a name="l00145"></a>00145                 <span class="keywordflow">foreach</span> ($keypairs as $k =&gt; $v)
-<a name="l00146"></a>00146                 {
-<a name="l00147"></a>00147                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
-<a name="l00148"></a>00148                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
-<a name="l00149"></a>00149                         $count++;
-<a name="l00150"></a>00150                 }
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152                 <span class="keywordflow">if</span> ($replace)
-<a name="l00153"></a>00153                 {
-<a name="l00154"></a>00154                         $opt[<span class="stringliteral">'Attribute.Replace'</span>] = <span class="stringliteral">'true'</span>;
-<a name="l00155"></a>00155                 }
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'PutAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00158"></a>00158         }
+<div class="fragment"><pre class="fragment"><a name="l00156"></a>00156         {
+<a name="l00157"></a>00157                 $opt = array();
+<a name="l00158"></a>00158                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00159"></a>00159                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
+<a name="l00160"></a>00160                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162                 $count = 0;
+<a name="l00163"></a>00163                 <span class="keywordflow">foreach</span> ($keypairs as $k =&gt; $v)
+<a name="l00164"></a>00164                 {
+<a name="l00165"></a>00165                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
+<a name="l00166"></a>00166                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
+<a name="l00167"></a>00167                         $count++;
+<a name="l00168"></a>00168                 }
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170                 <span class="keywordflow">if</span> ($replace)
+<a name="l00171"></a>00171                 {
+<a name="l00172"></a>00172                         $opt[<span class="stringliteral">'Attribute.Replace'</span>] = <span class="stringliteral">'true'</span>;
+<a name="l00173"></a>00173                 }
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'PutAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00176"></a>00176         }
 </pre></div>
 <p>
 
@@ -157,7 +195,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 23:37:50 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

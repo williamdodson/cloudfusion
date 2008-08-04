@@ -54,7 +54,7 @@ window.onload = initDynSections;
    <td valign="top">
       <div class="navtab">
         <table>
-          <tr><td class="navtab"><a class="qindex" href="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0">__construct</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_91adb5f512c9e2f6225663bc3daea021.html#91adb5f512c9e2f6225663bc3daea021">create_domain</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_78594f382e633f8432115b2dd5b0e9cc.html#78594f382e633f8432115b2dd5b0e9cc">delete_attributes</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_ff027b1b53382a6292d9fe0101064174.html#ff027b1b53382a6292d9fe0101064174">delete_domain</a></td></tr>
@@ -99,14 +99,43 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonSDB object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$sdb = <span class="keyword">new</span> <a class="code" href="a00004.html">AmazonSDB</a>();
 
-<p>Definition at line <a class="el" href="a00039.html#l00090">90</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Return a list of domains for your SimpleDB account.</span>
+<span class="comment"> */</span>
+$domains = $sdb-&gt;list_domains();
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($domains);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00039.html#l00104">104</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00091"></a>00091         {
-<a name="l00092"></a>00092                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListDomains'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00093"></a>00093         }
+<div class="fragment"><pre class="fragment"><a name="l00105"></a>00105         {
+<a name="l00106"></a>00106                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListDomains'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00107"></a>00107         }
 </pre></div>
 <p>
 
@@ -116,7 +145,7 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 23:37:50 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

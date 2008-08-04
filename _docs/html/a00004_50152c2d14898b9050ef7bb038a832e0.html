@@ -54,7 +54,7 @@ window.onload = initDynSections;
    <td valign="top">
       <div class="navtab">
         <table>
-          <tr><td class="navtab"><a class="qindex" href="a00004_40f115514c1664a50b11848b116df5a0.html#40f115514c1664a50b11848b116df5a0">__construct</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00004_c8e126eeec8a04b7693da7175af39d69.html#c8e126eeec8a04b7693da7175af39d69">__construct</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_91adb5f512c9e2f6225663bc3daea021.html#91adb5f512c9e2f6225663bc3daea021">create_domain</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_78594f382e633f8432115b2dd5b0e9cc.html#78594f382e633f8432115b2dd5b0e9cc">delete_attributes</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_ff027b1b53382a6292d9fe0101064174.html#ff027b1b53382a6292d9fe0101064174">delete_domain</a></td></tr>
@@ -121,33 +121,104 @@ string NextToken - (Optional) String that tells Amazon SimpleDB where to start t
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
-<dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html</a> </dd></dl>
+<h2><a class="anchor" name="example">
+Example Usage:</a></h2>
+<div class="fragment"><pre class="fragment">&lt;?php
+require_once(<span class="stringliteral">'tarzan.class.php'</span>);
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Instantiate a new AmazonSDB object using the settings from the config.inc.php file.</span>
+<span class="comment"> */</span>
+$sdb = <span class="keyword">new</span> <a class="code" href="a00004.html">AmazonSDB</a>();
 
-<p>Definition at line <a class="el" href="a00039.html#l00287">287</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Query SimpleDB for items containing data. Returns all matches up to 250 items. A </span>
+<span class="comment"> * separate request is required to return back the full data for the items returned </span>
+<span class="comment"> * in this query. (See below for more info.)</span>
+<span class="comment"> */</span>
+$query = $sdb-&gt;query(<span class="stringliteral">'warpshare_test'</span>, array(
+        <span class="stringliteral">'MaxNumberOfItems'</span> =&gt; 250
+));
 
-<p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>, and <a class="el" href="a00039.html#l00176">get_attributes()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00288"></a>00288         {
-<a name="l00289"></a>00289                 $opt = array();
-<a name="l00290"></a>00290                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00291"></a>00291                 $opt[<span class="stringliteral">'QueryExpression'</span>] = $expression;
-<a name="l00292"></a>00292 
-<a name="l00293"></a>00293                 $query = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'Query'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00294"></a>00294 
-<a name="l00295"></a>00295                 <span class="keywordflow">if</span> ($follow)
-<a name="l00296"></a>00296                 {
-<a name="l00297"></a>00297                         $handles = array();
-<a name="l00298"></a>00298 
-<a name="l00299"></a>00299                         <span class="keywordflow">foreach</span> ($query-&gt;body-&gt;QueryResult-&gt;ItemName as $item)
-<a name="l00300"></a>00300                         {
-<a name="l00301"></a>00301                                 $handles[] = $this-&gt;<a class="code" href="a00004_8291d13e0983869c762759337a395e9d.html#8291d13e0983869c762759337a395e9d">get_attributes</a>($domain_name, $item, null, <span class="keyword">true</span>);
-<a name="l00302"></a>00302                         }
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
-<a name="l00305"></a>00305                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
-<a name="l00306"></a>00306                 }
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308                 <span class="keywordflow">return</span> $query;
-<a name="l00309"></a>00309         }
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Look at the response to navigate through the headers and body of the response.</span>
+<span class="comment"> * Note that this is an object, not an array, and that the body is a SimpleXML object.</span>
+<span class="comment"> * </span>
+<span class="comment"> * http://php.net/manual/en/simplexml.examples.php</span>
+<span class="comment"> */</span>
+echo <span class="stringliteral">'&lt;pre&gt;'</span>;
+print_r($query);
+echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
+
+
+<span class="comment">/*========================================================*/</span>
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Same as above, but we're using a complex SimpleDB query to pull back specific items. </span>
+<span class="comment"> * (Added linebreaks for readability.)</span>
+<span class="comment"> */</span>
+$query = $sdb-&gt;$query = $sdb-&gt;query(<span class="stringliteral">'warpshare_test'</span>, 
+        array(
+                <span class="stringliteral">'MaxNumberOfItems'</span> =&gt; 250
+        ), 
+        <span class="stringliteral">"['Year' &gt;= '1900' and 'Year' &lt; '2000'] intersection ['Keyword' = 'Book'] intersection ['Rating' starts-with '4' or 'Rating' = '****'] union ['Title' = '300'] union ['Author' = 'Paul Van Dyk']"</span>
+);
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * Same as above, but we're using a complex SimpleDB query to pull back specific items, </span>
+<span class="comment"> * and then request those items all at once so that query responses also contain the </span>
+<span class="comment"> * data for the relevant items. (Added linebreaks for readability.)</span>
+<span class="comment"> */</span>
+$query = $sdb-&gt;$query = $sdb-&gt;query(<span class="stringliteral">'warpshare_test'</span>, 
+        array(
+                <span class="stringliteral">'MaxNumberOfItems'</span> =&gt; 250
+        ), 
+        <span class="stringliteral">"['Year' &gt;= '1900' and 'Year' &lt; '2000'] intersection ['Keyword' = 'Book'] intersection ['Rating' starts-with '4' or 'Rating' = '****'] union ['Title' = '300'] union ['Author' = 'Paul Van Dyk']"</span>, 
+        <span class="keyword">true</span>
+);
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * We're NOT using a SimpleDB query, but we are requesting the data for the resulting </span>
+<span class="comment"> * items all at once. </span>
+<span class="comment"> */</span>
+$query = $sdb-&gt;$query = $sdb-&gt;query(<span class="stringliteral">'warpshare_test'</span>, array(
+        <span class="stringliteral">'MaxNumberOfItems'</span> =&gt; 250
+), null, <span class="keyword">true</span>);
+
+
+?&gt;
+</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="a00039.html#l00311">311</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+
+<p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>, and <a class="el" href="a00039.html#l00196">get_attributes()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00312"></a>00312         {
+<a name="l00313"></a>00313                 $opt = array();
+<a name="l00314"></a>00314                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00315"></a>00315                 $opt[<span class="stringliteral">'QueryExpression'</span>] = $expression;
+<a name="l00316"></a>00316 
+<a name="l00317"></a>00317                 $query = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'Query'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00318"></a>00318 
+<a name="l00319"></a>00319                 <span class="keywordflow">if</span> ($follow)
+<a name="l00320"></a>00320                 {
+<a name="l00321"></a>00321                         $handles = array();
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323                         <span class="keywordflow">foreach</span> ($query-&gt;body-&gt;QueryResult-&gt;ItemName as $item)
+<a name="l00324"></a>00324                         {
+<a name="l00325"></a>00325                                 $handles[] = $this-&gt;<a class="code" href="a00004_8291d13e0983869c762759337a395e9d.html#8291d13e0983869c762759337a395e9d">get_attributes</a>($domain_name, $item, null, <span class="keyword">true</span>);
+<a name="l00326"></a>00326                         }
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
+<a name="l00329"></a>00329                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
+<a name="l00330"></a>00330                 }
+<a name="l00331"></a>00331 
+<a name="l00332"></a>00332                 <span class="keywordflow">return</span> $query;
+<a name="l00333"></a>00333         }
 </pre></div>
 <p>
 
@@ -157,7 +228,7 @@ string NextToken - (Optional) String that tells Amazon SimpleDB where to start t
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 23:37:50 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

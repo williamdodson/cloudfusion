@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SDB
- * @version 2008.07.07
+ * @version 2008.08.03
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -28,6 +28,9 @@ define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
 
 /**
  * Container for all Amazon SDB-related methods.
+ * 
+ * @section example Example Usage:
+ * @include sdb/__construct.phps
  */
 class AmazonSDB extends TarzanCore
 {
@@ -36,11 +39,18 @@ class AmazonSDB extends TarzanCore
 
 	/**
 	 * Constructor
+	 * 
+	 * @public
+	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
+	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * @return bool FALSE if no valid values are set, otherwise true.
+	 * @section example Example Usage:
+	 * @include sdb/__construct.phps
 	 */
-	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
+	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2007-11-07';
-		parent::__construct($key, $secret_key, $account_id, $assoc_id);
+		parent::__construct($key, $secret_key);
 	}
 
 
@@ -58,6 +68,8 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to create.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/create_domain.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
 	 */
 	public function create_domain($domain_name, $returnCurlHandle = null)
@@ -85,6 +97,8 @@ class AmazonSDB extends TarzanCore
 	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 * </ul>
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/list_domains.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
 	 */
 	public function list_domains($opt = null)
@@ -104,6 +118,8 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to delete.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/delete_domain.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
 	 */
 	public function delete_domain($domain_name, $returnCurlHandle = null)
@@ -132,6 +148,8 @@ class AmazonSDB extends TarzanCore
 	 * @param boolean $replace (Optional) Whether to replace an existing $item_name with this one. Defaults to false.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/put_attributes.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
 	 */
 	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null, $returnCurlHandle = null)
@@ -171,6 +189,8 @@ class AmazonSDB extends TarzanCore
 	 * @param mixed $keys (Optional) The name of the key (attribute) in the key-value pair. Supports a string value (for single keys) or an indexed array (for multiple keys).
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/get_attributes.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
 	 */
 	public function get_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
@@ -214,6 +234,8 @@ class AmazonSDB extends TarzanCore
 	 * @param mixed $keys (Optional) The name of the key(s) (attribute(s)) to delete from the item. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/delete_attributes.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
 	 */
 	public function delete_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
@@ -282,6 +304,8 @@ class AmazonSDB extends TarzanCore
 	 * @param string $expression (Optional) The SimpleDB query expression to use.
 	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.
 	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/query.phps
 	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
