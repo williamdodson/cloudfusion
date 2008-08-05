@@ -143,9 +143,9 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
+	 * @param string $item_name (Required) The name of the item/object to create.
 	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value pairs.
-	 * @param boolean $replace (Optional) Whether to replace an existing $item_name with this one. Defaults to false.
+	 * @param boolean $replace (Optional) Whether to replace a key-value pair if a matching key already exists. Defaults to false.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @section example Example Usage:
@@ -316,7 +316,8 @@ class AmazonSDB extends TarzanCore
 
 		$query = $this->authenticate('Query', $opt, SDB_DEFAULT_URL);
 
-		if ($follow)
+		// If $follow is requested, and there's at least one response to follow...
+		if ($follow && isset($query->body->QueryResult->ItemName))
 		{
 			$handles = array();
 
