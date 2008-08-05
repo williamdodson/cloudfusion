@@ -165,36 +165,36 @@ $get = $sdb-&gt;get_attributes(<span class="stringliteral">'warpshare_test'</spa
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00039.html#l00196">196</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00039.html#l00198">198</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00100">TarzanCore::$key</a>, and <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00039.html#l00311">query()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00197"></a>00197         {
-<a name="l00198"></a>00198                 $opt = array();
-<a name="l00199"></a>00199                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00200"></a>00200                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
-<a name="l00201"></a>00201                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00202"></a>00202 
-<a name="l00203"></a>00203                 <span class="keywordflow">if</span> ($keys)
-<a name="l00204"></a>00204                 {
-<a name="l00205"></a>00205                         <span class="keywordflow">if</span> (is_array($keys))
-<a name="l00206"></a>00206                         {
-<a name="l00207"></a>00207                                 $count = 0;
-<a name="l00208"></a>00208                                 <span class="keywordflow">foreach</span> ($keys as <a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>)
-<a name="l00209"></a>00209                                 {
-<a name="l00210"></a>00210                                         $opt[<span class="stringliteral">'AttributeName.'</span> . (string) $count] = $key;
-<a name="l00211"></a>00211                                         $count++;
-<a name="l00212"></a>00212                                 }
-<a name="l00213"></a>00213                         }
-<a name="l00214"></a>00214                         <span class="keywordflow">else</span>
-<a name="l00215"></a>00215                         {
-<a name="l00216"></a>00216                                 $opt[<span class="stringliteral">'AttributeName'</span>] = $keys;
-<a name="l00217"></a>00217                         }
-<a name="l00218"></a>00218                 }
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00221"></a>00221         }
+<p>Referenced by <a class="el" href="a00039.html#l00313">query()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00199"></a>00199         {
+<a name="l00200"></a>00200                 $opt = array();
+<a name="l00201"></a>00201                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00202"></a>00202                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
+<a name="l00203"></a>00203                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205                 <span class="keywordflow">if</span> ($keys)
+<a name="l00206"></a>00206                 {
+<a name="l00207"></a>00207                         <span class="keywordflow">if</span> (is_array($keys))
+<a name="l00208"></a>00208                         {
+<a name="l00209"></a>00209                                 $count = 0;
+<a name="l00210"></a>00210                                 <span class="keywordflow">foreach</span> ($keys as <a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>)
+<a name="l00211"></a>00211                                 {
+<a name="l00212"></a>00212                                         $opt[<span class="stringliteral">'AttributeName.'</span> . (string) $count] = $key;
+<a name="l00213"></a>00213                                         $count++;
+<a name="l00214"></a>00214                                 }
+<a name="l00215"></a>00215                         }
+<a name="l00216"></a>00216                         <span class="keywordflow">else</span>
+<a name="l00217"></a>00217                         {
+<a name="l00218"></a>00218                                 $opt[<span class="stringliteral">'AttributeName'</span>] = $keys;
+<a name="l00219"></a>00219                         }
+<a name="l00220"></a>00220                 }
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00223"></a>00223         }
 </pre></div>
 <p>
 
@@ -204,7 +204,7 @@ $get = $sdb-&gt;get_attributes(<span class="stringliteral">'warpshare_test'</spa
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Aug 4 23:19:21 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

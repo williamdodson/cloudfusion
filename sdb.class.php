@@ -164,13 +164,15 @@ class AmazonSDB extends TarzanCore
 		{
 			$opt['Attribute.' . (string) $count . '.Name'] = $k;
 			$opt['Attribute.' . (string) $count . '.Value'] = $v;
+
+			if ($replace)
+			{
+				$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+			}
+
 			$count++;
 		}
 
-		if ($replace)
-		{
-			$opt['Attribute.Replace'] = 'true';
-		}
 
 		return $this->authenticate('PutAttributes', $opt, SDB_DEFAULT_URL);
 	}

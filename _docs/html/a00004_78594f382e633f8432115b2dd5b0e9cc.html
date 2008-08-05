@@ -166,52 +166,52 @@ $delete = $sdb-&gt;delete_attributes(<span class="stringliteral">'warpshare_test
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00039.html#l00241">241</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00039.html#l00243">243</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
 
 <p>References <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00242"></a>00242         {
-<a name="l00243"></a>00243                 $opt = array();
-<a name="l00244"></a>00244                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00245"></a>00245                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
-<a name="l00246"></a>00246                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00247"></a>00247 
-<a name="l00248"></a>00248                 <span class="comment">// Do we have a key?</span>
-<a name="l00249"></a>00249                 <span class="keywordflow">if</span> ($keys)
-<a name="l00250"></a>00250                 {
-<a name="l00251"></a>00251                         <span class="comment">// An array?</span>
-<a name="l00252"></a>00252                         <span class="keywordflow">if</span> (is_array($keys))
-<a name="l00253"></a>00253                         {
-<a name="l00254"></a>00254                                 <span class="comment">// Indexed array of Attribute Names?</span>
-<a name="l00255"></a>00255                                 <span class="keywordflow">if</span> ($this-&gt;util-&gt;ready($keys[0]))
-<a name="l00256"></a>00256                                 {
-<a name="l00257"></a>00257                                         <span class="keywordflow">for</span> ($x = 0, $i = count($keys); $x &lt; $i; $x++)
-<a name="l00258"></a>00258                                         {
-<a name="l00259"></a>00259                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $i . <span class="stringliteral">'.Name'</span>] = $keys[$i];
-<a name="l00260"></a>00260                                         }
-<a name="l00261"></a>00261                                 }
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263                                 <span class="comment">// Associative array of Name/Value pairs.</span>
-<a name="l00264"></a>00264                                 <span class="keywordflow">else</span>
-<a name="l00265"></a>00265                                 {
-<a name="l00266"></a>00266                                         $count = 0;
-<a name="l00267"></a>00267                                         <span class="keywordflow">foreach</span> ($keys as $k =&gt; $v)
-<a name="l00268"></a>00268                                         {
-<a name="l00269"></a>00269                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
-<a name="l00270"></a>00270                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
-<a name="l00271"></a>00271                                                 $count++;
-<a name="l00272"></a>00272                                         }
-<a name="l00273"></a>00273                                 }
-<a name="l00274"></a>00274                         }
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276                         <span class="comment">// Single string Attribute Name.</span>
-<a name="l00277"></a>00277                         <span class="keywordflow">else</span>
-<a name="l00278"></a>00278                         {
-<a name="l00279"></a>00279                                 $opt[<span class="stringliteral">'Attribute.Name'</span>] = $keys;
-<a name="l00280"></a>00280                         }
-<a name="l00281"></a>00281                 }
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00284"></a>00284         }
+<div class="fragment"><pre class="fragment"><a name="l00244"></a>00244         {
+<a name="l00245"></a>00245                 $opt = array();
+<a name="l00246"></a>00246                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00247"></a>00247                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
+<a name="l00248"></a>00248                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250                 <span class="comment">// Do we have a key?</span>
+<a name="l00251"></a>00251                 <span class="keywordflow">if</span> ($keys)
+<a name="l00252"></a>00252                 {
+<a name="l00253"></a>00253                         <span class="comment">// An array?</span>
+<a name="l00254"></a>00254                         <span class="keywordflow">if</span> (is_array($keys))
+<a name="l00255"></a>00255                         {
+<a name="l00256"></a>00256                                 <span class="comment">// Indexed array of Attribute Names?</span>
+<a name="l00257"></a>00257                                 <span class="keywordflow">if</span> ($this-&gt;util-&gt;ready($keys[0]))
+<a name="l00258"></a>00258                                 {
+<a name="l00259"></a>00259                                         <span class="keywordflow">for</span> ($x = 0, $i = count($keys); $x &lt; $i; $x++)
+<a name="l00260"></a>00260                                         {
+<a name="l00261"></a>00261                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $i . <span class="stringliteral">'.Name'</span>] = $keys[$i];
+<a name="l00262"></a>00262                                         }
+<a name="l00263"></a>00263                                 }
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265                                 <span class="comment">// Associative array of Name/Value pairs.</span>
+<a name="l00266"></a>00266                                 <span class="keywordflow">else</span>
+<a name="l00267"></a>00267                                 {
+<a name="l00268"></a>00268                                         $count = 0;
+<a name="l00269"></a>00269                                         <span class="keywordflow">foreach</span> ($keys as $k =&gt; $v)
+<a name="l00270"></a>00270                                         {
+<a name="l00271"></a>00271                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
+<a name="l00272"></a>00272                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
+<a name="l00273"></a>00273                                                 $count++;
+<a name="l00274"></a>00274                                         }
+<a name="l00275"></a>00275                                 }
+<a name="l00276"></a>00276                         }
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278                         <span class="comment">// Single string Attribute Name.</span>
+<a name="l00279"></a>00279                         <span class="keywordflow">else</span>
+<a name="l00280"></a>00280                         {
+<a name="l00281"></a>00281                                 $opt[<span class="stringliteral">'Attribute.Name'</span>] = $keys;
+<a name="l00282"></a>00282                         }
+<a name="l00283"></a>00283                 }
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00286"></a>00286         }
 </pre></div>
 <p>
 
@@ -221,7 +221,7 @@ $delete = $sdb-&gt;delete_attributes(<span class="stringliteral">'warpshare_test
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 3 22:48:37 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Aug 4 23:19:21 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
