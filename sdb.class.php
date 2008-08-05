@@ -144,7 +144,7 @@ class AmazonSDB extends TarzanCore
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param string $item_name (Required) The name of the item/object to create.
-	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value pairs.
+	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
 	 * @param boolean $replace (Optional) Whether to replace a key-value pair if a matching key already exists. Defaults to false.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
@@ -162,12 +162,30 @@ class AmazonSDB extends TarzanCore
 		$count = 0;
 		foreach ($keypairs as $k => $v)
 		{
-			$opt['Attribute.' . (string) $count . '.Name'] = $k;
-			$opt['Attribute.' . (string) $count . '.Value'] = $v;
-
-			if ($replace)
+			if (is_array($v))
 			{
-				$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+				foreach ($v as $va)
+				{
+					$opt['Attribute.' . (string) $count . '.Name'] = $k;
+					$opt['Attribute.' . (string) $count . '.Value'] = $va;
+
+					if ($replace)
+					{
+						$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+					}
+
+					$count++;
+				}
+			}
+			else
+			{
+				$opt['Attribute.' . (string) $count . '.Name'] = $k;
+				$opt['Attribute.' . (string) $count . '.Value'] = $v;
+
+				if ($replace)
+				{
+					$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+				}
 			}
 
 			$count++;

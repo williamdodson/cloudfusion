@@ -33,4 +33,26 @@ print_r($put);
 echo '</pre>';
 
 
+/*========================================================*/
+
+
+/**
+ * An example of assigning multiple values to a single key.
+ */
+$put = $sdb->put_attributes('warpshare_test', 'user_data', array(
+	'name' => 'Ryan Parman',
+	'email' => 'ryan.lists.warpshare@gmail.com',
+	'url' => 'http://warpshare.com',
+	'gravatar' => 'http://en.gravatar.com/avatar/066da34008adb924c115df7a39779d8d?s=80&r=any',
+	'openid' => 'http://ryanparman.com',
+	'tags' => array(
+		'awesome',
+		'cool',
+		'fantastic',
+		'wonderful',
+		'he who you wish you were like'
+	)
+));
+
+
 ?>

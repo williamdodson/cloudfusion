@@ -116,7 +116,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$domain_name (Required) The name of the domain to use. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$item_name (Required) The name of the item/object to create. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>array</em>&nbsp;</td><td>$keypairs (Required) Associative array of parameters which are treated as key-value pairs. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>array</em>&nbsp;</td><td>$keypairs (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags). </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>boolean</em>&nbsp;</td><td>$replace (Optional) Whether to replace a key-value pair if a matching key already exists. Defaults to false. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>boolean</em>&nbsp;</td><td>$returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests. </td></tr>
   </table>
@@ -159,6 +159,28 @@ print_r($put);
 echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 
 
+<span class="comment">/*========================================================*/</span>
+
+<span class="comment"></span>
+<span class="comment">/**</span>
+<span class="comment"> * An example of assigning multiple values to a single key.</span>
+<span class="comment"> */</span>
+$put = $sdb-&gt;put_attributes(<span class="stringliteral">'warpshare_test'</span>, <span class="stringliteral">'user_data'</span>, array(
+        <span class="stringliteral">'name'</span> =&gt; <span class="stringliteral">'Ryan Parman'</span>,
+        <span class="stringliteral">'email'</span> =&gt; <span class="stringliteral">'ryan.lists.warpshare@gmail.com'</span>,
+        <span class="stringliteral">'url'</span> =&gt; <span class="stringliteral">'http://warpshare.com'</span>,
+        <span class="stringliteral">'gravatar'</span> =&gt; <span class="stringliteral">'http://en.gravatar.com/avatar/066da34008adb924c115df7a39779d8d?s=80&amp;r=any'</span>,
+        <span class="stringliteral">'openid'</span> =&gt; <span class="stringliteral">'http://ryanparman.com'</span>,
+        <span class="stringliteral">'tags'</span> =&gt; array(
+                <span class="stringliteral">'awesome'</span>,
+                <span class="stringliteral">'cool'</span>,
+                <span class="stringliteral">'fantastic'</span>,
+                <span class="stringliteral">'wonderful'</span>,
+                <span class="stringliteral">'he who you wish you were like'</span>
+        )
+));
+
+
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html</a> </dd></dl>
 
@@ -174,20 +196,38 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 <a name="l00162"></a>00162                 $count = 0;
 <a name="l00163"></a>00163                 <span class="keywordflow">foreach</span> ($keypairs as $k =&gt; $v)
 <a name="l00164"></a>00164                 {
-<a name="l00165"></a>00165                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
-<a name="l00166"></a>00166                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168                         <span class="keywordflow">if</span> ($replace)
-<a name="l00169"></a>00169                         {
-<a name="l00170"></a>00170                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Replace'</span>] = <span class="stringliteral">'true'</span>;
-<a name="l00171"></a>00171                         }
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173                         $count++;
-<a name="l00174"></a>00174                 }
-<a name="l00175"></a>00175 
+<a name="l00165"></a>00165                         <span class="keywordflow">if</span> (is_array($v))
+<a name="l00166"></a>00166                         {
+<a name="l00167"></a>00167                                 <span class="keywordflow">foreach</span> ($v as $va)
+<a name="l00168"></a>00168                                 {
+<a name="l00169"></a>00169                                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
+<a name="l00170"></a>00170                                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $va;
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172                                         <span class="keywordflow">if</span> ($replace)
+<a name="l00173"></a>00173                                         {
+<a name="l00174"></a>00174                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Replace'</span>] = <span class="stringliteral">'true'</span>;
+<a name="l00175"></a>00175                                         }
 <a name="l00176"></a>00176 
-<a name="l00177"></a>00177                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'PutAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00178"></a>00178         }
+<a name="l00177"></a>00177                                         $count++;
+<a name="l00178"></a>00178                                 }
+<a name="l00179"></a>00179                         }
+<a name="l00180"></a>00180                         <span class="keywordflow">else</span>
+<a name="l00181"></a>00181                         {
+<a name="l00182"></a>00182                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Name'</span>] = $k;
+<a name="l00183"></a>00183                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Value'</span>] = $v;
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185                                 <span class="keywordflow">if</span> ($replace)
+<a name="l00186"></a>00186                                 {
+<a name="l00187"></a>00187                                         $opt[<span class="stringliteral">'Attribute.'</span> . (string) $count . <span class="stringliteral">'.Replace'</span>] = <span class="stringliteral">'true'</span>;
+<a name="l00188"></a>00188                                 }
+<a name="l00189"></a>00189                         }
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191                         $count++;
+<a name="l00192"></a>00192                 }
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'PutAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00196"></a>00196         }
 </pre></div>
 <p>
 
@@ -197,7 +237,7 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Aug 4 23:19:21 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
