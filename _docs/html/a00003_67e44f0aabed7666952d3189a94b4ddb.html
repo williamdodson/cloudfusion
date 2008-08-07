@@ -185,18 +185,18 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 <span class="comment">/**</span>
 <span class="comment"> * Same as above, but explicitly choose the European Union using the S3_LOCATION_EU constant.</span>
 <span class="comment"> */</span>
-$s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a class="code" href="a00017_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
+$s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a class="code" href="a00019_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
 
 
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00415">415</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00415">415</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00576">copy_bucket()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l00576">copy_bucket()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00416"></a>00416         {
 <a name="l00417"></a>00417                 <span class="comment">// Defaults</span>
 <a name="l00418"></a>00418                 $body = null;
@@ -215,7 +215,7 @@ $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a 
 <a name="l00431"></a>00431 
 <a name="l00432"></a>00432                 <span class="comment">// Authenticate to S3</span>
 <a name="l00433"></a>00433                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, array(
-<a name="l00434"></a>00434                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
+<a name="l00434"></a>00434                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
 <a name="l00435"></a>00435                         <span class="stringliteral">'method'</span> =&gt; <span class="stringliteral">'create_bucket'</span>,
 <a name="l00436"></a>00436                         <span class="stringliteral">'body'</span> =&gt; $body,
 <a name="l00437"></a>00437                         <span class="stringliteral">'contentType'</span> =&gt; $contentType,
@@ -231,7 +231,7 @@ $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a 
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

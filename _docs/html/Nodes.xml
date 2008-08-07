@@ -134,28 +134,36 @@
           <Path>a00014.html</Path>
          </Node>
          <Node>
-          <Name>config-sample.inc.php</Name>
+          <Name>config-rp.inc.php</Name>
           <Path>a00015.html</Path>
          </Node>
          <Node>
-          <Name>ec2.class.php</Name>
+          <Name>config-sample.inc.php</Name>
           <Path>a00016.html</Path>
          </Node>
          <Node>
-          <Name>s3.class.php</Name>
+          <Name>config-ws.inc.php</Name>
           <Path>a00017.html</Path>
          </Node>
          <Node>
-          <Name>sdb.class.php</Name>
+          <Name>ec2.class.php</Name>
           <Path>a00018.html</Path>
          </Node>
          <Node>
-          <Name>sqs.class.php</Name>
+          <Name>s3.class.php</Name>
           <Path>a00019.html</Path>
          </Node>
          <Node>
-          <Name>tarzan.class.php</Name>
+          <Name>sdb.class.php</Name>
           <Path>a00020.html</Path>
+         </Node>
+         <Node>
+          <Name>sqs.class.php</Name>
+          <Path>a00021.html</Path>
+         </Node>
+         <Node>
+          <Name>tarzan.class.php</Name>
+          <Path>a00022.html</Path>
          </Node>
         </Subnodes>
        </Node>

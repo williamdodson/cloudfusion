@@ -33,7 +33,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_37734c67bd0a4a4884d4f15ace000564.html#37734c67bd0a4a4884d4f15ace000564"><param name="Name" value="$util"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_8cb3cf2e331d4cbbb87f78da2463047d.html#8cb3cf2e331d4cbbb87f78da2463047d"><param name="Name" value="$utilities_class"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_294af23ca36464b7a5661d8080ce43d1.html#294af23ca36464b7a5661d8080ce43d1"><param name="Name" value="$vhost"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00020_80a3892ecad687b96b542109495df0f0.html#80a3892ecad687b96b542109495df0f0"><param name="Name" value="__autoload"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00022_80a3892ecad687b96b542109495df0f0.html#80a3892ecad687b96b542109495df0f0"><param name="Name" value="__autoload"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_bba68f341b86ee6559df8104e2861cde.html#bba68f341b86ee6559df8104e2861cde"><param name="Name" value="__construct"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_bba68f341b86ee6559df8104e2861cde.html#bba68f341b86ee6559df8104e2861cde"><param name="Name" value="AmazonAAWS"></OBJECT>
@@ -283,7 +283,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00009_3fda31cc39db3ab72ffc0fc38643b905.html#3fda31cc39db3ab72ffc0fc38643b905"><param name="Name" value="size_readable"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ad632f7748de7abea6c4716186ad0579.html#ad632f7748de7abea6c4716186ad0579"><param name="Name" value="store_remote_file"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00001_d2f433e161f4708904cb78ed4a43d207.html#d2f433e161f4708904cb78ed4a43d207"><param name="Name" value="tag_lookup"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00020_80a3892ecad687b96b542109495df0f0.html"><param name="Name" value="tarzan.class.php"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00022_80a3892ecad687b96b542109495df0f0.html"><param name="Name" value="tarzan.class.php"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_4cef61f6f9842dbb0f5b8b11d1b54de5.html"><param name="Name" value="TarzanCore"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00006_4cef61f6f9842dbb0f5b8b11d1b54de5.html#4cef61f6f9842dbb0f5b8b11d1b54de5"><param name="Name" value="$account_id"></OBJECT>

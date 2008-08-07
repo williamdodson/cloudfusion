@@ -173,15 +173,15 @@ $delete = $s3-&gt;delete_object(<span class="stringliteral">'warpshare.test.eu'<
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00926">926</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00926">926</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00952">delete_all_objects()</a>, and <a class="el" href="a00038.html#l01172">move_object()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l00952">delete_all_objects()</a>, and <a class="el" href="a00042.html#l01172">move_object()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00927"></a>00927         {
 <a name="l00928"></a>00928                 <span class="comment">// Add this to our request</span>
 <a name="l00929"></a>00929                 $opt = array();
-<a name="l00930"></a>00930                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
+<a name="l00930"></a>00930                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
 <a name="l00931"></a>00931                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_object'</span>;
 <a name="l00932"></a>00932                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
 <a name="l00933"></a>00933                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
@@ -198,7 +198,7 @@ $delete = $s3-&gt;delete_object(<span class="stringliteral">'warpshare.test.eu'<
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

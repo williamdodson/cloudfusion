@@ -55,4 +55,48 @@ $put = $sdb->put_attributes('warpshare_test', 'user_data', array(
 ));
 
 
+/**
+ * An example of assigning multiple values to a single key, as well as if there are ANY 
+ * duplicate keys, the new values overwrite the existing ones (instead of adding 
+ * additional values to the existing keys).
+ */
+$put = $sdb->put_attributes('warpshare_test', 'user_data', array(
+	'name' => 'Ryan Parman',
+	'email' => 'ryan.lists.warpshare@gmail.com',
+	'url' => 'http://warpshare.com',
+	'gravatar' => 'http://en.gravatar.com/avatar/066da34008adb924c115df7a39779d8d?s=80&r=any',
+	'openid' => 'http://ryanparman.com',
+	'tags' => array(
+		'awesome',
+		'cool',
+		'fantastic',
+		'wonderful',
+		'he who you wish you were like'
+	)
+), true);
+
+
+/**
+ * An example of assigning multiple values to a single key, as well as overwriting only 
+ * specific keys, and adding additional values to the other existing keys.
+ */
+$put = $sdb->put_attributes('warpshare_test', 'user_data', array(
+	'name' => 'Ryan Parman',
+	'email' => 'ryan.lists.warpshare@gmail.com',
+	'url' => 'http://warpshare.com',
+	'gravatar' => 'http://en.gravatar.com/avatar/066da34008adb924c115df7a39779d8d?s=80&r=any',
+	'openid' => 'http://ryanparman.com',
+	'tags' => array(
+		'awesome',
+		'cool',
+		'fantastic',
+		'wonderful',
+		'he who you wish you were like'
+	)
+), array(
+	'name', 
+	'email'
+));
+
+
 ?>

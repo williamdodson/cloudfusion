@@ -191,22 +191,22 @@ print_r($files);
 
 ?&gt;
 </pre></div> 
-<p>Definition at line <a class="el" href="a00038.html#l00576">576</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00576">576</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l01116">copy_object()</a>, <a class="el" href="a00038.html#l00415">create_bucket()</a>, <a class="el" href="a00038.html#l00469">get_bucket_locale()</a>, and <a class="el" href="a00038.html#l01053">get_object_list()</a>.</p>
+<p>References <a class="el" href="a00042.html#l01116">copy_object()</a>, <a class="el" href="a00042.html#l00415">create_bucket()</a>, <a class="el" href="a00042.html#l00469">get_bucket_locale()</a>, and <a class="el" href="a00042.html#l01053">get_object_list()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00625">rename_bucket()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l00625">rename_bucket()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00577"></a>00577         {
 <a name="l00578"></a>00578                 <span class="comment">// Since S3 can't yet copy across geographical locations, make sure that the new bucket matches the existing bucket.</span>
 <a name="l00579"></a>00579                 $locale = $this-&gt;<a class="code" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a>($source_bucket);
 <a name="l00580"></a>00580                 <span class="keywordflow">switch</span> ($locale-&gt;body)
 <a name="l00581"></a>00581                 {
-<a name="l00582"></a>00582                         <span class="keywordflow">case</span> <a class="code" href="a00017_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>:
-<a name="l00583"></a>00583                                 $locale = <a class="code" href="a00017_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>;
+<a name="l00582"></a>00582                         <span class="keywordflow">case</span> <a class="code" href="a00019_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>:
+<a name="l00583"></a>00583                                 $locale = <a class="code" href="a00019_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>;
 <a name="l00584"></a>00584                                 <span class="keywordflow">break</span>;
 <a name="l00585"></a>00585 
 <a name="l00586"></a>00586                         <span class="keywordflow">default</span>:
-<a name="l00587"></a>00587                                 $locale = <a class="code" href="a00017_f2eefc95d3c9eed134c85f5d21cb886b.html#f2eefc95d3c9eed134c85f5d21cb886b">S3_LOCATION_US</a>;
+<a name="l00587"></a>00587                                 $locale = <a class="code" href="a00019_f2eefc95d3c9eed134c85f5d21cb886b.html#f2eefc95d3c9eed134c85f5d21cb886b">S3_LOCATION_US</a>;
 <a name="l00588"></a>00588                                 <span class="keywordflow">break</span>;
 <a name="l00589"></a>00589                 }
 <a name="l00590"></a>00590 
@@ -220,7 +220,7 @@ print_r($files);
 <a name="l00598"></a>00598                         <span class="keywordflow">foreach</span> ($list as $item)
 <a name="l00599"></a>00599                         {
 <a name="l00600"></a>00600                                 $handles[] = $this-&gt;<a class="code" href="a00003_ee2902fc46016bb37e6c88d858ae7751.html#ee2902fc46016bb37e6c88d858ae7751">copy_object</a>($source_bucket, $item, $dest_bucket, $item, array(
-<a name="l00601"></a>00601                                         <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00017_26b272ddfab8427eac3d883fb4f0356f.html#26b272ddfab8427eac3d883fb4f0356f">S3_ACL_PRIVATE</a>, 
+<a name="l00601"></a>00601                                         <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00019_26b272ddfab8427eac3d883fb4f0356f.html#26b272ddfab8427eac3d883fb4f0356f">S3_ACL_PRIVATE</a>, 
 <a name="l00602"></a>00602                                         <span class="stringliteral">'returnCurlHandle'</span> =&gt; <span class="keyword">true</span>
 <a name="l00603"></a>00603                                 ));
 <a name="l00604"></a>00604                         }
@@ -240,7 +240,7 @@ print_r($files);
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -118,7 +118,7 @@ window.onload = initDynSections;
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">$&nbsp;</td>
-          <td class="paramname"> <em>acl</em> = <code><a class="el" href="a00017_26b272ddfab8427eac3d883fb4f0356f.html#26b272ddfab8427eac3d883fb4f0356f">S3_ACL_PRIVATE</a></code>, </td>
+          <td class="paramname"> <em>acl</em> = <code><a class="el" href="a00019_26b272ddfab8427eac3d883fb4f0356f.html#26b272ddfab8427eac3d883fb4f0356f">S3_ACL_PRIVATE</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -160,7 +160,7 @@ $s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">Amazon
 <span class="comment">/**</span>
 <span class="comment"> * Set the access control settings for the bucket.</span>
 <span class="comment"> */</span>
-$acl = $s3-&gt;set_object_acl(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>);
+$acl = $s3-&gt;set_object_acl(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>, <a class="code" href="a00019_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>);
 
 <span class="comment"></span>
 <span class="comment">/**</span>
@@ -177,12 +177,12 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l01239">1239</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l01239">1239</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l01240"></a>01240         {
 <a name="l01241"></a>01241                 <span class="comment">// Add this to our request</span>
-<a name="l01242"></a>01242                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l01242"></a>01242                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
 <a name="l01243"></a>01243                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'set_object_acl'</span>;
 <a name="l01244"></a>01244                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
 <a name="l01245"></a>01245                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
@@ -200,7 +200,7 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

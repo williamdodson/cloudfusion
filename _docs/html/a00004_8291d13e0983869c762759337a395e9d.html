@@ -165,36 +165,36 @@ $get = $sdb-&gt;get_attributes(<span class="stringliteral">'warpshare_test'</spa
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html">http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00039.html#l00216">216</a> of file <a class="el" href="a00039.html">sdb.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00043.html#l00260">260</a> of file <a class="el" href="a00043.html">sdb.class.php</a>.</p>
 
-<p>References <a class="el" href="a00041.html#l00100">TarzanCore::$key</a>, and <a class="el" href="a00041.html#l00301">TarzanCore::authenticate()</a>.</p>
+<p>References <a class="el" href="a00045.html#l00100">TarzanCore::$key</a>, and <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00039.html#l00331">query()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00217"></a>00217         {
-<a name="l00218"></a>00218                 $opt = array();
-<a name="l00219"></a>00219                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00220"></a>00220                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
-<a name="l00221"></a>00221                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00222"></a>00222 
-<a name="l00223"></a>00223                 <span class="keywordflow">if</span> ($keys)
-<a name="l00224"></a>00224                 {
-<a name="l00225"></a>00225                         <span class="keywordflow">if</span> (is_array($keys))
-<a name="l00226"></a>00226                         {
-<a name="l00227"></a>00227                                 $count = 0;
-<a name="l00228"></a>00228                                 <span class="keywordflow">foreach</span> ($keys as <a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>)
-<a name="l00229"></a>00229                                 {
-<a name="l00230"></a>00230                                         $opt[<span class="stringliteral">'AttributeName.'</span> . (string) $count] = $key;
-<a name="l00231"></a>00231                                         $count++;
-<a name="l00232"></a>00232                                 }
-<a name="l00233"></a>00233                         }
-<a name="l00234"></a>00234                         <span class="keywordflow">else</span>
-<a name="l00235"></a>00235                         {
-<a name="l00236"></a>00236                                 $opt[<span class="stringliteral">'AttributeName'</span>] = $keys;
-<a name="l00237"></a>00237                         }
-<a name="l00238"></a>00238                 }
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetAttributes'</span>, $opt, <a class="code" href="a00018_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00241"></a>00241         }
+<p>Referenced by <a class="el" href="a00043.html#l00375">query()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00261"></a>00261         {
+<a name="l00262"></a>00262                 $opt = array();
+<a name="l00263"></a>00263                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00264"></a>00264                 $opt[<span class="stringliteral">'ItemName'</span>] = $item_name;
+<a name="l00265"></a>00265                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267                 <span class="keywordflow">if</span> ($keys)
+<a name="l00268"></a>00268                 {
+<a name="l00269"></a>00269                         <span class="keywordflow">if</span> (is_array($keys))
+<a name="l00270"></a>00270                         {
+<a name="l00271"></a>00271                                 $count = 0;
+<a name="l00272"></a>00272                                 <span class="keywordflow">foreach</span> ($keys as <a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>)
+<a name="l00273"></a>00273                                 {
+<a name="l00274"></a>00274                                         $opt[<span class="stringliteral">'AttributeName.'</span> . (string) $count] = $key;
+<a name="l00275"></a>00275                                         $count++;
+<a name="l00276"></a>00276                                 }
+<a name="l00277"></a>00277                         }
+<a name="l00278"></a>00278                         <span class="keywordflow">else</span>
+<a name="l00279"></a>00279                         {
+<a name="l00280"></a>00280                                 $opt[<span class="stringliteral">'AttributeName'</span>] = $keys;
+<a name="l00281"></a>00281                         }
+<a name="l00282"></a>00282                 }
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetAttributes'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00285"></a>00285         }
 </pre></div>
 <p>
 
@@ -204,7 +204,7 @@ $get = $sdb-&gt;get_attributes(<span class="stringliteral">'warpshare_test'</spa
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

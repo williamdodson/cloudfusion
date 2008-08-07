@@ -165,7 +165,7 @@ $file = $s3-&gt;create_object(<span class="stringliteral">'warpshare.test.eu'</s
         <span class="stringliteral">'filename'</span> =&gt; <span class="stringliteral">'sample.txt'</span>,
         <span class="stringliteral">'body'</span> =&gt; <span class="stringliteral">'This is some sample text that will go into the file.'</span>,
         <span class="stringliteral">'contentType'</span> =&gt; <span class="stringliteral">'text/plain'</span>,
-        <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00017_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>
+        <span class="stringliteral">'acl'</span> =&gt; <a class="code" href="a00019_8a93bf8a4901a811870a8af621ab285e.html#8a93bf8a4901a811870a8af621ab285e">S3_ACL_PUBLIC</a>
 ));
 
 <span class="comment"></span>
@@ -186,14 +186,14 @@ $file = $s3-&gt;create_object(<span class="stringliteral">'warpshare.test.eu'</s
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00825">825</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00825">825</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01322">store_remote_file()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l01322">store_remote_file()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00826"></a>00826         {
 <a name="l00827"></a>00827                 <span class="comment">// Add this to our request</span>
-<a name="l00828"></a>00828                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l00828"></a>00828                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
 <a name="l00829"></a>00829                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'create_object'</span>;
 <a name="l00830"></a>00830                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($opt[<span class="stringliteral">'filename'</span>]);
 <a name="l00831"></a>00831 
@@ -209,7 +209,7 @@ $file = $s3-&gt;create_object(<span class="stringliteral">'warpshare.test.eu'</s
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

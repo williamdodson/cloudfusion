@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Tarzan Pre-2.0 Trunk Build: _httprequest.class.php Source File</title>
+<title>Tarzan Pre-2.0 Trunk Build: sqs.class.php Source File</title>
 <link href="tarzan.css" rel="stylesheet" type="text/css">
 <link href="tabs.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -46,396 +46,261 @@ function initDynSections(){
 window.onload = initDynSections;
 -->
 </script>
-<h1>_httprequest.class.php</h1><a href="a00017.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php<span class="comment"></span>
+<h1>sqs.class.php</h1><a href="a00021.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 &lt;?php<span class="comment"></span>
 <a name="l00002"></a>00002 <span class="comment">/**</span>
-<a name="l00003"></a>00003 <span class="comment"> * TARZAN HTTP REQUEST</span>
-<a name="l00004"></a>00004 <span class="comment"> * HTTP Requests using CURL.</span>
+<a name="l00003"></a>00003 <span class="comment"> * AMAZON SIMPLE QUEUE SERVICE (SQS)</span>
+<a name="l00004"></a>00004 <span class="comment"> * http://sqs.amazonaws.com</span>
 <a name="l00005"></a>00005 <span class="comment"> *</span>
 <a name="l00006"></a>00006 <span class="comment"> * @category Tarzan</span>
-<a name="l00007"></a>00007 <span class="comment"> * @package TarzanHTTPRequest</span>
-<a name="l00008"></a>00008 <span class="comment"> * @version 2008.07.05</span>
+<a name="l00007"></a>00007 <span class="comment"> * @package SQS</span>
+<a name="l00008"></a>00008 <span class="comment"> * @version 2008.07.29</span>
 <a name="l00009"></a>00009 <span class="comment"> * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.</span>
 <a name="l00010"></a>00010 <span class="comment"> * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License</span>
 <a name="l00011"></a>00011 <span class="comment"> * @link http://tarzan-aws.com Tarzan</span>
-<a name="l00012"></a>00012 <span class="comment"> * @see README</span>
-<a name="l00013"></a>00013 <span class="comment"> */</span>
-<a name="l00014"></a>00014 
+<a name="l00012"></a>00012 <span class="comment"> * @link http://sqs.amazonaws.com Amazon SQS</span>
+<a name="l00013"></a>00013 <span class="comment"> * @see README</span>
+<a name="l00014"></a>00014 <span class="comment"> */</span>
 <a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00017"></a>00017 <span class="comment">// CLASS</span>
-<a name="l00018"></a>00018 <span class="comment"></span>
-<a name="l00019"></a>00019 <span class="comment">/**</span>
-<a name="l00020"></a>00020 <span class="comment"> * Request data via CURL.</span>
-<a name="l00021"></a>00021 <span class="comment"> */</span>
-<a name="l00022"></a><a class="code" href="a00013.html">00022</a> <span class="keyword">class </span><a class="code" href="a00013.html">TarzanHTTPRequest</a>
-<a name="l00023"></a>00023 {<span class="comment"></span>
-<a name="l00024"></a>00024 <span class="comment">        /**</span>
-<a name="l00025"></a>00025 <span class="comment">         * @var The URL being requested.</span>
-<a name="l00026"></a>00026 <span class="comment">         */</span>
-<a name="l00027"></a><a class="code" href="a00013_be8f47e19f8085311aebec52596072f5.html#be8f47e19f8085311aebec52596072f5">00027</a>         var <a class="code" href="a00013_be8f47e19f8085311aebec52596072f5.html#be8f47e19f8085311aebec52596072f5">$request_url</a>;
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00018"></a>00018 <span class="comment">// CONSTANTS</span>
+<a name="l00019"></a>00019 <span class="comment"></span>
+<a name="l00020"></a>00020 <span class="comment">/**</span>
+<a name="l00021"></a>00021 <span class="comment"> * Specify the default queue URL.</span>
+<a name="l00022"></a>00022 <span class="comment"> */</span>
+<a name="l00023"></a><a class="code" href="a00021_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">00023</a> define(<span class="stringliteral">'SQS_DEFAULT_URL'</span>, <span class="stringliteral">'http://queue.amazonaws.com/'</span>);
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00027"></a>00027 <span class="comment">// MAIN CLASS</span>
 <a name="l00028"></a>00028 <span class="comment"></span>
-<a name="l00029"></a>00029 <span class="comment">        /**</span>
-<a name="l00030"></a>00030 <span class="comment">         * @var The headers being sent in the request.</span>
-<a name="l00031"></a>00031 <span class="comment">         */</span>
-<a name="l00032"></a><a class="code" href="a00013_379de856908f312882f78af9927d8c26.html#379de856908f312882f78af9927d8c26">00032</a>         var <a class="code" href="a00013_379de856908f312882f78af9927d8c26.html#379de856908f312882f78af9927d8c26">$request_headers</a>;
-<a name="l00033"></a>00033 <span class="comment"></span>
-<a name="l00034"></a>00034 <span class="comment">        /**</span>
-<a name="l00035"></a>00035 <span class="comment">         * @var The body being sent in the request.</span>
-<a name="l00036"></a>00036 <span class="comment">         */</span>
-<a name="l00037"></a><a class="code" href="a00013_5733ebbf78d44dba533973a4cd437220.html#5733ebbf78d44dba533973a4cd437220">00037</a>         var <a class="code" href="a00013_5733ebbf78d44dba533973a4cd437220.html#5733ebbf78d44dba533973a4cd437220">$request_body</a>;
-<a name="l00038"></a>00038 <span class="comment"></span>
-<a name="l00039"></a>00039 <span class="comment">        /**</span>
-<a name="l00040"></a>00040 <span class="comment">         * @var The response returned by the request.</span>
-<a name="l00041"></a>00041 <span class="comment">         */</span>
-<a name="l00042"></a><a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">00042</a>         var <a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a>;
-<a name="l00043"></a>00043 <span class="comment"></span>
-<a name="l00044"></a>00044 <span class="comment">        /**</span>
-<a name="l00045"></a>00045 <span class="comment">         * @var The headers returned by the request.</span>
-<a name="l00046"></a>00046 <span class="comment">         */</span>
-<a name="l00047"></a><a class="code" href="a00013_305643f38c931be79adfa4340ad9f820.html#305643f38c931be79adfa4340ad9f820">00047</a>         var <a class="code" href="a00013_305643f38c931be79adfa4340ad9f820.html#305643f38c931be79adfa4340ad9f820">$response_headers</a>;
-<a name="l00048"></a>00048 <span class="comment"></span>
-<a name="l00049"></a>00049 <span class="comment">        /**</span>
-<a name="l00050"></a>00050 <span class="comment">         * @var The body returned by the request.</span>
-<a name="l00051"></a>00051 <span class="comment">         */</span>
-<a name="l00052"></a><a class="code" href="a00013_723b997e3227a51b23aaafe6e3e9203f.html#723b997e3227a51b23aaafe6e3e9203f">00052</a>         var <a class="code" href="a00013_723b997e3227a51b23aaafe6e3e9203f.html#723b997e3227a51b23aaafe6e3e9203f">$response_body</a>;
-<a name="l00053"></a>00053 <span class="comment"></span>
-<a name="l00054"></a>00054 <span class="comment">        /**</span>
-<a name="l00055"></a>00055 <span class="comment">         * @var The HTTP status code returned by the request.</span>
-<a name="l00056"></a>00056 <span class="comment">         */</span>
-<a name="l00057"></a><a class="code" href="a00013_47aea25610f40d7cde87729bac49e078.html#47aea25610f40d7cde87729bac49e078">00057</a>         var <a class="code" href="a00013_47aea25610f40d7cde87729bac49e078.html#47aea25610f40d7cde87729bac49e078">$response_code</a>;
-<a name="l00058"></a>00058 <span class="comment"></span>
-<a name="l00059"></a>00059 <span class="comment">        /**</span>
-<a name="l00060"></a>00060 <span class="comment">         * @var Additional response data.</span>
-<a name="l00061"></a>00061 <span class="comment">         */</span>
-<a name="l00062"></a><a class="code" href="a00013_4df1426d7f700b0eec27c2c6f26f8f28.html#4df1426d7f700b0eec27c2c6f26f8f28">00062</a>         var <a class="code" href="a00013_4df1426d7f700b0eec27c2c6f26f8f28.html#4df1426d7f700b0eec27c2c6f26f8f28">$response_info</a>;
-<a name="l00063"></a>00063 <span class="comment"></span>
-<a name="l00064"></a>00064 <span class="comment">        /**</span>
-<a name="l00065"></a>00065 <span class="comment">         * @var The handle for the CURL object.</span>
-<a name="l00066"></a>00066 <span class="comment">         */</span>
-<a name="l00067"></a><a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">00067</a>         var <a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a>;
-<a name="l00068"></a>00068 <span class="comment"></span>
-<a name="l00069"></a>00069 <span class="comment">        /**</span>
-<a name="l00070"></a>00070 <span class="comment">         * @var The method by which the request is being made.</span>
-<a name="l00071"></a>00071 <span class="comment">         */</span>
-<a name="l00072"></a><a class="code" href="a00013_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">00072</a>         var <a class="code" href="a00013_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>;
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00076"></a>00076         <span class="comment">// CONSTRUCTOR</span>
-<a name="l00077"></a>00077 <span class="comment"></span>
-<a name="l00078"></a>00078 <span class="comment">        /**</span>
-<a name="l00079"></a>00079 <span class="comment">         * Constructor</span>
-<a name="l00080"></a>00080 <span class="comment">         *</span>
-<a name="l00081"></a>00081 <span class="comment">         * Constructs a new instance of the TarzanHTTPRequest class.</span>
-<a name="l00082"></a>00082 <span class="comment">         *</span>
-<a name="l00083"></a>00083 <span class="comment">         * @access public</span>
-<a name="l00084"></a>00084 <span class="comment">         */</span>
-<a name="l00085"></a><a class="code" href="a00013_73d18f7fd113b4e76c89ff8ea02209d2.html#73d18f7fd113b4e76c89ff8ea02209d2">00085</a>         <span class="keyword">public</span> function <a class="code" href="a00013_73d18f7fd113b4e76c89ff8ea02209d2.html#73d18f7fd113b4e76c89ff8ea02209d2">__construct</a>($url)
-<a name="l00086"></a>00086         {
-<a name="l00087"></a>00087                 <span class="comment">// Set some default values.</span>
-<a name="l00088"></a>00088                 $this-&gt;request_url = $url;
-<a name="l00089"></a>00089                 $this-&gt;method = <a class="code" href="a00026_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l00090"></a>00090                 $this-&gt;request_headers = array();
-<a name="l00091"></a>00091                 $this-&gt;curl_handle = curl_init();
-<a name="l00092"></a>00092                 $this-&gt;request_body = <span class="stringliteral">''</span>;
-<a name="l00093"></a>00093         }
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00097"></a>00097         <span class="comment">// REQUEST METHODS</span>
-<a name="l00098"></a>00098 <span class="comment"></span>
-<a name="l00099"></a>00099 <span class="comment">        /**</span>
-<a name="l00100"></a>00100 <span class="comment">         * Add Header</span>
-<a name="l00101"></a>00101 <span class="comment">         * </span>
-<a name="l00102"></a>00102 <span class="comment">         * Add a header to the CURL request.</span>
-<a name="l00103"></a>00103 <span class="comment">         * </span>
-<a name="l00104"></a>00104 <span class="comment">         * @param string $key (Required) The HTTP header to set.</span>
-<a name="l00105"></a>00105 <span class="comment">         * @param string $value (Required) The value to set for the HTTP header.</span>
-<a name="l00106"></a>00106 <span class="comment">         * @return void</span>
-<a name="l00107"></a>00107 <span class="comment">         */</span>
-<a name="l00108"></a><a class="code" href="a00013_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">00108</a>         <span class="keyword">public</span> function <a class="code" href="a00013_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>($key, $value)
-<a name="l00109"></a>00109         {
-<a name="l00110"></a>00110                 $this-&gt;request_headers[$key] = $value;
+<a name="l00029"></a>00029 <span class="comment">/**</span>
+<a name="l00030"></a>00030 <span class="comment"> * Container for all Amazon SQS-related methods.</span>
+<a name="l00031"></a>00031 <span class="comment"> */</span>
+<a name="l00032"></a><a class="code" href="a00005.html">00032</a> <span class="keyword">class </span><a class="code" href="a00005.html">AmazonSQS</a> <span class="keyword">extends</span> <a class="code" href="a00006.html">TarzanCore</a>
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00035"></a>00035         <span class="comment">// CONSTRUCTOR</span>
+<a name="l00036"></a>00036 <span class="comment"></span>
+<a name="l00037"></a>00037 <span class="comment">        /**</span>
+<a name="l00038"></a>00038 <span class="comment">         * Constructor</span>
+<a name="l00039"></a>00039 <span class="comment">         */</span>
+<a name="l00040"></a><a class="code" href="a00005_3e353537326710b42882c991da3bcdfa.html#3e353537326710b42882c991da3bcdfa">00040</a>         <span class="keyword">public</span> function <a class="code" href="a00005_3e353537326710b42882c991da3bcdfa.html#3e353537326710b42882c991da3bcdfa">__construct</a>(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a> = null, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a> = null, <a class="code" href="a00006_4cef61f6f9842dbb0f5b8b11d1b54de5.html#4cef61f6f9842dbb0f5b8b11d1b54de5">$account_id</a> = null, <a class="code" href="a00006_be1c319e769a5b79be53724b9b3b615b.html#be1c319e769a5b79be53724b9b3b615b">$assoc_id</a> = null)
+<a name="l00041"></a>00041         {
+<a name="l00042"></a>00042                 $this-&gt;api_version = <span class="stringliteral">'2008-01-01'</span>;
+<a name="l00043"></a>00043                 parent::__construct(<a class="code" href="a00006_84e78a190ed4df00d33fb04050b0b5f3.html#84e78a190ed4df00d33fb04050b0b5f3">$key</a>, <a class="code" href="a00006_cdb3e15c2f29239ddc784e3b28e7050c.html#cdb3e15c2f29239ddc784e3b28e7050c">$secret_key</a>, <a class="code" href="a00006_4cef61f6f9842dbb0f5b8b11d1b54de5.html#4cef61f6f9842dbb0f5b8b11d1b54de5">$account_id</a>, <a class="code" href="a00006_be1c319e769a5b79be53724b9b3b615b.html#be1c319e769a5b79be53724b9b3b615b">$assoc_id</a>);
+<a name="l00044"></a>00044         }
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00048"></a>00048         <span class="comment">// QUEUES</span>
+<a name="l00049"></a>00049 <span class="comment"></span>
+<a name="l00050"></a>00050 <span class="comment">        /**</span>
+<a name="l00051"></a>00051 <span class="comment">         * Create Queue</span>
+<a name="l00052"></a>00052 <span class="comment">         *</span>
+<a name="l00053"></a>00053 <span class="comment">         * The CreateQueue action creates a new queue. You must provide a queue name that is unique within </span>
+<a name="l00054"></a>00054 <span class="comment">         * the scope of the queues you own. The queue is assigned a queue URL; you must use this URL when </span>
+<a name="l00055"></a>00055 <span class="comment">         * performing actions on the queue. When you create a queue, if a queue with the same name already </span>
+<a name="l00056"></a>00056 <span class="comment">         * exists, CreateQueue returns the queue URL with an error indicating that the queue already exists.</span>
+<a name="l00057"></a>00057 <span class="comment">         *</span>
+<a name="l00058"></a>00058 <span class="comment">         * @access public</span>
+<a name="l00059"></a>00059 <span class="comment">         * @param string $queue_name (Required) The name to use for the queue created. The queue name must be unique within the scope of all your queues.</span>
+<a name="l00060"></a>00060 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00061"></a>00061 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00062"></a>00062 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryCreateQueue.html</span>
+<a name="l00063"></a>00063 <span class="comment">         */</span>
+<a name="l00064"></a><a class="code" href="a00005_4a8f14c591483faeb3b8f12534385839.html#4a8f14c591483faeb3b8f12534385839">00064</a>         <span class="keyword">public</span> function <a class="code" href="a00005_4a8f14c591483faeb3b8f12534385839.html#4a8f14c591483faeb3b8f12534385839">create_queue</a>($queue_name, $returnCurlHandle = null)
+<a name="l00065"></a>00065         {
+<a name="l00066"></a>00066                 $opt[<span class="stringliteral">'QueueName'</span>] = $queue_name;
+<a name="l00067"></a>00067                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00068"></a>00068                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'CreateQueue'</span>, $opt, <a class="code" href="a00021_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">SQS_DEFAULT_URL</a>);
+<a name="l00069"></a>00069         }
+<a name="l00070"></a>00070 <span class="comment"></span>
+<a name="l00071"></a>00071 <span class="comment">        /**</span>
+<a name="l00072"></a>00072 <span class="comment">         * Delete Queue</span>
+<a name="l00073"></a>00073 <span class="comment">         *</span>
+<a name="l00074"></a>00074 <span class="comment">         * Deletes the queue specified by the queue URL. This will delete the queue, even if it's not empty.</span>
+<a name="l00075"></a>00075 <span class="comment">         *</span>
+<a name="l00076"></a>00076 <span class="comment">         * @access public</span>
+<a name="l00077"></a>00077 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00078"></a>00078 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00079"></a>00079 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00080"></a>00080 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html</span>
+<a name="l00081"></a>00081 <span class="comment">         */</span>
+<a name="l00082"></a><a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">00082</a>         <span class="keyword">public</span> function <a class="code" href="a00005_fd930b7cc5e14dbcec65d0c755b529a9.html#fd930b7cc5e14dbcec65d0c755b529a9">delete_queue</a>($queue_url, $returnCurlHandle = null)
+<a name="l00083"></a>00083         {
+<a name="l00084"></a>00084                 $opt = array();
+<a name="l00085"></a>00085                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00086"></a>00086                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteQueue'</span>, $opt, $queue_url);
+<a name="l00087"></a>00087         }
+<a name="l00088"></a>00088 <span class="comment"></span>
+<a name="l00089"></a>00089 <span class="comment">        /**</span>
+<a name="l00090"></a>00090 <span class="comment">         * List Queues</span>
+<a name="l00091"></a>00091 <span class="comment">         *</span>
+<a name="l00092"></a>00092 <span class="comment">         * The ListQueues action returns a list of your queues. A maximum 1000 queue URLs are returned. If </span>
+<a name="l00093"></a>00093 <span class="comment">         * you specify a value for the optional QueueNamePrefix parameter, only queues with a name beginning </span>
+<a name="l00094"></a>00094 <span class="comment">         * with the specified value are returned.</span>
+<a name="l00095"></a>00095 <span class="comment">         *</span>
+<a name="l00096"></a>00096 <span class="comment">         * @access public</span>
+<a name="l00097"></a>00097 <span class="comment">         * @param string $queue_name_prefix (Optional) String to use for filtering the list results. Only those queues whose name begins with the specified string are returned.</span>
+<a name="l00098"></a>00098 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00099"></a>00099 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00100"></a>00100 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryListQueues.html</span>
+<a name="l00101"></a>00101 <span class="comment">         */</span>
+<a name="l00102"></a><a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">00102</a>         <span class="keyword">public</span> function <a class="code" href="a00005_19b651645428d3152027ffbf4629e167.html#19b651645428d3152027ffbf4629e167">list_queues</a>($queue_name_prefix = null, $returnCurlHandle = null)
+<a name="l00103"></a>00103         {
+<a name="l00104"></a>00104                 $opt = array();
+<a name="l00105"></a>00105                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00106"></a>00106                 <span class="keywordflow">if</span> ($queue_name_prefix)
+<a name="l00107"></a>00107                 {
+<a name="l00108"></a>00108                         $opt[<span class="stringliteral">'QueueNamePrefix'</span>] = $queue_name_prefix;
+<a name="l00109"></a>00109                 }
+<a name="l00110"></a>00110                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListQueues'</span>, $opt, <a class="code" href="a00021_44a336372fb4e2359bc3c75bcf35a555.html#44a336372fb4e2359bc3c75bcf35a555">SQS_DEFAULT_URL</a>);
 <a name="l00111"></a>00111         }
 <a name="l00112"></a>00112 <span class="comment"></span>
 <a name="l00113"></a>00113 <span class="comment">        /**</span>
-<a name="l00114"></a>00114 <span class="comment">         * Remove Header</span>
-<a name="l00115"></a>00115 <span class="comment">         * </span>
-<a name="l00116"></a>00116 <span class="comment">         * Remove a header from the CURL request.</span>
-<a name="l00117"></a>00117 <span class="comment">         * </span>
-<a name="l00118"></a>00118 <span class="comment">         * @param string $key (Required) The HTTP header to set.</span>
-<a name="l00119"></a>00119 <span class="comment">         * @return void</span>
-<a name="l00120"></a>00120 <span class="comment">         */</span>
-<a name="l00121"></a><a class="code" href="a00013_304a010c39a9936275740cab46e8b419.html#304a010c39a9936275740cab46e8b419">00121</a>         <span class="keyword">public</span> function <a class="code" href="a00013_304a010c39a9936275740cab46e8b419.html#304a010c39a9936275740cab46e8b419">removeHeader</a>($key)
-<a name="l00122"></a>00122         {
-<a name="l00123"></a>00123                 <span class="keywordflow">if</span> (isset($this-&gt;request_headers[$key]))
-<a name="l00124"></a>00124                 {
-<a name="l00125"></a>00125                         unset($this-&gt;request_headers[$key]);
-<a name="l00126"></a>00126                 }
-<a name="l00127"></a>00127         }
-<a name="l00128"></a>00128 <span class="comment"></span>
-<a name="l00129"></a>00129 <span class="comment">        /**</span>
-<a name="l00130"></a>00130 <span class="comment">         * Set Method</span>
-<a name="l00131"></a>00131 <span class="comment">         * </span>
-<a name="l00132"></a>00132 <span class="comment">         * Set the method by which to make the request.</span>
-<a name="l00133"></a>00133 <span class="comment">         * </span>
-<a name="l00134"></a>00134 <span class="comment">         * @param string $method (Required) One of the following constants: HTTP_GET, HTTP_POST, HTTP_PUT, HTTP_HEAD, HTTP_DELETE.</span>
-<a name="l00135"></a>00135 <span class="comment">         * @return void</span>
-<a name="l00136"></a>00136 <span class="comment">         */</span>
-<a name="l00137"></a><a class="code" href="a00013_b9db71913906e65980e6602945c9d08f.html#b9db71913906e65980e6602945c9d08f">00137</a>         <span class="keyword">public</span> function <a class="code" href="a00013_b9db71913906e65980e6602945c9d08f.html#b9db71913906e65980e6602945c9d08f">setMethod</a>(<a class="code" href="a00013_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>)
-<a name="l00138"></a>00138         {
-<a name="l00139"></a>00139                 $this-&gt;method = strtoupper(<a class="code" href="a00013_60c56fc52ff556af62b3e038bcb03d21.html#60c56fc52ff556af62b3e038bcb03d21">$method</a>);
-<a name="l00140"></a>00140         }
-<a name="l00141"></a>00141 <span class="comment"></span>
-<a name="l00142"></a>00142 <span class="comment">        /**</span>
-<a name="l00143"></a>00143 <span class="comment">         * Set Body</span>
-<a name="l00144"></a>00144 <span class="comment">         * </span>
-<a name="l00145"></a>00145 <span class="comment">         * Set the body to send in the request.</span>
-<a name="l00146"></a>00146 <span class="comment">         * </span>
-<a name="l00147"></a>00147 <span class="comment">         * @param string $body (Required) The text to send along in the body.</span>
-<a name="l00148"></a>00148 <span class="comment">         * @return void</span>
-<a name="l00149"></a>00149 <span class="comment">         */</span>
-<a name="l00150"></a><a class="code" href="a00013_57e9b59835310648dd072b3bb52dabac.html#57e9b59835310648dd072b3bb52dabac">00150</a>         <span class="keyword">public</span> function <a class="code" href="a00013_57e9b59835310648dd072b3bb52dabac.html#57e9b59835310648dd072b3bb52dabac">setBody</a>($body)
-<a name="l00151"></a>00151         {
-<a name="l00152"></a>00152                 $this-&gt;request_body = $body;
-<a name="l00153"></a>00153         }
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00157"></a>00157         <span class="comment">// PREPARE, SEND, AND PROCESS REQUEST</span>
-<a name="l00158"></a>00158 <span class="comment"></span>
-<a name="l00159"></a>00159 <span class="comment">        /**</span>
-<a name="l00160"></a>00160 <span class="comment">         * Prepare Request</span>
-<a name="l00161"></a>00161 <span class="comment">         * </span>
-<a name="l00162"></a>00162 <span class="comment">         * Determine the details of the CURL request to make. This can be passed along to a curl_multi_exec() function.</span>
-<a name="l00163"></a>00163 <span class="comment">         * </span>
-<a name="l00164"></a>00164 <span class="comment">         * @return The handle for the CURL object.</span>
-<a name="l00165"></a>00165 <span class="comment">         */</span>
-<a name="l00166"></a><a class="code" href="a00013_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">00166</a>         <span class="keyword">public</span> function <a class="code" href="a00013_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">prepRequest</a>()
-<a name="l00167"></a>00167         {
-<a name="l00168"></a>00168                 $this-&gt;<a class="code" href="a00013_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>(<span class="stringliteral">'Expect'</span>, <span class="stringliteral">'100-continue'</span>);
-<a name="l00169"></a>00169                 $this-&gt;<a class="code" href="a00013_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>(<span class="stringliteral">'Connection'</span>, <span class="stringliteral">'close'</span>);
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171                 <span class="comment">// Set default options.</span>
-<a name="l00172"></a>00172                 curl_setopt($this-&gt;curl_handle, CURLOPT_URL, $this-&gt;request_url);
-<a name="l00173"></a>00173                 curl_setopt($this-&gt;curl_handle, CURLOPT_FILETIME, <span class="keyword">true</span>);
-<a name="l00174"></a>00174                 curl_setopt($this-&gt;curl_handle, CURLOPT_FRESH_CONNECT, <span class="keyword">true</span>);
-<a name="l00175"></a>00175                 curl_setopt($this-&gt;curl_handle, CURLOPT_SSL_VERIFYPEER, <span class="keyword">false</span>);
-<a name="l00176"></a>00176                 curl_setopt($this-&gt;curl_handle, CURLOPT_SSL_VERIFYHOST, <span class="keyword">false</span>);
-<a name="l00177"></a>00177                 curl_setopt($this-&gt;curl_handle, CURLOPT_VERBOSE, <span class="keyword">true</span>);
-<a name="l00178"></a>00178                 curl_setopt($this-&gt;curl_handle, CURLOPT_MAXCONNECTS, 50);
-<a name="l00179"></a>00179                 curl_setopt($this-&gt;curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
-<a name="l00180"></a>00180                 curl_setopt($this-&gt;curl_handle, CURLOPT_FOLLOWLOCATION, <span class="keyword">true</span>);
-<a name="l00181"></a>00181                 curl_setopt($this-&gt;curl_handle, CURLOPT_MAXREDIRS, 5);
-<a name="l00182"></a>00182                 curl_setopt($this-&gt;curl_handle, CURLOPT_HEADER, <span class="keyword">true</span>);
-<a name="l00183"></a>00183                 curl_setopt($this-&gt;curl_handle, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<a name="l00184"></a>00184                 curl_setopt($this-&gt;curl_handle, CURLOPT_TIMEOUT, 120);
-<a name="l00185"></a>00185                 curl_setopt($this-&gt;curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
-<a name="l00186"></a>00186                 curl_setopt($this-&gt;curl_handle, CURLOPT_NOSIGNAL, <span class="keyword">true</span>);
-<a name="l00187"></a>00187                 curl_setopt($this-&gt;curl_handle, CURLOPT_REFERER, $this-&gt;request_url);
-<a name="l00188"></a>00188                 curl_setopt($this-&gt;curl_handle, CURLOPT_USERAGENT, <a class="code" href="a00026_5abf2024b40b7188bd8f6acc96b54c43.html#5abf2024b40b7188bd8f6acc96b54c43">TARZAN_USERAGENT</a>);
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190                 <span class="comment">// Handle the encoding if we can.</span>
-<a name="l00191"></a>00191                 <span class="keywordflow">if</span> (extension_loaded(<span class="stringliteral">'zlib'</span>))
-<a name="l00192"></a>00192                 {
-<a name="l00193"></a>00193                         curl_setopt($this-&gt;curl_handle, CURLOPT_ENCODING, <span class="stringliteral">''</span>);
-<a name="l00194"></a>00194                 }
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196                 <span class="comment">// Process custom headers</span>
-<a name="l00197"></a>00197                 <span class="keywordflow">if</span> (isset($this-&gt;request_headers) &amp;&amp; count($this-&gt;request_headers))
-<a name="l00198"></a>00198                 {
-<a name="l00199"></a>00199                         $temp_headers = array();
-<a name="l00200"></a>00200 
-<a name="l00201"></a>00201                         <span class="keywordflow">foreach</span> ($this-&gt;request_headers as $k =&gt; $v)
-<a name="l00202"></a>00202                         {
-<a name="l00203"></a>00203                                 $temp_headers[] = $k . <span class="stringliteral">': '</span> . $v;
-<a name="l00204"></a>00204                         }
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206                         curl_setopt($this-&gt;curl_handle, CURLOPT_HTTPHEADER, $temp_headers);
-<a name="l00207"></a>00207                 }
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209                 <span class="keywordflow">switch</span> ($this-&gt;method)
-<a name="l00210"></a>00210                 {
-<a name="l00211"></a>00211                         <span class="keywordflow">case</span> <a class="code" href="a00026_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>:
-<a name="l00212"></a>00212                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, <span class="stringliteral">'PUT'</span>);
-<a name="l00213"></a>00213                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
-<a name="l00214"></a>00214                                 <span class="keywordflow">break</span>;
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216                         <span class="keywordflow">case</span> <a class="code" href="a00026_8991829aee166dcb5a3eebd59b986c6a.html#8991829aee166dcb5a3eebd59b986c6a">HTTP_POST</a>:
-<a name="l00217"></a>00217                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POST, <span class="keyword">true</span>);
-<a name="l00218"></a>00218                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
-<a name="l00219"></a>00219                                 <span class="keywordflow">break</span>;
-<a name="l00220"></a>00220 
-<a name="l00221"></a>00221                         <span class="keywordflow">case</span> <a class="code" href="a00026_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>:
-<a name="l00222"></a>00222                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, <a class="code" href="a00026_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>);
-<a name="l00223"></a>00223                                 curl_setopt($this-&gt;curl_handle, CURLOPT_NOBODY, 1);
-<a name="l00224"></a>00224                                 <span class="keywordflow">break</span>;
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226                         <span class="keywordflow">default</span>:
-<a name="l00227"></a>00227                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, $this-&gt;method);
-<a name="l00228"></a>00228                                 <span class="keywordflow">break</span>;
-<a name="l00229"></a>00229                 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231                 <span class="keywordflow">return</span> $this-&gt;curl_handle;
-<a name="l00232"></a>00232         }
-<a name="l00233"></a>00233 <span class="comment"></span>
-<a name="l00234"></a>00234 <span class="comment">        /**</span>
-<a name="l00235"></a>00235 <span class="comment">         * Process Response</span>
-<a name="l00236"></a>00236 <span class="comment">         * </span>
-<a name="l00237"></a>00237 <span class="comment">         * Take the post-processed CURL data and break it down into useful header/body/info chunks.</span>
+<a name="l00114"></a>00114 <span class="comment">         * Get Queue Attributes</span>
+<a name="l00115"></a>00115 <span class="comment">         *</span>
+<a name="l00116"></a>00116 <span class="comment">         * Gets one or all attributes of a queue.</span>
+<a name="l00117"></a>00117 <span class="comment">         *</span>
+<a name="l00118"></a>00118 <span class="comment">         * @access public</span>
+<a name="l00119"></a>00119 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00120"></a>00120 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00121"></a>00121 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00122"></a>00122 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html</span>
+<a name="l00123"></a>00123 <span class="comment">         */</span>
+<a name="l00124"></a><a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">00124</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c">get_queue_attributes</a>($queue_url, $returnCurlHandle = null)
+<a name="l00125"></a>00125         {
+<a name="l00126"></a>00126                 $opt = array();
+<a name="l00127"></a>00127                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'All'</span>;
+<a name="l00128"></a>00128                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00129"></a>00129                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00130"></a>00130         }
+<a name="l00131"></a>00131 <span class="comment"></span>
+<a name="l00132"></a>00132 <span class="comment">        /**</span>
+<a name="l00133"></a>00133 <span class="comment">         * Set Queue Attributes</span>
+<a name="l00134"></a>00134 <span class="comment">         *</span>
+<a name="l00135"></a>00135 <span class="comment">         * Sets an attribute of a queue. Currently, you can set only the VisibilityTimeout attribute for a </span>
+<a name="l00136"></a>00136 <span class="comment">         * queue. See Visibility Timeout for more information.</span>
+<a name="l00137"></a>00137 <span class="comment">         *</span>
+<a name="l00138"></a>00138 <span class="comment">         * @access public</span>
+<a name="l00139"></a>00139 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00140"></a>00140 <span class="comment">         * @param array $opt Associative array of parameters which can have the following keys:</span>
+<a name="l00141"></a>00141 <span class="comment">         * &lt;ul&gt;</span>
+<a name="l00142"></a>00142 <span class="comment">         *   &lt;li&gt;integer VisibilityTimeout - (Optional) Must be an integer from 0 to 7200 (2 hours).&lt;/li&gt;</span>
+<a name="l00143"></a>00143 <span class="comment">         *   &lt;li&gt;boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.&lt;/li&gt;</span>
+<a name="l00144"></a>00144 <span class="comment">         * &lt;/ul&gt;</span>
+<a name="l00145"></a>00145 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00146"></a>00146 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html</span>
+<a name="l00147"></a>00147 <span class="comment">         */</span>
+<a name="l00148"></a><a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">00148</a>         <span class="keyword">public</span> function <a class="code" href="a00005_e057b950a34ccf1690a8bc0420a769bf.html#e057b950a34ccf1690a8bc0420a769bf">set_queue_attributes</a>($queue_url, $opt = null)
+<a name="l00149"></a>00149         {
+<a name="l00150"></a>00150                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]))
+<a name="l00151"></a>00151                 {
+<a name="l00152"></a>00152                         $opt[<span class="stringliteral">'Attribute.Name'</span>] = <span class="stringliteral">'VisibilityTimeout'</span>;
+<a name="l00153"></a>00153                         $opt[<span class="stringliteral">'Attribute.Value'</span>] = $opt[<span class="stringliteral">'VisibilityTimeout'</span>];
+<a name="l00154"></a>00154                         unset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]);
+<a name="l00155"></a>00155                 }
+<a name="l00156"></a>00156                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00157"></a>00157         }
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00161"></a>00161         <span class="comment">// MESSAGES</span>
+<a name="l00162"></a>00162 <span class="comment"></span>
+<a name="l00163"></a>00163 <span class="comment">        /**</span>
+<a name="l00164"></a>00164 <span class="comment">         * Send Message</span>
+<a name="l00165"></a>00165 <span class="comment">         *</span>
+<a name="l00166"></a>00166 <span class="comment">         * The SendMessage action delivers a message to the specified queue.</span>
+<a name="l00167"></a>00167 <span class="comment">         *</span>
+<a name="l00168"></a>00168 <span class="comment">         * @access public</span>
+<a name="l00169"></a>00169 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00170"></a>00170 <span class="comment">         * @param string $message (Required) Message size cannot exceed 8 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]</span>
+<a name="l00171"></a>00171 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00172"></a>00172 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00173"></a>00173 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html</span>
+<a name="l00174"></a>00174 <span class="comment">         */</span>
+<a name="l00175"></a><a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">00175</a>         <span class="keyword">public</span> function <a class="code" href="a00005_41d43edf6ec74c40b0402f5ee461766d.html#41d43edf6ec74c40b0402f5ee461766d">send_message</a>($queue_url, $message, $returnCurlHandle = null)
+<a name="l00176"></a>00176         {
+<a name="l00177"></a>00177                 $opt = array();
+<a name="l00178"></a>00178                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00179"></a>00179                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SendMessage'</span>, $opt, $queue_url, $message);
+<a name="l00180"></a>00180         }
+<a name="l00181"></a>00181 <span class="comment"></span>
+<a name="l00182"></a>00182 <span class="comment">        /**</span>
+<a name="l00183"></a>00183 <span class="comment">         * Receive Message</span>
+<a name="l00184"></a>00184 <span class="comment">         *</span>
+<a name="l00185"></a>00185 <span class="comment">         * Retrieves one or more messages from the specified queue, including the message body and message </span>
+<a name="l00186"></a>00186 <span class="comment">         * ID of each message. Messages returned by this action stay in the queue until you delete them. </span>
+<a name="l00187"></a>00187 <span class="comment">         * However, once a message is returned to a ReceiveMessage request, it is not returned on subsequent </span>
+<a name="l00188"></a>00188 <span class="comment">         * ReceiveMessage requests for the duration of the VisibilityTimeout. If you do not specify a </span>
+<a name="l00189"></a>00189 <span class="comment">         * VisibilityTimeout in the request, the overall visibility timeout for the queue is used for the </span>
+<a name="l00190"></a>00190 <span class="comment">         * returned messages. A default visibility timeout of 30 seconds is set when you create the queue. </span>
+<a name="l00191"></a>00191 <span class="comment">         * You can also set the visibility timeout for the queue by using SetQueueAttributes. See Visibility </span>
+<a name="l00192"></a>00192 <span class="comment">         * Timeout for more information.</span>
+<a name="l00193"></a>00193 <span class="comment">         *</span>
+<a name="l00194"></a>00194 <span class="comment">         * @access public</span>
+<a name="l00195"></a>00195 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00196"></a>00196 <span class="comment">         * @param array $opt Associative array of parameters which can have the following keys:</span>
+<a name="l00197"></a>00197 <span class="comment">         * &lt;ul&gt;</span>
+<a name="l00198"></a>00198 <span class="comment">         *   &lt;li&gt;integer MaxNumberOfMessages - (Optional) Maximum number of messages to return, from 1 to 10. Not necessarily all the messages in the queue are returned. If there are fewer messages in the queue than NumberOfMessages, the maximum number of messages returned is the current number of messages in the queue. Defaults to 1 message.&lt;/li&gt;</span>
+<a name="l00199"></a>00199 <span class="comment">         *   &lt;li&gt;integer VisibilityTimeout - (Optional) An integer from 0 to 86400 (24 hours). Defaults to 30 seconds.&lt;/li&gt;</span>
+<a name="l00200"></a>00200 <span class="comment">         *   &lt;li&gt;boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.&lt;/li&gt;</span>
+<a name="l00201"></a>00201 <span class="comment">         * &lt;/ul&gt;</span>
+<a name="l00202"></a>00202 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00203"></a>00203 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryReceiveMessage.html</span>
+<a name="l00204"></a>00204 <span class="comment">         */</span>
+<a name="l00205"></a><a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">00205</a>         <span class="keyword">public</span> function <a class="code" href="a00005_b7ebbccfff7f384bec80711966cfbe6c.html#b7ebbccfff7f384bec80711966cfbe6c">receive_message</a>($queue_url, $opt = null)
+<a name="l00206"></a>00206         {
+<a name="l00207"></a>00207                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ReceiveMessage'</span>, $opt, $queue_url);
+<a name="l00208"></a>00208         }
+<a name="l00209"></a>00209 <span class="comment"></span>
+<a name="l00210"></a>00210 <span class="comment">        /**</span>
+<a name="l00211"></a>00211 <span class="comment">         * Delete Message</span>
+<a name="l00212"></a>00212 <span class="comment">         *</span>
+<a name="l00213"></a>00213 <span class="comment">         * The DeleteMessage action unconditionally removes the specified message from the specified queue. Even if </span>
+<a name="l00214"></a>00214 <span class="comment">         * the message is locked by another reader due to the visibility timeout setting, it is still deleted from </span>
+<a name="l00215"></a>00215 <span class="comment">         * the queue.</span>
+<a name="l00216"></a>00216 <span class="comment">         *</span>
+<a name="l00217"></a>00217 <span class="comment">         * @access public</span>
+<a name="l00218"></a>00218 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00219"></a>00219 <span class="comment">         * @param string $receipt_handle (Required) The receipt handle of the message to return.</span>
+<a name="l00220"></a>00220 <span class="comment">         * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</span>
+<a name="l00221"></a>00221 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00222"></a>00222 <span class="comment">         * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteMessage.html</span>
+<a name="l00223"></a>00223 <span class="comment">         */</span>
+<a name="l00224"></a><a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">00224</a>         <span class="keyword">public</span> function <a class="code" href="a00005_5548c87c581d5797dbf17e3ec67686fa.html#5548c87c581d5797dbf17e3ec67686fa">delete_message</a>($queue_url, $receipt_handle, $returnCurlHandle = null)
+<a name="l00225"></a>00225         {
+<a name="l00226"></a>00226                 $opt = array();
+<a name="l00227"></a>00227                 $opt[<span class="stringliteral">'ReceiptHandle'</span>] = $receipt_handle;
+<a name="l00228"></a>00228                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00229"></a>00229                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeleteMessage'</span>, $opt, $queue_url);
+<a name="l00230"></a>00230         }
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233         <span class="comment">/*%******************************************************************************************%*/</span>
+<a name="l00234"></a>00234         <span class="comment">// HELPER/UTILITY METHODS</span>
+<a name="l00235"></a>00235 <span class="comment"></span>
+<a name="l00236"></a>00236 <span class="comment">        /**</span>
+<a name="l00237"></a>00237 <span class="comment">         * Get Queue Size</span>
 <a name="l00238"></a>00238 <span class="comment">         * </span>
-<a name="l00239"></a>00239 <span class="comment">         * @return void</span>
-<a name="l00240"></a>00240 <span class="comment">         */</span>
-<a name="l00241"></a><a class="code" href="a00013_e9c72581ca0c82407180696432e15ba4.html#e9c72581ca0c82407180696432e15ba4">00241</a>         <span class="keyword">public</span> function <a class="code" href="a00013_e9c72581ca0c82407180696432e15ba4.html#e9c72581ca0c82407180696432e15ba4">processResponse</a>(<a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a> = null, <a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a> = null)
-<a name="l00242"></a>00242         {
-<a name="l00243"></a>00243                 <span class="comment">// Accept a custom one if it's passed.</span>
-<a name="l00244"></a>00244                 <span class="keywordflow">if</span> (<a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a> &amp;&amp; <a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a>)
-<a name="l00245"></a>00245                 {
-<a name="l00246"></a>00246                         $this-&gt;curl_handle = <a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a>;
-<a name="l00247"></a>00247                         $this-&gt;response = <a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a>;
-<a name="l00248"></a>00248                 }
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250                 <span class="comment">// Determine what's what.</span>
-<a name="l00251"></a>00251                 $header_size = curl_getinfo($this-&gt;curl_handle, CURLINFO_HEADER_SIZE);
-<a name="l00252"></a>00252                 $this-&gt;response_headers = substr($this-&gt;response, 0, $header_size);
-<a name="l00253"></a>00253                 $this-&gt;response_body = substr($this-&gt;response, $header_size);
-<a name="l00254"></a>00254                 $this-&gt;response_code = curl_getinfo($this-&gt;curl_handle, CURLINFO_HTTP_CODE);
-<a name="l00255"></a>00255                 $this-&gt;response_info = curl_getinfo($this-&gt;curl_handle);
-<a name="l00256"></a>00256 
-<a name="l00257"></a>00257                 <span class="comment">// Parse out the headers</span>
-<a name="l00258"></a>00258                 $this-&gt;response_headers = explode(<span class="stringliteral">"\r\n\r\n"</span>, trim($this-&gt;response_headers));
-<a name="l00259"></a>00259                 $this-&gt;response_headers = array_pop($this-&gt;response_headers);
-<a name="l00260"></a>00260                 $this-&gt;response_headers = explode(<span class="stringliteral">"\r\n"</span>, $this-&gt;response_headers);
-<a name="l00261"></a>00261                 array_shift($this-&gt;response_headers);
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263                 <span class="comment">// Loop through and split up the headers.</span>
-<a name="l00264"></a>00264                 $header_assoc = array();
-<a name="l00265"></a>00265                 <span class="keywordflow">foreach</span> ($this-&gt;response_headers as $header)
-<a name="l00266"></a>00266                 {
-<a name="l00267"></a>00267                         $kv = explode(<span class="stringliteral">': '</span>, $header);
-<a name="l00268"></a>00268                         $header_assoc[strtolower($kv[0])] = $kv[1];
-<a name="l00269"></a>00269                 }
-<a name="l00270"></a>00270 
-<a name="l00271"></a>00271                 <span class="comment">// Reset the headers to the appropriate property.</span>
-<a name="l00272"></a>00272                 $this-&gt;response_headers = $header_assoc;
-<a name="l00273"></a>00273                 $this-&gt;response_headers[<span class="stringliteral">'_info'</span>] = $this-&gt;response_info;
-<a name="l00274"></a>00274                 $this-&gt;response_headers[<span class="stringliteral">'_info'</span>][<span class="stringliteral">'method'</span>] = $this-&gt;method;
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276                 <span class="keywordflow">if</span> (<a class="code" href="a00013_74049b9c29f740fcc0ca5a28bc07209f.html#74049b9c29f740fcc0ca5a28bc07209f">$curl_handle</a> &amp;&amp; <a class="code" href="a00013_d9c64913ff8845ec6da8b06c6999c8b8.html#d9c64913ff8845ec6da8b06c6999c8b8">$response</a>)
-<a name="l00277"></a>00277                 {
-<a name="l00278"></a>00278                         <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="a00014.html">TarzanHTTPResponse</a>($this-&gt;response_headers, $this-&gt;response_body, $this-&gt;response_code);
-<a name="l00279"></a>00279                 }
-<a name="l00280"></a>00280         }
-<a name="l00281"></a>00281 <span class="comment"></span>
-<a name="l00282"></a>00282 <span class="comment">        /**</span>
-<a name="l00283"></a>00283 <span class="comment">         * Send Request</span>
-<a name="l00284"></a>00284 <span class="comment">         * </span>
-<a name="l00285"></a>00285 <span class="comment">         * Sends the request, calling necessary utility functions to update built-in properties.</span>
-<a name="l00286"></a>00286 <span class="comment">         * </span>
-<a name="l00287"></a>00287 <span class="comment">         * @return The resulting unparsed data from the request.</span>
-<a name="l00288"></a>00288 <span class="comment">         */</span>
-<a name="l00289"></a><a class="code" href="a00013_de31130758b9040f292d1b841792c961.html#de31130758b9040f292d1b841792c961">00289</a>         <span class="keyword">public</span> function <a class="code" href="a00013_de31130758b9040f292d1b841792c961.html#de31130758b9040f292d1b841792c961">sendRequest</a>()
-<a name="l00290"></a>00290         {
-<a name="l00291"></a>00291                 $this-&gt;<a class="code" href="a00013_137007e64f9ba635d7aa7fbaac2b9682.html#137007e64f9ba635d7aa7fbaac2b9682">prepRequest</a>();
-<a name="l00292"></a>00292                 $this-&gt;response = curl_exec($this-&gt;curl_handle);
-<a name="l00293"></a>00293                 $this-&gt;<a class="code" href="a00013_e9c72581ca0c82407180696432e15ba4.html#e9c72581ca0c82407180696432e15ba4">processResponse</a>();
-<a name="l00294"></a>00294 
-<a name="l00295"></a>00295                 curl_close($this-&gt;curl_handle);
-<a name="l00296"></a>00296                 <span class="keywordflow">return</span> $this-&gt;response;
-<a name="l00297"></a>00297         }
-<a name="l00298"></a>00298 <span class="comment"></span>
-<a name="l00299"></a>00299 <span class="comment">        /**</span>
-<a name="l00300"></a>00300 <span class="comment">         * Send Multi Request</span>
-<a name="l00301"></a>00301 <span class="comment">         * </span>
-<a name="l00302"></a>00302 <span class="comment">         * Sends CURL requests with MultiCURL.</span>
-<a name="l00303"></a>00303 <span class="comment">         * </span>
-<a name="l00304"></a>00304 <span class="comment">         * @param array $handles (Required) An array of CURL handles to process simultaneously.</span>
-<a name="l00305"></a>00305 <span class="comment">         */</span>
-<a name="l00306"></a><a class="code" href="a00013_9bbf8c889f1b9b943d991d2f1c0846bc.html#9bbf8c889f1b9b943d991d2f1c0846bc">00306</a>         <span class="keyword">public</span> function <a class="code" href="a00013_9bbf8c889f1b9b943d991d2f1c0846bc.html#9bbf8c889f1b9b943d991d2f1c0846bc">sendMultiRequest</a>($handles)
-<a name="l00307"></a>00307         {
-<a name="l00308"></a>00308                 <span class="comment">// Initialize MultiCURL</span>
-<a name="l00309"></a>00309                 $multi_handle = curl_multi_init();
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311                 <span class="comment">// Loop through each of the CURL handles and add them to the MultiCURL request.</span>
-<a name="l00312"></a>00312                 <span class="keywordflow">foreach</span> ($handles as $handle)
-<a name="l00313"></a>00313                 {
-<a name="l00314"></a>00314                         curl_multi_add_handle($multi_handle, $handle);
-<a name="l00315"></a>00315                 }
-<a name="l00316"></a>00316 
-<a name="l00317"></a>00317                 $count = 0;
-<a name="l00318"></a>00318 
-<a name="l00319"></a>00319                 <span class="comment">// Execute</span>
-<a name="l00320"></a>00320                 <span class="keywordflow">do</span>
-<a name="l00321"></a>00321                 {
-<a name="l00322"></a>00322                         $status = curl_multi_exec($multi_handle, $active);
-<a name="l00323"></a>00323                 }
-<a name="l00324"></a>00324                 <span class="keywordflow">while</span> ($status == CURLM_CALL_MULTI_PERFORM  || $active);
-<a name="l00325"></a>00325 
-<a name="l00326"></a>00326                 <span class="comment">// Retrieve each handle response</span>
-<a name="l00327"></a>00327                 <span class="keywordflow">foreach</span> ($handles as $handle)
-<a name="l00328"></a>00328                 {
-<a name="l00329"></a>00329                         <span class="keywordflow">if</span> (curl_errno($handle) == CURLE_OK)
-<a name="l00330"></a>00330                         {
-<a name="l00331"></a>00331                                 $HTTPRequest = <span class="keyword">new</span> <a class="code" href="a00013.html">TarzanHTTPRequest</a>(null);
-<a name="l00332"></a>00332                                 $handles_post[] = $HTTPRequest-&gt;processResponse($handle, curl_multi_getcontent($handle));
-<a name="l00333"></a>00333                         }
-<a name="l00334"></a>00334                         <span class="keywordflow">else</span>
-<a name="l00335"></a>00335                         {
-<a name="l00336"></a>00336                                 trigger_error(curl_error($handle));
-<a name="l00337"></a>00337                         }
-<a name="l00338"></a>00338                 }
-<a name="l00339"></a>00339 
-<a name="l00340"></a>00340                 <span class="keywordflow">return</span> $handles_post;
-<a name="l00341"></a>00341         }
-<a name="l00342"></a>00342 
-<a name="l00343"></a>00343 
-<a name="l00344"></a>00344         <span class="comment">/*%******************************************************************************************%*/</span>
-<a name="l00345"></a>00345         <span class="comment">// RESPONSE METHODS</span>
-<a name="l00346"></a>00346 <span class="comment"></span>
-<a name="l00347"></a>00347 <span class="comment">        /**</span>
-<a name="l00348"></a>00348 <span class="comment">         * Get Response Header</span>
-<a name="l00349"></a>00349 <span class="comment">         * </span>
-<a name="l00350"></a>00350 <span class="comment">         * Get the response headers from the request.</span>
-<a name="l00351"></a>00351 <span class="comment">         * </span>
-<a name="l00352"></a>00352 <span class="comment">         * @return array The response headers.</span>
-<a name="l00353"></a>00353 <span class="comment">         */</span>
-<a name="l00354"></a><a class="code" href="a00013_85867c194a4199dc31e2ffef07d8cd63.html#85867c194a4199dc31e2ffef07d8cd63">00354</a>         <span class="keyword">public</span> function <a class="code" href="a00013_85867c194a4199dc31e2ffef07d8cd63.html#85867c194a4199dc31e2ffef07d8cd63">getResponseHeader</a>($header = null)
-<a name="l00355"></a>00355         {
-<a name="l00356"></a>00356                 <span class="keywordflow">if</span> ($header)
-<a name="l00357"></a>00357                 {
-<a name="l00358"></a>00358                         <span class="keywordflow">return</span> $this-&gt;response_headers[strtolower($header)];
-<a name="l00359"></a>00359                 }
-<a name="l00360"></a>00360                 <span class="keywordflow">return</span> $this-&gt;response_headers;
-<a name="l00361"></a>00361         }
-<a name="l00362"></a>00362 <span class="comment"></span>
-<a name="l00363"></a>00363 <span class="comment">        /**</span>
-<a name="l00364"></a>00364 <span class="comment">         * Get Response Body</span>
-<a name="l00365"></a>00365 <span class="comment">         * </span>
-<a name="l00366"></a>00366 <span class="comment">         * Get the response body from the request.</span>
-<a name="l00367"></a>00367 <span class="comment">         * </span>
-<a name="l00368"></a>00368 <span class="comment">         * @return string The response body.</span>
-<a name="l00369"></a>00369 <span class="comment">         */</span>
-<a name="l00370"></a><a class="code" href="a00013_28b694ac430e29b4148aa5dd1f947466.html#28b694ac430e29b4148aa5dd1f947466">00370</a>         <span class="keyword">public</span> function <a class="code" href="a00013_28b694ac430e29b4148aa5dd1f947466.html#28b694ac430e29b4148aa5dd1f947466">getResponseBody</a>()
-<a name="l00371"></a>00371         {
-<a name="l00372"></a>00372                 <span class="keywordflow">return</span> $this-&gt;response_body;
-<a name="l00373"></a>00373         }
-<a name="l00374"></a>00374 <span class="comment"></span>
-<a name="l00375"></a>00375 <span class="comment">        /**</span>
-<a name="l00376"></a>00376 <span class="comment">         * Get Response Code</span>
-<a name="l00377"></a>00377 <span class="comment">         * </span>
-<a name="l00378"></a>00378 <span class="comment">         * Get the HTTP response code from the request.</span>
-<a name="l00379"></a>00379 <span class="comment">         * </span>
-<a name="l00380"></a>00380 <span class="comment">         * @return string The HTTP response code.</span>
-<a name="l00381"></a>00381 <span class="comment">         */</span>
-<a name="l00382"></a><a class="code" href="a00013_7b03a800932569df89678308bba66066.html#7b03a800932569df89678308bba66066">00382</a>         <span class="keyword">public</span> function <a class="code" href="a00013_7b03a800932569df89678308bba66066.html#7b03a800932569df89678308bba66066">getResponseCode</a>()
-<a name="l00383"></a>00383         {
-<a name="l00384"></a>00384                 <span class="keywordflow">return</span> $this-&gt;response_code;
-<a name="l00385"></a>00385         }
-<a name="l00386"></a>00386 }
-<a name="l00387"></a>00387 
-<a name="l00388"></a>00388 ?&gt;
+<a name="l00239"></a>00239 <span class="comment">         * Retrieves the approximate number of messages in the queue.</span>
+<a name="l00240"></a>00240 <span class="comment">         *</span>
+<a name="l00241"></a>00241 <span class="comment">         * @access public</span>
+<a name="l00242"></a>00242 <span class="comment">         * @param string $queue_url (Required) The URL of the queue to perform the action on.</span>
+<a name="l00243"></a>00243 <span class="comment">         * @return integer The Approximate number of messages.</span>
+<a name="l00244"></a>00244 <span class="comment">         */</span>
+<a name="l00245"></a><a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">00245</a>         <span class="keyword">public</span> function <a class="code" href="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84">get_queue_size</a>($queue_url)
+<a name="l00246"></a>00246         {
+<a name="l00247"></a>00247                 $opt = array();
+<a name="l00248"></a>00248                 $opt[<span class="stringliteral">'AttributeName'</span>] = <span class="stringliteral">'ApproximateNumberOfMessages'</span>;
+<a name="l00249"></a>00249                 $response = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'GetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00250"></a>00250                 <span class="keywordflow">return</span> (integer) $response-&gt;body-&gt;GetQueueAttributesResult-&gt;Attribute-&gt;Value;
+<a name="l00251"></a>00251         }
+<a name="l00252"></a>00252 }
+<a name="l00253"></a>00253 ?&gt;
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 15:45:19 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

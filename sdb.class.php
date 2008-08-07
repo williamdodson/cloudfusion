@@ -145,7 +145,7 @@ class AmazonSDB extends TarzanCore
 	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param string $item_name (Required) The name of the item/object to create.
 	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
-	 * @param boolean $replace (Optional) Whether to replace a key-value pair if a matching key already exists. Defaults to false.
+	 * @param mixed $replace (Optional) Whether to replace a key-value pair if a matching key already exists. Supports either a boolean (which affects ALL key-value pairs) or an indexed array of key names (which affects only the keys specified). Defaults to boolean false.
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse
 	 * @section example Example Usage:
@@ -158,22 +158,41 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['ItemName'] = $item_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
+		$rstore = array();
 
+		// Start looping through the keypairs.
 		$count = 0;
 		foreach ($keypairs as $k => $v)
 		{
+			// Is one of the values an array?
 			if (is_array($v))
 			{
+				// Loop through each of them so that all values are passed as individual attributes.
 				foreach ($v as $va)
 				{
 					$opt['Attribute.' . (string) $count . '.Name'] = $k;
 					$opt['Attribute.' . (string) $count . '.Value'] = $va;
 
+					// Do we want to do replacement?
 					if ($replace)
 					{
-						$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+						// Do we have an associative array of key names?
+						if (is_array($replace))
+						{
+							// Store this key-index pair for later.
+							$rstore[] = array(
+								'count' => $count,
+								'key' => $k
+							);
+						}
+						// Or just a since REPLACE ALL?
+						else
+						{
+							$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+						}
 					}
 
+					// Increment
 					$count++;
 				}
 			}
@@ -182,15 +201,40 @@ class AmazonSDB extends TarzanCore
 				$opt['Attribute.' . (string) $count . '.Name'] = $k;
 				$opt['Attribute.' . (string) $count . '.Value'] = $v;
 
+				// Do we want to do replacement?
 				if ($replace)
 				{
-					$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+					// Do we have an associative array of key names?
+					if (is_array($replace))
+					{
+						// Store this key-index pair for later.
+						$rstore[] = array(
+							'count' => $count,
+							'key' => $k
+						);
+					}
+					// Or just a since REPLACE ALL?
+					else
+					{
+						$opt['Attribute.' . (string) $count . '.Replace'] = 'true';
+					}
 				}
 			}
 
+			// Increment
 			$count++;
 		}
 
+		// Go through all of the saved key-index pairs we saved earlier.
+		foreach ($rstore as $k => $store)
+		{
+			// Did we want to replace one of these keypairs?
+			if (in_array($store['key'], $replace))
+			{
+				// Replace!
+				$opt['Attribute.' . (string) $store['count'] . '.Replace'] = 'true';
+			}
+		}
 
 		return $this->authenticate('PutAttributes', $opt, SDB_DEFAULT_URL);
 	}
@@ -249,8 +293,8 @@ class AmazonSDB extends TarzanCore
 	 * running it multiple times on the same item or attribute does not result in an error response.
 	 * 
 	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to create.
-	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
+	 * @param string $domain_name (Required) The name of the domain.
+	 * @param string $item_name (Required) The name of the item/object.
 	 * @param mixed $keys (Optional) The name of the key(s) (attribute(s)) to delete from the item. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse

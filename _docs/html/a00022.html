@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Tarzan Pre-2.0 Trunk Build: ec2.class.php File Reference</title>
+<title>Tarzan Pre-2.0 Trunk Build: tarzan.class.php File Reference</title>
 <link href="tarzan.css" rel="stylesheet" type="text/css">
 <link href="tabs.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -47,22 +47,47 @@ window.onload = initDynSections;
 -->
 </script>
 <div class="contents">
-<h1>ec2.class.php File Reference</h1>
+<h1>tarzan.class.php File Reference</h1>
 <p>
-<a href="a00049.html">Go to the source code of this file.</a><table border="0" cellpadding="0" cellspacing="0">
+<a href="a00045.html">Go to the source code of this file.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Namespaces</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><b>EC2</b></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><b>TarzanCore</b></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html">AmazonEC2</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00006.html">TarzanCore</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a> </td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_603e333b347bfbcd6c108c007da19a2e.html#603e333b347bfbcd6c108c007da19a2e">DATE_AWS_ISO8601</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_1d895bd8986515e3792a30ea36777b45.html#1d895bd8986515e3792a30ea36777b45">DATE_AWS_RFC2616</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_8991829aee166dcb5a3eebd59b986c6a.html#8991829aee166dcb5a3eebd59b986c6a">HTTP_POST</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_c212a20eed71e9f245c0acd865136041.html#c212a20eed71e9f245c0acd865136041">TARZAN_BUILD</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_371c29149f80caa0133995980854eec5.html#371c29149f80caa0133995980854eec5">TARZAN_NAME</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_9bc7a8dd8037c817b41cd1d558215d4b.html#9bc7a8dd8037c817b41cd1d558215d4b">TARZAN_URL</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_5abf2024b40b7188bd8f6acc96b54c43.html#5abf2024b40b7188bd8f6acc96b54c43">TARZAN_USERAGENT</a> </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_49f3005850bb78564693697179447c55.html#49f3005850bb78564693697179447c55">TARZAN_VERSION</a> </td></tr>
+
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022_80a3892ecad687b96b542109495df0f0.html#80a3892ecad687b96b542109495df0f0">__autoload</a> ($class_name)</td></tr>
 
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 15:45:19 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -100,11 +100,11 @@ Prepare Request<p>
 Determine the details of the CURL request to make. This can be passed along to a curl_multi_exec() function.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>The handle for the CURL object. </dd></dl>
 
-<p>Definition at line <a class="el" href="a00032.html#l00166">166</a> of file <a class="el" href="a00032.html">_httprequest.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00034.html#l00166">166</a> of file <a class="el" href="a00034.html">_httprequest.class.php</a>.</p>
 
-<p>References <a class="el" href="a00032.html#l00108">addHeader()</a>.</p>
+<p>References <a class="el" href="a00034.html#l00108">addHeader()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00032.html#l00289">sendRequest()</a>.</p>
+<p>Referenced by <a class="el" href="a00034.html#l00289">sendRequest()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00167"></a>00167         {
 <a name="l00168"></a>00168                 $this-&gt;<a class="code" href="a00007_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>(<span class="stringliteral">'Expect'</span>, <span class="stringliteral">'100-continue'</span>);
 <a name="l00169"></a>00169                 $this-&gt;<a class="code" href="a00007_3bb6451cdc27b6e5a3d0bab6075fd18c.html#3bb6451cdc27b6e5a3d0bab6075fd18c">addHeader</a>(<span class="stringliteral">'Connection'</span>, <span class="stringliteral">'close'</span>);
@@ -126,7 +126,7 @@ Determine the details of the CURL request to make. This can be passed along to a
 <a name="l00185"></a>00185                 curl_setopt($this-&gt;curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
 <a name="l00186"></a>00186                 curl_setopt($this-&gt;curl_handle, CURLOPT_NOSIGNAL, <span class="keyword">true</span>);
 <a name="l00187"></a>00187                 curl_setopt($this-&gt;curl_handle, CURLOPT_REFERER, $this-&gt;request_url);
-<a name="l00188"></a>00188                 curl_setopt($this-&gt;curl_handle, CURLOPT_USERAGENT, <a class="code" href="a00020_5abf2024b40b7188bd8f6acc96b54c43.html#5abf2024b40b7188bd8f6acc96b54c43">TARZAN_USERAGENT</a>);
+<a name="l00188"></a>00188                 curl_setopt($this-&gt;curl_handle, CURLOPT_USERAGENT, <a class="code" href="a00022_5abf2024b40b7188bd8f6acc96b54c43.html#5abf2024b40b7188bd8f6acc96b54c43">TARZAN_USERAGENT</a>);
 <a name="l00189"></a>00189 
 <a name="l00190"></a>00190                 <span class="comment">// Handle the encoding if we can.</span>
 <a name="l00191"></a>00191                 <span class="keywordflow">if</span> (extension_loaded(<span class="stringliteral">'zlib'</span>))
@@ -149,18 +149,18 @@ Determine the details of the CURL request to make. This can be passed along to a
 <a name="l00208"></a>00208 
 <a name="l00209"></a>00209                 <span class="keywordflow">switch</span> ($this-&gt;method)
 <a name="l00210"></a>00210                 {
-<a name="l00211"></a>00211                         <span class="keywordflow">case</span> <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>:
+<a name="l00211"></a>00211                         <span class="keywordflow">case</span> <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>:
 <a name="l00212"></a>00212                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, <span class="stringliteral">'PUT'</span>);
 <a name="l00213"></a>00213                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
 <a name="l00214"></a>00214                                 <span class="keywordflow">break</span>;
 <a name="l00215"></a>00215 
-<a name="l00216"></a>00216                         <span class="keywordflow">case</span> <a class="code" href="a00020_8991829aee166dcb5a3eebd59b986c6a.html#8991829aee166dcb5a3eebd59b986c6a">HTTP_POST</a>:
+<a name="l00216"></a>00216                         <span class="keywordflow">case</span> <a class="code" href="a00022_8991829aee166dcb5a3eebd59b986c6a.html#8991829aee166dcb5a3eebd59b986c6a">HTTP_POST</a>:
 <a name="l00217"></a>00217                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POST, <span class="keyword">true</span>);
 <a name="l00218"></a>00218                                 curl_setopt($this-&gt;curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
 <a name="l00219"></a>00219                                 <span class="keywordflow">break</span>;
 <a name="l00220"></a>00220 
-<a name="l00221"></a>00221                         <span class="keywordflow">case</span> <a class="code" href="a00020_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>:
-<a name="l00222"></a>00222                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, <a class="code" href="a00020_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>);
+<a name="l00221"></a>00221                         <span class="keywordflow">case</span> <a class="code" href="a00022_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>:
+<a name="l00222"></a>00222                                 curl_setopt($this-&gt;curl_handle, CURLOPT_CUSTOMREQUEST, <a class="code" href="a00022_f1c93e1abfb608f9d2c35759ae2d62e9.html#f1c93e1abfb608f9d2c35759ae2d62e9">HTTP_HEAD</a>);
 <a name="l00223"></a>00223                                 curl_setopt($this-&gt;curl_handle, CURLOPT_NOBODY, 1);
 <a name="l00224"></a>00224                                 <span class="keywordflow">break</span>;
 <a name="l00225"></a>00225 
@@ -180,7 +180,7 @@ Determine the details of the CURL request to make. This can be passed along to a
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:59 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

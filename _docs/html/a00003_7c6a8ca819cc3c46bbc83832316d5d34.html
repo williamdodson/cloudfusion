@@ -151,11 +151,11 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 
 <p>Reimplemented from <a class="el" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">TarzanCore</a>.</p>
 
-<p>Definition at line <a class="el" href="a00038.html#l00115">115</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00115">115</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00041.html#l00234">TarzanCore::adjust_offset()</a>.</p>
+<p>References <a class="el" href="a00045.html#l00234">TarzanCore::adjust_offset()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l01116">copy_object()</a>, <a class="el" href="a00038.html#l00415">create_bucket()</a>, <a class="el" href="a00038.html#l00825">create_object()</a>, <a class="el" href="a00038.html#l00537">delete_bucket()</a>, <a class="el" href="a00038.html#l00926">delete_object()</a>, <a class="el" href="a00038.html#l00760">get_bucket_acl()</a>, <a class="el" href="a00038.html#l00469">get_bucket_locale()</a>, <a class="el" href="a00038.html#l01266">get_logs()</a>, <a class="el" href="a00038.html#l00856">get_object()</a>, <a class="el" href="a00038.html#l01213">get_object_acl()</a>, <a class="el" href="a00038.html#l01390">get_object_url()</a>, <a class="el" href="a00038.html#l00494">head_bucket()</a>, <a class="el" href="a00038.html#l00881">head_object()</a>, <a class="el" href="a00038.html#l00691">list_buckets()</a>, <a class="el" href="a00038.html#l00997">list_objects()</a>, <a class="el" href="a00038.html#l00784">set_bucket_acl()</a>, and <a class="el" href="a00038.html#l01239">set_object_acl()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l01116">copy_object()</a>, <a class="el" href="a00042.html#l00415">create_bucket()</a>, <a class="el" href="a00042.html#l00825">create_object()</a>, <a class="el" href="a00042.html#l00537">delete_bucket()</a>, <a class="el" href="a00042.html#l00926">delete_object()</a>, <a class="el" href="a00042.html#l00760">get_bucket_acl()</a>, <a class="el" href="a00042.html#l00469">get_bucket_locale()</a>, <a class="el" href="a00042.html#l01266">get_logs()</a>, <a class="el" href="a00042.html#l00856">get_object()</a>, <a class="el" href="a00042.html#l01213">get_object_acl()</a>, <a class="el" href="a00042.html#l01390">get_object_url()</a>, <a class="el" href="a00042.html#l00494">head_bucket()</a>, <a class="el" href="a00042.html#l00881">head_object()</a>, <a class="el" href="a00042.html#l00691">list_buckets()</a>, <a class="el" href="a00042.html#l00997">list_objects()</a>, <a class="el" href="a00042.html#l00784">set_bucket_acl()</a>, and <a class="el" href="a00042.html#l01239">set_object_acl()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00116"></a>00116         {
 <a name="l00117"></a>00117                 <span class="comment">// If nothing was passed in, don't do anything.</span>
 <a name="l00118"></a>00118                 <span class="keywordflow">if</span> (!$opt)
@@ -207,7 +207,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <a name="l00164"></a>00164 
 <a name="l00165"></a>00165                         <span class="comment">// Get the UTC timestamp in RFC 2616 format</span>
 <a name="l00166"></a>00166                         $since_epoch = time() + $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
-<a name="l00167"></a>00167                         $httpDate = gmdate(<a class="code" href="a00020_1d895bd8986515e3792a30ea36777b45.html#1d895bd8986515e3792a30ea36777b45">DATE_AWS_RFC2616</a>, $since_epoch);
+<a name="l00167"></a>00167                         $httpDate = gmdate(<a class="code" href="a00022_1d895bd8986515e3792a30ea36777b45.html#1d895bd8986515e3792a30ea36777b45">DATE_AWS_RFC2616</a>, $since_epoch);
 <a name="l00168"></a>00168 
 <a name="l00169"></a>00169                         <span class="comment">// Generate the request string</span>
 <a name="l00170"></a>00170                         $request = <span class="stringliteral">''</span>;
@@ -286,7 +286,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <a name="l00243"></a>00243                         {
 <a name="l00244"></a>00244                                 $req-&gt;addHeader(<span class="stringliteral">'Content-Type'</span>, $contentType);
 <a name="l00245"></a>00245                         }
-<a name="l00246"></a>00246                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00020_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
+<a name="l00246"></a>00246                         <span class="keywordflow">else</span> <span class="keywordflow">if</span> ($verb == <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>) <span class="comment">// Set a default value for HTTP_PUT</span>
 <a name="l00247"></a>00247                         {
 <a name="l00248"></a>00248                                 $contentType = <span class="stringliteral">'application/x-www-form-urlencoded'</span>;
 <a name="l00249"></a>00249                         }
@@ -426,7 +426,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

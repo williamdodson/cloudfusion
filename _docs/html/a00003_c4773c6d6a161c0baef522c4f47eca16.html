@@ -179,11 +179,11 @@ $deleted = $s3-&gt;delete_bucket(<span class="stringliteral">'warpshare.test.eu'
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00537">537</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00537">537</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>, and <a class="el" href="a00038.html#l00952">delete_all_objects()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>, and <a class="el" href="a00042.html#l00952">delete_all_objects()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00625">rename_bucket()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l00625">rename_bucket()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00538"></a>00538         {
 <a name="l00539"></a>00539                 <span class="comment">// Set default value</span>
 <a name="l00540"></a>00540                 $success = <span class="keyword">true</span>;
@@ -199,7 +199,7 @@ $deleted = $s3-&gt;delete_bucket(<span class="stringliteral">'warpshare.test.eu'
 <a name="l00550"></a>00550                 {
 <a name="l00551"></a>00551                         <span class="comment">// Add this to our request</span>
 <a name="l00552"></a>00552                         $opt = array();
-<a name="l00553"></a>00553                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
+<a name="l00553"></a>00553                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
 <a name="l00554"></a>00554                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_bucket'</span>;
 <a name="l00555"></a>00555                         $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
 <a name="l00556"></a>00556 
@@ -218,7 +218,7 @@ $deleted = $s3-&gt;delete_bucket(<span class="stringliteral">'warpshare.test.eu'
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

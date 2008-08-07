@@ -147,7 +147,7 @@ $s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">Amazon
 <span class="comment">/**</span>
 <span class="comment"> * For the sake of example, let's create a bucket that we know is in the European Union.</span>
 <span class="comment"> */</span>
-$bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'</span>, <a class="code" href="a00017_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
+$bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'</span>, <a class="code" href="a00019_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
 
 <span class="comment"></span>
 <span class="comment">/**</span>
@@ -189,15 +189,15 @@ $bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'<
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00038.html#l00469">469</a> of file <a class="el" href="a00038.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00469">469</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00038.html#l00115">authenticate()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00038.html#l00576">copy_bucket()</a>.</p>
+<p>Referenced by <a class="el" href="a00042.html#l00576">copy_bucket()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00470"></a>00470         {
 <a name="l00471"></a>00471                 <span class="comment">// Add this to our request</span>
 <a name="l00472"></a>00472                 $opt = array();
-<a name="l00473"></a>00473                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00020_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l00473"></a>00473                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
 <a name="l00474"></a>00474                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_bucket_locale'</span>;
 <a name="l00475"></a>00475                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
 <a name="l00476"></a>00476 
@@ -213,7 +213,7 @@ $bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'<
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Aug 5 13:59:20 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
