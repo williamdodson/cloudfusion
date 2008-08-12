@@ -6,7 +6,7 @@
  *
  * @category Tarzan
  * @package AAWS
- * @version 2008.07.07
+ * @version 2008.08.11
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -365,6 +365,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function help($opt = null, $locale = AAWS_LOCALE_US)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('Help', $opt, $locale);
 	}
 
@@ -481,6 +486,11 @@ class AmazonAAWS extends TarzanCore
 	 */
 	public function list_search($opt = null, $locale = AAWS_LOCALE_US)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('ListSearch', $opt, $locale);
 	}
 

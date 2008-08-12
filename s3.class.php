@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package S3
- * @version 2008.08.02
+ * @version 2008.08.11
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -450,6 +450,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function get_bucket($bucket, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->list_objects($bucket, $opt);
 	}
 
@@ -624,7 +629,6 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function rename_bucket($source_bucket, $dest_bucket)
 	{
-		$responses = array();
 		$responses['copy'] = $this->copy_bucket($source_bucket, $dest_bucket);
 		$responses['delete'] = $this->delete_bucket($source_bucket, true);
 
@@ -691,6 +695,7 @@ class AmazonS3 extends TarzanCore
 	public function list_buckets($returnCurlHandle = null)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'list_buckets';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
@@ -760,6 +765,7 @@ class AmazonS3 extends TarzanCore
 	public function get_bucket_acl($bucket, $returnCurlHandle = null)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_bucket_acl';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
@@ -784,6 +790,7 @@ class AmazonS3 extends TarzanCore
 	public function set_bucket_acl($bucket, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'set_bucket_acl';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
@@ -824,6 +831,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function create_object($bucket, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'create_object';
@@ -855,6 +867,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function get_object($bucket, $filename, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object';
@@ -996,6 +1013,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function list_objects($bucket, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'list_objects';
@@ -1115,6 +1137,11 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'copy_object';
@@ -1213,6 +1240,7 @@ class AmazonS3 extends TarzanCore
 	public function get_object_acl($bucket, $filename, $returnCurlHandle = null)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object_acl';
 		$opt['filename'] = $filename;
@@ -1239,6 +1267,7 @@ class AmazonS3 extends TarzanCore
 	public function set_object_acl($bucket, $filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'set_object_acl';
 		$opt['filename'] = $filename;
@@ -1266,6 +1295,7 @@ class AmazonS3 extends TarzanCore
 	public function get_logs($bucket)
 	{
 		// Add this to our request
+		$opt = array();
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_logs';
 
@@ -1392,6 +1422,7 @@ class AmazonS3 extends TarzanCore
 		if ($qsa)
 		{
 			// Add this to our request
+			$opt = array();
 			$opt['verb'] = HTTP_GET;
 			$opt['method'] = 'get_object_url';
 			$opt['filename'] = $filename;

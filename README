@@ -1,5 +1,5 @@
 TARZAN
-A well-documented, straight-forward, object-oriented PHP5 API for working with some of Amazon's Web Services.
+A fast, powerful PHP toolkit for building web applications with Amazon Web Services.
 
 * HOME: http://tarzan-aws.com
 * DOCUMENTATION: http://tarzan-aws.com/docs/

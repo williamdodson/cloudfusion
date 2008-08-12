@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SQS
- * @version 2008.07.29
+ * @version 2008.08.11
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -63,6 +63,7 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
 	{
+		$opt = array();
 		$opt['QueueName'] = $queue_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 		return $this->authenticate('CreateQueue', $opt, SQS_DEFAULT_URL);
@@ -147,6 +148,11 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function set_queue_attributes($queue_url, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if (isset($opt['VisibilityTimeout']))
 		{
 			$opt['Attribute.Name'] = 'VisibilityTimeout';
@@ -204,6 +210,11 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function receive_message($queue_url, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('ReceiveMessage', $opt, $queue_url);
 	}
 

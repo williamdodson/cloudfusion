@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package SDB
- * @version 2008.08.03
+ * @version 2008.08.11
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -103,6 +103,11 @@ class AmazonSDB extends TarzanCore
 	 */
 	public function list_domains($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('ListDomains', $opt, SDB_DEFAULT_URL);
 	}
 
@@ -374,7 +379,11 @@ class AmazonSDB extends TarzanCore
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
 	{
-		$opt = array();
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;
 

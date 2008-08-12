@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package EC2
- * @version 2008.04.13
+ * @version 2008.08.11
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -100,6 +100,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function deregister_image($image_id)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($image_id)
 		{
 			$opt['ImageId'] = $image_id;
@@ -127,6 +132,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_images($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('DescribeImages', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -142,6 +152,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function register_image($image_location)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($image_location)
 		{
 			$opt['ImageLocation'] = $image_location;
@@ -166,6 +181,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_image_attribute($image_id)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($image_id)
 		{
 			$opt['ImageId'] = $image_id;
@@ -197,6 +217,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('ModifyImageAttribute', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -212,6 +237,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function reset_image_attribute($image_id)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($image_id)
 		{
 			$opt['ImageId'] = $image_id;
@@ -241,6 +271,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function confirm_product_instance($product_code, $instance_id)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($product_code)
 		{
 			$opt['ProductCode'] = $product_code;
@@ -269,6 +304,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_instances($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('DescribeInstances', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -296,6 +336,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($image_id)
 		{
 			$opt['ImageId'] = $image_id;
@@ -331,6 +376,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function terminate_instances($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('TerminateInstances', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -351,6 +401,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function create_key_pair($key_name)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($key_name)
 		{
 			$opt['KeyName'] = $key_name;
@@ -371,6 +426,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function delete_key_pair($key_name)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($key_name)
 		{
 			$opt['KeyName'] = $key_name;
@@ -396,6 +456,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_key_pairs($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('DescribeKeyPairs', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -438,6 +503,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($group_name)
 		{
 			$opt['GroupName'] = $group_name;
@@ -463,6 +533,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function create_security_group($group_name, $group_description)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($group_name)
 		{
 			$opt['GroupName'] = $group_name;
@@ -489,6 +564,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function delete_security_group($group_name)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($group_name)
 		{
 			$opt['GroupName'] = $group_name;
@@ -515,6 +595,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_security_groups($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('DescribeSecurityGroups', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -554,6 +639,11 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		if ($group_name)
 		{
 			$opt['GroupName'] = $group_name;

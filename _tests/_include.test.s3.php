@@ -193,7 +193,7 @@ class S3Base extends UnitTestCase
 	{
 		$move_object = $this->class->rename_object($this->bucket, 'duplicate_of_' . $this->file, 'renamed_duplicate_of_' . $this->file);
 
-		if ($move_object->isOK())
+		if ($move_object['copy']->isOK())
 		{
 			$this->pass();
 		}
