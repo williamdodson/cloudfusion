@@ -1412,7 +1412,7 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
-	 * @param integer $qsa (Required) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
+	 * @param integer $qsa (Optional) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
 	 * @return string The file URL, with authentication parameters if requested.
 	 * @section example Example Usage:
 	 * @include s3/get_object_url.phps

@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package TarzanHTTPRequest
- * @version 2008.07.05
+ * @version 2008.08.14
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -181,7 +181,7 @@ class TarzanHTTPRequest
 		curl_setopt($this->curl_handle, CURLOPT_MAXREDIRS, 5);
 		curl_setopt($this->curl_handle, CURLOPT_HEADER, true);
 		curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->curl_handle, CURLOPT_TIMEOUT, 120);
+		curl_setopt($this->curl_handle, CURLOPT_TIMEOUT, 5184000);
 		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($this->curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($this->curl_handle, CURLOPT_REFERER, $this->request_url);
