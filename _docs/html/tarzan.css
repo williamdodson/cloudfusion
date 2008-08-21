@@ -1,0 +1,253 @@
+/***********************************************************
+YUI Reset 2.4.1 (with a few modifications)
+***********************************************************/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+table{border-collapse:collapse;border-spacing:0;}
+ol,ul{list-style:none;margin:0;padding:0;}
+q:before,q:after{content:'';}
+caption,th{text-align:left;}
+fieldset,img{border:0;}
+li{margin:0;padding:0;}
+abbr,acronym{border:0;}
+
+
+/*********************************************
+Default styles
+*********************************************/
+html, body {
+	height:100%;
+}
+
+body {
+	font:14px/1.5em "Lucida Grande", Verdana, sans-serif;
+	letter-spacing:0px;
+	color:#333;
+	margin:0;
+	padding:0 20px;
+}
+
+a {
+	color:#326EA1;
+	text-decoration:underline;
+	padding:0 1px;
+}
+
+a:hover {
+	color:#fff;
+	background-color:#333;
+	text-decoration:none;
+	padding:0 1px;
+}
+
+a.anchor,
+a.anchor:hover {
+	color:#333;
+	background:none;
+	padding:none;
+	text-decoration:none;
+}
+
+h1, div.navpath {
+	font-size:30px;
+	font-weight:bold !important;
+	text-transform:none;
+	background-color:#171e21 !important;
+	color:#fff;
+	padding:20px;
+	margin:0 -20px 10px -20px;
+	border:none !important;
+}
+
+h1 a, div.navpath a {
+	color:#fff !important;
+	text-decoration:none;
+}
+
+h2, 
+td.memname,
+div.memdoc dl dt {
+	font-size:18px;
+	font-weight:bold !important;
+	letter-spacing:-1px;
+	text-transform:uppercase;
+	margin:20px 0 10px 0;
+	padding:0;
+}
+
+p {
+	margin:0;
+	padding:5px 0;
+}
+
+ul, ol {
+	list-style-type:disc;
+	margin:10px 0 10px 20px;
+	padding:0 0 0 15px;
+}
+
+ul li, ol li {
+	margin:0 0 7px 0;
+	padding:0 0 0 3px;
+}
+
+form {
+	margin:0;
+	padding:0;
+}
+
+blockquote {
+	font-size:12px;
+	line-height:1.4em;
+	color:#666;
+	border-left:4px solid #666;
+	margin:10px 30px;
+	padding:10px 20px;
+	background-color:#f3f3f3;
+}
+
+input[type=text], select, textarea {
+	font-size:14px;
+	line-height:1.5em;
+	padding:2px;
+}
+
+input[type=text], select, textarea {
+	background-color:#e9f5ff;
+	border:1px solid #333;
+}
+
+input[type=text]:focus, select:focus, textarea:focus {
+	background-color:#ffe;
+}
+
+strong {
+	font-weight:bold;
+}
+
+em {
+	font-style:italic;
+}
+
+table {
+	margin:5px 0;
+}
+
+table,
+table th,
+table td {
+	font-size:14px;
+	line-height:/1.2em;
+	border-collapse:collapse;
+}
+
+table th,
+table td {
+	border-bottom:1px solid #ddd;
+	padding:6px 8px;
+}
+
+table th {
+	font-weight:normal;
+	text-align:center;
+	background-color:#eee;
+	color:#666;
+	white-space:no-break;
+	width:1%;
+}
+
+table td a {
+	font-weight:bold;
+}
+
+hr {
+	display:none;
+}
+
+dl dt {
+	font-weight:bold;
+}
+
+dl dd {
+	margin-left:30px;
+}
+
+pre {
+	font:12px/1.4em Monaco, monospace;
+	background-color:#e9f5ff;
+	border:1px dotted #000080;
+	color:#000080;
+	padding:10px;
+	margin:10px 0;
+	overflow:auto;
+	max-height:400px;
+}
+
+
+/***********************************************************
+Left-hand styles
+***********************************************************/
+body.ftvtree {
+	font:12px/1.2em "Lucida Grande", Verdana, sans-serif;
+	padding:0 15px;
+}
+
+body.ftvtree p {
+	padding:0;
+	margin:0;
+}
+
+body.ftvtree h3 {
+	padding:10px;
+	font-weight:bold;
+}
+
+body.ftvtree div#folder1,
+body.ftvtree div#folder2,
+body.ftvtree div#folder3,
+body.ftvtree div#folder4,
+body.ftvtree div#folder5,
+body.ftvtree div#folder6,
+body.ftvtree div#folder7,
+body.ftvtree div#folder8,
+body.ftvtree div#folder9 {
+	display:none;
+}
+
+
+/***********************************************************
+Main styles
+***********************************************************/
+div.navtab {
+	background-color:#f3f3f3 !important;
+}
+
+td.paramname {
+	font:12px/1.4em Monaco, monospace;
+}
+
+div.memdoc dl {
+	margin:10px 0;
+}
+
+div.memdoc p {
+	padding:8px 0;
+}
+
+table a.anchor {
+	display:block;
+	height:0;
+}
+
+h2 a.anchor {
+	display:inline;
+}
+
+table.memname td {
+	border:none;
+}
+
+table.memname {
+	border-bottom:1px solid #ddd;
+}
