@@ -5,7 +5,7 @@
  *
  * @category Tarzan
  * @package EC2
- * @version 2008.08.11
+ * @version 2008.08.20
  * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
  * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
  * @link http://tarzan-aws.com Tarzan
@@ -83,6 +83,48 @@ class AmazonEC2 extends TarzanCore
 
 	// Not yet implemented. New as of 2008-02-01.
 	public function release_address() {}
+
+
+	/*%******************************************************************************************%*/
+	// EBS SNAPSHOTS TO S3
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function create_snapshot() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function describe_snapshots() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function delete_snapshot() {}
+
+
+	/*%******************************************************************************************%*/
+	// EBS VOLUMES
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function create_volume() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function describe_volumes() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function attach_volume() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function detach_volume() {}
+
+	// Not yet implemented. New as of 2008-05-05.
+	public function delete_volume() {}
+
+
+	/*%******************************************************************************************%*/
+	// MISCELLANEOUS
+
+	// Not yet implemented. New as of 2008-02-01.
+	public function get_console_output() {}
+
+	// Not yet implemented. New as of 2008-02-01.
+	public function reboot_instances() {}
 
 
 	/*%******************************************************************************************%*/
