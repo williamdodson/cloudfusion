@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -173,22 +173,22 @@ $delete = $s3-&gt;delete_object(<span class="stringliteral">'warpshare.test.eu'<
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l00926">926</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00948">948</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00042.html#l00952">delete_all_objects()</a>, and <a class="el" href="a00042.html#l01172">move_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00927"></a>00927         {
-<a name="l00928"></a>00928                 <span class="comment">// Add this to our request</span>
-<a name="l00929"></a>00929                 $opt = array();
-<a name="l00930"></a>00930                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
-<a name="l00931"></a>00931                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_object'</span>;
-<a name="l00932"></a>00932                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
-<a name="l00933"></a>00933                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00934"></a>00934 
-<a name="l00935"></a>00935                 <span class="comment">// Authenticate to S3</span>
-<a name="l00936"></a>00936                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00937"></a>00937         }
+<p>Referenced by <a class="el" href="a00042.html#l00974">delete_all_objects()</a>, and <a class="el" href="a00042.html#l01204">move_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00949"></a>00949         {
+<a name="l00950"></a>00950                 <span class="comment">// Add this to our request</span>
+<a name="l00951"></a>00951                 $opt = array();
+<a name="l00952"></a>00952                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_7c0802f4bae424cd442b2086c5859495.html#7c0802f4bae424cd442b2086c5859495">HTTP_DELETE</a>;
+<a name="l00953"></a>00953                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'delete_object'</span>;
+<a name="l00954"></a>00954                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
+<a name="l00955"></a>00955                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l00956"></a>00956 
+<a name="l00957"></a>00957                 <span class="comment">// Authenticate to S3</span>
+<a name="l00958"></a>00958                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00959"></a>00959         }
 </pre></div>
 <p>
 
@@ -198,7 +198,7 @@ $delete = $s3-&gt;delete_object(<span class="stringliteral">'warpshare.test.eu'<
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

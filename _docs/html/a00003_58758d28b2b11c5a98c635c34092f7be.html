@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindexHL" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -173,50 +173,50 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a class="el" href="a00003_db502170660cf3cd5d19b337bfbc8382.html#db502170660cf3cd5d19b337bfbc8382">list_objects</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l01053">1053</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l01080">1080</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00042.html#l00997">list_objects()</a>.</p>
+<p>References <a class="el" href="a00042.html#l01019">list_objects()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00042.html#l00576">copy_bucket()</a>, <a class="el" href="a00042.html#l00952">delete_all_objects()</a>, and <a class="el" href="a00042.html#l00645">get_bucket_size()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01054"></a>01054         {
-<a name="l01055"></a>01055                 <span class="comment">// Set some default values</span>
-<a name="l01056"></a>01056                 $filenames = array();
-<a name="l01057"></a>01057                 $pcre = null;
-<a name="l01058"></a>01058 
-<a name="l01059"></a>01059                 <span class="comment">// Get a list of files.</span>
-<a name="l01060"></a>01060                 $list = $this-&gt;<a class="code" href="a00003_db502170660cf3cd5d19b337bfbc8382.html#db502170660cf3cd5d19b337bfbc8382">list_objects</a>($bucket, $opt);
-<a name="l01061"></a>01061 
-<a name="l01062"></a>01062                 <span class="comment">// Extract the options</span>
-<a name="l01063"></a>01063                 <span class="keywordflow">if</span> ($opt)
-<a name="l01064"></a>01064                 {
-<a name="l01065"></a>01065                         extract($opt);
-<a name="l01066"></a>01066                 }
-<a name="l01067"></a>01067 
-<a name="l01068"></a>01068                 <span class="comment">// If we have a PCRE regex, store it.</span>
-<a name="l01069"></a>01069                 <span class="keywordflow">if</span> ($pcre)
-<a name="l01070"></a>01070                 {
-<a name="l01071"></a>01071                         <span class="comment">// Loop through and find the filenames.</span>
-<a name="l01072"></a>01072                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $file)
-<a name="l01073"></a>01073                         {
-<a name="l01074"></a>01074                                 $file = (string) $file-&gt;Key;
-<a name="l01075"></a>01075 
-<a name="l01076"></a>01076                                 <span class="keywordflow">if</span> (preg_match($pcre, $file))
-<a name="l01077"></a>01077                                 {
-<a name="l01078"></a>01078                                         $filenames[] = $file;
-<a name="l01079"></a>01079                                 }
-<a name="l01080"></a>01080                         }
-<a name="l01081"></a>01081                 }
-<a name="l01082"></a>01082                 <span class="keywordflow">else</span>
-<a name="l01083"></a>01083                 {
-<a name="l01084"></a>01084                         <span class="comment">// Loop through and find the filenames.</span>
-<a name="l01085"></a>01085                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $file)
-<a name="l01086"></a>01086                         {
-<a name="l01087"></a>01087                                 $filenames[] = (string) $file-&gt;Key;
-<a name="l01088"></a>01088                         }
-<a name="l01089"></a>01089                 }
-<a name="l01090"></a>01090 
-<a name="l01091"></a>01091                 <span class="keywordflow">return</span> (count($filenames) &gt; 0) ? $filenames : null;
-<a name="l01092"></a>01092         }
+<p>Referenced by <a class="el" href="a00042.html#l00586">copy_bucket()</a>, <a class="el" href="a00042.html#l00974">delete_all_objects()</a>, and <a class="el" href="a00042.html#l00654">get_bucket_size()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01081"></a>01081         {
+<a name="l01082"></a>01082                 <span class="comment">// Set some default values</span>
+<a name="l01083"></a>01083                 $filenames = array();
+<a name="l01084"></a>01084                 $pcre = null;
+<a name="l01085"></a>01085 
+<a name="l01086"></a>01086                 <span class="comment">// Get a list of files.</span>
+<a name="l01087"></a>01087                 $list = $this-&gt;<a class="code" href="a00003_db502170660cf3cd5d19b337bfbc8382.html#db502170660cf3cd5d19b337bfbc8382">list_objects</a>($bucket, $opt);
+<a name="l01088"></a>01088 
+<a name="l01089"></a>01089                 <span class="comment">// Extract the options</span>
+<a name="l01090"></a>01090                 <span class="keywordflow">if</span> ($opt)
+<a name="l01091"></a>01091                 {
+<a name="l01092"></a>01092                         extract($opt);
+<a name="l01093"></a>01093                 }
+<a name="l01094"></a>01094 
+<a name="l01095"></a>01095                 <span class="comment">// If we have a PCRE regex, store it.</span>
+<a name="l01096"></a>01096                 <span class="keywordflow">if</span> ($pcre)
+<a name="l01097"></a>01097                 {
+<a name="l01098"></a>01098                         <span class="comment">// Loop through and find the filenames.</span>
+<a name="l01099"></a>01099                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $file)
+<a name="l01100"></a>01100                         {
+<a name="l01101"></a>01101                                 $file = (string) $file-&gt;Key;
+<a name="l01102"></a>01102 
+<a name="l01103"></a>01103                                 <span class="keywordflow">if</span> (preg_match($pcre, $file))
+<a name="l01104"></a>01104                                 {
+<a name="l01105"></a>01105                                         $filenames[] = $file;
+<a name="l01106"></a>01106                                 }
+<a name="l01107"></a>01107                         }
+<a name="l01108"></a>01108                 }
+<a name="l01109"></a>01109                 <span class="keywordflow">else</span>
+<a name="l01110"></a>01110                 {
+<a name="l01111"></a>01111                         <span class="comment">// Loop through and find the filenames.</span>
+<a name="l01112"></a>01112                         <span class="keywordflow">foreach</span> ($list-&gt;body-&gt;Contents as $file)
+<a name="l01113"></a>01113                         {
+<a name="l01114"></a>01114                                 $filenames[] = (string) $file-&gt;Key;
+<a name="l01115"></a>01115                         }
+<a name="l01116"></a>01116                 }
+<a name="l01117"></a>01117 
+<a name="l01118"></a>01118                 <span class="keywordflow">return</span> (count($filenames) &gt; 0) ? $filenames : null;
+<a name="l01119"></a>01119         }
 </pre></div>
 <p>
 
@@ -226,7 +226,7 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

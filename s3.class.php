@@ -214,6 +214,11 @@ class AmazonS3 extends TarzanCore
 				$filename .= '?acl';
 			}
 
+			elseif ($method == 'get_object_url')
+			{
+				$filename = rawurldecode($filename);
+			}
+
 			if (!$request == '/')
 			{
 				$request = '/' . $request;
@@ -1413,11 +1418,12 @@ class AmazonS3 extends TarzanCore
 	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
 	 * @param integer $qsa (Optional) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
+	 * @param boolean $torrent (Optional) Whether to return the torrent version of the URL or not. Defaults to false.
 	 * @return string The file URL, with authentication parameters if requested.
 	 * @section example Example Usage:
 	 * @include s3/get_object_url.phps
 	 */
-	public function get_object_url($bucket, $filename, $qsa = 0)
+	public function get_object_url($bucket, $filename, $qsa = 0, $torrent = false)
 	{
 		if ($qsa)
 		{
@@ -1425,7 +1431,7 @@ class AmazonS3 extends TarzanCore
 			$opt = array();
 			$opt['verb'] = HTTP_GET;
 			$opt['method'] = 'get_object_url';
-			$opt['filename'] = $filename;
+			$opt['filename'] = $filename . (($torrent) ? '?torrent' : '');
 			$opt['qsa'] = $qsa;
 
 			// Adjust the clock
@@ -1440,20 +1446,20 @@ class AmazonS3 extends TarzanCore
 
 			if ($this->vhost)
 			{
-				return 'http://' . $this->vhost . $data['filename'] . '?AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
+				return 'http://' . $this->vhost . $data['filename'] . ((!$torrent) ? '?' : '&') . 'AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
 			}
 			
-			return 'http://' . $data['bucket'] . '.s3.amazonaws.com' . $data['filename'] . '?AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
+			return 'http://' . $data['bucket'] . '.s3.amazonaws.com' . $data['filename'] . ((!$torrent) ? '?' : '&') . 'AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
 		}
 		else
 		{
 			// If we're using a virtual host, use that instead.
 			if ($this->vhost)
 			{
-				return 'http://' . $this->vhost . '/' . $filename;
+				return 'http://' . $this->vhost . '/' . $filename . (($torrent) ? '?torrent' : '');
 			}
 
-			return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename;
+			return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename . (($torrent) ? '?torrent' : '');
 		}
 	}
 
@@ -1465,19 +1471,19 @@ class AmazonS3 extends TarzanCore
 	 * @access public
 	 * @param string $bucket (Required) The name of the bucket to be used. Pass null if using AmazonS3::set_vhost().
 	 * @param string $filename (Required) The filename for the content.
-	 * @return string The Torrent URL.
+	 * @param integer $qsa (Optional) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false.
+	 * @return string The torrent URL, with authentication parameters if requested.
 	 * @section example Example Usage:
 	 * @include s3/get_torrent_url.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3Torrent.html
 	 */
-	public function get_torrent_url($bucket, $filename)
+	public function get_torrent_url($bucket, $filename, $qsa = 0)
 	{
-		// If we're using a virtual host, use that instead.
-		if ($this->vhost)
+		if ($qsa)
 		{
-			return 'http://' . $this->vhost . '/' . $filename . '?torrent';
+			return $this->get_object_url($bucket, $filename, $qsa, true);
 		}
-		return 'http://' . $bucket . '.s3.amazonaws.com/' . $filename . '?torrent';
+		return $this->get_object_url($bucket, $filename, 0 , true);
 	}
 }
 ?>

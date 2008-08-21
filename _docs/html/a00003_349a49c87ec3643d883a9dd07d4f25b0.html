@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Tarzan Pre-2.0 Trunk Build: AmazonS3::get_bucket_locale</title>
+<title>Tarzan Pre-2.0 Trunk Build: AmazonS3::get_object_url</title>
 <link href="tarzan.css" rel="stylesheet" type="text/css">
 <link href="tabs.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -70,14 +70,14 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_6312ae42a9d57aba65a54fe72f524a83.html#6312ae42a9d57aba65a54fe72f524a83">get_bucket_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_170c2e321cca665bb36e771a908141dd.html#170c2e321cca665bb36e771a908141dd">get_bucket_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_8dbb0782f98218849d44204c9c6d4a2a.html#8dbb0782f98218849d44204c9c6d4a2a">get_bucket_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindexHL" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_f0c6274bee4bc0e3ed726277a02806c6.html#f0c6274bee4bc0e3ed726277a02806c6">get_bucket_locale</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_3871abbdd8d54892dd2fa7f8ddd130d5.html#3871abbdd8d54892dd2fa7f8ddd130d5">get_bucket_size</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_c5e0d8a7c97a676793db8f6c2864df0d.html#c5e0d8a7c97a676793db8f6c2864df0d">get_logs</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_c910dc680460ad26d60cd9d138c3e534.html#c910dc680460ad26d60cd9d138c3e534">get_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindexHL" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
@@ -98,12 +98,12 @@ window.onload = initDynSections;
       </div>
    </td>
    <td valign="top">
-<a class="anchor" name="f0c6274bee4bc0e3ed726277a02806c6"></a><!-- doxytag: member="AmazonS3::get_bucket_locale" ref="f0c6274bee4bc0e3ed726277a02806c6" args="($bucket, $returnCurlHandle=null)" -->
+<a class="anchor" name="349a49c87ec3643d883a9dd07d4f25b0"></a><!-- doxytag: member="AmazonS3::get_object_url" ref="349a49c87ec3643d883a9dd07d4f25b0" args="($bucket, $filename, $qsa=0, $torrent=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">AmazonS3::get_bucket_locale           </td>
+          <td class="memname">AmazonS3::get_object_url           </td>
           <td>(</td>
           <td class="paramtype">$&nbsp;</td>
           <td class="paramname"> <em>bucket</em>, </td>
@@ -112,7 +112,19 @@ window.onload = initDynSections;
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">$&nbsp;</td>
-          <td class="paramname"> <em>returnCurlHandle</em> = <code>null</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&nbsp;</td>
+          <td class="paramname"> <em>qsa</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&nbsp;</td>
+          <td class="paramname"> <em>torrent</em> = <code>false</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -124,15 +136,17 @@ window.onload = initDynSections;
 <div class="memdoc">
 
 <p>
-Get Bucket Locale<p>
-Lists the location constraint of the bucket. U.S.-based buckets have no response.<p>
+Get Object URL<p>
+Gets the URL for the file.<p>
 public <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$bucket (Required) The name of the bucket to check. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>boolean</em>&nbsp;</td><td>$returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$bucket (Required) The name of the bucket to be used. Pass null if using <a class="el" href="a00003_77c40f0c3d121a4d981544e13d9b4c6c.html#77c40f0c3d121a4d981544e13d9b4c6c">AmazonS3::set_vhost()</a>. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>$filename (Required) The filename for the content. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>integer</em>&nbsp;</td><td>$qsa (Optional) This doubles as a boolean (do you want to use Query String Authentication?) and an integer (how many seconds from now should this authentication work?). Defaults to 0/false. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>boolean</em>&nbsp;</td><td>$torrent (Optional) Whether to return the torrent version of the URL or not. Defaults to false. </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>string The file URL, with authentication parameters if requested. </dd></dl>
 <h2><a class="anchor" name="example">
 Example Usage:</a></h2>
 <div class="fragment"><pre class="fragment">&lt;?php
@@ -145,65 +159,56 @@ $s3 = <span class="keyword">new</span> <a class="code" href="a00003.html">Amazon
 
 <span class="comment"></span>
 <span class="comment">/**</span>
-<span class="comment"> * For the sake of example, let's create a bucket that we know is in the European Union.</span>
+<span class="comment"> * Display the URL for accessing this file in this bucket.</span>
 <span class="comment"> */</span>
-$bucket = $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.test.eu'</span>, <a class="code" href="a00019_277297965a06985360e508778695926b.html#277297965a06985360e508778695926b">S3_LOCATION_EU</a>);
-
-<span class="comment"></span>
-<span class="comment">/**</span>
-<span class="comment"> * As long as the request came back with a positive response (HTTP Status Code 200)...</span>
-<span class="comment"> */</span>
-<span class="keywordflow">if</span> ($bucket-&gt;isOK())
-{
-<span class="comment"></span>
-<span class="comment">        /**</span>
-<span class="comment">         * Let's get the locale of the bucket we just created. Remember that this returns a </span>
-<span class="comment">         * TarzanHTTPResponse object.</span>
-<span class="comment">         */</span>
-        $locale = $s3-&gt;get_bucket_locale(<span class="stringliteral">'warpshare.test.eu'</span>);
-
-<span class="comment"></span>
-<span class="comment">        /**</span>
-<span class="comment">         * We can look at the resulting data if we want to.</span>
-<span class="comment">         */</span>
-        echo <span class="stringliteral">'&lt;pre&gt;'</span>;
-        print_r($locale);
-        echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
-
-<span class="comment"></span>
-<span class="comment">        /**</span>
-<span class="comment">         * If there is no body, it's a US bucket. Otherwise, the bucket is from a different </span>
-<span class="comment">         * geographical location (currently only the EU).</span>
-<span class="comment">         */</span>
-        <span class="keywordflow">if</span> (empty($locale-&gt;body))
-        {
-                echo <span class="stringliteral">'US'</span>;
-        }
-        <span class="keywordflow">else</span>
-        {
-                echo $locale-&gt;body;
-        }
-}
+echo $s3-&gt;get_object_url(<span class="stringliteral">'warpshare.test.eu'</span>, <span class="stringliteral">'sample.txt'</span>);
 
 
 ?&gt;
-</pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html</a> </dd></dl>
+</pre></div> 
+<p>Definition at line <a class="el" href="a00042.html#l01426">1426</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>Definition at line <a class="el" href="a00042.html#l00479">479</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>References <a class="el" href="a00045.html#l00234">TarzanCore::adjust_offset()</a>, and <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
-
-<p>Referenced by <a class="el" href="a00042.html#l00586">copy_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00480"></a>00480         {
-<a name="l00481"></a>00481                 <span class="comment">// Add this to our request</span>
-<a name="l00482"></a>00482                 $opt = array();
-<a name="l00483"></a>00483                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l00484"></a>00484                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_bucket_locale'</span>;
-<a name="l00485"></a>00485                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l00486"></a>00486 
-<a name="l00487"></a>00487                 <span class="comment">// Authenticate to S3</span>
-<a name="l00488"></a>00488                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00489"></a>00489         }
+<p>Referenced by <a class="el" href="a00042.html#l01480">get_torrent_url()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01427"></a>01427         {
+<a name="l01428"></a>01428                 <span class="keywordflow">if</span> ($qsa)
+<a name="l01429"></a>01429                 {
+<a name="l01430"></a>01430                         <span class="comment">// Add this to our request</span>
+<a name="l01431"></a>01431                         $opt = array();
+<a name="l01432"></a>01432                         $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l01433"></a>01433                         $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_url'</span>;
+<a name="l01434"></a>01434                         $opt[<span class="stringliteral">'filename'</span>] = $filename . (($torrent) ? <span class="stringliteral">'?torrent'</span> : <span class="stringliteral">''</span>);
+<a name="l01435"></a>01435                         $opt[<span class="stringliteral">'qsa'</span>] = $qsa;
+<a name="l01436"></a>01436 
+<a name="l01437"></a>01437                         <span class="comment">// Adjust the clock</span>
+<a name="l01438"></a>01438                         $old_offset = $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>;
+<a name="l01439"></a>01439                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a>($qsa);
+<a name="l01440"></a>01440 
+<a name="l01441"></a>01441                         <span class="comment">// Authenticate to S3</span>
+<a name="l01442"></a>01442                         $data = $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01443"></a>01443 
+<a name="l01444"></a>01444                         <span class="comment">// Reset the clock</span>
+<a name="l01445"></a>01445                         $this-&gt;<a class="code" href="a00006_442c34311e9a195e3dff6ac7dbdd903d.html#442c34311e9a195e3dff6ac7dbdd903d">adjust_offset</a> = $old_offset;
+<a name="l01446"></a>01446 
+<a name="l01447"></a>01447                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01448"></a>01448                         {
+<a name="l01449"></a>01449                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . $data[<span class="stringliteral">'filename'</span>] . ((!$torrent) ? <span class="charliteral">'?'</span> : <span class="charliteral">'&amp;'</span>) . <span class="stringliteral">'AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
+<a name="l01450"></a>01450                         }
+<a name="l01451"></a>01451                         
+<a name="l01452"></a>01452                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $data[<span class="stringliteral">'bucket'</span>] . <span class="stringliteral">'.s3.amazonaws.com'</span> . $data[<span class="stringliteral">'filename'</span>] . ((!$torrent) ? <span class="charliteral">'?'</span> : <span class="charliteral">'&amp;'</span>) . <span class="stringliteral">'AWSAccessKeyId='</span> . $data[<span class="stringliteral">'key'</span>] . <span class="stringliteral">'&amp;Expires='</span> . $data[<span class="stringliteral">'expires'</span>] . <span class="stringliteral">'&amp;Signature='</span> . rawurlencode($data[<span class="stringliteral">'signature'</span>]);
+<a name="l01453"></a>01453                 }
+<a name="l01454"></a>01454                 <span class="keywordflow">else</span>
+<a name="l01455"></a>01455                 {
+<a name="l01456"></a>01456                         <span class="comment">// If we're using a virtual host, use that instead.</span>
+<a name="l01457"></a>01457                         <span class="keywordflow">if</span> ($this-&gt;vhost)
+<a name="l01458"></a>01458                         {
+<a name="l01459"></a>01459                                 <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $this-&gt;vhost . <span class="charliteral">'/'</span> . $filename . (($torrent) ? <span class="stringliteral">'?torrent'</span> : <span class="stringliteral">''</span>);
+<a name="l01460"></a>01460                         }
+<a name="l01461"></a>01461 
+<a name="l01462"></a>01462                         <span class="keywordflow">return</span> <span class="stringliteral">'http://'</span> . $bucket . <span class="stringliteral">'.s3.amazonaws.com/'</span> . $filename . (($torrent) ? <span class="stringliteral">'?torrent'</span> : <span class="stringliteral">''</span>);
+<a name="l01463"></a>01463                 }
+<a name="l01464"></a>01464         }
 </pre></div>
 <p>
 

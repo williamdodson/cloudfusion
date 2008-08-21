@@ -118,12 +118,17 @@ string Owner.n - (Optional) Owners of AMIs to describe. </li>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImages.html">http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImages.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00041.html#l00128">128</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00041.html#l00133">133</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00129"></a>00129         {
-<a name="l00130"></a>00130                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DescribeImages'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
-<a name="l00131"></a>00131         }
+<div class="fragment"><pre class="fragment"><a name="l00134"></a>00134         {
+<a name="l00135"></a>00135                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00136"></a>00136                 {
+<a name="l00137"></a>00137                         $opt = array();
+<a name="l00138"></a>00138                 }
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DescribeImages'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
+<a name="l00141"></a>00141         }
 </pre></div>
 <p>
 
@@ -133,7 +138,7 @@ string Owner.n - (Optional) Owners of AMIs to describe. </li>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

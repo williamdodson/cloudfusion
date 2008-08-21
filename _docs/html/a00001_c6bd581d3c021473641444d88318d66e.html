@@ -128,8 +128,13 @@ string ResponseGroup - (Optional) Specifies the types of values to return. You c
 
 <p>References <a class="el" href="a00037.html#l00087">authenticate()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00367"></a>00367         {
-<a name="l00368"></a>00368                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00001_0d16fa81ac000acac84a35604e250bb6.html#0d16fa81ac000acac84a35604e250bb6">authenticate</a>(<span class="stringliteral">'Help'</span>, $opt, $locale);
-<a name="l00369"></a>00369         }
+<a name="l00368"></a>00368                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00369"></a>00369                 {
+<a name="l00370"></a>00370                         $opt = array();
+<a name="l00371"></a>00371                 }
+<a name="l00372"></a>00372 
+<a name="l00373"></a>00373                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00001_0d16fa81ac000acac84a35604e250bb6.html#0d16fa81ac000acac84a35604e250bb6">authenticate</a>(<span class="stringliteral">'Help'</span>, $opt, $locale);
+<a name="l00374"></a>00374         }
 </pre></div>
 <p>
 
@@ -139,7 +144,7 @@ string ResponseGroup - (Optional) Specifies the types of values to return. You c
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -111,18 +111,23 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html">http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00044.html#l00148">148</a> of file <a class="el" href="a00044.html">sqs.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00044.html#l00149">149</a> of file <a class="el" href="a00044.html">sqs.class.php</a>.</p>
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00149"></a>00149         {
-<a name="l00150"></a>00150                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]))
-<a name="l00151"></a>00151                 {
-<a name="l00152"></a>00152                         $opt[<span class="stringliteral">'Attribute.Name'</span>] = <span class="stringliteral">'VisibilityTimeout'</span>;
-<a name="l00153"></a>00153                         $opt[<span class="stringliteral">'Attribute.Value'</span>] = $opt[<span class="stringliteral">'VisibilityTimeout'</span>];
-<a name="l00154"></a>00154                         unset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]);
-<a name="l00155"></a>00155                 }
-<a name="l00156"></a>00156                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SetQueueAttributes'</span>, $opt, $queue_url);
-<a name="l00157"></a>00157         }
+<div class="fragment"><pre class="fragment"><a name="l00150"></a>00150         {
+<a name="l00151"></a>00151                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00152"></a>00152                 {
+<a name="l00153"></a>00153                         $opt = array();
+<a name="l00154"></a>00154                 }
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]))
+<a name="l00157"></a>00157                 {
+<a name="l00158"></a>00158                         $opt[<span class="stringliteral">'Attribute.Name'</span>] = <span class="stringliteral">'VisibilityTimeout'</span>;
+<a name="l00159"></a>00159                         $opt[<span class="stringliteral">'Attribute.Value'</span>] = $opt[<span class="stringliteral">'VisibilityTimeout'</span>];
+<a name="l00160"></a>00160                         unset($opt[<span class="stringliteral">'VisibilityTimeout'</span>]);
+<a name="l00161"></a>00161                 }
+<a name="l00162"></a>00162                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'SetQueueAttributes'</span>, $opt, $queue_url);
+<a name="l00163"></a>00163         }
 </pre></div>
 <p>
 
@@ -132,7 +137,7 @@ boolean $returnCurlHandle - (Optional) A private toggle that will return the CUR
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:26 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

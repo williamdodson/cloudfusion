@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -177,18 +177,23 @@ echo $file-&gt;body;
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l00856">856</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00873">873</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00857"></a>00857         {
-<a name="l00858"></a>00858                 <span class="comment">// Add this to our request</span>
-<a name="l00859"></a>00859                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l00860"></a>00860                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object'</span>;
-<a name="l00861"></a>00861                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
-<a name="l00862"></a>00862 
-<a name="l00863"></a>00863                 <span class="comment">// Authenticate to S3</span>
-<a name="l00864"></a>00864                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l00865"></a>00865         }
+<div class="fragment"><pre class="fragment"><a name="l00874"></a>00874         {
+<a name="l00875"></a>00875                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00876"></a>00876                 {
+<a name="l00877"></a>00877                         $opt = array();
+<a name="l00878"></a>00878                 }
+<a name="l00879"></a>00879 
+<a name="l00880"></a>00880                 <span class="comment">// Add this to our request</span>
+<a name="l00881"></a>00881                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l00882"></a>00882                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object'</span>;
+<a name="l00883"></a>00883                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($filename);
+<a name="l00884"></a>00884 
+<a name="l00885"></a>00885                 <span class="comment">// Authenticate to S3</span>
+<a name="l00886"></a>00886                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l00887"></a>00887         }
 </pre></div>
 <p>
 
@@ -198,7 +203,7 @@ echo $file-&gt;body;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

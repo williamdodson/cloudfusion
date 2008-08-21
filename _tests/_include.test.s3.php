@@ -290,17 +290,33 @@ class S3Base extends UnitTestCase
 			$this->fail();
 		}
 	}
-	
+
 	public function test_get_object_url()
 	{
 		$get_object_url = $this->class->get_object_url($this->bucket, $this->file);
 		$this->assertEqual($get_object_url, 'http://' . $this->bucket . '.s3.amazonaws.com/' . $this->file);
 	}
 
+	public function test_get_object_url_qsa()
+	{
+		$get_object_url = $this->class->get_object_url($this->bucket, $this->file, 60);
+		$request = new TarzanHTTPRequest($get_object_url);
+		$request->sendRequest();
+		$this->assertEqual(200, (integer) $request->getResponseCode());
+	}
+
 	public function test_get_torrent_url()
 	{
 		$get_torrent_url = $this->class->get_torrent_url($this->bucket, $this->file);
 		$this->assertEqual($get_torrent_url, 'http://' . $this->bucket . '.s3.amazonaws.com/' . $this->file . '?torrent');
+	}
+
+	public function test_get_torrent_url_qsa()
+	{
+		$get_torrent_url = $this->class->get_torrent_url($this->bucket, $this->file, 60);
+		$request = new TarzanHTTPRequest($get_torrent_url);
+		$request->sendRequest();
+		$this->assertEqual(200, (integer) $request->getResponseCode());
 	}
 
 	public function test_set_object_acl()

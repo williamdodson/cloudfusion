@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -153,33 +153,33 @@ $delete = $s3-&gt;delete_all_objects(<span class="stringliteral">'warpshare.test
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a class="el" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l00952">952</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00974">974</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00042.html#l00926">delete_object()</a>, and <a class="el" href="a00042.html#l01053">get_object_list()</a>.</p>
+<p>References <a class="el" href="a00042.html#l00948">delete_object()</a>, and <a class="el" href="a00042.html#l01080">get_object_list()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00042.html#l00537">delete_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00953"></a>00953         {
-<a name="l00954"></a>00954                 <span class="comment">// Collect all matches</span>
-<a name="l00955"></a>00955                 $list = $this-&gt;<a class="code" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a>($bucket, array(<span class="stringliteral">'pcre'</span>, $pcre));
-<a name="l00956"></a>00956 
-<a name="l00957"></a>00957                 <span class="comment">// As long as we have at least one match...</span>
-<a name="l00958"></a>00958                 <span class="keywordflow">if</span> (count($list) &gt; 0)
-<a name="l00959"></a>00959                 {
-<a name="l00960"></a>00960                         <span class="comment">// Hold CURL handles</span>
-<a name="l00961"></a>00961                         $handles = array();
-<a name="l00962"></a>00962 
-<a name="l00963"></a>00963                         <span class="comment">// Go through all of the items and delete them.</span>
-<a name="l00964"></a>00964                         <span class="keywordflow">foreach</span> ($list as $item)
-<a name="l00965"></a>00965                         {
-<a name="l00966"></a>00966                                 $handles[] = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($bucket, $item, <span class="keyword">true</span>);
-<a name="l00967"></a>00967                         }
-<a name="l00968"></a>00968 
-<a name="l00969"></a>00969                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
-<a name="l00970"></a>00970                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
-<a name="l00971"></a>00971                 }
-<a name="l00972"></a>00972 
-<a name="l00973"></a>00973                 <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00974"></a>00974         }
+<p>Referenced by <a class="el" href="a00042.html#l00547">delete_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00975"></a>00975         {
+<a name="l00976"></a>00976                 <span class="comment">// Collect all matches</span>
+<a name="l00977"></a>00977                 $list = $this-&gt;<a class="code" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a>($bucket, array(<span class="stringliteral">'pcre'</span>, $pcre));
+<a name="l00978"></a>00978 
+<a name="l00979"></a>00979                 <span class="comment">// As long as we have at least one match...</span>
+<a name="l00980"></a>00980                 <span class="keywordflow">if</span> (count($list) &gt; 0)
+<a name="l00981"></a>00981                 {
+<a name="l00982"></a>00982                         <span class="comment">// Hold CURL handles</span>
+<a name="l00983"></a>00983                         $handles = array();
+<a name="l00984"></a>00984 
+<a name="l00985"></a>00985                         <span class="comment">// Go through all of the items and delete them.</span>
+<a name="l00986"></a>00986                         <span class="keywordflow">foreach</span> ($list as $item)
+<a name="l00987"></a>00987                         {
+<a name="l00988"></a>00988                                 $handles[] = $this-&gt;<a class="code" href="a00003_22a2cc306d129bb28032d38d0774950c.html#22a2cc306d129bb28032d38d0774950c">delete_object</a>($bucket, $item, <span class="keyword">true</span>);
+<a name="l00989"></a>00989                         }
+<a name="l00990"></a>00990 
+<a name="l00991"></a>00991                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
+<a name="l00992"></a>00992                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
+<a name="l00993"></a>00993                 }
+<a name="l00994"></a>00994 
+<a name="l00995"></a>00995                 <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00996"></a>00996         }
 </pre></div>
 <p>
 
@@ -189,7 +189,7 @@ $delete = $s3-&gt;delete_all_objects(<span class="stringliteral">'warpshare.test
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

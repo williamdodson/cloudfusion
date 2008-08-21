@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindexHL" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -165,20 +165,20 @@ echo $s3-&gt;get_object_filesize(<span class="stringliteral">'warpshare.test.eu'
 
 ?&gt;
 </pre></div> 
-<p>Definition at line <a class="el" href="a00042.html#l01020">1020</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l01047">1047</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
-<p>References <a class="el" href="a00042.html#l00881">head_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01021"></a>01021         {
-<a name="l01022"></a>01022                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
-<a name="l01023"></a>01023                 $filesize = (integer) $object-&gt;header[<span class="stringliteral">'content-length'</span>];
-<a name="l01024"></a>01024 
-<a name="l01025"></a>01025                 <span class="keywordflow">if</span> ($friendly_format)
-<a name="l01026"></a>01026                 {
-<a name="l01027"></a>01027                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
-<a name="l01028"></a>01028                 }
-<a name="l01029"></a>01029 
-<a name="l01030"></a>01030                 <span class="keywordflow">return</span> $filesize;
-<a name="l01031"></a>01031         }
+<p>References <a class="el" href="a00042.html#l00903">head_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01048"></a>01048         {
+<a name="l01049"></a>01049                 $object = $this-&gt;<a class="code" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a>($bucket, $filename);
+<a name="l01050"></a>01050                 $filesize = (integer) $object-&gt;header[<span class="stringliteral">'content-length'</span>];
+<a name="l01051"></a>01051 
+<a name="l01052"></a>01052                 <span class="keywordflow">if</span> ($friendly_format)
+<a name="l01053"></a>01053                 {
+<a name="l01054"></a>01054                         $filesize = $this-&gt;util-&gt;size_readable($filesize);
+<a name="l01055"></a>01055                 }
+<a name="l01056"></a>01056 
+<a name="l01057"></a>01057                 <span class="keywordflow">return</span> $filesize;
+<a name="l01058"></a>01058         }
 </pre></div>
 <p>
 
@@ -188,7 +188,7 @@ echo $s3-&gt;get_object_filesize(<span class="stringliteral">'warpshare.test.eu'
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

@@ -124,25 +124,25 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemSearch.html">http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemSearch.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00037.html#l00417">417</a> of file <a class="el" href="a00037.html">aaws.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00037.html#l00422">422</a> of file <a class="el" href="a00037.html">aaws.class.php</a>.</p>
 
 <p>References <a class="el" href="a00037.html#l00087">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00418"></a>00418         {
-<a name="l00419"></a>00419                 <span class="keywordflow">if</span> (!$opt)
-<a name="l00420"></a>00420                 {
-<a name="l00421"></a>00421                         $opt = array();
-<a name="l00422"></a>00422                 }
-<a name="l00423"></a>00423 
-<a name="l00424"></a>00424                 $opt[<span class="stringliteral">'Keywords'</span>] = $keywords;
-<a name="l00425"></a>00425 
-<a name="l00426"></a>00426                 <span class="comment">// Default to 'All' if nothing else has been sent.</span>
-<a name="l00427"></a>00427                 <span class="keywordflow">if</span> (!isset($opt[<span class="stringliteral">'SearchIndex'</span>]) || empty($opt[<span class="stringliteral">'SearchIndex'</span>]))
-<a name="l00428"></a>00428                 {
-<a name="l00429"></a>00429                         $opt[<span class="stringliteral">'SearchIndex'</span>] = <span class="stringliteral">'All'</span>;
-<a name="l00430"></a>00430                 }
-<a name="l00431"></a>00431 
-<a name="l00432"></a>00432                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00001_0d16fa81ac000acac84a35604e250bb6.html#0d16fa81ac000acac84a35604e250bb6">authenticate</a>(<span class="stringliteral">'ItemSearch'</span>, $opt, $locale);
-<a name="l00433"></a>00433         }
+<div class="fragment"><pre class="fragment"><a name="l00423"></a>00423         {
+<a name="l00424"></a>00424                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00425"></a>00425                 {
+<a name="l00426"></a>00426                         $opt = array();
+<a name="l00427"></a>00427                 }
+<a name="l00428"></a>00428 
+<a name="l00429"></a>00429                 $opt[<span class="stringliteral">'Keywords'</span>] = $keywords;
+<a name="l00430"></a>00430 
+<a name="l00431"></a>00431                 <span class="comment">// Default to 'All' if nothing else has been sent.</span>
+<a name="l00432"></a>00432                 <span class="keywordflow">if</span> (!isset($opt[<span class="stringliteral">'SearchIndex'</span>]) || empty($opt[<span class="stringliteral">'SearchIndex'</span>]))
+<a name="l00433"></a>00433                 {
+<a name="l00434"></a>00434                         $opt[<span class="stringliteral">'SearchIndex'</span>] = <span class="stringliteral">'All'</span>;
+<a name="l00435"></a>00435                 }
+<a name="l00436"></a>00436 
+<a name="l00437"></a>00437                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00001_0d16fa81ac000acac84a35604e250bb6.html#0d16fa81ac000acac84a35604e250bb6">authenticate</a>(<span class="stringliteral">'ItemSearch'</span>, $opt, $locale);
+<a name="l00438"></a>00438         }
 </pre></div>
 <p>
 
@@ -152,7 +152,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

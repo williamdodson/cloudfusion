@@ -110,20 +110,25 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html">http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00041.html#l00167">167</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00041.html#l00182">182</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00168"></a>00168         {
-<a name="l00169"></a>00169                 <span class="keywordflow">if</span> ($image_id)
-<a name="l00170"></a>00170                 {
-<a name="l00171"></a>00171                         $opt[<span class="stringliteral">'ImageId'</span>] = $image_id;
-<a name="l00172"></a>00172                 }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174                 <span class="comment">// This is the only supported value in the EC2 2007-03-01 release.</span>
-<a name="l00175"></a>00175                 $opt[<span class="stringliteral">'Attribute'</span>] = <span class="stringliteral">'launchPermission'</span>;
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DescribeImageAttribute'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
-<a name="l00178"></a>00178         }
+<div class="fragment"><pre class="fragment"><a name="l00183"></a>00183         {
+<a name="l00184"></a>00184                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00185"></a>00185                 {
+<a name="l00186"></a>00186                         $opt = array();
+<a name="l00187"></a>00187                 }
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189                 <span class="keywordflow">if</span> ($image_id)
+<a name="l00190"></a>00190                 {
+<a name="l00191"></a>00191                         $opt[<span class="stringliteral">'ImageId'</span>] = $image_id;
+<a name="l00192"></a>00192                 }
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194                 <span class="comment">// This is the only supported value in the EC2 2007-03-01 release.</span>
+<a name="l00195"></a>00195                 $opt[<span class="stringliteral">'Attribute'</span>] = <span class="stringliteral">'launchPermission'</span>;
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DescribeImageAttribute'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
+<a name="l00198"></a>00198         }
 </pre></div>
 <p>
 
@@ -133,7 +138,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

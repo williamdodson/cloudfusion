@@ -134,8 +134,13 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00105"></a>00105         {
-<a name="l00106"></a>00106                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListDomains'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00107"></a>00107         }
+<a name="l00106"></a>00106                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00107"></a>00107                 {
+<a name="l00108"></a>00108                         $opt = array();
+<a name="l00109"></a>00109                 }
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'ListDomains'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00112"></a>00112         }
 </pre></div>
 <p>
 
@@ -145,7 +150,7 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:26 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

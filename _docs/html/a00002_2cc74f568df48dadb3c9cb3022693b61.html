@@ -114,13 +114,18 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
 <div class="fragment"><pre class="fragment"><a name="l00102"></a>00102         {
-<a name="l00103"></a>00103                 <span class="keywordflow">if</span> ($image_id)
+<a name="l00103"></a>00103                 <span class="keywordflow">if</span> (!$opt)
 <a name="l00104"></a>00104                 {
-<a name="l00105"></a>00105                         $opt[<span class="stringliteral">'ImageId'</span>] = $image_id;
+<a name="l00105"></a>00105                         $opt = array();
 <a name="l00106"></a>00106                 }
 <a name="l00107"></a>00107 
-<a name="l00108"></a>00108                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeregisterImage'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
-<a name="l00109"></a>00109         }
+<a name="l00108"></a>00108                 <span class="keywordflow">if</span> ($image_id)
+<a name="l00109"></a>00109                 {
+<a name="l00110"></a>00110                         $opt[<span class="stringliteral">'ImageId'</span>] = $image_id;
+<a name="l00111"></a>00111                 }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'DeregisterImage'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
+<a name="l00114"></a>00114         }
 </pre></div>
 <p>
 
@@ -130,7 +135,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

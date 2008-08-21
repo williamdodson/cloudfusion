@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -192,36 +192,36 @@ $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a 
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l00415">415</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l00420">420</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00042.html#l00576">copy_bucket()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00416"></a>00416         {
-<a name="l00417"></a>00417                 <span class="comment">// Defaults</span>
-<a name="l00418"></a>00418                 $body = null;
-<a name="l00419"></a>00419                 $contentType = null;
-<a name="l00420"></a>00420 
-<a name="l00421"></a>00421                 <span class="keywordflow">if</span> ($locale)
-<a name="l00422"></a>00422                 {
-<a name="l00423"></a>00423                         <span class="keywordflow">switch</span>(strtolower($locale))
-<a name="l00424"></a>00424                         {
-<a name="l00425"></a>00425                                 <span class="keywordflow">case</span> <span class="stringliteral">'eu'</span>:
-<a name="l00426"></a>00426                                         $body = <span class="stringliteral">'&lt;CreateBucketConfiguration&gt;&lt;LocationConstraint&gt;'</span> . strtoupper($locale) . <span class="stringliteral">'&lt;/LocationConstraint&gt;&lt;/CreateBucketConfiguration&gt;'</span>;
-<a name="l00427"></a>00427                                         $contentType = <span class="stringliteral">'application/xml'</span>;
-<a name="l00428"></a>00428                                         <span class="keywordflow">break</span>;
-<a name="l00429"></a>00429                         }
-<a name="l00430"></a>00430                 }
-<a name="l00431"></a>00431 
-<a name="l00432"></a>00432                 <span class="comment">// Authenticate to S3</span>
-<a name="l00433"></a>00433                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, array(
-<a name="l00434"></a>00434                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
-<a name="l00435"></a>00435                         <span class="stringliteral">'method'</span> =&gt; <span class="stringliteral">'create_bucket'</span>,
-<a name="l00436"></a>00436                         <span class="stringliteral">'body'</span> =&gt; $body,
-<a name="l00437"></a>00437                         <span class="stringliteral">'contentType'</span> =&gt; $contentType,
-<a name="l00438"></a>00438                         <span class="stringliteral">'returnCurlHandle'</span> =&gt; $returnCurlHandle
-<a name="l00439"></a>00439                 ));
-<a name="l00440"></a>00440         }
+<p>Referenced by <a class="el" href="a00042.html#l00586">copy_bucket()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l00421"></a>00421         {
+<a name="l00422"></a>00422                 <span class="comment">// Defaults</span>
+<a name="l00423"></a>00423                 $body = null;
+<a name="l00424"></a>00424                 $contentType = null;
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426                 <span class="keywordflow">if</span> ($locale)
+<a name="l00427"></a>00427                 {
+<a name="l00428"></a>00428                         <span class="keywordflow">switch</span>(strtolower($locale))
+<a name="l00429"></a>00429                         {
+<a name="l00430"></a>00430                                 <span class="keywordflow">case</span> <span class="stringliteral">'eu'</span>:
+<a name="l00431"></a>00431                                         $body = <span class="stringliteral">'&lt;CreateBucketConfiguration&gt;&lt;LocationConstraint&gt;'</span> . strtoupper($locale) . <span class="stringliteral">'&lt;/LocationConstraint&gt;&lt;/CreateBucketConfiguration&gt;'</span>;
+<a name="l00432"></a>00432                                         $contentType = <span class="stringliteral">'application/xml'</span>;
+<a name="l00433"></a>00433                                         <span class="keywordflow">break</span>;
+<a name="l00434"></a>00434                         }
+<a name="l00435"></a>00435                 }
+<a name="l00436"></a>00436 
+<a name="l00437"></a>00437                 <span class="comment">// Authenticate to S3</span>
+<a name="l00438"></a>00438                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, array(
+<a name="l00439"></a>00439                         <span class="stringliteral">'verb'</span> =&gt; <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>,
+<a name="l00440"></a>00440                         <span class="stringliteral">'method'</span> =&gt; <span class="stringliteral">'create_bucket'</span>,
+<a name="l00441"></a>00441                         <span class="stringliteral">'body'</span> =&gt; $body,
+<a name="l00442"></a>00442                         <span class="stringliteral">'contentType'</span> =&gt; $contentType,
+<a name="l00443"></a>00443                         <span class="stringliteral">'returnCurlHandle'</span> =&gt; $returnCurlHandle
+<a name="l00444"></a>00444                 ));
+<a name="l00445"></a>00445         }
 </pre></div>
 <p>
 
@@ -231,7 +231,7 @@ $s3-&gt;create_bucket(<span class="stringliteral">'warpshare.images'</span>, <a 
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

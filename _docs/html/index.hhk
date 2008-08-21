@@ -126,8 +126,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482"><param name="Name" value="get_object_acl"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0"><param name="Name" value="get_object_filesize"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be"><param name="Name" value="get_object_list"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc"><param name="Name" value="get_object_url"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2"><param name="Name" value="get_torrent_url"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0"><param name="Name" value="get_object_url"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019"><param name="Name" value="get_torrent_url"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070"><param name="Name" value="head_bucket"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8"><param name="Name" value="head_object"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315"><param name="Name" value="if_bucket_exists"></OBJECT>
@@ -224,10 +224,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482"><param name="Name" value="get_object_acl"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0"><param name="Name" value="get_object_filesize"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be"><param name="Name" value="get_object_list"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc"><param name="Name" value="get_object_url"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0"><param name="Name" value="get_object_url"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_b9deaa55ceb1bb00327072c5e71b321c.html#b9deaa55ceb1bb00327072c5e71b321c"><param name="Name" value="get_queue_attributes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00005_ac606d67a32faf3e8e0076023d590c84.html#ac606d67a32faf3e8e0076023d590c84"><param name="Name" value="get_queue_size"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2"><param name="Name" value="get_torrent_url"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019"><param name="Name" value="get_torrent_url"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_28b694ac430e29b4148aa5dd1f947466.html#28b694ac430e29b4148aa5dd1f947466"><param name="Name" value="getResponseBody"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_7b03a800932569df89678308bba66066.html#7b03a800932569df89678308bba66066"><param name="Name" value="getResponseCode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="a00007_85867c194a4199dc31e2ffef07d8cd63.html#85867c194a4199dc31e2ffef07d8cd63"><param name="Name" value="getResponseHeader"></OBJECT>

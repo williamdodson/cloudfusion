@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -194,31 +194,36 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?UsingCopyingObjects.html</a> <p>
 <a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTObjectPUT.html#RESTObjectPUTRequestHeaders</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l01116">1116</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l01143">1143</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
 
-<p>Referenced by <a class="el" href="a00042.html#l00576">copy_bucket()</a>, <a class="el" href="a00042.html#l01152">duplicate_object()</a>, and <a class="el" href="a00042.html#l01172">move_object()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01117"></a>01117         {
-<a name="l01118"></a>01118                 <span class="comment">// Add this to our request</span>
-<a name="l01119"></a>01119                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
-<a name="l01120"></a>01120                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'copy_object'</span>;
-<a name="l01121"></a>01121                 $opt[<span class="stringliteral">'sourceBucket'</span>] = $source_bucket;
-<a name="l01122"></a>01122                 $opt[<span class="stringliteral">'sourceObject'</span>] = $source_filename;
-<a name="l01123"></a>01123                 $opt[<span class="stringliteral">'destinationBucket'</span>] = $dest_bucket;
-<a name="l01124"></a>01124                 $opt[<span class="stringliteral">'destinationObject'</span>] = $dest_filename;
-<a name="l01125"></a>01125                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($dest_filename);
-<a name="l01126"></a>01126                 $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'COPY'</span>;
-<a name="l01127"></a>01127 
-<a name="l01128"></a>01128                 <span class="comment">// Do we have metadata?</span>
-<a name="l01129"></a>01129                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'meta'</span>]) &amp;&amp; is_array($opt[<span class="stringliteral">'meta'</span>]))
-<a name="l01130"></a>01130                 {
-<a name="l01131"></a>01131                         $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'REPLACE'</span>;
-<a name="l01132"></a>01132                 }
-<a name="l01133"></a>01133 
-<a name="l01134"></a>01134                 <span class="comment">// Authenticate to S3</span>
-<a name="l01135"></a>01135                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($dest_bucket, $opt);
-<a name="l01136"></a>01136         }
+<p>Referenced by <a class="el" href="a00042.html#l00586">copy_bucket()</a>, <a class="el" href="a00042.html#l01184">duplicate_object()</a>, and <a class="el" href="a00042.html#l01204">move_object()</a>.</p>
+<div class="fragment"><pre class="fragment"><a name="l01144"></a>01144         {
+<a name="l01145"></a>01145                 <span class="keywordflow">if</span> (!$opt)
+<a name="l01146"></a>01146                 {
+<a name="l01147"></a>01147                         $opt = array();
+<a name="l01148"></a>01148                 }
+<a name="l01149"></a>01149 
+<a name="l01150"></a>01150                 <span class="comment">// Add this to our request</span>
+<a name="l01151"></a>01151                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_12f047cd6da4c2ebf4f768664dfc8cb8.html#12f047cd6da4c2ebf4f768664dfc8cb8">HTTP_PUT</a>;
+<a name="l01152"></a>01152                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'copy_object'</span>;
+<a name="l01153"></a>01153                 $opt[<span class="stringliteral">'sourceBucket'</span>] = $source_bucket;
+<a name="l01154"></a>01154                 $opt[<span class="stringliteral">'sourceObject'</span>] = $source_filename;
+<a name="l01155"></a>01155                 $opt[<span class="stringliteral">'destinationBucket'</span>] = $dest_bucket;
+<a name="l01156"></a>01156                 $opt[<span class="stringliteral">'destinationObject'</span>] = $dest_filename;
+<a name="l01157"></a>01157                 $opt[<span class="stringliteral">'filename'</span>] = rawurlencode($dest_filename);
+<a name="l01158"></a>01158                 $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'COPY'</span>;
+<a name="l01159"></a>01159 
+<a name="l01160"></a>01160                 <span class="comment">// Do we have metadata?</span>
+<a name="l01161"></a>01161                 <span class="keywordflow">if</span> (isset($opt[<span class="stringliteral">'meta'</span>]) &amp;&amp; is_array($opt[<span class="stringliteral">'meta'</span>]))
+<a name="l01162"></a>01162                 {
+<a name="l01163"></a>01163                         $opt[<span class="stringliteral">'metadataDirective'</span>] = <span class="stringliteral">'REPLACE'</span>;
+<a name="l01164"></a>01164                 }
+<a name="l01165"></a>01165 
+<a name="l01166"></a>01166                 <span class="comment">// Authenticate to S3</span>
+<a name="l01167"></a>01167                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($dest_bucket, $opt);
+<a name="l01168"></a>01168         }
 </pre></div>
 <p>
 
@@ -228,7 +233,7 @@ echo <span class="stringliteral">'&lt;/pre&gt;'</span>;
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

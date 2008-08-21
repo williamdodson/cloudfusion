@@ -77,8 +77,8 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindexHL" href="a00003_389b71935845272272e0a72577eca482.html#389b71935845272272e0a72577eca482">get_object_acl</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_ff528738510994a60a46e97a0d804cc0.html#ff528738510994a60a46e97a0d804cc0">get_object_filesize</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_58758d28b2b11c5a98c635c34092f7be.html#58758d28b2b11c5a98c635c34092f7be">get_object_list</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_ba6cfbdb199890da7f752826901b41bc.html#ba6cfbdb199890da7f752826901b41bc">get_object_url</a></td></tr>
-          <tr><td class="navtab"><a class="qindex" href="a00003_caec29c4ea275db8b682ff6ecca1cec2.html#caec29c4ea275db8b682ff6ecca1cec2">get_torrent_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_349a49c87ec3643d883a9dd07d4f25b0.html#349a49c87ec3643d883a9dd07d4f25b0">get_object_url</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00003_b47edff943c4457a4f82aa0944339019.html#b47edff943c4457a4f82aa0944339019">get_torrent_url</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_65287b5f7b2c9df6db3d672c6bf82070.html#65287b5f7b2c9df6db3d672c6bf82070">head_bucket</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_d6600356585a48f822674ccadde146c8.html#d6600356585a48f822674ccadde146c8">head_object</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00003_f6ad3e916b4263ba03199a247d178315.html#f6ad3e916b4263ba03199a247d178315">if_bucket_exists</a></td></tr>
@@ -177,19 +177,20 @@ echo (<span class="keywordtype">string</span>) $acl-&gt;body-&gt;Owner-&gt;Displ
 ?&gt;
 </pre></div> <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html">http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00042.html#l01213">1213</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00042.html#l01245">1245</a> of file <a class="el" href="a00042.html">s3.class.php</a>.</p>
 
 <p>References <a class="el" href="a00042.html#l00115">authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l01214"></a>01214         {
-<a name="l01215"></a>01215                 <span class="comment">// Add this to our request</span>
-<a name="l01216"></a>01216                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
-<a name="l01217"></a>01217                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_acl'</span>;
-<a name="l01218"></a>01218                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
-<a name="l01219"></a>01219                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
-<a name="l01220"></a>01220 
-<a name="l01221"></a>01221                 <span class="comment">// Authenticate to S3</span>
-<a name="l01222"></a>01222                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
-<a name="l01223"></a>01223         }
+<div class="fragment"><pre class="fragment"><a name="l01246"></a>01246         {
+<a name="l01247"></a>01247                 <span class="comment">// Add this to our request</span>
+<a name="l01248"></a>01248                 $opt = array();
+<a name="l01249"></a>01249                 $opt[<span class="stringliteral">'verb'</span>] = <a class="code" href="a00022_bee436b68fa82c549b1067404e0c33fe.html#bee436b68fa82c549b1067404e0c33fe">HTTP_GET</a>;
+<a name="l01250"></a>01250                 $opt[<span class="stringliteral">'method'</span>] = <span class="stringliteral">'get_object_acl'</span>;
+<a name="l01251"></a>01251                 $opt[<span class="stringliteral">'filename'</span>] = $filename;
+<a name="l01252"></a>01252                 $opt[<span class="stringliteral">'returnCurlHandle'</span>] = $returnCurlHandle;
+<a name="l01253"></a>01253 
+<a name="l01254"></a>01254                 <span class="comment">// Authenticate to S3</span>
+<a name="l01255"></a>01255                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00003_7c6a8ca819cc3c46bbc83832316d5d34.html#7c6a8ca819cc3c46bbc83832316d5d34">authenticate</a>($bucket, $opt);
+<a name="l01256"></a>01256         }
 </pre></div>
 <p>
 
@@ -199,7 +200,7 @@ echo (<span class="keywordtype">string</span>) $acl-&gt;body-&gt;Owner-&gt;Displ
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:57 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:25 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

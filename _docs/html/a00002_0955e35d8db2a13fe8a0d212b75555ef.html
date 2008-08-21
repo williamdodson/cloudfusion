@@ -120,22 +120,27 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="a00008.html">TarzanHTTPResponse</a> </dd></dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a href="http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html">http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="a00041.html#l00464">464</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
+<p>Definition at line <a class="el" href="a00041.html#l00534">534</a> of file <a class="el" href="a00041.html">ec2.class.php</a>.</p>
 
 <p>References <a class="el" href="a00045.html#l00301">TarzanCore::authenticate()</a>.</p>
-<div class="fragment"><pre class="fragment"><a name="l00465"></a>00465         {
-<a name="l00466"></a>00466                 <span class="keywordflow">if</span> ($group_name)
-<a name="l00467"></a>00467                 {
-<a name="l00468"></a>00468                         $opt[<span class="stringliteral">'GroupName'</span>] = $group_name;
-<a name="l00469"></a>00469                 }
-<a name="l00470"></a>00470 
-<a name="l00471"></a>00471                 <span class="keywordflow">if</span> ($group_description)
-<a name="l00472"></a>00472                 {
-<a name="l00473"></a>00473                         $opt[<span class="stringliteral">'GroupDescription'</span>] = $group_description;
-<a name="l00474"></a>00474                 }
-<a name="l00475"></a>00475 
-<a name="l00476"></a>00476                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'CreateSecurityGroup'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
-<a name="l00477"></a>00477         }
+<div class="fragment"><pre class="fragment"><a name="l00535"></a>00535         {
+<a name="l00536"></a>00536                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00537"></a>00537                 {
+<a name="l00538"></a>00538                         $opt = array();
+<a name="l00539"></a>00539                 }
+<a name="l00540"></a>00540 
+<a name="l00541"></a>00541                 <span class="keywordflow">if</span> ($group_name)
+<a name="l00542"></a>00542                 {
+<a name="l00543"></a>00543                         $opt[<span class="stringliteral">'GroupName'</span>] = $group_name;
+<a name="l00544"></a>00544                 }
+<a name="l00545"></a>00545 
+<a name="l00546"></a>00546                 <span class="keywordflow">if</span> ($group_description)
+<a name="l00547"></a>00547                 {
+<a name="l00548"></a>00548                         $opt[<span class="stringliteral">'GroupDescription'</span>] = $group_description;
+<a name="l00549"></a>00549                 }
+<a name="l00550"></a>00550 
+<a name="l00551"></a>00551                 <span class="keywordflow">return</span> $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'CreateSecurityGroup'</span>, $opt, <a class="code" href="a00018_a356f1216db28eb53b627ecb97d64b07.html#a356f1216db28eb53b627ecb97d64b07">EC2_DEFAULT_URL</a>);
+<a name="l00552"></a>00552         }
 </pre></div>
 <p>
 
@@ -145,7 +150,7 @@ public <dl compact><dt><b>Parameters:</b></dt><dd>
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 7 01:25:56 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 22:09:24 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
