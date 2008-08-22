@@ -325,7 +325,7 @@ class AmazonSDB extends TarzanCore
 				{
 					for ($x = 0, $i = count($keys); $x < $i; $x++)
 					{
-						$opt['Attribute.' . (string) $i . '.Name'] = $keys[$i];
+						$opt['Attribute.' . (string) $x . '.Name'] = $keys[$x];
 					}
 				}
 
