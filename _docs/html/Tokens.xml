@@ -297,6 +297,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>attach_volume</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_e570802ee17adda9a8a84b14c092fa07.html</Path>
+    <Anchor>e570802ee17adda9a8a84b14c092fa07</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>authorize_security_group_ingress</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -337,6 +347,26 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>create_snapshot</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_6861ddc24e900b84d9f9289522bffbbf.html</Path>
+    <Anchor>6861ddc24e900b84d9f9289522bffbbf</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>create_volume</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_3c7abd1ff9a9664086ebf41e11d2a640.html</Path>
+    <Anchor>3c7abd1ff9a9664086ebf41e11d2a640</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>delete_key_pair</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -354,6 +384,26 @@
     </TokenIdentifier>
     <Path>a00002_4a45805199891166068e2aae364c37d0.html</Path>
     <Anchor>4a45805199891166068e2aae364c37d0</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delete_snapshot</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_3dcace9c4fd65a5bec4cd1bc666cca59.html</Path>
+    <Anchor>3dcace9c4fd65a5bec4cd1bc666cca59</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delete_volume</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_c3d318f5f208f10be896eec60f4bad04.html</Path>
+    <Anchor>c3d318f5f208f10be896eec60f4bad04</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -437,6 +487,36 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>describe_snapshots</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_2c7e71f822e7d72fca48ad2e708f7bb8.html</Path>
+    <Anchor>2c7e71f822e7d72fca48ad2e708f7bb8</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>describe_volumes</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_1e6034820f8c5fbc263aade7aab0ea0c.html</Path>
+    <Anchor>1e6034820f8c5fbc263aade7aab0ea0c</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>detach_volume</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_5ec36cbf979fc236e1cba1ae334971c1.html</Path>
+    <Anchor>5ec36cbf979fc236e1cba1ae334971c1</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>disassociate_address</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -447,6 +527,16 @@
   </Token>
   <Token>
     <TokenIdentifier>
+      <Name>get_console_output</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_00c5fb70f0187e4653a7d0a2e2e56eeb.html</Path>
+    <Anchor>00c5fb70f0187e4653a7d0a2e2e56eeb</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
       <Name>modify_image_attribute</Name>
       <APILanguage>php</APILanguage>
       <Type>clm</Type>
@@ -454,6 +544,16 @@
     </TokenIdentifier>
     <Path>a00002_56cb3bfac6465eff3d8d3d6b94ce6715.html</Path>
     <Anchor>56cb3bfac6465eff3d8d3d6b94ce6715</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>reboot_instances</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonEC2</Scope>
+    </TokenIdentifier>
+    <Path>a00002_1180b6b9efc5d316f3200fb805235b5a.html</Path>
+    <Anchor>1180b6b9efc5d316f3200fb805235b5a</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>
@@ -1030,6 +1130,16 @@
     </TokenIdentifier>
     <Path>a00004_50152c2d14898b9050ef7bb038a832e0.html</Path>
     <Anchor>50152c2d14898b9050ef7bb038a832e0</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>query_with_attributes</Name>
+      <APILanguage>php</APILanguage>
+      <Type>clm</Type>
+      <Scope>AmazonSDB</Scope>
+    </TokenIdentifier>
+    <Path>a00004_0e30f8619a7aa9bba970e25f4b7fa928.html</Path>
+    <Anchor>0e30f8619a7aa9bba970e25f4b7fa928</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>

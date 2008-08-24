@@ -102,6 +102,21 @@ class SDB extends UnitTestCase
 		}
 	}
 
+	public function test_query_with_attributes()
+	{
+		$this->query = $this->class->query_with_attributes($this->dname);
+
+		if ($this->query->isOK())
+		{
+			$this->pass();
+		}
+		else
+		{
+			$this->dump($this->query);
+			$this->fail();
+		}
+	}
+
 	public function test_get_attributes()
 	{
 		$get_attributes = $this->class->get_attributes($this->dname, $this->query->body->QueryResult->ItemName);

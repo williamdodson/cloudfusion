@@ -62,6 +62,7 @@ window.onload = initDynSections;
           <tr><td class="navtab"><a class="qindex" href="a00004_631357b55145d23b091ac82f7a76b04f.html#631357b55145d23b091ac82f7a76b04f">list_domains</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_43caa054e9a0acb8dadef26977ba9b9b.html#43caa054e9a0acb8dadef26977ba9b9b">put_attributes</a></td></tr>
           <tr><td class="navtab"><a class="qindex" href="a00004_50152c2d14898b9050ef7bb038a832e0.html#50152c2d14898b9050ef7bb038a832e0">query</a></td></tr>
+          <tr><td class="navtab"><a class="qindex" href="a00004_0e30f8619a7aa9bba970e25f4b7fa928.html#0e30f8619a7aa9bba970e25f4b7fa928">query_with_attributes</a></td></tr>
         </table>
       </div>
    </td>
@@ -186,7 +187,7 @@ $delete = $sdb-&gt;delete_attributes(<span class="stringliteral">'warpshare_test
 <a name="l00325"></a>00325                                 {
 <a name="l00326"></a>00326                                         <span class="keywordflow">for</span> ($x = 0, $i = count($keys); $x &lt; $i; $x++)
 <a name="l00327"></a>00327                                         {
-<a name="l00328"></a>00328                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $i . <span class="stringliteral">'.Name'</span>] = $keys[$i];
+<a name="l00328"></a>00328                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $x . <span class="stringliteral">'.Name'</span>] = $keys[$x];
 <a name="l00329"></a>00329                                         }
 <a name="l00330"></a>00330                                 }
 <a name="l00331"></a>00331 
@@ -221,7 +222,7 @@ $delete = $sdb-&gt;delete_attributes(<span class="stringliteral">'warpshare_test
   </tr>
 </table>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 23:43:07 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 23 19:17:11 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>

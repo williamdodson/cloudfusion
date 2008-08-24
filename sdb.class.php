@@ -363,6 +363,14 @@ class AmazonSDB extends TarzanCore
 	 * than 5 seconds will likely time-out and return a time-out error response. A Query with no 
 	 * QueryExpression matches all items in the domain.
 	 * 
+	 * The Query operation returns a list of ItemNames that match the query expression. The maximum 
+	 * number that can be returned by one query is determined by MaxNumberOfItems which can be set 
+	 * to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If 
+	 * more than MaxNumberOfItems items match the query expression, a NextToken is also returned. 
+	 * 
+	 * Submitting the query again with the NextToken will return the next set of items. To obtain 
+	 * all items matching the query expression, repeat until no NextToken is returned.
+	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to use.
 	 * @param array $opt Associative array of parameters which can have the following keys:
@@ -371,7 +379,7 @@ class AmazonSDB extends TarzanCore
 	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
 	 * </ul>
 	 * @param string $expression (Optional) The SimpleDB query expression to use.
-	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.
+	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to query_with_attributes(), except that the response is a bit different and it can return a larger data set. Defaults to false.
 	 * @return TarzanHTTPResponse
 	 * @section example Example Usage:
 	 * @include sdb/query.phps
@@ -402,6 +410,49 @@ class AmazonSDB extends TarzanCore
 			$request = new $this->request_class(null);
 			return $request->sendMultiRequest($handles);
 		}
+
+		return $query;
+	}
+
+	/**
+	 * QueryWithAttributes
+	 * 
+	 * The QueryWithAttributes operation returns a set of Attributes  for ItemNames that match the 
+	 * query expression. QueryWithAttributes  operations that run longer than 5 seconds will likely 
+	 * time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression 
+	 * matches all items in the domain.
+	 * 
+	 * The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically 
+	 * adjusts the number of items returned per page to enforce this limit. For example, even if you 
+	 * ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 
+	 * items and an appropriate NextToken to get the next page of results.
+	 * 
+	 * @access public
+	 * @param string $domain_name (Required) The name of the domain to use.
+	 * @param array $opt Associative array of parameters which can have the following keys:
+	 * <ul>
+	 *   <li>string AttributeName - (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.</li>
+	 *   <li>integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.</li>
+	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
+	 * </ul>
+	 * @param string $expression (Optional) The SimpleDB query expression to use.
+	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.
+	 * @return TarzanHTTPResponse
+	 * @section example Example Usage:
+	 * @include sdb/query_with_attributes.phps
+	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
+	 */
+	public function query_with_attributes($domain_name, $opt = null, $expression = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
+		$opt['DomainName'] = $domain_name;
+		$opt['QueryExpression'] = $expression;
+
+		$query = $this->authenticate('QueryWithAttributes', $opt, SDB_DEFAULT_URL);
 
 		return $query;
 	}

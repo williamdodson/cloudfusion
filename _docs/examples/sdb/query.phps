@@ -35,7 +35,7 @@ echo '</pre>';
  * Same as above, but we're using a complex SimpleDB expression to pull back specific items. 
  * (Added linebreaks for readability.)
  */
-$query = $sdb->$query = $sdb->query('warpshare_test', 
+$query = $sdb->$query('warpshare_test', 
 	array(
 		'MaxNumberOfItems' => 250
 	), 
@@ -48,7 +48,7 @@ $query = $sdb->$query = $sdb->query('warpshare_test',
  * and then request those items all at once so that query responses also contain the 
  * data for the relevant items. (Added linebreaks for readability.)
  */
-$query = $sdb->$query = $sdb->query('warpshare_test', 
+$query = $sdb->$query('warpshare_test', 
 	array(
 		'MaxNumberOfItems' => 250
 	), 
@@ -61,7 +61,7 @@ $query = $sdb->$query = $sdb->query('warpshare_test',
  * We're NOT using a SimpleDB expression, but we are requesting the data for the resulting 
  * items all at once. 
  */
-$query = $sdb->$query = $sdb->query('warpshare_test', array(
+$query = $sdb->$query('warpshare_test', array(
 	'MaxNumberOfItems' => 250
 ), null, true);
 

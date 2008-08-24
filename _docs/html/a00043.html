@@ -373,7 +373,7 @@ window.onload = initDynSections;
 <a name="l00325"></a>00325                                 {
 <a name="l00326"></a>00326                                         <span class="keywordflow">for</span> ($x = 0, $i = count($keys); $x &lt; $i; $x++)
 <a name="l00327"></a>00327                                         {
-<a name="l00328"></a>00328                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $i . <span class="stringliteral">'.Name'</span>] = $keys[$i];
+<a name="l00328"></a>00328                                                 $opt[<span class="stringliteral">'Attribute.'</span> . (string) $x . <span class="stringliteral">'.Name'</span>] = $keys[$x];
 <a name="l00329"></a>00329                                         }
 <a name="l00330"></a>00330                                 }
 <a name="l00331"></a>00331 
@@ -411,52 +411,103 @@ window.onload = initDynSections;
 <a name="l00363"></a>00363 <span class="comment">         * than 5 seconds will likely time-out and return a time-out error response. A Query with no </span>
 <a name="l00364"></a>00364 <span class="comment">         * QueryExpression matches all items in the domain.</span>
 <a name="l00365"></a>00365 <span class="comment">         * </span>
-<a name="l00366"></a>00366 <span class="comment">         * @access public</span>
-<a name="l00367"></a>00367 <span class="comment">         * @param string $domain_name (Required) The name of the domain to use.</span>
-<a name="l00368"></a>00368 <span class="comment">         * @param array $opt Associative array of parameters which can have the following keys:</span>
-<a name="l00369"></a>00369 <span class="comment">         * &lt;ul&gt;</span>
-<a name="l00370"></a>00370 <span class="comment">         *   &lt;li&gt;integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.&lt;/li&gt;</span>
-<a name="l00371"></a>00371 <span class="comment">         *   &lt;li&gt;string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.&lt;/li&gt;</span>
-<a name="l00372"></a>00372 <span class="comment">         * &lt;/ul&gt;</span>
-<a name="l00373"></a>00373 <span class="comment">         * @param string $expression (Optional) The SimpleDB query expression to use.</span>
-<a name="l00374"></a>00374 <span class="comment">         * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.</span>
-<a name="l00375"></a>00375 <span class="comment">         * @return TarzanHTTPResponse</span>
-<a name="l00376"></a>00376 <span class="comment">         * @section example Example Usage:</span>
-<a name="l00377"></a>00377 <span class="comment">         * @include sdb/query.phps</span>
-<a name="l00378"></a>00378 <span class="comment">         * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html</span>
-<a name="l00379"></a>00379 <span class="comment">         */</span>
-<a name="l00380"></a><a class="code" href="a00004_50152c2d14898b9050ef7bb038a832e0.html#50152c2d14898b9050ef7bb038a832e0">00380</a>         <span class="keyword">public</span> function <a class="code" href="a00004_50152c2d14898b9050ef7bb038a832e0.html#50152c2d14898b9050ef7bb038a832e0">query</a>($domain_name, $opt = null, $expression = null, $follow = null)
-<a name="l00381"></a>00381         {
-<a name="l00382"></a>00382                 <span class="keywordflow">if</span> (!$opt)
-<a name="l00383"></a>00383                 {
-<a name="l00384"></a>00384                         $opt = array();
-<a name="l00385"></a>00385                 }
-<a name="l00386"></a>00386 
-<a name="l00387"></a>00387                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
-<a name="l00388"></a>00388                 $opt[<span class="stringliteral">'QueryExpression'</span>] = $expression;
-<a name="l00389"></a>00389 
-<a name="l00390"></a>00390                 $query = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'Query'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
-<a name="l00391"></a>00391 
-<a name="l00392"></a>00392                 <span class="comment">// If $follow is requested, and there's at least one response to follow...</span>
-<a name="l00393"></a>00393                 <span class="keywordflow">if</span> ($follow &amp;&amp; isset($query-&gt;body-&gt;QueryResult-&gt;ItemName))
-<a name="l00394"></a>00394                 {
-<a name="l00395"></a>00395                         $handles = array();
-<a name="l00396"></a>00396 
-<a name="l00397"></a>00397                         <span class="keywordflow">foreach</span> ($query-&gt;body-&gt;QueryResult-&gt;ItemName as $item)
-<a name="l00398"></a>00398                         {
-<a name="l00399"></a>00399                                 $handles[] = $this-&gt;<a class="code" href="a00004_8291d13e0983869c762759337a395e9d.html#8291d13e0983869c762759337a395e9d">get_attributes</a>($domain_name, $item, null, <span class="keyword">true</span>);
-<a name="l00400"></a>00400                         }
-<a name="l00401"></a>00401 
-<a name="l00402"></a>00402                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
-<a name="l00403"></a>00403                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
-<a name="l00404"></a>00404                 }
-<a name="l00405"></a>00405 
-<a name="l00406"></a>00406                 <span class="keywordflow">return</span> $query;
-<a name="l00407"></a>00407         }
-<a name="l00408"></a>00408 }
-<a name="l00409"></a>00409 ?&gt;
+<a name="l00366"></a>00366 <span class="comment">         * The Query operation returns a list of ItemNames that match the query expression. The maximum </span>
+<a name="l00367"></a>00367 <span class="comment">         * number that can be returned by one query is determined by MaxNumberOfItems which can be set </span>
+<a name="l00368"></a>00368 <span class="comment">         * to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If </span>
+<a name="l00369"></a>00369 <span class="comment">         * more than MaxNumberOfItems items match the query expression, a NextToken is also returned. </span>
+<a name="l00370"></a>00370 <span class="comment">         * </span>
+<a name="l00371"></a>00371 <span class="comment">         * Submitting the query again with the NextToken will return the next set of items. To obtain </span>
+<a name="l00372"></a>00372 <span class="comment">         * all items matching the query expression, repeat until no NextToken is returned.</span>
+<a name="l00373"></a>00373 <span class="comment">         * </span>
+<a name="l00374"></a>00374 <span class="comment">         * @access public</span>
+<a name="l00375"></a>00375 <span class="comment">         * @param string $domain_name (Required) The name of the domain to use.</span>
+<a name="l00376"></a>00376 <span class="comment">         * @param array $opt Associative array of parameters which can have the following keys:</span>
+<a name="l00377"></a>00377 <span class="comment">         * &lt;ul&gt;</span>
+<a name="l00378"></a>00378 <span class="comment">         *   &lt;li&gt;integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.&lt;/li&gt;</span>
+<a name="l00379"></a>00379 <span class="comment">         *   &lt;li&gt;string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.&lt;/li&gt;</span>
+<a name="l00380"></a>00380 <span class="comment">         * &lt;/ul&gt;</span>
+<a name="l00381"></a>00381 <span class="comment">         * @param string $expression (Optional) The SimpleDB query expression to use.</span>
+<a name="l00382"></a>00382 <span class="comment">         * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to query_with_attributes(), except that the response is a bit different and it can return a larger data set. Defaults to false.</span>
+<a name="l00383"></a>00383 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00384"></a>00384 <span class="comment">         * @section example Example Usage:</span>
+<a name="l00385"></a>00385 <span class="comment">         * @include sdb/query.phps</span>
+<a name="l00386"></a>00386 <span class="comment">         * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html</span>
+<a name="l00387"></a>00387 <span class="comment">         */</span>
+<a name="l00388"></a><a class="code" href="a00004_50152c2d14898b9050ef7bb038a832e0.html#50152c2d14898b9050ef7bb038a832e0">00388</a>         <span class="keyword">public</span> function <a class="code" href="a00004_50152c2d14898b9050ef7bb038a832e0.html#50152c2d14898b9050ef7bb038a832e0">query</a>($domain_name, $opt = null, $expression = null, $follow = null)
+<a name="l00389"></a>00389         {
+<a name="l00390"></a>00390                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00391"></a>00391                 {
+<a name="l00392"></a>00392                         $opt = array();
+<a name="l00393"></a>00393                 }
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00396"></a>00396                 $opt[<span class="stringliteral">'QueryExpression'</span>] = $expression;
+<a name="l00397"></a>00397 
+<a name="l00398"></a>00398                 $query = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'Query'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00399"></a>00399 
+<a name="l00400"></a>00400                 <span class="comment">// If $follow is requested, and there's at least one response to follow...</span>
+<a name="l00401"></a>00401                 <span class="keywordflow">if</span> ($follow &amp;&amp; isset($query-&gt;body-&gt;QueryResult-&gt;ItemName))
+<a name="l00402"></a>00402                 {
+<a name="l00403"></a>00403                         $handles = array();
+<a name="l00404"></a>00404 
+<a name="l00405"></a>00405                         <span class="keywordflow">foreach</span> ($query-&gt;body-&gt;QueryResult-&gt;ItemName as $item)
+<a name="l00406"></a>00406                         {
+<a name="l00407"></a>00407                                 $handles[] = $this-&gt;<a class="code" href="a00004_8291d13e0983869c762759337a395e9d.html#8291d13e0983869c762759337a395e9d">get_attributes</a>($domain_name, $item, null, <span class="keyword">true</span>);
+<a name="l00408"></a>00408                         }
+<a name="l00409"></a>00409 
+<a name="l00410"></a>00410                         $request = <span class="keyword">new</span> $this-&gt;request_class(null);
+<a name="l00411"></a>00411                         <span class="keywordflow">return</span> $request-&gt;sendMultiRequest($handles);
+<a name="l00412"></a>00412                 }
+<a name="l00413"></a>00413 
+<a name="l00414"></a>00414                 <span class="keywordflow">return</span> $query;
+<a name="l00415"></a>00415         }
+<a name="l00416"></a>00416 <span class="comment"></span>
+<a name="l00417"></a>00417 <span class="comment">        /**</span>
+<a name="l00418"></a>00418 <span class="comment">         * QueryWithAttributes</span>
+<a name="l00419"></a>00419 <span class="comment">         * </span>
+<a name="l00420"></a>00420 <span class="comment">         * The QueryWithAttributes operation returns a set of Attributes  for ItemNames that match the </span>
+<a name="l00421"></a>00421 <span class="comment">         * query expression. QueryWithAttributes  operations that run longer than 5 seconds will likely </span>
+<a name="l00422"></a>00422 <span class="comment">         * time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression </span>
+<a name="l00423"></a>00423 <span class="comment">         * matches all items in the domain.</span>
+<a name="l00424"></a>00424 <span class="comment">         * </span>
+<a name="l00425"></a>00425 <span class="comment">         * The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically </span>
+<a name="l00426"></a>00426 <span class="comment">         * adjusts the number of items returned per page to enforce this limit. For example, even if you </span>
+<a name="l00427"></a>00427 <span class="comment">         * ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 </span>
+<a name="l00428"></a>00428 <span class="comment">         * items and an appropriate NextToken to get the next page of results.</span>
+<a name="l00429"></a>00429 <span class="comment">         * </span>
+<a name="l00430"></a>00430 <span class="comment">         * @access public</span>
+<a name="l00431"></a>00431 <span class="comment">         * @param string $domain_name (Required) The name of the domain to use.</span>
+<a name="l00432"></a>00432 <span class="comment">         * @param array $opt Associative array of parameters which can have the following keys:</span>
+<a name="l00433"></a>00433 <span class="comment">         * &lt;ul&gt;</span>
+<a name="l00434"></a>00434 <span class="comment">         *   &lt;li&gt;string AttributeName - (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.&lt;/li&gt;</span>
+<a name="l00435"></a>00435 <span class="comment">         *   &lt;li&gt;integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.&lt;/li&gt;</span>
+<a name="l00436"></a>00436 <span class="comment">         *   &lt;li&gt;string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.&lt;/li&gt;</span>
+<a name="l00437"></a>00437 <span class="comment">         * &lt;/ul&gt;</span>
+<a name="l00438"></a>00438 <span class="comment">         * @param string $expression (Optional) The SimpleDB query expression to use.</span>
+<a name="l00439"></a>00439 <span class="comment">         * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.</span>
+<a name="l00440"></a>00440 <span class="comment">         * @return TarzanHTTPResponse</span>
+<a name="l00441"></a>00441 <span class="comment">         * @section example Example Usage:</span>
+<a name="l00442"></a>00442 <span class="comment">         * @include sdb/query_with_attributes.phps</span>
+<a name="l00443"></a>00443 <span class="comment">         * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html</span>
+<a name="l00444"></a>00444 <span class="comment">         */</span>
+<a name="l00445"></a><a class="code" href="a00004_0e30f8619a7aa9bba970e25f4b7fa928.html#0e30f8619a7aa9bba970e25f4b7fa928">00445</a>         <span class="keyword">public</span> function <a class="code" href="a00004_0e30f8619a7aa9bba970e25f4b7fa928.html#0e30f8619a7aa9bba970e25f4b7fa928">query_with_attributes</a>($domain_name, $opt = null, $expression = null)
+<a name="l00446"></a>00446         {
+<a name="l00447"></a>00447                 <span class="keywordflow">if</span> (!$opt)
+<a name="l00448"></a>00448                 {
+<a name="l00449"></a>00449                         $opt = array();
+<a name="l00450"></a>00450                 }
+<a name="l00451"></a>00451 
+<a name="l00452"></a>00452                 $opt[<span class="stringliteral">'DomainName'</span>] = $domain_name;
+<a name="l00453"></a>00453                 $opt[<span class="stringliteral">'QueryExpression'</span>] = $expression;
+<a name="l00454"></a>00454 
+<a name="l00455"></a>00455                 $query = $this-&gt;<a class="code" href="a00006_3fb0bd4332f737732312815e5f4211f8.html#3fb0bd4332f737732312815e5f4211f8">authenticate</a>(<span class="stringliteral">'QueryWithAttributes'</span>, $opt, <a class="code" href="a00020_8190cd4624261979beb11b7c5d1b209a.html#8190cd4624261979beb11b7c5d1b209a">SDB_DEFAULT_URL</a>);
+<a name="l00456"></a>00456 
+<a name="l00457"></a>00457                 <span class="keywordflow">return</span> $query;
+<a name="l00458"></a>00458         }
+<a name="l00459"></a>00459 }
+<a name="l00460"></a>00460 ?&gt;
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 20 23:42:59 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 23 19:17:10 2008 for Tarzan Pre-2.0 Trunk Build by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.6 </small></address>
 </body>
