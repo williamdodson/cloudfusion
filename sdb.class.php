@@ -254,7 +254,7 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * @access public
 	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param string $item_name (Required) The name of the item/object to create. This will contain various key-value pairs.
+	 * @param string $item_name (Required) The name of the item/object to read. This will contain various key-value pairs.
 	 * @param mixed $keys (Optional) The name of the key (attribute) in the key-value pair. Supports a string value (for single keys) or an indexed array (for multiple keys).
 	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * @return TarzanHTTPResponse

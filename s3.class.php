@@ -1,16 +1,19 @@
 <?php
 /**
- * AMAZON SIMPLE STORAGE SERVICE (S3)
- * http://s3.amazonaws.com
+ * File: Amazon S3
  *
- * @category Tarzan
- * @package S3
- * @version 2008.08.11
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @link http://s3.amazonaws.com Amazon S3
- * @see README
+ * Version:
+ * 	2008.08.11
+ * 
+ * Copyright:
+ * 	2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
+ * 	Amazon S3 - http://s3.amazonaws.com
  */
 
 
@@ -18,36 +21,43 @@
 // CONSTANTS
 
 /**
+ * Constant: S3_LOCATION_US
  * Specify the US location.
  */
 define('S3_LOCATION_US', 'us');
 
 /**
+ * Constant: S3_LOCATION_EU
  * Specify the European Union (EU) location.
  */
 define('S3_LOCATION_EU', 'eu');
 
 /**
+ * Constant: S3_ACL_PRIVATE
  * ACL: Owner-only read/write.
  */
 define('S3_ACL_PRIVATE', 'private');
 
 /**
+ * Constant: S3_ACL_PUBLIC
  * ACL: Owner read/write, public read.
  */
 define('S3_ACL_PUBLIC', 'public-read');
 
 /**
+ * Constant: S3_ACL_OPEN
  * ACL: Public read/write.
  */
 define('S3_ACL_OPEN', 'public-read-write');
 
 /**
+ * Constant: S3_ACL_AUTH_READ
  * ACL: Owner read/write, authenticated read.
  */
 define('S3_ACL_AUTH_READ', 'authenticated-read');
 
 /**
+ * Constant: S3_PCRE_ALL
  * PCRE: Match all items
  */
 define('S3_PCRE_ALL', '/.*/i');
@@ -57,20 +67,31 @@ define('S3_PCRE_ALL', '/.*/i');
 // MAIN CLASS
 
 /**
+ * Class: AmazonS3
  * Container for all Amazon S3-related methods.
  * 
- * @section example Example Usage:
- * @include s3/__construct.phps
+ * Example Usage:
+ * (start code)
+ * require_once('tarzan.class.php');
+ * 
+ * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
+ * $s3 = new AmazonS3();
+ * 
+ * // Instantiate a new AmazonS3 object using these specific settings.
+ * $s3 = new AmazonS3($key, $secret_key);
+ * (end)
  */
 class AmazonS3 extends TarzanCore
 {
 	/**
-	 * @var The request URL.
+	 * Property: request_url
+	 * The request URL.
 	 */
 	var $request_url;
 
 	/**
-	 * @var The virtual host setting.
+	 * Property: vhost
+	 * The virtual host setting.
 	 */
 	var $vhost;
 
@@ -79,14 +100,18 @@ class AmazonS3 extends TarzanCore
 	// CONSTRUCTOR
 
 	/**
-	 * Constructor
+	 * Function: __construct
+	 * 	The constructor
 	 * 
-	 * @public
-	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
-	 * @return bool FALSE if no valid values are set, otherwise true.
-	 * @section example Example Usage:
-	 * @include s3/__construct.phps
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * 
+	 * Returns:
+	 * 	boolean FALSE if no valid values are set, otherwise true.
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -100,18 +125,24 @@ class AmazonS3 extends TarzanCore
 	// AUTHENTICATION
 
 	/**
-	 * Authenticate
-	 *
-	 * Authenticates a connection to S3.
-	 *
-	 * @access public
-	 * @param string $bucket (Required) The name of the bucket to be used.
-	 * @param array $opt (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
-	 * @param string $location (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
-	 * @param integer $redirects (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
-	 * @return TarzanHTTPResponse
-	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
-	 */
+	 * Function: authenticate
+	 * 	Authenticates a connection to S3.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	bucket - _string_ (Required) The name of the bucket to be used.
+	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * 	location - _string_ (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
+	 * 	redirects - _integer_ (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
+	 * 
+	 * Returns:
+	 * 	The two integers multiplied together.
+ 	 * 
+	 * See Also:
+	 * 	http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
+	*/
 	public function authenticate($bucket, $opt = null, $location = null, $redirects = 0)
 	{
 		// If nothing was passed in, don't do anything.
@@ -137,6 +168,7 @@ class AmazonS3 extends TarzanCore
 			$etag = null;
 			$qsa = null;
 			$md5 = null;
+			$metadataDirective = null;
 			$meta = null;
 			$hmeta = null;
 			$range = null;
@@ -269,8 +301,25 @@ class AmazonS3 extends TarzanCore
 			// Do we have COPY settings?
 			if ($method == 'copy_object')
 			{
+				// Copy data
 				$acl .= 'x-amz-copy-source:/' . $sourceBucket . '/' . $sourceObject . "\n";
 				$req->addHeader('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
+
+				// Add any meta headers.
+				if ($meta)
+				{
+					uksort($meta, 'strnatcasecmp');
+
+					foreach ($meta as $k => $v)
+					{
+						$req->addHeader('x-amz-meta-' . strtolower($k), $v);
+						$acl .= 'x-amz-meta-' . strtolower($k) . ':' . $v . "\n";
+					}
+				}
+
+				// Metadata directive
+				$acl .= 'x-amz-metadata-directive:' . $metadataDirective . "\n";
+				$req->addHeader('x-amz-metadata-directive', $metadataDirective);
 			}
 
 			// Are we checking for changes?
@@ -391,6 +440,34 @@ class AmazonS3 extends TarzanCore
  	 * @section example Example Usage:
 	 * @include s3/set_vhost.phps
 	 * @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
+	 */
+	/**
+	 * Function: set_vhost
+	 * Use this virtual host instead of the normal bucket.s3.amazonaws.com domain.
+	 * 
+	 * Access:
+	 * public
+ 	 * 
+	 * Parameters:
+	 * vhost - _string_ (Required) The hostname to use instead of bucket.s3.amazonaws.com.
+	 * 
+	 * Returns:
+	 * void
+ 	 * 
+	 * See Also:
+	 * Virtual Hosting of Buckets - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
+	 * 
+	 * Example Usage:
+	 * (start code)
+	 * require_once('tarzan.class.php');
+ 	 * 
+	 * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
+	 * $s3 = new AmazonS3();
+ 	 * 
+	 * // Use a virtual host address for URLs and other HTTP requests instead of the <bucket>.s3.amazonaws.com URL.
+	 * // http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?VirtualHosting.html
+	 * $s3->set_vhost('s3.warpshare.com');
+	 * (end)
 	 */
 	public function set_vhost($vhost)
 	{
@@ -1133,6 +1210,7 @@ class AmazonS3 extends TarzanCore
 	 *   <li>string acl - (Optional) One of the following options: S3_ACL_PRIVATE, S3_ACL_PUBLIC, S3_ACL_OPEN, or S3_ACL_AUTH_READ. Defaults to S3_ACL_PRIVATE.</li>
 	 *   <li>boolean returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
 	 *   <li>array meta - (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.</li>
+	 *   <li>string metadataDirective - (Optional) Accepts either COPY or REPLACE. You will likely never need to use this, as it manages itself with no issues.</li>
 	 * </ul>
 	 * @section example Example Usage:
 	 * @include s3/copy_object.phps
@@ -1155,7 +1233,7 @@ class AmazonS3 extends TarzanCore
 		$opt['destinationBucket'] = $dest_bucket;
 		$opt['destinationObject'] = $dest_filename;
 		$opt['filename'] = rawurlencode($dest_filename);
-		$opt['metadataDirective'] = 'COPY';
+		$opt['metadataDirective'] = isset($opt['metadataDirective']) ? $opt['metadataDirective'] : 'COPY';
 
 		// Do we have metadata?
 		if (isset($opt['meta']) && is_array($opt['meta']))
