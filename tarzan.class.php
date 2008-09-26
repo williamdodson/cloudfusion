@@ -1,15 +1,18 @@
 <?php
 /**
- * TARZAN CORE
- * Core Tarzan functionality.
+ * File: TarzanCore
  *
- * @category Tarzan
- * @package TarzanCore
- * @version 2008.07.15
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @see README
+ * Version:
+ * 	2008.07.15
+ * 
+ * Copyright:
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
  */
 
 
@@ -41,48 +44,75 @@ function __autoload($class_name)
 // CONSTANTS
 
 /**
- * Tarzan Name
+ * Constant: TARZAN_NAME
+ * Name of the software.
  */
 define('TARZAN_NAME', 'Tarzan');
 
 /**
- * Tarzan Version
+ * Constant: TARZAN_VERSION
+ * Version of the software.
  */
 define('TARZAN_VERSION', '2.0b');
 
 /**
- * Tarzan Build
- * @todo Hardcode for release.
+ * Constant: TARZAN_BUILD
+ * Build ID of the software.
  */
 define('TARZAN_BUILD', gmdate('YmdHis', strtotime(substr('$Date$', 7, 25)) ? strtotime(substr('$Date$', 7, 25)) : filemtime(__FILE__)));
 
 /**
- * Tarzan Website URL
+ * Constant: TARZAN_URL
+ * URL to learn more about the software.
  */
-define('TARZAN_URL', 'http://tarzan-aws.googlecode.com');
+define('TARZAN_URL', 'http://tarzan-aws.com');
 
 /**
- * Tarzan Useragent
+ * Constant: TARZAN_USERAGENT
+ * User agent string used to identify Tarzan.
  */
 define('TARZAN_USERAGENT', TARZAN_NAME . '/' . TARZAN_VERSION . ' (Amazon Web Services API; ' . TARZAN_URL . ') Build/' . TARZAN_BUILD);
 
 /**
+ * Constant: DATE_AWS_RFC2616
  * Define the RFC 2616-compliant date format
  */
 define('DATE_AWS_RFC2616', 'D, d M Y H:i:s \G\M\T');
 
 /**
+ * Constant: DATE_AWS_ISO8601
  * Define the ISO-8601-compliant date format
  */
 define('DATE_AWS_ISO8601', 'Y-m-d\TH:i:s\Z');
 
 /**
- * Define various method types.
+ * Constant: HTTP_GET
+ * HTTP method type: Get
  */
 define('HTTP_GET', 'GET');
+
+/**
+ * Constant: HTTP_POST
+ * HTTP method type: Post
+ */
 define('HTTP_POST', 'POST');
+
+/**
+ * Constant: HTTP_PUT
+ * HTTP method type: Put
+ */
 define('HTTP_PUT', 'PUT');
+
+/**
+ * Constant: HTTP_DELETE
+ * HTTP method type: Delete
+ */
 define('HTTP_DELETE', 'DELETE');
+
+/**
+ * Constant: HTTP_HEAD
+ * HTTP method type: Head
+ */
 define('HTTP_HEAD', 'HEAD');
 
 
@@ -90,62 +120,74 @@ define('HTTP_HEAD', 'HEAD');
 // CLASS
 
 /**
- * Wrapper for common AWS functions
+ * Class: TarzanCore
+ * Container for all shared methods. This is not intended to be instantiated directly, but is extended by the Amazon-specific classes.
  */
 class TarzanCore
 {
 	/**
-	 * @var The Amazon API Key
+	 * Property: key
+	 * The Amazon API Key.
 	 */
 	var $key;
 
 	/**
-	 * @var The Amazon API Secret Key
+	 * Property: secret_key
+	 * The Amazon API Secret Key.
 	 */
 	var $secret_key;
 
 	/**
-	 * @var The Amazon Account ID, sans hyphens
+	 * Property: account_id
+	 * The Amazon Account ID, sans hyphens.
 	 */
 	var $account_id;
 
 	/**
-	 * @var The Amazon Associates ID
+	 * Property: assoc_id
+	 * The Amazon Associates ID.
 	 */
 	var $assoc_id;
 
 	/**
-	 * @var Handle for the utility functions
+	 * Property: util
+	 * Handle for the utility functions.
 	 */
 	var $util;
 
 	/**
-	 * @var An identifier for the current service.
+	 * Property: service
+	 * An identifier for the current AWS service.
 	 */
 	var $service = null;
 
 	/**
-	 * @var API version.
+	 * Property: api_version
+	 * The supported API version.
 	 */
 	var $api_version = null;
 
 	/**
-	 * @var The default class to use for Utilities.
+	 * Property: utilities_class
+	 * The default class to use for Utilities (defaults to TarzanUtilities).
 	 */
 	var $utilities_class = 'TarzanUtilities';
 
 	/**
-	 * @var The default class to use for HTTP Requests.
+	 * Property: request_class
+	 * The default class to use for HTTP Requests (defaults to TarzanHTTPRequest).
 	 */
 	var $request_class = 'TarzanHTTPRequest';
 
 	/**
-	 * @var The default class to use for HTTP Responses.
+	 * Property: response_class
+	 * The default class to use for HTTP Responses (defaults to TarzanHTTPResponse).
 	 */
 	var $response_class = 'TarzanHTTPResponse';
 
 	/**
-	 * @var The number of seconds to adjust the request timestamp by.
+	 * Property: adjust_offset
+	 * The number of seconds to adjust the request timestamp by (defaults to 0).
 	 */
 	var $adjust_offset = 0;
 
@@ -154,16 +196,20 @@ class TarzanCore
 	// CONSTRUCTOR
 
 	/**
-	 * Constructor
-	 *
-	 * Constructs a new instance of the TarzanCore class.
-	 *
-	 * @access public
-	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
-	 * @param string $account_id Your Amazon account ID without the hyphens. Required for EC2. If blank, it will look for the AWS_ACCOUNT_ID constant.
-	 * @param string $assoc_id Your Amazon Associates ID. Required for AAWS. If blank, it will look for the AWS_ASSOC_ID constant.
-	 * @return bool FALSE if no valid values are set, otherwise true.
+	 * Function: __construct()
+	 * 	The constructor
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * 	account_id - _string_ (Optional) Your Amazon account ID without the hyphens. Required for EC2. If blank, it will look for the AWS_ACCOUNT_ID constant.
+	 * 	assoc_id - _string_ (Optional) Your Amazon Associates ID. Required for AAWS. If blank, it will look for the AWS_ASSOC_ID constant.
+	 * 
+	 * Returns:
+	 * 	boolean FALSE if no valid values are set, otherwise true.
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
 	{
@@ -223,13 +269,17 @@ class TarzanCore
 	// SET CUSTOM SETTINGS
 
 	/**
-	 * Adjust Offset
+	 * Function: adjust_offset()
+	 * 	Allows you to adjust the current time, for occasions when your server is out of sync with Amazon's servers.
 	 * 
-	 * Allows you to adjust the current time, for occasions when your server is out of sync with 
-	 * Amazon's servers.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $seconds (Required) The number of seconds to adjust the sent timestamp by.
-	 * @return void
+	 * Parameters:
+	 * 	seconds - _integer_ (Required) The number of seconds to adjust the sent timestamp by.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function adjust_offset($seconds)
 	{
@@ -241,12 +291,17 @@ class TarzanCore
 	// SET CUSTOM CLASSES
 
 	/**
-	 * Set Utilities Class
+	 * Function: set_utilities_class()
+	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
-	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * @return void
+	 * Parameters:
+	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	function set_utilities_class($class = 'TarzanUtilities')
 	{
@@ -255,12 +310,17 @@ class TarzanCore
 	}
 
 	/**
-	 * Set Request Class
+	 * Function: set_request_class()
+	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
-	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * @return void
+	 * Parameters:
+	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	function set_request_class($class = 'TarzanHTTPRequest')
 	{
@@ -268,12 +328,17 @@ class TarzanCore
 	}
 
 	/**
-	 * Set Response Class
+	 * Function: set_response_class()
+	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
-	 * Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $class (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * @return void
+	 * Parameters:
+	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	function set_response_class($class = 'TarzanHTTPResponse')
 	{
@@ -285,18 +350,20 @@ class TarzanCore
 	// AUTHENTICATION
 
 	/**
-	 * Authenticate
-	 *
-	 * Authenticates a connection to AWS and is used by EC2, SQS, and SimpleDB. This method is not 
-	 * intended to be manually called. Instead it is called by the other functions on a per-use basis.
-	 *
-	 * @access private
-	 * @param string $action (Required) Indicates the action to perform.
-	 * @param array $opt (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
-	 * @param string $queue_url (Optional) The URL of the queue to perform the action on.
-	 * @param string $message (Optional) This parameter is only used by the send_message() method.
-	 * @return object A TarzanHTTPResponse response object.
-	 * @see http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryAuth.html
+	 * Function: authenticate()
+	 * 	Authenticates a connection to S3. This should not be used directly unless you're writing custom methods for this class.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	action - _string_ (Required) Indicates the action to perform.
+	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * 	queue_url - _string_ (Optional) The URL of the queue to perform the action on.
+	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
+	 * 
+	 * Returns:
+	 * 	An TarzanHTTPResponse object
 	 */
 	public function authenticate($action, $opt = null, $queue_url = null, $message = null)
 	{
