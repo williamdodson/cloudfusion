@@ -121,7 +121,7 @@ define('HTTP_HEAD', 'HEAD');
 
 /**
  * Class: TarzanCore
- * Container for all shared methods. This is not intended to be instantiated directly, but is extended by the Amazon-specific classes.
+ * 	Container for all shared methods. This is not intended to be instantiated directly, but is extended by the Amazon-specific classes.
  */
 class TarzanCore
 {
@@ -351,7 +351,7 @@ class TarzanCore
 
 	/**
 	 * Function: authenticate()
-	 * 	Authenticates a connection to S3. This should not be used directly unless you're writing custom methods for this class.
+	 * 	Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis as necessary. This should not be used directly unless you're writing custom methods for this class.
 	 * 
 	 * Access:
 	 * 	public

@@ -1,16 +1,19 @@
 <?php
 /**
- * AMAZON SIMPLEDB (SDB)
- * http://sdb.amazonaws.com
+ * File: Amazon SDB
  *
- * @category Tarzan
- * @package SDB
- * @version 2008.08.11
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @link http://sdb.amazonaws.com Amazon SDB
- * @see README
+ * Version:
+ * 	2008.08.11
+ * 
+ * Copyright:
+ * 	2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
+ * 	Amazon SDB - http://amazonaws.com/sdb
  */
 
 
