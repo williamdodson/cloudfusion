@@ -70,7 +70,8 @@ define('TARZAN_URL', 'http://tarzan-aws.com');
 
 /**
  * Constant: TARZAN_USERAGENT
- * User agent string used to identify Tarzan.
+ * User agent string used to identify Tarzan
+ * > Tarzan/2.0b (Amazon Web Services API; http://tarzan-aws.com) Build/20080927210040
  */
 define('TARZAN_USERAGENT', TARZAN_NAME . '/' . TARZAN_VERSION . ' (Amazon Web Services API; ' . TARZAN_URL . ') Build/' . TARZAN_BUILD);
 

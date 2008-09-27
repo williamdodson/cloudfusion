@@ -1,15 +1,19 @@
 <?php
 /**
- * TARZAN HTTP RESPONSE
- * Standard HTTP response handler.
+ * File: TarzanHTTPResponse
+ * 	Converts the HTTP responses into organized data chunks.
  *
- * @category Tarzan
- * @package TarzanHTTPResponse
- * @version 2008.08.02
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @see README
+ * Version:
+ * 	2008.08.02
+ * 
+ * Copyright:
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
  */
 
 
@@ -17,34 +21,43 @@
 // CLASS
 
 /**
- * Standard handler for PEAR-based responses from Amazon.
+ * Class: TarzanHTTPResponse
+ * 	Container for all response-related methods.
  */
 class TarzanHTTPResponse
 {
 	/**
-	 * Store HTTP header information.
+	 * Property: header
+	 * Stores the HTTP header information.
 	 */
 	var $header;
 
 	/**
-	 * Store the SimpleXML response.
+	 * Property: body
+	 * Stores the SimpleXML response.
 	 */
 	var $body;
 
 	/**
-	 * Store the HTTP response code.
+	 * Property: status
+	 * Stores the HTTP response code.
 	 */
 	var $status;
 
 	/**
-	 * Constructor
-	 *
-	 * Constructs a new instance of the TarzanHTTPResponse class.
-	 *
-	 * @access public
-	 * @param array $header The HTTP headers as returned from AWS by PEAR's HTTP_Request class.
-	 * @param string $body XML content as returned from AWS by PEAR's HTTP_Request class.
-	 * @return object Contains an (array) 'header' property (containing HTTP headers) and a (SimpleXMLElement) 'body' property.
+	 * Method: __construct()
+	 * 	The constructor
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	header - _array_ (Required) Associative array of HTTP headers (typically returned by <TarzanHTTPRequest::getResponseHeader()>).
+	 * 	body - _string_ (Required) XML-formatted response from AWS.
+	 * 	status - _integer_ (Optional) HTTP response status code from the request.
+	 * 
+	 * Returns:
+	 * 	_object_ Contains an _array_ 'header' property (HTTP headers as an associative array), a _SimpleXMLElement_ 'body' property, and an _integer_ 'status' code.
 	 */
 	public function __construct($header, $body, $status = null)
 	{
@@ -65,12 +78,17 @@ class TarzanHTTPResponse
 	}
 
 	/**
-	 * isOK
+	 * Method: isOK()
+	 * 	Did we receive the status code we expected?
 	 * 
-	 * Did we receive the status code we expected?
+	 * Access:
+	 * 	public
 	 * 
-	 * @param mixed $codes (Optional) The status code(s) to expect. Integer for a single accepted value, or an array of integers for multiple accepted values.
-	 * @return boolean Whether we received the expected code or not.
+	 * Parameters:
+	 * 	codes - _integer|array_ (Optional) The status code(s) to expect. Pass an _integer_ for a single acceptable value, or an _array_ of integers for multiple acceptable values. Defaults to _array_ 200|204.
+	 * 
+	 * Returns:
+	 * 	_boolean_ Whether we received the expected status code or not.
 	 */
 	public function isOK($codes = array(200, 204))
 	{
