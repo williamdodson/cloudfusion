@@ -1,6 +1,7 @@
 <?php
 /**
  * File: TarzanCore
+ * 	Core functionality and default settings shared across classes.
  *
  * Version:
  * 	2008.07.15
@@ -196,7 +197,7 @@ class TarzanCore
 	// CONSTRUCTOR
 
 	/**
-	 * Function: __construct()
+	 * Method: __construct()
 	 * 	The constructor
 	 * 
 	 * Access:
@@ -269,7 +270,7 @@ class TarzanCore
 	// SET CUSTOM SETTINGS
 
 	/**
-	 * Function: adjust_offset()
+	 * Method: adjust_offset()
 	 * 	Allows you to adjust the current time, for occasions when your server is out of sync with Amazon's servers.
 	 * 
 	 * Access:
@@ -291,7 +292,7 @@ class TarzanCore
 	// SET CUSTOM CLASSES
 
 	/**
-	 * Function: set_utilities_class()
+	 * Method: set_utilities_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
 	 * Access:
@@ -310,7 +311,7 @@ class TarzanCore
 	}
 
 	/**
-	 * Function: set_request_class()
+	 * Method: set_request_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
 	 * Access:
@@ -328,7 +329,7 @@ class TarzanCore
 	}
 
 	/**
-	 * Function: set_response_class()
+	 * Method: set_response_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
 	 * 
 	 * Access:
@@ -350,7 +351,7 @@ class TarzanCore
 	// AUTHENTICATION
 
 	/**
-	 * Function: authenticate()
+	 * Method: authenticate()
 	 * 	Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis as necessary. This should not be used directly unless you're writing custom methods for this class.
 	 * 
 	 * Access:

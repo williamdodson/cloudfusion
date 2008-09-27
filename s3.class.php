@@ -1,6 +1,7 @@
 <?php
 /**
  * File: Amazon S3
+ * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
  * 	2008.08.11
@@ -103,7 +104,7 @@ class AmazonS3 extends TarzanCore
 	// CONSTRUCTOR
 
 	/**
-	 * Function: __construct()
+	 * Method: __construct()
 	 * 	The constructor
 	 * 
 	 * Access:
@@ -128,7 +129,7 @@ class AmazonS3 extends TarzanCore
 	// AUTHENTICATION
 
 	/**
-	 * Function: authenticate()
+	 * Method: authenticate()
 	 * 	Authenticates a connection to S3. This should not be used directly unless you're writing custom methods for this class.
 	 * 
 	 * Access:
@@ -433,7 +434,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: set_vhost()
+	 * Method: set_vhost()
 	 * 	Use this virtual host instead of the normal bucket.s3.amazonaws.com domain.
 	 * 
 	 * Access:
@@ -459,7 +460,7 @@ class AmazonS3 extends TarzanCore
 	// BUCKET METHODS
 
 	/**
-	 * Function: create_bucket()
+	 * Method: create_bucket()
 	 * 	The bucket holds all of your objects, and provides a globally unique namespace in which you can manage the keys that identify objects. A bucket can hold any number of objects.
 	 * 
 	 * Access:
@@ -507,7 +508,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket()
+	 * Method: get_bucket()
 	 * 	Referred to as "GET Bucket" in the AWS docs, but implemented here as AmazonS3::list_objects(). Therefore, this is an alias of list_objects().
 	 * 
 	 * See Also:
@@ -524,7 +525,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket_locale()
+	 * Method: get_bucket_locale()
 	 * 	Lists the location constraint of the bucket. U.S.-based buckets have no response.
 	 * 
 	 * Access:
@@ -554,7 +555,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: head_bucket()
+	 * Method: head_bucket()
 	 * 	Reads only the HTTP headers of a bucket.
 	 * 
 	 * Access:
@@ -585,7 +586,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: if_bucket_exists()
+	 * Method: if_bucket_exists()
 	 * 	Checks whether this bucket already exists in your account or not.
 	 * 
 	 * Access:
@@ -607,7 +608,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: delete_bucket()
+	 * Method: delete_bucket()
 	 * 	Deletes a bucket from your account. All objects in the bucket must be deleted before the bucket itself can be deleted.
 	 * 
 	 * Access:
@@ -654,7 +655,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: copy_bucket()
+	 * Method: copy_bucket()
 	 * 	Copies the contents of a bucket into a new bucket.
 	 * 
 	 * Access:
@@ -709,7 +710,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: rename_bucket()
+	 * Method: rename_bucket()
 	 * 	Renames a bucket by making a copy and deleting the original.
 	 * 
 	 * Access:
@@ -735,7 +736,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket_size()
+	 * Method: get_bucket_size()
 	 * 	Gets the number of files in the bucket.
 	 * 
 	 * Access:
@@ -757,7 +758,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket_filesize()
+	 * Method: get_bucket_filesize()
 	 * 	Gets the file size of the contents of the bucket.
 	 * 
 	 * Access:
@@ -793,7 +794,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: list_buckets()
+	 * Method: list_buckets()
 	 * 	Gets a list of all of the buckets on the S3 account.
 	 * 
 	 * Access:
@@ -823,7 +824,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket_list()
+	 * Method: get_bucket_list()
 	 * 	ONLY lists the bucket names, as an array, on the S3 account.
 	 * 
 	 * Access:
@@ -874,7 +875,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_bucket_acl()
+	 * Method: get_bucket_acl()
 	 * 	Gets the ACL settings for a bucket.
 	 * 
 	 * Access:
@@ -905,7 +906,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: set_bucket_acl()
+	 * Method: set_bucket_acl()
 	 * 	Sets the ACL settings for a bucket.
 	 * 
 	 * Access:
@@ -941,7 +942,7 @@ class AmazonS3 extends TarzanCore
 	// OBJECT METHODS
 
 	/**
-	 * Function: create_object()
+	 * Method: create_object()
 	 * 	Once you have a bucket, you can start storing objects in it. Objects are stored using the HTTP PUT method. Each object can hold up to 5 GB of data. When you store an object, S3 streams the data to multiple storage servers in multiple data centers to ensure that the data remains available in the event of internal network or hardware failure.
 	 * 
 	 * Access:
@@ -985,7 +986,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_object()
+	 * Method: get_object()
 	 * 	Reads the contents of an object within a bucket.
 	 * 
 	 * Access:
@@ -1026,7 +1027,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: head_object()
+	 * Method: head_object()
 	 * 	Reads only the HTTP headers of an object within a bucket.
 	 * 
 	 * Access:
@@ -1059,7 +1060,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: if_object_exists()
+	 * Method: if_object_exists()
 	 * 	Checks whether this object already exists in this bucket.
 	 * 
 	 * Access:
@@ -1083,7 +1084,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: delete_object()
+	 * Method: delete_object()
 	 * 	Deletes an object from within a bucket.
 	 * 
 	 * Access:
@@ -1116,7 +1117,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: delete_all_objects()
+	 * Method: delete_all_objects()
 	 * 	Delete all of the objects inside the specified bucket.
 	 * 
 	 * Access:
@@ -1158,7 +1159,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: list_objects()
+	 * Method: list_objects()
 	 * 	Lists the objects in a bucket. Provided as the 'GetBucket' action in Amazon's REST API.
 	 * 
 	 * Access:
@@ -1200,7 +1201,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_object_filesize()
+	 * Method: get_object_filesize()
 	 * 	Gets the file size of the object.
 	 * 
 	 * Access:
@@ -1232,7 +1233,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_object_list()
+	 * Method: get_object_list()
 	 * 	ONLY lists the object filenames from a bucket.
 	 * 
 	 * Access:
@@ -1301,7 +1302,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: copy_object()
+	 * Method: copy_object()
 	 * 	Copies an object to a new location, whether in the same locale/bucket or otherwise.
 	 * 
 	 * Access:
@@ -1358,7 +1359,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: duplicate_object()
+	 * Method: duplicate_object()
 	 * 	Identical to <copy_object()>, except that it only copies within a single bucket.
 	 * 
 	 * Access:
@@ -1383,7 +1384,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: move_object()
+	 * Method: move_object()
 	 * 	Moves an object to a new location, whether in the same locale/bucket or otherwise.
 	 * 
 	 * Access:
@@ -1412,7 +1413,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: rename_object()
+	 * Method: rename_object()
 	 * 	Identical to <move_object()>, except that it only moves within a single bucket.
 	 * 
 	 * Access:
@@ -1437,7 +1438,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_object_acl()
+	 * Method: get_object_acl()
 	 * 	Gets the ACL settings for a object.
 	 * 
 	 * Access:
@@ -1470,7 +1471,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: set_object_acl()
+	 * Method: set_object_acl()
 	 * 	Sets the ACL settings for a object.
 	 * 
 	 * Access:
@@ -1509,7 +1510,7 @@ class AmazonS3 extends TarzanCore
 	// LOGGING METHODS
 
 	/**
-	 * Function: get_logs()
+	 * Method: get_logs()
 	 * 	NOT YET IMPLEMENTED! Get the access logs associated with a given bucket.
 	 * 
 	 * Access:
@@ -1537,7 +1538,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: toggle_logging()
+	 * Method: toggle_logging()
 	 * 	NOT YET IMPLEMENTED! Enable/Disable bucket logging.
 	 * 
 	 * See Also:
@@ -1549,7 +1550,7 @@ class AmazonS3 extends TarzanCore
 	// 	}
 
 	/**
-	 * Function: set_logging_permissions()
+	 * Method: set_logging_permissions()
 	 * 	NOT YET IMPLEMENTED! Determine the permissions for managing the logging process.
 	 * 
 	 * See Also:
@@ -1565,7 +1566,7 @@ class AmazonS3 extends TarzanCore
 	// MISCELLANEOUS METHODS
 
 	/**
-	 * Function: store_remote_file()
+	 * Method: store_remote_file()
 	 * 	Takes an existing remote file, stores it to S3, and returns a URL.
 	 * 
 	 * Access:
@@ -1643,7 +1644,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_object_url()
+	 * Method: get_object_url()
 	 * 	Gets the web-accessible URL for the file (assuming you've set the ACL settings to <S3_ACL_PUBLIC>).
 	 * 
 	 * Access:
@@ -1704,7 +1705,7 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Function: get_torrent_url()
+	 * Method: get_torrent_url()
 	 * 	Gets the web-accessible torrent URL for the file (assuming you've set the ACL settings to <S3_ACL_PUBLIC>).
 	 * 
 	 * Access:

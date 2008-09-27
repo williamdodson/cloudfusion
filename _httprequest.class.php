@@ -1,15 +1,19 @@
 <?php
 /**
- * TARZAN HTTP REQUEST
- * HTTP Requests using CURL.
+ * File: TarzanHTTPRequest
+ * 	Handles all linear and parallel HTTP requests using cURL.
  *
- * @category Tarzan
- * @package TarzanHTTPRequest
- * @version 2008.08.14
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @see README
+ * Version:
+ * 	2008.09.27
+ * 
+ * Copyright:
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
  */
 
 
@@ -17,57 +21,68 @@
 // CLASS
 
 /**
- * Request data via CURL.
+ * Class: TarzanHTTPRequest
+ * 	Container for all request-related methods. The naming convention for methods mimics those of PEAR's HTTP_Request class.
  */
 class TarzanHTTPRequest
 {
 	/**
-	 * @var The URL being requested.
+	 * Property: request_url
+	 * The URL being requested.
 	 */
 	var $request_url;
 
 	/**
-	 * @var The headers being sent in the request.
+	 * Property: request_headers
+	 * The headers being sent in the request.
 	 */
 	var $request_headers;
 
 	/**
-	 * @var The body being sent in the request.
+	 * Property: request_body
+	 * The body being sent in the request.
 	 */
 	var $request_body;
 
 	/**
-	 * @var The response returned by the request.
+	 * Property: response
+	 * The response returned by the request.
 	 */
 	var $response;
 
 	/**
-	 * @var The headers returned by the request.
+	 * Property: response_headers
+	 * The headers returned by the request.
 	 */
 	var $response_headers;
 
 	/**
-	 * @var The body returned by the request.
+	 * Property: response_body
+	 * The body returned by the request.
 	 */
 	var $response_body;
 
 	/**
-	 * @var The HTTP status code returned by the request.
+	 * Property: response_code
+	 * The HTTP status code returned by the request.
 	 */
 	var $response_code;
 
 	/**
-	 * @var Additional response data.
+	 * Property: response_info
+	 * Additional response data.
 	 */
 	var $response_info;
 
 	/**
-	 * @var The handle for the CURL object.
+	 * Property: curl_handle
+	 * The handle for the cURL object.
 	 */
 	var $curl_handle;
 
 	/**
-	 * @var The method by which the request is being made.
+	 * Property: method
+	 * The method by which the request is being made.
 	 */
 	var $method;
 
@@ -76,11 +91,17 @@ class TarzanHTTPRequest
 	// CONSTRUCTOR
 
 	/**
-	 * Constructor
-	 *
-	 * Constructs a new instance of the TarzanHTTPRequest class.
-	 *
-	 * @access public
+	 * Method: __construct()
+	 * 	The constructor
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	url - _string_ (Required) The URL to request or service endpoint to query.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function __construct($url)
 	{
@@ -97,13 +118,18 @@ class TarzanHTTPRequest
 	// REQUEST METHODS
 
 	/**
-	 * Add Header
+	 * Method: addHeader()
+	 * 	Adds a custom HTTP header to the cURL request.
 	 * 
-	 * Add a header to the CURL request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $key (Required) The HTTP header to set.
-	 * @param string $value (Required) The value to set for the HTTP header.
-	 * @return void
+	 * Parameters:
+	 * 	key - _string_ (Required) The custom HTTP header to set.
+	 * 	value - _mixed_ (Required) The value to assign to the custom HTTP header.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function addHeader($key, $value)
 	{
@@ -111,12 +137,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Remove Header
+	 * Method: removeHeader()
+	 * 	Removes an HTTP header from the cURL request.
 	 * 
-	 * Remove a header from the CURL request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $key (Required) The HTTP header to set.
-	 * @return void
+	 * Parameters:
+	 * 	key - _string_ (Required) The custom HTTP header to set.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function removeHeader($key)
 	{
@@ -127,12 +158,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Set Method
+	 * Method: setMethod()
+	 * 	Set the method type for the request.
 	 * 
-	 * Set the method by which to make the request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $method (Required) One of the following constants: HTTP_GET, HTTP_POST, HTTP_PUT, HTTP_HEAD, HTTP_DELETE.
-	 * @return void
+	 * Parameters:
+	 * 	method - _string_ (Required) One of the following constants: <HTTP_GET>, <HTTP_POST>, <HTTP_PUT>, <HTTP_HEAD>, <HTTP_DELETE>.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function setMethod($method)
 	{
@@ -140,12 +176,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Set Body
+	 * Method: setBody()
+	 * 	Set the body to send in the request.
 	 * 
-	 * Set the body to send in the request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param string $body (Required) The text to send along in the body.
-	 * @return void
+	 * Parameters:
+	 * 	body - _string_ (Required) The textual content to send along in the body of the request.
+	 * 
+	 * Returns:
+	 * 	void
 	 */
 	public function setBody($body)
 	{
@@ -157,11 +198,14 @@ class TarzanHTTPRequest
 	// PREPARE, SEND, AND PROCESS REQUEST
 
 	/**
-	 * Prepare Request
+	 * Method: prepRequest()
+	 * 	Prepares and adds the details of the cURL request. This can be passed along to a curl_multi_exec() function.
 	 * 
-	 * Determine the details of the CURL request to make. This can be passed along to a curl_multi_exec() function.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return The handle for the CURL object.
+	 * Returns:
+	 * 	The handle for the cURL object.
 	 */
 	public function prepRequest()
 	{
@@ -175,7 +219,7 @@ class TarzanHTTPRequest
  		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYPEER, false);
  		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYHOST, false);
  		curl_setopt($this->curl_handle, CURLOPT_VERBOSE, true);
- 		curl_setopt($this->curl_handle, CURLOPT_MAXCONNECTS, 50);
+ 		// curl_setopt($this->curl_handle, CURLOPT_MAXCONNECTS, 50);
  		curl_setopt($this->curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
 		curl_setopt($this->curl_handle, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($this->curl_handle, CURLOPT_MAXREDIRS, 5);
@@ -232,11 +276,18 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Process Response
+	 * Method: processResponse()
+	 * 	Take the post-processed cURL data and break it down into useful header/body/info chunks. Uses the data stored in the <curl_handle> and <response> properties unless replacement data is passed in via parameters.
 	 * 
-	 * Take the post-processed CURL data and break it down into useful header/body/info chunks.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return void
+	 * Parameters:
+	 * 	curl_handle - _string_ (Optional) The reference to the already executed cURL request.
+	 * 	response - _string_ (Optional) The actual response content itself that needs to be parsed.
+	 * 
+	 * Returns:
+	 * 	TarzanHTTPResponse object
 	 */
 	public function processResponse($curl_handle = null, $response = null)
 	{
@@ -280,11 +331,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Send Request
+	 * Method: sendRequest()
+	 * 	Sends the request, calling necessary utility functions to update built-in properties.
 	 * 
-	 * Sends the request, calling necessary utility functions to update built-in properties.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return The resulting unparsed data from the request.
+	 * Returns:
+	 * 	_string_ The resulting unparsed data from the request.
+	 * 
+	 * See Also:
+	 * 	Related - <sendMultiRequest()>
 	 */
 	public function sendRequest()
 	{
@@ -297,11 +354,20 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Send Multi Request
+	 * Method: sendMultiRequest()
+	 * 	Sends the request using curl_multi_exec(), enabling parallel requests.
 	 * 
-	 * Sends CURL requests with MultiCURL.
+	 * Access:
+	 * 	public
 	 * 
-	 * @param array $handles (Required) An array of CURL handles to process simultaneously.
+	 * Parameters:
+	 * 	handles - _array_ (Required) An indexed array of cURL handles to process simultaneously.
+	 * 
+	 * Returns:
+	 * 	_array_ Post-processed cURL responses.
+	 * 
+	 * See Also:
+	 * 	Related - <sendRequest()>
 	 */
 	public function sendMultiRequest($handles)
 	{
@@ -345,11 +411,20 @@ class TarzanHTTPRequest
 	// RESPONSE METHODS
 
 	/**
-	 * Get Response Header
+	 * Method: getResponseHeader()
+	 * 	Get the HTTP response headers from the request.
 	 * 
-	 * Get the response headers from the request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return array The response headers.
+	 * Parameters:
+	 * 	header - _string_ (Optional) A specific header value to return. Defaults to all headers.
+	 * 
+	 * Returns:
+	 * 	_string_|_array_ All or selected header values.
+	 * 
+	 * See Also:
+	 * 	Related - <getResponseBody()>, <getResponseCode()>
 	 */
 	public function getResponseHeader($header = null)
 	{
@@ -361,11 +436,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Get Response Body
+	 * Method: getResponseBody()
+	 * 	Get the HTTP response body from the request.
 	 * 
-	 * Get the response body from the request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return string The response body.
+	 * Returns:
+	 * 	_string_ The response body.
+	 * 
+	 * See Also:
+	 * 	Related - <getResponseHeader()>, <getResponseCode()>
 	 */
 	public function getResponseBody()
 	{
@@ -373,11 +454,17 @@ class TarzanHTTPRequest
 	}
 
 	/**
-	 * Get Response Code
+	 * Method: getResponseCode()
+	 * 	Get the HTTP response code from the request.
 	 * 
-	 * Get the HTTP response code from the request.
+	 * Access:
+	 * 	public
 	 * 
-	 * @return string The HTTP response code.
+	 * Returns:
+	 * 	_string_ The HTTP response code.
+	 * 
+	 * See Also:
+	 * 	Related - <getResponseHeader()>, <getResponseBody()>
 	 */
 	public function getResponseCode()
 	{
