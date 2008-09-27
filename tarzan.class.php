@@ -365,7 +365,7 @@ class TarzanCore
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
 	 * 
 	 * Returns:
-	 * 	An TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
 	 */
 	public function authenticate($action, $opt = null, $queue_url = null, $message = null)
 	{

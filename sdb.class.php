@@ -1,6 +1,7 @@
 <?php
 /**
  * File: Amazon SDB
+ * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
  * 	2008.08.11
@@ -13,7 +14,7 @@
  * 
  * See Also:
  * 	Tarzan - http://tarzan-aws.com
- * 	Amazon SDB - http://amazonaws.com/sdb
+ * 	Amazon SDB - http://aws.amazon.com/simpledb
  */
 
 
@@ -21,6 +22,7 @@
 // CONSTANTS
 
 /**
+ * Constant: SDB_DEFAULT_URL
  * Specify the default queue URL.
  */
 define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
@@ -30,10 +32,22 @@ define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
 // MAIN CLASS
 
 /**
- * Container for all Amazon SDB-related methods.
+ * Class: AmazonSDB
+ * 	Container for all Amazon SimpleDB-related methods. Inherits additional methods from TarzanCore.
  * 
- * @section example Example Usage:
- * @include sdb/__construct.phps
+ * Extends:
+ * 	TarzanCore
+ * 
+ * Example Usage:
+ * (start code)
+ * require_once('tarzan.class.php');
+ * 
+ * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
+ * $s3 = new AmazonSDB();
+ * 
+ * // Instantiate a new AmazonS3 object using these specific settings.
+ * $s3 = new AmazonSDB($key, $secret_key);
+ * (end)
  */
 class AmazonSDB extends TarzanCore
 {
@@ -41,14 +55,18 @@ class AmazonSDB extends TarzanCore
 	// CONSTRUCTOR
 
 	/**
-	 * Constructor
+	 * Method: __construct()
+	 * 	The constructor
 	 * 
-	 * @public
-	 * @param string $key Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * @param string $secret_key Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
-	 * @return bool FALSE if no valid values are set, otherwise true.
-	 * @section example Example Usage:
-	 * @include sdb/__construct.phps
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * 
+	 * Returns:
+	 * 	_boolean_ false if no valid values are set, otherwise true.
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -61,19 +79,23 @@ class AmazonSDB extends TarzanCore
 	// DOMAIN
 
 	/**
-	 * Create Domain
+	 * Method: create_domain()
+	 * 	Creates a new domain. The domain name must be unique among the domains associated with the Access Key ID provided in the request. The CreateDomain operation might take 10 or more seconds to complete.
 	 * 
-	 * Creates a new domain. The domain name must be unique among the domains associated with the 
-	 * Access Key ID provided in the request. The CreateDomain operation might take 10 or more 
-	 * seconds to complete. 
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to create.
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/create_domain.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/create_domain.phps
+	 * 	Related - <list_domains()>, <delete_domain()>
 	 */
 	public function create_domain($domain_name, $returnCurlHandle = null)
 	{
@@ -85,24 +107,27 @@ class AmazonSDB extends TarzanCore
 	}
 
 	/**
-	 * List Domains
+	 * Method: list_domains()
+	 * 	Lists all domains associated with the Access Key ID. It returns domain names up to the limit set by MaxNumberOfDomains. A NextToken is returned if there are more than MaxNumberOfDomains domains. Calling ListDomains successive times with the NextToken returns up to MaxNumberOfDomains more domain names each time.
 	 * 
-	 * Lists all domains associated with the Access Key ID. It returns domain names up to the limit set 
-	 * by MaxNumberOfDomains. A NextToken is returned if there are more than MaxNumberOfDomains domains. 
-	 * Calling ListDomains successive times with the NextToken returns up to MaxNumberOfDomains more 
-	 * domain names each time.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param array $opt Associative array of parameters which can have the following keys:
-	 * <ul>
-	 *   <li>integer MaxNumberOfDomains - (Optional) The maximum number of domain names you want returned. The range is 1 to 100.</li>
-	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
-	 *   <li>boolean $returnCurlHandle - (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.</li>
-	 * </ul>
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/list_domains.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
+	 * Parameters:
+	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
+	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/list_domains.phps
+ 	 * 	Related - <create_domain()>, <delete_domain()>
 	 */
 	public function list_domains($opt = null)
 	{
@@ -115,20 +140,23 @@ class AmazonSDB extends TarzanCore
 	}
 
 	/**
-	 * Delete Domain
+	 * Method: delete_domain()
+	 * 	Deletes a domain. Any items (and their attributes) in the domain are deleted as well. The DeleteDomain operation might take 10 or more seconds to complete. Running DeleteDomain on a domain that does not exist or running the function multiple times using the same domain name will not result in an error response.
 	 * 
-	 * Deletes a domain. Any items (and their attributes) in the domain are deleted as well. The DeleteDomain 
-	 * operation might take 10 or more seconds to complete. Running DeleteDomain on a domain that does not 
-	 * exist or running the function multiple times using the same domain name will not result in an error 
-	 * response.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to delete.
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/delete_domain.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/delete_domain.phps
+ 	 * 	Related - <create_domain()>, <list_domains()>
 	 */
 	public function delete_domain($domain_name, $returnCurlHandle = null)
 	{
@@ -144,21 +172,26 @@ class AmazonSDB extends TarzanCore
 	// ATTRIBUTES
 
 	/**
-	 * Put Attributes
+	 * Method: put_attributes()
+	 * 	Creates or replaces attributes in an item. You specify new attributes using a combination of the Attribute.X.Name and Attribute.X.Value parameters.
 	 * 
-	 * Creates or replaces attributes in an item. You specify new attributes using a combination of 
-	 * the Attribute.X.Name and Attribute.X.Value parameters.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param string $item_name (Required) The name of the item/object to create.
-	 * @param array $keypairs (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
-	 * @param mixed $replace (Optional) Whether to replace a key-value pair if a matching key already exists. Supports either a boolean (which affects ALL key-value pairs) or an indexed array of key names (which affects only the keys specified). Defaults to boolean false.
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/put_attributes.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	item_name - _string_ (Required) The name of the base item which will contain the series of keypairs.
+	 * 	keypairs - _array_ (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
+	 * 	replace - _boolean|array_ (Optional) Whether to replace a key-value pair if a matching key already exists. Supports either a boolean (which affects ALL key-value pairs) or an indexed array of key names (which affects only the keys specified). Defaults to boolean false.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/put_attributes.phps
+ 	 * 	Related - <get_attributes()>, <delete_attributes()>
 	 */
 	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null, $returnCurlHandle = null)
 	{
@@ -248,22 +281,25 @@ class AmazonSDB extends TarzanCore
 	}
 
 	/**
-	 * Get Attributes
+	 * Method: get_attributes()
+	 * 	Returns all of the attributes associated with the item. Optionally, the attributes returned can be limited to one or more specified attribute name parameters. If the item does not exist on the replica that was accessed for this operation, an empty set is returned. The system does not return an error as it cannot guarantee the item does not exist on other replicas.
 	 * 
-	 * Returns all of the attributes associated with the item. Optionally, the attributes returned 
-	 * can be limited to one or more specified attribute name parameters. If the item does not exist 
-	 * on the replica that was accessed for this operation, an empty set is returned. The system 
-	 * does not return an error as it cannot guarantee the item does not exist on other replicas.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param string $item_name (Required) The name of the item/object to read. This will contain various key-value pairs.
-	 * @param mixed $keys (Optional) The name of the key (attribute) in the key-value pair. Supports a string value (for single keys) or an indexed array (for multiple keys).
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/get_attributes.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	item_name - _string_ (Required) The name of the base item which will contain the series of keypairs.
+	 * 	keys - _string|array_ (Optional) The name of the key (attribute) in the key-value pair that you want to return. Supports a string value (for single keys) or an indexed array (for multiple keys).
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/get_attributes.phps
+ 	 * 	Related - <put_attributes()>, <delete_attributes()>
 	 */
 	public function get_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
 	{
@@ -293,22 +329,25 @@ class AmazonSDB extends TarzanCore
 	}
 
 	/**
-	 * Delete Attributes
+	 * Method: delete_attributes()
+	 * 	Deletes one or more attributes associated with the item. If all attributes of an item are deleted, the item is deleted. If you specify DeleteAttributes without attributes or values, all the attributes for the item are deleted. DeleteAttributes is an idempotent operation; running it multiple times on the same item or attribute does not result in an error response.
 	 * 
-	 * Deletes one or more attributes associated with the item. If all attributes of an item are 
-	 * deleted, the item is deleted. If you specify DeleteAttributes without attributes or values, 
-	 * all the attributes for the item are deleted. DeleteAttributes is an idempotent operation; 
-	 * running it multiple times on the same item or attribute does not result in an error response.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain.
-	 * @param string $item_name (Required) The name of the item/object.
-	 * @param mixed $keys (Optional) The name of the key(s) (attribute(s)) to delete from the item. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
-	 * @param boolean $returnCurlHandle (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/delete_attributes.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	item_name - _string_ (Required) The name of the base item which will contain the series of keypairs.
+	 * 	keys - _string|array_ (Optional) The name of the key (attribute) in the key-value pair that you want to delete. Supports a string value (for single keys), an indexed array (for multiple keys), or an associative array containing one or more key-value pairs (for deleting specific values).
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/delete_attributes.phps
+ 	 * 	Related - <put_attributes()>, <get_attributes()>
 	 */
 	public function delete_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
 	{
@@ -360,33 +399,34 @@ class AmazonSDB extends TarzanCore
 	// QUERY
 
 	/**
-	 * Query
+	 * Method: query()
+	 * 	Returns a set of ItemNames that match the query expression. Query operations that run longer than 5 seconds will likely time-out and return a time-out error response. A Query with no QueryExpression matches all items in the domain.
 	 * 
-	 * Returns a set of ItemNames that match the query expression. Query operations that run longer 
-	 * than 5 seconds will likely time-out and return a time-out error response. A Query with no 
-	 * QueryExpression matches all items in the domain.
+	 * 	The Query operation returns a list of ItemNames that match the query expression. The maximum number that can be returned by one query is determined by MaxNumberOfItems which can be set to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If more than MaxNumberOfItems items match the query expression, a NextToken is also returned. 
 	 * 
-	 * The Query operation returns a list of ItemNames that match the query expression. The maximum 
-	 * number that can be returned by one query is determined by MaxNumberOfItems which can be set 
-	 * to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If 
-	 * more than MaxNumberOfItems items match the query expression, a NextToken is also returned. 
+	 * 	Submitting the query again with the NextToken will return the next set of items. To obtain all items matching the query expression, repeat until no NextToken is returned.
 	 * 
-	 * Submitting the query again with the NextToken will return the next set of items. To obtain 
-	 * all items matching the query expression, repeat until no NextToken is returned.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param array $opt Associative array of parameters which can have the following keys:
-	 * <ul>
-	 *   <li>integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.</li>
-	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
-	 * </ul>
-	 * @param string $expression (Optional) The SimpleDB query expression to use.
-	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to query_with_attributes(), except that the response is a bit different and it can return a larger data set. Defaults to false.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/query.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
+	 * 	follow - _boolean_ (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to <query_with_attributes()>, except that the response is a bit different and it can return a larger data set. Defaults to false.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
+	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query.phps
+ 	 * 	Related - <query_with_attributes()>
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
 	{
@@ -418,32 +458,32 @@ class AmazonSDB extends TarzanCore
 	}
 
 	/**
-	 * QueryWithAttributes
+	 * Method: query_with_attributes()
+	 * 	The QueryWithAttributes operation returns a set of Attributes for ItemNames that match the query expression. QueryWithAttributes operations that run longer than 5 seconds will likely time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression matches all items in the domain.
 	 * 
-	 * The QueryWithAttributes operation returns a set of Attributes  for ItemNames that match the 
-	 * query expression. QueryWithAttributes  operations that run longer than 5 seconds will likely 
-	 * time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression 
-	 * matches all items in the domain.
+	 * 	The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 items and an appropriate NextToken to get the next page of results.
 	 * 
-	 * The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically 
-	 * adjusts the number of items returned per page to enforce this limit. For example, even if you 
-	 * ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 
-	 * items and an appropriate NextToken to get the next page of results.
+	 * Access:
+	 * 	public
 	 * 
-	 * @access public
-	 * @param string $domain_name (Required) The name of the domain to use.
-	 * @param array $opt Associative array of parameters which can have the following keys:
-	 * <ul>
-	 *   <li>string AttributeName - (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.</li>
-	 *   <li>integer MaxNumberOfItems - (Optional) The maximum number of item names you want returned. The range is 1 to 250, defaults to 100.</li>
-	 *   <li>string NextToken - (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.</li>
-	 * </ul>
-	 * @param string $expression (Optional) The SimpleDB query expression to use.
-	 * @param boolean $follow (Optional) Whether to take the next step and fetch the items that are returned. Defaults to false.
-	 * @return TarzanHTTPResponse
-	 * @section example Example Usage:
-	 * @include sdb/query_with_attributes.phps
-	 * @see http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	AttributeName - _string_ (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.
+	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
+	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query_with_attributes.phps
+ 	 * 	Related - <query()>
 	 */
 	public function query_with_attributes($domain_name, $opt = null, $expression = null)
 	{

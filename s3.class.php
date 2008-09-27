@@ -142,7 +142,7 @@ class AmazonS3 extends TarzanCore
 	 * 	redirects - _integer_ (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
@@ -472,7 +472,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
@@ -536,7 +536,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
@@ -566,7 +566,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
@@ -620,7 +620,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
+	 * 	<TarzanHTTPResponse> object if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
@@ -666,7 +666,7 @@ class AmazonS3 extends TarzanCore
 	 * 	dest_bucket - _string_ (Required) The name of the destination bucket.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_bucket.phps
@@ -721,7 +721,7 @@ class AmazonS3 extends TarzanCore
 	 * 	dest_bucket - _string_ (Required) The name of the destination bucket.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/rename_bucket.phps
@@ -804,7 +804,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTServiceGET.html
@@ -886,7 +886,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
@@ -917,7 +917,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
@@ -961,7 +961,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
@@ -1003,7 +1003,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
@@ -1039,7 +1039,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
@@ -1096,7 +1096,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
@@ -1177,7 +1177,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketGET.html
@@ -1322,7 +1322,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
@@ -1372,7 +1372,7 @@ class AmazonS3 extends TarzanCore
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/duplicate_object.phps
@@ -1398,7 +1398,7 @@ class AmazonS3 extends TarzanCore
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 
 	 * Returns:
-	 * 	_array_ TarzanHTTPResponse objects for the copy and the delete.
+	 * 	_array_ <TarzanHTTPResponse> objects for the copy and the delete.
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/move_object.phps
@@ -1426,7 +1426,7 @@ class AmazonS3 extends TarzanCore
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/rename_object.phps
@@ -1450,7 +1450,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
@@ -1484,7 +1484,7 @@ class AmazonS3 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
@@ -1520,7 +1520,7 @@ class AmazonS3 extends TarzanCore
 	 * 	bucket - _string_ (Required) The name of the bucket to be used. Pass null if using <set_vhost()>.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ServerLogs.html

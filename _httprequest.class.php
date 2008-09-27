@@ -287,7 +287,7 @@ class TarzanHTTPRequest
 	 * 	response - _string_ (Optional) The actual response content itself that needs to be parsed.
 	 * 
 	 * Returns:
-	 * 	TarzanHTTPResponse object
+	 * 	<TarzanHTTPResponse> object
 	 */
 	public function processResponse($curl_handle = null, $response = null)
 	{
