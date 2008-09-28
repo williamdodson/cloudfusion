@@ -111,8 +111,8 @@ class AmazonS3 extends TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
 	 * 
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.

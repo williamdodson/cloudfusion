@@ -42,10 +42,10 @@ define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
  * (start code)
  * require_once('tarzan.class.php');
  * 
- * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
+ * // Instantiate a new AmazonSDB object using the settings from the config.inc.php file.
  * $s3 = new AmazonSDB();
  * 
- * // Instantiate a new AmazonS3 object using these specific settings.
+ * // Instantiate a new AmazonSDB object using these specific settings.
  * $s3 = new AmazonSDB($key, $secret_key);
  * (end)
  */
@@ -62,8 +62,8 @@ class AmazonSDB extends TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
 	 * 
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.

@@ -171,19 +171,19 @@ class TarzanCore
 
 	/**
 	 * Property: utilities_class
-	 * The default class to use for Utilities (defaults to TarzanUtilities).
+	 * The default class to use for Utilities (defaults to <TarzanUtilities>).
 	 */
 	var $utilities_class = 'TarzanUtilities';
 
 	/**
 	 * Property: request_class
-	 * The default class to use for HTTP Requests (defaults to TarzanHTTPRequest).
+	 * The default class to use for HTTP Requests (defaults to <TarzanHTTPRequest>).
 	 */
 	var $request_class = 'TarzanHTTPRequest';
 
 	/**
 	 * Property: response_class
-	 * The default class to use for HTTP Responses (defaults to TarzanHTTPResponse).
+	 * The default class to use for HTTP Responses (defaults to <TarzanHTTPResponse>).
 	 */
 	var $response_class = 'TarzanHTTPResponse';
 
@@ -205,10 +205,10 @@ class TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the AWS_KEY constant.
-	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the AWS_SECRET_KEY constant.
-	 * 	account_id - _string_ (Optional) Your Amazon account ID without the hyphens. Required for EC2. If blank, it will look for the AWS_ACCOUNT_ID constant.
-	 * 	assoc_id - _string_ (Optional) Your Amazon Associates ID. Required for AAWS. If blank, it will look for the AWS_ASSOC_ID constant.
+	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
+	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
+	 * 	account_id - _string_ (Optional) Your Amazon account ID without the hyphens. Required for EC2. If blank, it will look for the <AWS_ACCOUNT_ID> constant.
+	 * 	assoc_id - _string_ (Optional) Your Amazon Associates ID. Required for AAWS. If blank, it will look for the <AWS_ASSOC_ID> constant.
 	 * 
 	 * Returns:
 	 * 	boolean FALSE if no valid values are set, otherwise true.
