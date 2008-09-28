@@ -1,15 +1,19 @@
 <?php
 /**
- * TARZAN UTILITIES
- * Common Tarzan functionality.
+ * File: TarzanUtilities
+ * 	Utilities for connecting to, and working with, AWS.
  *
- * @category Tarzan
- * @package TarzanUtilities
- * @version 2008.04.20
- * @copyright 2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
- * @license http://opensource.org/licenses/bsd-license.php Simplified BSD License
- * @link http://tarzan-aws.com Tarzan
- * @see README
+ * Version:
+ * 	2008.04.20
+ * 
+ * Copyright:
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 
+ * License:
+ * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
+ * 
+ * See Also:
+ * 	Tarzan - http://tarzan-aws.com
  */
 
 
@@ -17,12 +21,20 @@
 // CLASS
 
 /**
- * Various utilities for working with AWS.
+ * Class: TarzanUtilities
+ * 	Container for all utility-related methods.
  */
 class TarzanUtilities
 {
 	/**
-	 * Constructor
+	 * Method: __construct()
+	 * 	The constructor
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	<TarzanUtilities> object
 	 */
 	public function __construct()
 	{
@@ -30,11 +42,17 @@ class TarzanUtilities
 	}
 
 	/**
-	 * Check if a value (such as a GET or POST parameter or an array value) has a real, non-empty value.
+	 * Method: ready()
+	 * 	Check if a value (such as a GET or POST parameter or an array value) has a real, non-empty value.
 	 * 
-	 * @access public
-	 * @param array $var (Required) The value to check.
-	 * @return boolean Whether this has a real value.
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	var - _array_ (Required) The value to check.
+	 * 
+	 * Returns:
+	 * 	_boolean_ Whether this has a real value.
 	 */
 	public function ready($var)
 	{
@@ -42,61 +60,99 @@ class TarzanUtilities
 	}
 
 	/**
-	 * Convert a HEX value to Base64.
-	 *
-	 * @access public
-	 * @param string $str (Required) Value to convert.
-	 * @return string Base64-encoded string.
+	 * Method: hex_to_base64()
+	 * 	Convert a HEX value to Base64.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	str - _string_ (Required) Value to convert.
+	 * 
+	 * Returns:
+	 * 	_string_ Base64-encoded string.
 	 */
-	public function hex_to_base64($str) {
-	    $raw = '';
-	    for ($i=0; $i < strlen($str); $i+=2) {
-	        $raw .= chr(hexdec(substr($str, $i, 2)));
-	    }
-	    return base64_encode($raw);
+	public function hex_to_base64($str)
+	{
+		$raw = '';
+
+		for ($i = 0; $i < strlen($str); $i += 2)
+		{
+			$raw .= chr(hexdec(substr($str, $i, 2)));
+		}
+
+		return base64_encode($raw);
 	}
 
 	/**
-	 * Convert an associative array into a query string.
-	 *
-	 * @access public
-	 * @param array $array (Required) Array to convert.
-	 * @return string URL-friendly query string.
+	 * Method: to_query_string()
+	 * 	Convert an associative array into a query string.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	array - _array_ (Required) Array to convert.
+	 * 
+	 * Returns:
+	 * 	_string_ URL-friendly query string.
 	 */
 	public function to_query_string($array)
 	{
 		$t = array();
+
 		foreach ($array as $k => $v)
 		{
 			$t[] = rawurlencode($k) . '=' . rawurlencode($v);
 		}
+
 		return implode('&', $t);
 	}
 
 	/**
-	 * Convert an associative array into a sign-able string.
-	 *
-	 * @access public
-	 * @param array $array (Required) Array to convert.
-	 * @return string URL-friendly sign-able string.
+	 * Method: to_signable_string()
+	 * 	Convert an associative array into a sign-able string.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	array - _array_ (Required) Array to convert.
+	 * 
+	 * Returns:
+	 * 	_string_ URL-friendly sign-able string.
 	 */
 	public function to_signable_string($array)
 	{
 		$t = array();
+
 		foreach ($array as $k => $v)
 		{
 			$t[] = $k . $v;
 		}
+
 		return implode('', $t);
 	}
 
 	/**
-	 * Convert a query string into an associative array.
+	 * Method: query_to_array()
+	 * 	Convert a query string into an associative array. Multiple, identical keys will become an indexed array.
 	 * 
-	 * Multiple, identical keys will become an indexed array.
-	 * <code>
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	qs - _string_ (Required) Query string to convert.
+	 * 
+	 * Returns:
+	 * 	_array_ Associative array of keys and values.
+	 * 
+	 * Example Usage:
+	 * (start code)
+	 * // This query string...
 	 * ?key1=value&key1=value&key2=value
 	 * 
+	 * // Will become this array...
 	 * Array
 	 * (
 	 *     [key1] => Array
@@ -107,11 +163,7 @@ class TarzanUtilities
 	 * 
 	 *     [key2] => value
 	 * )
-	 * </code>
-	 *
-	 * @access public
-	 * @param array $qs (Required) Query string to convert.
-	 * @return array Associative array of keys and values.
+	 * (end)
 	 */
 	public function query_to_array($qs)
 	{
@@ -140,14 +192,22 @@ class TarzanUtilities
 	}
 
 	/**
-	 * Return human readable sizes
-	 *
-	 * @author Aidan Lister <aidan@php.net>
-	 * @author Ryan Parman <ryan@warpshare.com>
-	 * @param int $size (Required) Size in bytes.
-	 * @param int $unit (Optional) The maximum unit.
-	 * @param int $retstring (Optional) The return string format.
-	 * @link http://aidanlister.com/repos/v/function.size_readable.php
+	 * Method: size_readable()
+	 * 	Return human readable file sizes. Original function by Aidan Lister <mailto:aidan@php.net>, modified by Ryan Parman.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	size - _integer_ (Required) Filesize in bytes.
+	 * 	unit - _string_ (Optional) The maximum unit to use. Defaults to the largest appropriate unit.
+	 * 	retstring - _string_ (Optional) The format for the return string. Defaults to '%01.2f %s'
+	 * 
+	 * Returns:
+	 * 	_string_ The human-readable file size.
+	 * 
+	 * See Also:
+	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
 	 */
 	function size_readable($size, $unit = null, $retstring = null)
 	{
@@ -181,10 +241,17 @@ class TarzanUtilities
 	}
 
 	/**
-	 * Time in Hours:Minutes:Seconds
-	 *
-	 * @param int $seconds (Required) The number of seconds to convert.
-	 * @return string The formatted time.
+	 * Method: time_hms()
+	 * 	Convert a number of seconds into Hours:Minutes:Seconds.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	seconds - _integer_ (Required) The number of seconds to convert.
+	 * 
+	 * Returns:
+	 * 	_string_ The formatted time.
 	 */
 	function time_hms($seconds)
 	{
@@ -192,23 +259,26 @@ class TarzanUtilities
 
 		$hours = floor($seconds / 3600);
 		$remainder = $seconds % 3600;
+
 		if ($hours > 0)
 		{
-			$time .= $hours.':';
+			$time .= $hours . ':';
 		}
 
 		$minutes = floor($remainder / 60);
 		$seconds = $remainder % 60;
+
 		if ($minutes < 10 && $hours > 0)
 		{
 			$minutes = '0' . $minutes;
 		}
+
 		if ($seconds < 10)
 		{
 			$seconds = '0' . $seconds;
 		}
 
-		$time .= $minutes.':';
+		$time .= $minutes . ':';
 		$time .= $seconds;
 
 		return $time;
