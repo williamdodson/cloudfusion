@@ -23,7 +23,7 @@
 
 /**
  * Constant: SQS_DEFAULT_URL
- * Specify the default queue URL.
+ * 	Specify the default queue URL.
  */
 define('SQS_DEFAULT_URL', 'http://queue.amazonaws.com/');
 

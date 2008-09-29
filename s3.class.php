@@ -23,43 +23,43 @@
 
 /**
  * Constant: S3_LOCATION_US
- * Specify the US location.
+ * 	Specify the US location.
  */
 define('S3_LOCATION_US', 'us');
 
 /**
  * Constant: S3_LOCATION_EU
- * Specify the European Union (EU) location.
+ * 	Specify the European Union (EU) location.
  */
 define('S3_LOCATION_EU', 'eu');
 
 /**
  * Constant: S3_ACL_PRIVATE
- * ACL: Owner-only read/write.
+ * 	ACL: Owner-only read/write.
  */
 define('S3_ACL_PRIVATE', 'private');
 
 /**
  * Constant: S3_ACL_PUBLIC
- * ACL: Owner read/write, public read.
+ * 	ACL: Owner read/write, public read.
  */
 define('S3_ACL_PUBLIC', 'public-read');
 
 /**
  * Constant: S3_ACL_OPEN
- * ACL: Public read/write.
+ * 	ACL: Public read/write.
  */
 define('S3_ACL_OPEN', 'public-read-write');
 
 /**
  * Constant: S3_ACL_AUTH_READ
- * ACL: Owner read/write, authenticated read.
+ * 	ACL: Owner read/write, authenticated read.
  */
 define('S3_ACL_AUTH_READ', 'authenticated-read');
 
 /**
  * Constant: S3_PCRE_ALL
- * PCRE: Match all items
+ * 	PCRE: Match all items
  */
 define('S3_PCRE_ALL', '/.*/i');
 
@@ -89,13 +89,13 @@ class AmazonS3 extends TarzanCore
 {
 	/**
 	 * Property: request_url
-	 * The request URL.
+	 * 	The request URL.
 	 */
 	var $request_url;
 
 	/**
 	 * Property: vhost
-	 * The virtual host setting.
+	 * 	The virtual host setting.
 	 */
 	var $vhost;
 

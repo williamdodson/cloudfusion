@@ -7,7 +7,7 @@
  * 	2008.08.11
  * 
  * Copyright:
- * 	2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
@@ -23,7 +23,7 @@
 
 /**
  * Constant: SDB_DEFAULT_URL
- * Specify the default queue URL.
+ * 	Specify the default queue URL.
  */
 define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
 

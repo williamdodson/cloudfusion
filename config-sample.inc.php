@@ -7,7 +7,7 @@
  * 	2008.04.12
  * 
  * Copyright:
- * 	2006-2008 Ryan Parman, LifeNexus Digital, Inc., and contributors.
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
