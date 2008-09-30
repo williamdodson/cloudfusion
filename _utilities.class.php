@@ -294,12 +294,12 @@ class TarzanUtilities
 	 * Parameters:
 	 * 	attrs - _array_ (Required) The attributes to test, as strings. Intended for testing properties of the $base object, but also works with variables if you place an @ symbol at the beginning of the command.
 	 * 	base - _object_ (Optional) The base object to use, if any.
-	 * 	default - _mixed_ (Optional) What to return if there are no matches. Defaults to _boolean_ false.
+	 * 	default - _mixed_ (Optional) What to return if there are no matches. Defaults to null.
 	 * 
 	 * Returns:
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
 	 */
-	function try_these($attrs, $base = null, $default = false)
+	function try_these($attrs, $base = null, $default = null)
 	{
 		if ($base)
 		{
