@@ -4,7 +4,7 @@
  * 	Utilities for connecting to, and working with, AWS.
  *
  * Version:
- * 	2008.04.20
+ * 	2008.09.29
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -282,6 +282,47 @@ class TarzanUtilities
 		$time .= $seconds;
 
 		return $time;
+	}
+
+	/**
+	 * Method: try_these()
+	 * 	Returns the first value that is set. Based on Try.these() from Prototype <http://prototypejs.org>.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	attrs - _array_ (Required) The attributes to test, as strings. Intended for testing properties of the $base object, but also works with variables if you place an @ symbol at the beginning of the command.
+	 * 	base - _object_ (Optional) The base object to use, if any.
+	 * 	default - _mixed_ (Optional) What to return if there are no matches. Defaults to _boolean_ false.
+	 * 
+	 * Returns:
+	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
+	 */
+	function try_these($attrs, $base = null, $default = false)
+	{
+		if ($base)
+		{
+			foreach ($attrs as $attr)
+			{
+				if (isset($base->$attr))
+				{
+					return $base->$attr;
+				}
+			}
+		}
+		else
+		{
+			foreach ($attrs as $attr)
+			{
+				if (isset($attr))
+				{
+					return $attr;
+				}
+			}
+		}
+
+		return $default;
 	}
 }
 ?>
