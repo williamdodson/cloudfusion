@@ -466,7 +466,8 @@ class TarzanCore
 		}
 
 		// Once we've determined the preferred caching method, instantiate a new cache.
-		$cache = new $CacheMethod($method . '-' . $this->key, $location, $expires);
+		$cache_uuid = $method . '-' . $this->key . '-' . sha1($method . serialize($params));
+		$cache = new $CacheMethod($cache_uuid, $location, $expires);
 
 		// If the data exists...
 		if ($data = $cache->read())
