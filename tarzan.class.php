@@ -38,6 +38,10 @@ function __autoload($class_name)
 	{
 		require_once(dirname(__FILE__) . '/' . str_replace('tarzan', '_', strtolower($class_name)) . '.class.php');
 	}
+	elseif (stristr($class_name, 'cache'))
+	{
+		require_once(dirname(__FILE__) . '/' . '_' . strtolower($class_name) . '.class.php');
+	}
 }
 
 
@@ -423,6 +427,101 @@ class TarzanCore
 		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
+		return $data;
+	}
+
+
+	/*%******************************************************************************************%*/
+	// CACHING LAYER
+
+	/**
+	 * Method: cache_response()
+	 * 	Caches a TarzanHTTPResponse object using the preferred caching method.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for.
+	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. Currently only file-based caching is available (via <CacheFile>), so valid values include relative and absolute local file system paths (e.g. /tmp/cache or ./cache).
+	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
+	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 */
+	public function cache_response($method, $location, $expires, $params = null)
+	{
+		// I would expect locations like '/tmp/cache', 'pdo://user:pass@hostname:port', and 'apc'.
+		$type = strtolower(substr($location, 0, 3));
+		switch ($type)
+		{
+			case 'apc':
+				$CacheMethod = 'CacheAPC';
+				break;
+	
+			default:
+				$CacheMethod = 'CacheFile';
+				break;
+		}
+
+		// Once we've determined the preferred caching method, instantiate a new cache.
+		$cache = new $CacheMethod($method . '-' . $this->key, $location, $expires);
+
+		// If the data exists...
+		if ($data = $cache->read())
+		{
+			// It exists, but is it expired?
+			if ($cache->is_expired())
+			{
+				// If so, fetch new data from Amazon.
+				if ($data = call_user_func_array(array($this, $method), $params))
+				{
+					// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+					$copy = clone($data);
+					$copy->body = $copy->body->asXML();
+
+					// Cache the data
+					$cache->update($copy);
+
+					// Free the unused memory.
+					unset($copy);
+				}
+
+				// We did not get back good data from Amazon...
+				else
+				{
+					// ...so we'll reset the freshness of the cache and use it again (if supported by the caching method).
+					$cache->reset();
+				}
+			}
+
+			// It exists and is still fresh. Let's use it.
+			else
+			{
+				// Since we're going to use this, let's convert the XML back into a SimpleXML object.
+				$data->body = new SimpleXMLElement($data->body);
+			}
+		}
+
+		// The data does not already exist in the cache.
+		else
+		{
+			// Fetch it.
+			$data = call_user_func_array(array($this, $method), $params);
+
+			// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+			$copy = clone($data);
+			$copy->body = $copy->body->asXML();
+
+			// Cache the data
+			$cache->create($copy);
+
+			// Free the unused memory.
+			unset($copy);
+		}
+
+		// We're done. Return the data. Huzzah!
 		return $data;
 	}
 }

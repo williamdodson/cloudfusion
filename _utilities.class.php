@@ -209,7 +209,7 @@ class TarzanUtilities
 	 * See Also:
 	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
 	 */
-	function size_readable($size, $unit = null, $retstring = null)
+	public function size_readable($size, $unit = null, $retstring = null)
 	{
 		// Units
 		$sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB');
@@ -253,7 +253,7 @@ class TarzanUtilities
 	 * Returns:
 	 * 	_string_ The formatted time.
 	 */
-	function time_hms($seconds)
+	public function time_hms($seconds)
 	{
 		$time = '';
 
@@ -299,7 +299,7 @@ class TarzanUtilities
 	 * Returns:
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
 	 */
-	function try_these($attrs, $base = null, $default = null)
+	public function try_these($attrs, $base = null, $default = null)
 	{
 		if ($base)
 		{
