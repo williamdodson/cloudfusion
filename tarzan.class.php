@@ -443,7 +443,7 @@ class TarzanCore
  	 * 
 	 * Parameters:
 	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for.
-	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. Currently only file-based caching is available (via <CacheFile>), so valid values include relative and absolute local file system paths (e.g. /tmp/cache or ./cache).
+	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. Currently, file-based caching (via <CacheFile>) and APC caching (via <CacheAPC>) are available so valid values include relative and absolute local file system paths (e.g. /tmp/cache or ./cache), or 'apc'.
 	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
 	 * 
