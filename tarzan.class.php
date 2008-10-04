@@ -400,7 +400,7 @@ class TarzanCore
 
 		// Compose the request.
 		$request_url = $queue_url . '?' . $querystring;
-		$request =& new $this->request_class($request_url);
+		$request = new $this->request_class($request_url);
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
@@ -442,7 +442,7 @@ class TarzanCore
 	 * 	public
  	 * 
 	 * Parameters:
-	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for.
+	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for. If the method is not in the $this scope, pass in an array where the correct scope is in the [0] position and the method name is in the [1] position.
 	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. Currently, file-based caching (via <CacheFile>) and APC caching (via <CacheAPC>) are available so valid values include relative and absolute local file system paths (e.g. /tmp/cache or ./cache), or 'apc'.
 	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
@@ -452,6 +452,13 @@ class TarzanCore
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{
+		$_this = $this;
+		if (is_array($method))
+		{
+			$_this = $method[0];
+			$method = $method[1];
+		}
+
 		// I would expect locations like '/tmp/cache', 'pdo://user:pass@hostname:port', and 'apc'.
 		$type = strtolower(substr($location, 0, 3));
 		switch ($type)
@@ -466,7 +473,15 @@ class TarzanCore
 		}
 
 		// Once we've determined the preferred caching method, instantiate a new cache.
-		$cache_uuid = $method . '-' . $this->key . '-' . sha1($method . serialize($params));
+		if (isset($_this->key))
+		{
+			$cache_uuid = $method . '-' . $_this->key . '-' . sha1($method . serialize($params));
+		}
+		else
+		{
+			$cache_uuid = $method . '-' . 'nokey' . '-' . sha1($method . serialize($params));
+		}
+
 		$cache = new $CacheMethod($cache_uuid, $location, $expires);
 
 		// If the data exists...
@@ -476,17 +491,34 @@ class TarzanCore
 			if ($cache->is_expired())
 			{
 				// If so, fetch new data from Amazon.
-				if ($data = call_user_func_array(array($this, $method), $params))
+				if ($data = call_user_func_array(array($_this, $method), $params))
 				{
-					// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-					$copy = clone($data);
-					$copy->body = $copy->body->asXML();
+					if (is_array($data))
+					{
+						$copy = array();
 
-					// Cache the data
-					$cache->update($copy);
+						for ($i = 0, $len = sizeof($data); $i < $len; $i++)
+						{
+							// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+							$copy[$i] = $data[$i];
+							$copy[$i]->body = $copy[$i]->body->asXML();
+						}
 
-					// Free the unused memory.
-					unset($copy);
+						// Cache the data
+						$cache->create($copy);
+					}
+					else
+					{
+						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+						$copy = clone($data);
+						$copy->body = $copy->body->asXML();
+
+						// Cache the data
+						$cache->create($copy);
+
+						// Free the unused memory.
+						unset($copy);
+					}
 				}
 
 				// We did not get back good data from Amazon...
@@ -500,8 +532,19 @@ class TarzanCore
 			// It exists and is still fresh. Let's use it.
 			else
 			{
-				// Since we're going to use this, let's convert the XML back into a SimpleXML object.
-				$data->body = new SimpleXMLElement($data->body);
+				if (is_array($data))
+				{
+					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
+					{
+						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+						$data[$i]->body = new SimpleXMLElement($data[$i]->body);
+					}
+				}
+				else
+				{
+					// Since we're going to use this, let's convert the XML back into a SimpleXML object.
+					$data->body = new SimpleXMLElement($data->body);
+				}
 			}
 		}
 
@@ -509,17 +552,35 @@ class TarzanCore
 		else
 		{
 			// Fetch it.
-			$data = call_user_func_array(array($this, $method), $params);
+			if ($data = call_user_func_array(array($_this, $method), $params))
+			{
+				if (is_array($data))
+				{
+					$copy = array();
 
-			// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-			$copy = clone($data);
-			$copy->body = $copy->body->asXML();
+					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
+					{
+						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+						$copy[$i] = $data[$i];
+						$copy[$i]->body = $copy[$i]->body->asXML();
+					}
 
-			// Cache the data
-			$cache->create($copy);
+					// Cache the data
+					$cache->create($copy);
+				}
+				else
+				{
+					// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
+					$copy = clone($data);
+					$copy->body = $copy->body->asXML();
 
-			// Free the unused memory.
-			unset($copy);
+					// Cache the data
+					$cache->create($copy);
+
+					// Free the unused memory.
+					unset($copy);
+				}
+			}
 		}
 
 		// We're done. Return the data. Huzzah!
