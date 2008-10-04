@@ -40,7 +40,7 @@ $browser = new S3Browser($s3, array(
 				<h1>S3 Browser</h1>
 				<div id="content">
 
-					<?php $browser->generate('s3.ryanparman.com'); ?>
+					<?php $browser->generate('tarzan.demo'); ?>
 
 				</div>
 
