@@ -14,10 +14,11 @@ $s3 = new AmazonS3();
 
 // Instantiate a new S3Browser object while passing in some parameters.
 $browser = new S3Browser($s3, array(
+	'bucket_name' => true,
 	'cache' => './cache',
+	'cache_duration' => 3600,
 	'images' => './images',
 	'templates' => './templates',
-	'cache_duration' => 3600,
 ));
 
 // Begin the HTML output.

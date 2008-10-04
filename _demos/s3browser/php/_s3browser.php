@@ -51,6 +51,7 @@ class S3Browser
  	 * 	options - _array_ (Required) Associative array of parameters which can have the following keys:
  	 * 
  	 * Keys for the $opt parameter:
+ 	 * 	bucket_name = _boolean_ (Required) Whether to display the name of the bucket above the table or not.
  	 * 	cache - _string_ (Required) Either a local file system path (for file-based caching) or 'apc' for APC-based caching.
 	 * 	cache_duration - _integer_ (Required) The number of seconds to cache AWS responses for.
 	 * 	images - _string_ (Required) Web-friendly path to the images folder.
@@ -113,8 +114,11 @@ class S3Browser
 	 */
 	function generate($bucket = null)
 	{
-		// The name of the bucket.
-		echo '<h3>Bucket: ' . $bucket . '</h3>';
+		if ($this->options['bucket_name'])
+		{
+			// The name of the bucket.
+			echo '<h3>Bucket: ' . $bucket . '</h3>';
+		}
 
 		// Fetch (and cache) a list of objects for the current bucket.
 		$contents = $this->s3->cache_response('list_objects', $this->options['cache'], $this->options['cache_duration'], array($bucket));
@@ -162,7 +166,7 @@ class S3Browser
 				$loop = str_replace('{S3-TYPE}', strtoupper($extension), $loop);
 				$loop = str_replace('{S3-SIZE}', $this->s3->util->size_readable((integer) $item->Size), $loop);
 				$loop = str_replace('{S3-DATE}', date('j M Y, g:i a', strtotime((string) $item->LastModified)), $loop);
-				$loop = str_replace('{S3-ICON}', './images/icons/check.php?i=' . strtolower($extension) . '.png', $loop);
+				$loop = str_replace('{S3-ICON}', $this->options['images'] . '/icons/check.php?i=' . strtolower($extension) . '.png', $loop);
 				$loop = str_replace('{S3-EXTENSION}', strtoupper($extension), $loop);
 
 				// Echo it out to the page.
