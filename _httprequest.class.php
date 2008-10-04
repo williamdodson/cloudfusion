@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL.
  *
  * Version:
- * 	2008.09.27
+ * 	2008.10.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -388,6 +388,9 @@ class TarzanHTTPRequest
 			$status = curl_multi_exec($multi_handle, $active);
 		}
 		while ($status == CURLM_CALL_MULTI_PERFORM  || $active);
+
+		// Define this.
+		$handles_post = array();
 
 		// Retrieve each handle response
 		foreach ($handles as $handle)

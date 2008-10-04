@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.07.15
+ * 	2008.10.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.

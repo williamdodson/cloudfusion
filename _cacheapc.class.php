@@ -4,7 +4,7 @@
  * 	APC-based caching class.
  *
  * Version:
- * 	2008.10.01
+ * 	2008.10.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -67,7 +67,7 @@ class CacheAPC extends CacheCore
 	 */
 	public function create($data)
 	{
-		return apc_add($this->id, $data, $this->expires);
+		return apc_add($this->id, serialize($data), $this->expires);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class CacheAPC extends CacheCore
 	 */
 	public function read()
 	{
-		return apc_fetch($this->id);
+		return unserialize(apc_fetch($this->id));
 	}
 
 	/**
@@ -100,7 +100,7 @@ class CacheAPC extends CacheCore
 	 */
 	public function update($data)
 	{
-		return apc_store($this->id, $data, $this->expires);
+		return apc_store($this->id, serialize($data), $this->expires);
 	}
 
 	/**
