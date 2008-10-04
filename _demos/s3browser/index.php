@@ -1,12 +1,18 @@
 <?php
+// Let's time the page load.
 $time_start = microtime(true);
 
+// Enable error reporting. Set to 0 to disable.
 error_reporting(E_ALL);
 
+// Load the libraries we need.
 require_once('../../tarzan.class.php');
 require_once('./php/_s3browser.php');
 
+// Instantiate a new AmazonS3 object.
 $s3 = new AmazonS3();
+
+// Instantiate a new S3Browser object while passing in some parameters.
 $browser = new S3Browser($s3, array(
 	'cache' => './cache',
 	'images' => './images',
@@ -14,6 +20,7 @@ $browser = new S3Browser($s3, array(
 	'cache_duration' => 3600,
 ));
 
+// Begin the HTML output.
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 	"http://www.w3.org/TR/html4/strict.dtd">
 
