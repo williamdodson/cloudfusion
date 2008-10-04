@@ -4,7 +4,7 @@
  * 	Functionality specific to the S3 Browser.
  *
  * Version:
- * 	2008.10.03
+ * 	2008.10.04
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -162,7 +162,7 @@ class S3Browser
 				// Replace the placeholder text with the real values.
 				$loop = str_replace('{S3-ZEBRA}', ($zi % 2) ? 'zebra' : '', $loop);
 				$loop = str_replace('{S3-FILENAME}', (string) $item->Key, $loop);
-				$loop = str_replace('{S3-FILEURL}', 'http://' . $this->s3->vhost . '/' . (string) $item->Key, $loop);
+				$loop = str_replace('{S3-FILEURL}', $contents->header['x-tarzan-requesturl'] . (string) $item->Key, $loop);
 				$loop = str_replace('{S3-TYPE}', strtoupper($extension), $loop);
 				$loop = str_replace('{S3-SIZE}', $this->s3->util->size_readable((integer) $item->Size), $loop);
 				$loop = str_replace('{S3-DATE}', date('j M Y, g:i a', strtotime((string) $item->LastModified)), $loop);

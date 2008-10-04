@@ -36,10 +36,14 @@ table.default td.filename {
 	font-size:14px;
 }
 
-.zebra {
-	background-color:#edf3fe;
+table.default tbody tr:hover {
+	background-color:#3d80df;
 }
 
-.private {
-	color:#aaa;
+table.default tbody tr:hover * {
+	color:#fff !important;
+}
+
+.zebra {
+	background-color:#edf3fe;
 }
