@@ -1,0 +1,45 @@
+div#content {
+	padding-top:10px;
+}
+
+div.s3browser h1 {
+	margin:0;
+	padding:20px;
+	background-color:#171e21;
+	color:#fff;
+}
+
+table.default * {
+	font-family:"Lucida Grande", Verdana, sans-serif;
+}
+
+table.default th.icon {
+	padding:5px 20px;
+	width:1%;
+	background-color:transparent;
+}
+
+table.default th.icon img {
+	width:24px;
+	height:24px;
+}
+
+table.default td {
+	width:auto;
+	padding:0 10px;
+	width:1%;
+	white-space:nowrap;
+}
+
+table.default td.filename {
+	width:96%;
+	font-size:14px;
+}
+
+.zebra {
+	background-color:#edf3fe;
+}
+
+.private {
+	color:#aaa;
+}
