@@ -500,7 +500,7 @@ class TarzanCore
 						for ($i = 0, $len = sizeof($data); $i < $len; $i++)
 						{
 							// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-							$copy[$i] = $data[$i];
+							$copy[$i] = clone($data[$i]);
 							$copy[$i]->body = $copy[$i]->body->asXML();
 						}
 
