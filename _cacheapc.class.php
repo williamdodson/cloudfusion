@@ -48,7 +48,7 @@ class CacheAPC extends CacheCore
 	 */
 	public function __construct($name, $location, $expires)
 	{
-		parent::__construct($name, $location, $expires);
+		parent::__construct($name, null, $expires);
 		$this->id = $this->name;
 	}
 

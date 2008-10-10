@@ -92,6 +92,12 @@ define('DATE_AWS_RFC2616', 'D, d M Y H:i:s \G\M\T');
 define('DATE_AWS_ISO8601', 'Y-m-d\TH:i:s\Z');
 
 /**
+ * Constant: DATE_AWS_MYSQL
+ * Define the MySQL-compliant date format
+ */
+define('DATE_AWS_MYSQL', 'Y-m-d H:i:s');
+
+/**
  * Constant: HTTP_GET
  * HTTP method type: Get
  */
