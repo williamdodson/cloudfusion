@@ -4,7 +4,7 @@
  * 	File-based caching class.
  *
  * Version:
- * 	2008.09.30
+ * 	2008.10.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -155,7 +155,8 @@ class CacheFile extends CacheCore
 	{
 		if (file_exists($this->id))
 		{
-			return filemtime($this->id);
+			$this->timestamp = filemtime($this->id);
+			return $this->timestamp;
 		}
 
 		return false;

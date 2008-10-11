@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across caching classes.
  *
  * Version:
- * 	2008.09.30
+ * 	2008.10.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -49,6 +49,12 @@ class CacheCore
 	 * Used internally to uniquely identify the location + name of the cache object.
 	 */
 	var $id;
+
+	/**
+	 * Property: timestamp
+	 * Stores the time when the cache object was created.
+	 */
+	var $timestamp;
 
 
 	/*%******************************************************************************************%*/

@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.10.03
+ * 	2008.10.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -521,7 +521,11 @@ class TarzanCore
 						}
 
 						// Cache the data
-						$cache->create($copy);
+						$cache->update($copy);
+
+						// Free the unused memory.
+						$copy = null;
+						unset($copy);
 					}
 					else
 					{
@@ -530,9 +534,10 @@ class TarzanCore
 						$copy->body = $copy->body->asXML();
 
 						// Cache the data
-						$cache->create($copy);
+						$cache->update($copy);
 
 						// Free the unused memory.
+						$copy = null;
 						unset($copy);
 					}
 				}
@@ -585,6 +590,7 @@ class TarzanCore
 					$cache->create($copy);
 
 					// Free the unused memory.
+					$copy = null;
 					unset($copy);
 				}
 				else
@@ -597,6 +603,7 @@ class TarzanCore
 					$cache->create($copy);
 
 					// Free the unused memory.
+					$copy = null;
 					unset($copy);
 				}
 			}

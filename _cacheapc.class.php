@@ -4,7 +4,7 @@
  * 	APC-based caching class.
  *
  * Version:
- * 	2008.10.03
+ * 	2008.10.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.

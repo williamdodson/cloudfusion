@@ -4,7 +4,7 @@
  * 	Database-based caching class using PHP Data Objects (PDO).
  *
  * Version:
- * 	2008.10.09
+ * 	2008.10.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -104,6 +104,9 @@ class CachePDO extends CacheCore
 	 */
 	public function __construct($name, $location, $expires)
 	{
+		// Make sure the name is no longer than 40 characters.
+		$name = sha1($name);
+
 		// Call parent constructor and set id.
 		parent::__construct($name, $location, $expires);
 		$this->id = $this->name;
@@ -259,7 +262,8 @@ class CachePDO extends CacheCore
 				$value = strtotime($value);
 			}
 
-			return date('U', $value);
+			$this->timestamp = date('U', $value);
+			return $this->timestamp;
 		}
 
 		return false;
