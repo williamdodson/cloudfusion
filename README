@@ -1,9 +1,14 @@
-TARZAN
+== TARZAN ==
 A fast, powerful PHP toolkit for building web applications with Amazon Web Services.
 
-* HOME: http://tarzan-aws.com
-* DOCUMENTATION: http://tarzan-aws.com/docs/
 
+== LINKS ==
+* HOME: http://tarzan-aws.com
+* DOCS: http://tarzan-aws.com/docs/
+* WIKI: http://tarzan-aws.com/wiki/
+
+
+== LICENSE ==
 This code has been released under the Simplified (aka "New") BSD license (1999) as follows:
 
 Copyright (c) 2006-2008 LifeNexus Digital, Inc., and contributors. All rights reserved.
