@@ -449,9 +449,14 @@ class TarzanCore
  	 * 
 	 * Parameters:
 	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for. If the method is not in the $this scope, pass in an array where the correct scope is in the [0] position and the method name is in the [1] position.
-	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. Currently, file-based caching (via <CacheFile>) and APC caching (via <CacheAPC>) are available so valid values include relative and absolute local file system paths (e.g. /tmp/cache or ./cache), or 'apc'.
+	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. See below.
 	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
+	 * 
+	 * Example values for $location:
+	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
+	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
+	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -465,7 +470,7 @@ class TarzanCore
 			$method = $method[1];
 		}
 
-		// I would expect locations like '/tmp/cache', 'pdo://user:pass@hostname:port', and 'apc'.
+		// I would expect locations like '/tmp/cache', 'pdo.mysql://user:pass@hostname:port', 'pdo.sqlite:memory:', and 'apc'.
 		$type = strtolower(substr($location, 0, 3));
 		switch ($type)
 		{
@@ -473,6 +478,11 @@ class TarzanCore
 				$CacheMethod = 'CacheAPC';
 				break;
 	
+			case 'pdo':
+				$CacheMethod = 'CachePDO';
+				$location = substr($location, 4);
+				break;
+
 			default:
 				$CacheMethod = 'CacheFile';
 				break;

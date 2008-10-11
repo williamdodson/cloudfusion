@@ -87,7 +87,9 @@ class CachePDO extends CacheCore
 
 	/**
 	 * Method: __construct()
-	 * 	The constructor
+	 * 	The constructor.
+	 * 
+	 * 	Tested with MySQL 5.0.x (http://mysql.com), PostgreSQL (http://postgresql.com), and SQLite 3.x (http://sqlite.org). SQLite 2.x is assumed to work. No other PDO-supported databases have been tested (e.g. Oracle, Microsoft SQL Server, IBM DB2, ODBC, Sybase, Firebird). Feel free to send patches for additional database support. See <http://php.net/pdo> for more information.
 	 * 
 	 * Access:
 	 * 	public
@@ -105,22 +107,42 @@ class CachePDO extends CacheCore
 		// Call parent constructor and set id.
 		parent::__construct($name, $location, $expires);
 		$this->id = $this->name;
-		// $this->expires_sql = date(DATE_AWS_MYSQL);
+		$options = array();
 
-		// Parse and set the DSN
-		$this->dsn = parse_url($location);
-		$this->dsn_string = $this->dsn['scheme'] . ':host=' . $this->dsn['host'] . ((isset($this->dsn['port'])) ? ';port=' . $this->dsn['port'] : '') . ';dbname=' . substr($this->dsn['path'], 1);
+		// Check if the location contains :// (e.g. mysql://user:pass@hostname:port/table)
+		if (stripos($location, '://') === false)
+		{
+			// No? Just pass it through.
+			$this->dsn = parse_url($location);
+			$this->dsn_string = $location;
+		}
+		else
+		{
+			// Yes? Parse and set the DSN
+			$this->dsn = parse_url($location);
+			$this->dsn_string = $this->dsn['scheme'] . ':host=' . $this->dsn['host'] . ((isset($this->dsn['port'])) ? ';port=' . $this->dsn['port'] : '') . ';dbname=' . substr($this->dsn['path'], 1);
+		}
 
-		// Instantiate a new PDO object
-		$this->pdo = new PDO($this->dsn_string, $this->dsn['user'], $this->dsn['pass'], array(
-			PDO::ATTR_PERSISTENT => true
-		));
+		// Make sure that user/pass are defined.
+		$user = isset($this->dsn['user']) ? $this->dsn['user'] : null;
+		$pass = isset($this->dsn['pass']) ? $this->dsn['pass'] : null;
 
-		// Define prepared statements
-		$this->create = $this->pdo->prepare("INSERT INTO cache (id, data) VALUES (:id, :data)");
+		// Set persistence for databases that support it.
+		switch ($this->dsn['scheme'])
+		{
+			case 'mysql': // MySQL
+			case 'pgsql': // PostgreSQL
+				$options[PDO::ATTR_PERSISTENT] = true;
+				break;
+		}
+
+		// Instantiate a new PDO object with a persistent connection.
+		$this->pdo = new PDO($this->dsn_string, $user, $pass, $options);
+
+		// Define prepared statements for improved performance.
+		$this->create = $this->pdo->prepare("INSERT INTO cache (id, expires, data) VALUES (:id, :expires, :data)");
 		$this->read = $this->pdo->prepare("SELECT id, expires, data FROM cache WHERE id = :id");
-		$this->update = $this->pdo->prepare("UPDATE cache SET data = :data WHERE id = :id");
-		$this->reset = $this->pdo->prepare("UPDATE cache SET :expires = NOW() WHERE id = :id");
+		$this->reset = $this->pdo->prepare("UPDATE cache SET expires = :expires WHERE id = :id");
 		$this->delete = $this->pdo->prepare("DELETE FROM cache WHERE id = :id");
 	}
 
@@ -141,6 +163,8 @@ class CachePDO extends CacheCore
 	{
 		$this->create->bindParam(':id', $this->id);
 		$this->create->bindParam(':data', serialize($data));
+		$this->create->bindParam(':expires', $this->generate_timestamp());
+
 		return (bool) $this->create->execute();
 	}
 
@@ -186,9 +210,8 @@ class CachePDO extends CacheCore
 	 */
 	public function update($data)
 	{
-		$this->create->bindParam(':id', $this->id);
-		$this->create->bindParam(':data', serialize($data));
-		return (bool) $this->update->execute();
+		$this->delete();
+		return $this->create($data);
 	}
 
 	/**
@@ -228,7 +251,15 @@ class CachePDO extends CacheCore
 
 		if ($this->store_read)
 		{
-			return date('U', strtotime($this->store_read['expires']));
+			$value = $this->store_read['expires'];
+
+			// If 'expires' isn't yet an integer, convert it into one.
+			if (!is_numeric($value))
+			{
+				$value = strtotime($value);
+			}
+
+			return date('U', $value);
 		}
 
 		return false;
@@ -246,7 +277,8 @@ class CachePDO extends CacheCore
 	 */
 	public function reset()
 	{
-		$this->create->bindParam(':id', $this->id);
+		$this->reset->bindParam(':id', $this->id);
+		$this->reset->bindParam(':expires', $this->generate_timestamp());
 		return (bool) $this->reset->execute();
 	}
 
@@ -268,6 +300,52 @@ class CachePDO extends CacheCore
 		}
 
 		return false;
+	}
+
+	/**
+	 * Method: get_drivers()
+	 * 	Returns a list of supported PDO database drivers.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	_array_ The list of supported database drivers.
+	 */
+	public function get_drivers()
+	{
+		return PDO::getAvailableDrivers();
+	}
+
+	/**
+	 * Method: generate_timestamp()
+	 * 	Returns a timestamp value apropriate to the current database type.
+	 * 
+	 * Access:
+	 * 	private
+	 * 
+	 * Returns:
+	 * 	_mixed_ Timestamp for MySQL and PostgreSQL, integer value for SQLite.
+	 */
+	private function generate_timestamp()
+	{
+		// Define 'expires' settings differently.
+		switch ($this->dsn['scheme'])
+		{
+			// These support timestamps.
+			case 'mysql': // MySQL
+			case 'pgsql': // PostgreSQL
+				$expires = date(DATE_AWS_MYSQL, time());
+				break;
+
+			// These support integers.
+			case 'sqlite': // SQLite 3
+			case 'sqlite2': // SQLite 2
+				$expires = time();
+				break;
+		}
+
+		return $expires;
 	}
 }
 ?>

@@ -167,5 +167,17 @@ class CacheCore
 	 * 	_boolean_ Whether the cache is expired or not.
 	 */
 	public function is_expired() { return; }
+
+	/**
+	 * Method: get_drivers()
+	 * 	Returns a list of supported PDO database drivers. Placeholder method should be defined by the extending class.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	_array_ The list of supported database drivers.
+	 */
+	public function get_drivers() { return; }
 }
 ?>
