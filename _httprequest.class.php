@@ -109,7 +109,6 @@ class TarzanHTTPRequest
 		$this->request_url = $url;
 		$this->method = HTTP_GET;
 		$this->request_headers = array();
-		$this->curl_handle = curl_init();
 		$this->request_body = '';
 	}
 
@@ -212,29 +211,31 @@ class TarzanHTTPRequest
 		$this->addHeader('Expect', '100-continue');
 		$this->addHeader('Connection', 'close');
 
+		$curl_handle = curl_init();
+
 		// Set default options.
- 		curl_setopt($this->curl_handle, CURLOPT_URL, $this->request_url);
- 		curl_setopt($this->curl_handle, CURLOPT_FILETIME, true);
- 		curl_setopt($this->curl_handle, CURLOPT_FRESH_CONNECT, true);
- 		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYPEER, false);
- 		curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYHOST, false);
- 		curl_setopt($this->curl_handle, CURLOPT_VERBOSE, true);
- 		// curl_setopt($this->curl_handle, CURLOPT_MAXCONNECTS, 50);
- 		curl_setopt($this->curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
-		curl_setopt($this->curl_handle, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($this->curl_handle, CURLOPT_MAXREDIRS, 5);
-		curl_setopt($this->curl_handle, CURLOPT_HEADER, true);
-		curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->curl_handle, CURLOPT_TIMEOUT, 5184000);
-		curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
-		curl_setopt($this->curl_handle, CURLOPT_NOSIGNAL, true);
-		curl_setopt($this->curl_handle, CURLOPT_REFERER, $this->request_url);
-		curl_setopt($this->curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);
+ 		curl_setopt($curl_handle, CURLOPT_URL, $this->request_url);
+ 		curl_setopt($curl_handle, CURLOPT_FILETIME, true);
+ 		curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, true);
+ 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+ 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
+ 		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
+ 		curl_setopt($curl_handle, CURLOPT_MAXCONNECTS, 50);
+ 		curl_setopt($curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
+		curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl_handle, CURLOPT_MAXREDIRS, 5);
+		curl_setopt($curl_handle, CURLOPT_HEADER, true);
+		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl_handle, CURLOPT_TIMEOUT, 5184000);
+		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
+		curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
+		curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
+		curl_setopt($curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);
 
 		// Handle the encoding if we can.
 		if (extension_loaded('zlib'))
 		{
-			curl_setopt($this->curl_handle, CURLOPT_ENCODING, '');
+			curl_setopt($curl_handle, CURLOPT_ENCODING, '');
 		}
 
 		// Process custom headers
@@ -247,32 +248,32 @@ class TarzanHTTPRequest
 				$temp_headers[] = $k . ': ' . $v;
 			}
 
-			curl_setopt($this->curl_handle, CURLOPT_HTTPHEADER, $temp_headers);
+			curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $temp_headers);
 		}
 
 		switch ($this->method)
 		{
 			case HTTP_PUT:
-				curl_setopt($this->curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
-				curl_setopt($this->curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
 			case HTTP_POST:
-				curl_setopt($this->curl_handle, CURLOPT_POST, true);
-				curl_setopt($this->curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				curl_setopt($curl_handle, CURLOPT_POST, true);
+				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
 			case HTTP_HEAD:
-				curl_setopt($this->curl_handle, CURLOPT_CUSTOMREQUEST, HTTP_HEAD);
-				curl_setopt($this->curl_handle, CURLOPT_NOBODY, 1);
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, HTTP_HEAD);
+				curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
 				break;
 
 			default:
-				curl_setopt($this->curl_handle, CURLOPT_CUSTOMREQUEST, $this->method);
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this->method);
 				break;
 		}
 
-		return $this->curl_handle;
+		return $curl_handle;
 	}
 
 	/**
@@ -345,11 +346,11 @@ class TarzanHTTPRequest
 	 */
 	public function sendRequest()
 	{
-		$this->prepRequest();
-		$this->response = curl_exec($this->curl_handle);
-		$this->processResponse();
+		$curl_handle = $this->prepRequest();
+		$this->response = curl_exec($curl_handle);
+		$this->processResponse($curl_handle, $this->response);
 
-		curl_close($this->curl_handle);
+		curl_close($curl_handle);
 		return $this->response;
 	}
 
