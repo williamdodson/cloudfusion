@@ -393,7 +393,7 @@ class TarzanCore
 		}
 
 		// Do a case-insensitive, natural order sort on the array keys.
-		uksort($query, 'strnatcasecmp');
+		uksort($query, 'strcasecmp');
 
 		// Create the string that needs to be hashed.
 		$sign_query = $this->util->to_signable_string($query);
