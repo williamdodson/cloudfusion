@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL.
  *
  * Version:
- * 	2008.10.03
+ * 	2008.10.17
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -92,6 +92,18 @@ class TarzanHTTPRequest
 	 */
 	var $proxy = null;
 
+	/**
+	 * Property: username
+	 * 	The username to use for the request.
+	 */
+	var $username = null;
+
+	/**
+	 * Property: password
+	 * 	The password to use for the request.
+	 */
+	var $password = null;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -131,6 +143,26 @@ class TarzanHTTPRequest
 
 	/*%******************************************************************************************%*/
 	// REQUEST METHODS
+
+	/**
+	 * Method: setCredentials()
+	 * 	Sets the credentials to use for authentication.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	user - _string_ (Required) The username to authenticate with.
+	 * 	pass - _string_ (Required) The password to authenticate with.
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function setCredentials($user, $pass)
+	{
+		$this->username = $user;
+		$this->password = $pass;
+	}
 
 	/**
 	 * Method: addHeader()
@@ -261,6 +293,13 @@ class TarzanHTTPRequest
 			{
 				curl_setopt($curl_handle, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
 			}
+		}
+
+		// Set credentials for HTTP Basic Authentication.
+		if ($this->username && $this->password)
+		{
+			curl_setopt($curl_handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+			curl_setopt($curl_handle, CURLOPT_USERPWD, $this->username . ':' . $this->password);
 		}
 
 		// Handle the encoding if we can.
