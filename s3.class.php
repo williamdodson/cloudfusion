@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.08.11
+ * 	2008.10.17
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -267,11 +267,12 @@ class AmazonS3 extends TarzanCore
 			}
 			else
 			{
-				$this->request_url = 'http://' . $hostname . $request;
+				$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
+				$this->request_url = $scheme . $hostname . $request;
 			}
 
 			// Instantiate the request class
-			$req = new $this->request_class($this->request_url);
+			$req = new $this->request_class($this->request_url, $this->set_proxy);
 
 			// Do we have a verb?
 			if (isset($verb) && !empty($verb))

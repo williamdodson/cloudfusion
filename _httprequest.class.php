@@ -284,18 +284,18 @@ class TarzanHTTPRequest
 		if ($this->proxy)
 		{
 			curl_setopt($curl_handle, CURLOPT_HTTPPROXYTUNNEL, true);
-
+		
 			$host = $this->proxy['host'];
 			$host .= ($this->proxy['port']) ? ':' . $this->proxy['port'] : '';
 			curl_setopt($curl_handle, CURLOPT_PROXY, $host);
-
+		
 			if (isset($this->proxy['user']) && isset($this->proxy['pass']))
 			{
 				curl_setopt($curl_handle, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
 			}
 		}
 
-		// Set credentials for HTTP Basic Authentication.
+		// Set credentials for HTTP Basic/Digest Authentication.
 		if ($this->username && $this->password)
 		{
 			curl_setopt($curl_handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
