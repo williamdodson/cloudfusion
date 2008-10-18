@@ -25,7 +25,7 @@
  * Constant: EC2_DEFAULT_URL
  * 	Specify the default queue URL.
  */
-define('EC2_DEFAULT_URL', 'http://ec2.amazonaws.com/');
+define('EC2_DEFAULT_URL', 'ec2.amazonaws.com');
 
 
 /*%******************************************************************************************%*/

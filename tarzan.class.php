@@ -203,6 +203,18 @@ class TarzanCore
 	 */
 	var $adjust_offset = 0;
 
+	/**
+	 * Property: enable_ssl
+	 * 	Whether SSL/HTTPS should be enabled by default.
+	 */
+	var $enable_ssl = false;
+
+	/**
+	 * Property: set_proxy
+	 * 	Sets the proxy to use for connecting.
+	 */
+	var $set_proxy = null;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -298,6 +310,42 @@ class TarzanCore
 		$this->adjust_offset = $seconds;
 	}
 
+	/**
+	 * Method: enable_ssl()
+	 * 	Enables all Amazon classes to use SSL (https) for enhanced security.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	enable - _boolean_ (Optional) Whether to enable SSL or not.
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function enable_ssl($enable = true)
+	{
+		$this->enable_ssl = $enable;
+	}
+
+	/**
+	 * Method: set_proxy()
+	 * 	Set the proxy settings to use for connecting.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	proxy - _string_ (Required) Accepts proxy credentials in the following format: proxy://user:pass@hostname:port
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function set_proxy($proxy)
+	{
+		$this->set_proxy = $proxy;
+	}
+
 
 	/*%******************************************************************************************%*/
 	// SET CUSTOM CLASSES
@@ -371,13 +419,13 @@ class TarzanCore
 	 * Parameters:
 	 * 	action - _string_ (Required) Indicates the action to perform.
 	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
-	 * 	queue_url - _string_ (Optional) The URL of the queue to perform the action on.
+	 * 	domain - _string_ (Optional) The URL of the queue to perform the action on.
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
 	 */
-	public function authenticate($action, $opt = null, $queue_url = null, $message = null)
+	public function authenticate($action, $opt = null, $domain = null, $message = null)
 	{
 		// Manage the key-value pairs that are used in the query.
 		$query['Action'] = $action;
@@ -405,8 +453,9 @@ class TarzanCore
 		$querystring = $this->util->to_query_string($query);
 
 		// Compose the request.
-		$request_url = $queue_url . '?' . $querystring;
-		$request = new $this->request_class($request_url);
+		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
+		$request_url = $scheme . $domain . '/?' . $querystring;
+		$request = new $this->request_class($request_url, $this->set_proxy);
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)

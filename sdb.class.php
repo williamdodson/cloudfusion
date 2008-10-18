@@ -25,7 +25,7 @@
  * Constant: SDB_DEFAULT_URL
  * 	Specify the default queue URL.
  */
-define('SDB_DEFAULT_URL', 'http://sdb.amazonaws.com/');
+define('SDB_DEFAULT_URL', 'sdb.amazonaws.com');
 
 
 /*%******************************************************************************************%*/

@@ -28,63 +28,69 @@ class TarzanHTTPRequest
 {
 	/**
 	 * Property: request_url
-	 * The URL being requested.
+	 * 	The URL being requested.
 	 */
 	var $request_url;
 
 	/**
 	 * Property: request_headers
-	 * The headers being sent in the request.
+	 * 	The headers being sent in the request.
 	 */
 	var $request_headers;
 
 	/**
 	 * Property: request_body
-	 * The body being sent in the request.
+	 * 	The body being sent in the request.
 	 */
 	var $request_body;
 
 	/**
 	 * Property: response
-	 * The response returned by the request.
+	 * 	The response returned by the request.
 	 */
 	var $response;
 
 	/**
 	 * Property: response_headers
-	 * The headers returned by the request.
+	 * 	The headers returned by the request.
 	 */
 	var $response_headers;
 
 	/**
 	 * Property: response_body
-	 * The body returned by the request.
+	 * 	The body returned by the request.
 	 */
 	var $response_body;
 
 	/**
 	 * Property: response_code
-	 * The HTTP status code returned by the request.
+	 * 	The HTTP status code returned by the request.
 	 */
 	var $response_code;
 
 	/**
 	 * Property: response_info
-	 * Additional response data.
+	 * 	Additional response data.
 	 */
 	var $response_info;
 
 	/**
 	 * Property: curl_handle
-	 * The handle for the cURL object.
+	 * 	The handle for the cURL object.
 	 */
 	var $curl_handle;
 
 	/**
 	 * Property: method
-	 * The method by which the request is being made.
+	 * 	The method by which the request is being made.
 	 */
 	var $method;
+
+	/**
+	 * Property: proxy
+	 * 	Stores the proxy settings to use for the request.
+	 */
+	var $proxy = null;
 
 
 	/*%******************************************************************************************%*/
@@ -99,17 +105,27 @@ class TarzanHTTPRequest
 	 * 
 	 * Parameters:
 	 * 	url - _string_ (Required) The URL to request or service endpoint to query.
+	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
 	 * 
 	 * Returns:
 	 * 	void
 	 */
-	public function __construct($url)
+	public function __construct($url, $proxy = null)
 	{
 		// Set some default values.
 		$this->request_url = $url;
 		$this->method = HTTP_GET;
 		$this->request_headers = array();
 		$this->request_body = '';
+
+		if ($proxy)
+		{
+			$proxy = parse_url($proxy);
+			$proxy['user'] = isset($proxy['user']) ? $proxy['user'] : null;
+			$proxy['pass'] = isset($proxy['pass']) ? $proxy['pass'] : null;
+			$proxy['port'] = isset($proxy['port']) ? $proxy['port'] : null;
+			$this->proxy = $proxy;
+		}
 	}
 
 
@@ -217,8 +233,8 @@ class TarzanHTTPRequest
  		curl_setopt($curl_handle, CURLOPT_URL, $this->request_url);
  		curl_setopt($curl_handle, CURLOPT_FILETIME, true);
  		curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, true);
- 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
- 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
+ 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, true);
+ 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, true);
  		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
  		curl_setopt($curl_handle, CURLOPT_MAXCONNECTS, 50);
  		curl_setopt($curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
@@ -231,6 +247,21 @@ class TarzanHTTPRequest
 		curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
 		curl_setopt($curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);
+
+		// Enable a proxy connection if requested.
+		if ($this->proxy)
+		{
+			curl_setopt($curl_handle, CURLOPT_HTTPPROXYTUNNEL, true);
+
+			$host = $this->proxy['host'];
+			$host .= ($this->proxy['port']) ? ':' . $this->proxy['port'] : '';
+			curl_setopt($curl_handle, CURLOPT_PROXY, $host);
+
+			if (isset($this->proxy['user']) && isset($this->proxy['pass']))
+			{
+				curl_setopt($curl_handle, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
+			}
+		}
 
 		// Handle the encoding if we can.
 		if (extension_loaded('zlib'))
