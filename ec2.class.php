@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2008.08.20
+ * 	2008.10.21
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -71,7 +71,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
-		$this->api_version = '2008-02-01';
+		$this->api_version = '2008-05-05';
 		parent::__construct($key, $secret_key, $account_id);
 	}
 
@@ -96,10 +96,15 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-02-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
 	 */
 	public function describe_availability_zones($opt = null)
 	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
 		return $this->authenticate('DescribeAvailabilityZones', $opt, EC2_DEFAULT_URL);
 	}
 
@@ -107,62 +112,443 @@ class AmazonEC2 extends TarzanCore
 	/*%******************************************************************************************%*/
 	// ELASTIC IP ADDRESSES
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function allocate_address() {}
+	/**
+	 * Method: allocate_address()
+	 * 	Acquires an elastic IP address for use with your account.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AllocateAddress.html
+	 * 	Related - <associate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
+	 */
+	public function allocate_address()
+	{
+		return $this->authenticate('AllocateAddress', null, EC2_DEFAULT_URL);
+	}
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function associate_address() {}
+	/**
+	 * Method: associate_address()
+	 * 	Associates an elastic IP address with an instance.
+	 * 
+	 * 	If the IP address is currently assigned to another instance, the IP address is assigned to the new instance. This is an idempotent operation. If you enter it more than once, Amazon EC2 does not return an error.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	instance_id - _string_ (Required) The instance to which the IP address is assigned.
+	 * 	public_ip - _string_ (Required) IP address that you are assigning to the instance, retrieved from <allocate_address()>.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AssociateAddress.html
+	 * 	Related - <allocate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
+	 */
+	public function associate_address($instance_id, $public_ip)
+	{
+		$opt = array();
+		$opt['InstanceId'] = $instance_id;
+		$opt['PublicIp'] = $public_ip;
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function describe_addresses() {}
+		return $this->authenticate('AssociateAddress', $opt, EC2_DEFAULT_URL);
+	}
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function disassociate_address() {}
+	/**
+	 * Method: describe_addresses()
+	 * 	Lists elastic IP addresses assigned to your account.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	PublicIp.1 - _string_ (Required but can be empty) One Elastic IP addresses to describe.
+	 * 	PublicIp.n - _string_ (Optional) More than one Elastic IP addresses to describe.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
+	 * 	Related - <allocate_address()>, <associate_address()>, <disassociate_address()>, <release_address()>
+	 */
+	public function describe_addresses($opt = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function release_address() {}
+		return $this->authenticate('DescribeAddresses', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: disassociate_address()
+	 * 	Disassociates the specified elastic IP address from the instance to which it is assigned.
+	 * 
+	 * 	This is an idempotent operation. If you enter it more than once, Amazon EC2 does not return an error.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	public_ip - _string_ (Required) IP address that you are disassociating from the instance.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
+	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <release_address()>
+	 */
+	public function disassociate_address($public_ip)
+	{
+		$opt = array();
+		$opt['PublicIp'] = $public_ip;
+
+		return $this->authenticate('DisassociateAddress', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: release_address()
+	 * 	Releases an elastic IP address associated with your account. If you run this operation on an elastic IP address that is already released, the address might be assigned to another account which will cause Amazon EC2 to return an error.
+	 * 
+	 * 	Releasing an IP address automatically disassociates it from any instance with which it is associated. For more information, see <disassociate_address()>.
+	 * 
+	 * 	After releasing an elastic IP address, it is released to the IP address pool and might no longer be available to your account. Make sure to update your DNS records and any servers or devices that communicate with the address.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	public_ip - _string_ (Required) IP address that you are releasing from your account.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
+	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <disassociate_address()>
+	 */
+	public function release_address($public_ip)
+	{
+		$opt = array();
+		$opt['PublicIp'] = $public_ip;
+
+		return $this->authenticate('ReleaseAddress', $opt, EC2_DEFAULT_URL);
+	}
 
 
 	/*%******************************************************************************************%*/
 	// EBS SNAPSHOTS TO S3
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function create_snapshot() {}
+	/**
+	 * Method: create_snapshot()
+	 * 	Creates a snapshot of an Amazon EBS volume and stores it in Amazon S3. You can use snapshots for backups, to launch instances from identical snapshots, and to save data before shutting down an instance. For more information, see Amazon Elastic Block Store.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	volume_id - _string_ (Required) The ID of the Amazon EBS volume to snapshot. Must be a volume that you own.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
+	 * 	Related - <describe_snapshots()>, <delete_snapshot()>
+	 */
+	public function create_snapshot($volume_id)
+	{
+		$opt = array();
+		$opt['VolumeId'] = $volume_id;
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function describe_snapshots() {}
+		return $this->authenticate('CreateSnapshot', $opt, EC2_DEFAULT_URL);
+	}
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function delete_snapshot() {}
+	/**
+	 * Method: describe_snapshots()
+	 * 	Describes the status of Amazon EBS snapshots.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	SnapshotId.n - _string_ (Optional) The ID of the Amazon EBS snapshot.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
+	 * 	Related - <create_snapshot()>, <delete_snapshot()>
+	 */
+	public function describe_snapshots($opt = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
+		return $this->authenticate('DescribeSnapshots', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: delete_snapshot()
+	 * 	Deletes a snapshot of an Amazon EBS volume that is stored in Amazon S3.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	snapshot_id - _string_ (Optional) The ID of the Amazon EBS snapshot to delete.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
+	 * 	Related - <create_snapshot()>, <describe_snapshots()>
+	 */
+	public function delete_snapshot($snapshot_id)
+	{
+		$opt = array();
+		$opt['SnapshotId'] = $snapshot_id;
+
+		return $this->authenticate('DeleteSnapshot', $opt, EC2_DEFAULT_URL);
+	}
 
 
 	/*%******************************************************************************************%*/
 	// EBS VOLUMES
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function create_volume() {}
+	/**
+	 * Method: create_volume()
+	 * 	Creates a new Amazon EBS volume that you can mount from any Amazon EC2 instance. You must specify an availability zone when creating a volume. The volume and any instance to which it attaches must be in the same availability zone.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	sizesnapid - _mixed_ (Required) Either the size of the volume in GB as an integer (from 1 to 1024), or the ID of the snapshot from which to create the new volume as a string.
+	 * 	zone - _string_ (Required) The availability zone in which to create the new volume.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-CreateVolume.html
+	 * 	Related - <describe_volumes()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
+	 */
+	public function create_volume($sizesnapid, $zone)
+	{
+		$opt = array();
+		$opt['AvailabilityZone'] = $zone;
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function describe_volumes() {}
+		if (is_numeric($sizesnapid))
+		{
+			$opt['Size'] = $sizesnapid;
+		}
+		else
+		{
+			$opt['SnapshotId'] = $sizesnapid;
+		}
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function attach_volume() {}
+		return $this->authenticate('CreateVolume', $opt, EC2_DEFAULT_URL);
+	}
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function detach_volume() {}
+	/**
+	 * Method: describe_volumes()
+	 * 	Lists one or more Amazon EBS volumes that you own. If you do not specify any volumes, Amazon EBS returns all volumes that you own.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	VolumeId.n - _string_ (Optional) The ID of the volume to list.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
+	 * 	Related - <create_volume()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
+	 */
+	public function describe_volumes($opt = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
 
-	// Not yet implemented. New as of 2008-05-05.
-	public function delete_volume() {}
+		return $this->authenticate('DescribeVolumes', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: attach_volume()
+	 * 	Attaches an Amazon EBS volume to an instance.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	volume_id - _string_ (Required) The ID of the Amazon EBS volume.
+	 * 	instance_id - _string_ (Required) The ID of the instance to which the volume attaches.
+	 * 	device - _string_ (Required) Specifies how the device is exposed to the instance (e.g., /dev/sdh). For information on standard storage locations, see Storage Locations.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AttachVolume.html
+	 * 	Storage Locations - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/instance-storage.html#storage-locations
+	 * 	Related - <create_volume()>, <describe_volumes()>, <detach_volume()>, <delete_volume()>
+	 */
+	public function attach_volume($volume_id, $instance_id, $device)
+	{
+		$opt = array();
+		$opt['VolumeId'] = $volume_id;
+		$opt['InstanceId'] = $instance_id;
+		$opt['Device'] = $device;
+
+		return $this->authenticate('AttachVolume', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: detach_volume()
+	 * 	Detaches an Amazon EBS volume from an instance.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	volume_id - _string_ (Required) The ID of the Amazon EBS volume.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	InstanceId - _string_ (Optional) The ID of the instance from which the volume will detach.
+	 * 	Device - _string_ (Optional) The name of the device.
+	 * 	Force - _boolean_ (Optional) Forces detachment if the previous detachment attempt did not occur cleanly (logging into an instance, unmounting the volume, and detaching normally). This option can lead to data loss or a corrupted file system. Use this option only as a last resort to detach an instance from a failed instance. The instance will not have an opportunity to flush file system caches nor file system meta data. If you use this option, you must perform file system check and repair procedures.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DetachVolume.html
+	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <delete_volume()>
+	 */
+	public function detach_volume($volume_id, $opt = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
+		$opt['VolumeId'] = $volume_id;
+
+		return $this->authenticate('DetachVolume', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: delete_volume()
+	 * 	Deletes an Amazon EBS volume.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	volume_id - _string_ (Required) The ID of the Amazon EBS volume.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DeleteVolume.html
+	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <detach_volume()>
+	 */
+	public function delete_volume($volume_id)
+	{
+		$opt = array();
+		$opt['VolumeId'] = $volume_id;
+
+		return $this->authenticate('DeleteVolume', $opt, EC2_DEFAULT_URL);
+	}
 
 
 	/*%******************************************************************************************%*/
 	// MISCELLANEOUS
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function get_console_output() {}
+	/**
+	 * Method: get_console_output()
+	 * 	Retrieves console output for the specified instance. Instance console output is buffered and posted shortly after instance boot, reboot, and termination. Amazon EC2 preserves the most recent 64 KB output which will be available for at least one hour after the most recent post.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	instance_id - _string_ (Required) An instance ID returned from a previous call to <run_instances()>.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
+	 * 	Related - <reboot_instances()>
+	 */
+	public function get_console_output($instance_id)
+	{
+		$opt = array();
+		$opt['InstanceId'] = $instance_id;
 
-	// Not yet implemented. New as of 2008-02-01.
-	public function reboot_instances() {}
+		return $this->authenticate('GetConsoleOutput', $opt, EC2_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: reboot_instances()
+	 * 	Requests a reboot of one or more instances. This operation is asynchronous; it only queues a request to reboot the specified instance(s). The operation will succeed if the instances are valid and belong to the user. Requests to reboot terminated instances are ignored.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	InstanceId.1 - _string_ (Required) One instance ID returned from previous calls to <run_instances()>.
+	 * 	InstanceId.n - _string_ (Optional) More than one instance IDs returned from previous calls to <run_instances()>.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-RebootInstances.html
+	 * 	Related - <get_console_output()>
+	 */
+	public function reboot_instances($opt = null)
+	{
+		if (!$opt)
+		{
+			$opt = array();
+		}
+
+		return $this->authenticate('RebootInstances', $opt, EC2_DEFAULT_URL);
+	}
 
 
 	/*%******************************************************************************************%*/
@@ -182,27 +568,30 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeregisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DeregisterImage.html
 	 * 	Related - <describe_images()>, <register_image()>
 	 */
 	public function deregister_image($image_id)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($image_id)
-		{
-			$opt['ImageId'] = $image_id;
-		}
+		$opt = array();
+		$opt['ImageId'] = $image_id;
 
 		return $this->authenticate('DeregisterImage', $opt, EC2_DEFAULT_URL);
 	}
 
 	/**
 	 * Method: describe_images()
-	 * 	Returns information about AMIs available for use by the user. This includes both public AMIs (those available for any user to launch) and private AMIs (those owned by the user making the request and those owned by other users that the user making the request has explicit launch permissions for).
+	 * 	The DescribeImages operation returns information about AMIs, AKIs, and ARIs available to the user. Information returned includes image type, product codes, architecture, and kernel and RAM disk IDs. Images available to the user include public images available for any user to launch, private images owned by the user making the request, and private images owned by other users for which the user has explicit launch permissions.
+	 * 
+	 * 	Launch permissions fall into three categories: (a) 'public' where the owner of the AMI granted launch permissions for the AMI to the all group. All users have launch permissions for these AMIs. (b) 'explicit' where the owner of the AMI granted launch permissions to a specific user. (c) 'implicit' where a user has implicit launch permissions for all AMIs he or she owns.
+	 * 
+	 * 	The list of AMIs returned can be modified by specifying AMI IDs, AMI owners, or users with launch permissions. If no options are specified, Amazon EC2 returns all AMIs for which the user has launch permissions.
+	 * 
+	 * 	If you specify one or more AMI IDs, only AMIs that have the specified IDs are returned. If you specify an invalid AMI ID, a fault is returned. If you specify an AMI ID for which you do not have access, it will not be included in the returned results.
+	 * 
+	 * 	If you specify one or more AMI owners, only AMIs from the specified owners and for which you have access are returned. The results can include the account IDs of the specified owners, amazon for AMIs owned by Amazon or self for AMIs that you own.
+	 * 
+	 * 	If you specify a list of executable users, only users that have launch permissions for the AMIs are returned. You can specify account IDs (if you own the AMI(s)), self for AMIs for which you own or have explicit permissions, or all for public AMIs.
 	 * 
 	 * Access:
 	 * 	public
@@ -219,7 +608,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImages.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeImages.html
 	 * 	Related - <deregister_image()>, <register_image()>
 	 */
 	public function describe_images($opt = null)
@@ -234,7 +623,11 @@ class AmazonEC2 extends TarzanCore
 
 	/**
 	 * Method: register_image()
-	 * 	Registers an AMI with Amazon EC2. Images must be registered before they can be launched via <run_instances()>.
+	 * 	Registers an AMI with Amazon EC2. Images must be registered before they can be launched. For more information, see <run_instances()>.
+	 * 
+	 * 	Each AMI is associated with an unique ID which is provided by the Amazon EC2 service through the <register_image()> operation. During registration, Amazon EC2 retrieves the specified image manifest from Amazon S3 and verifies that the image is owned by the user registering the image.
+	 * 
+	 * 	The image manifest is retrieved once and stored within the Amazon EC2. Any modifications to an image in Amazon S3 invalidates this registration. If you make changes to an image, deregister the previous image and register the new image. For more information, see <deregister_image()>.
 	 * 
 	 * Access:
 	 * 	public
@@ -246,20 +639,13 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RegisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-RegisterImage.html
 	 * 	Related - <deregister_image()>, <describe_images()>
 	 */
 	public function register_image($image_location)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($image_location)
-		{
-			$opt['ImageLocation'] = $image_location;
-		}
+		$opt = array();
+		$opt['ImageLocation'] = $image_location;
 
 		return $this->authenticate('RegisterImage', $opt, EC2_DEFAULT_URL);
 	}
@@ -276,28 +662,21 @@ class AmazonEC2 extends TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	image_id - _string_ (Required) Unique ID of a machine image, returned by a call to <register_image()> or <describe_images()>.
+	 * 	image_id - _string_ (Required) ID of the AMI for which an attribute will be described, returned by a call to <register_image()> or <describe_images()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
 	 * 	Related - <modify_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function describe_image_attribute($image_id)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		$opt = array();
+		$opt['ImageId'] = $image_id;
 
-		if ($image_id)
-		{
-			$opt['ImageId'] = $image_id;
-		}
-
-		// This is the only supported value in the EC2 2007-03-01 release.
+		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
 		return $this->authenticate('DescribeImageAttribute', $opt, EC2_DEFAULT_URL);
@@ -325,7 +704,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
@@ -335,39 +714,35 @@ class AmazonEC2 extends TarzanCore
 			$opt = array();
 		}
 
+		$opt['ImageId'] = $image_id;
+		$opt['Attribute'] = $attribute;
+
 		return $this->authenticate('ModifyImageAttribute', $opt, EC2_DEFAULT_URL);
 	}
 
 	/**
 	 * Method: reset_image_attribute()
-	 * 	Resets an attribute of an AMI to its default value.
+	 * 	Resets an attribute of an AMI to its default value (the productCodes attribute cannot be reset).
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	image_id - _string_ (Required) Unique ID of a machine image, returned by a call to <register_image()> or <describe_images()>.
+	 * 	image_id - _string_ (Required) ID of the AMI for which an attribute will be described, returned by a call to <register_image()> or <describe_images()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <modify_image_attribute()>
 	 */
 	public function reset_image_attribute($image_id)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		$opt = array();
+		$opt['ImageId'] = $image_id;
 
-		if ($image_id)
-		{
-			$opt['ImageId'] = $image_id;
-		}
-
-		// This is the only supported value in the EC2 2007-03-01 release.
+		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
 		return $this->authenticate('ResetImageAttribute', $opt, EC2_DEFAULT_URL);
@@ -381,36 +756,27 @@ class AmazonEC2 extends TarzanCore
 	 * Method: confirm_product_instance()
 	 * 	Returns true if the given product code is attached to the instance with the given instance ID. The operation returns false if the product code is not attached to the instance.
 	 * 
+	 * 	Can only be executed by the owner of the AMI. This feature is useful when an AMI owner is providing support and wants to verify whether a user's instance is eligible.
+	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
 	 * 	product_code - _string_ (Required) The product code to confirm is attached to the instance.
-	 * 	instance_id - _string_ (Required) The instance to confirm.
+	 * 	instance_id - _string_ (Required) The instance for which to confirm the product code.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
 	 * 	Related - <describe_instances()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function confirm_product_instance($product_code, $instance_id)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($product_code)
-		{
-			$opt['ProductCode'] = $product_code;
-		}
-
-		if ($instance_id)
-		{
-			$opt['InstanceId'] = $instance_id;
-		}
+		$opt = array();
+		$opt['ProductCode'] = $product_code;
+		$opt['InstanceId'] = $instance_id;
 
 		return $this->authenticate('ConfirmProductInstance', $opt, EC2_DEFAULT_URL);
 	}
@@ -432,7 +798,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeInstances.html
 	 * 	Related - <confirm_product_instance()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function describe_instances($opt = null)
@@ -447,7 +813,19 @@ class AmazonEC2 extends TarzanCore
 
 	/**
 	 * Method: run_instances()
-	 * 	Launches a specified number of instances. A call to <run_instances()> is guaranteed to start no fewer than the requested minimum. If there is insufficient capacity available then no instances will be started. Amazon EC2 will make a best effort attempt to satisfy the requested maximum values.
+	 * 	The RunInstances operation launches a specified number of instances. The Query version of <run_instances()> only allows instances of a single AMI to be launched in one call. This is different from the SOAP API version of the call, but similar to the ec2-run-instances command line tool.
+	 * 
+	 * 	If Amazon EC2 cannot launch the minimum number AMIs you request, no instances launch. If there is insufficient capacity to launch the maximum number of AMIs you request, Amazon EC2 launches as many as possible to satisfy the requested maximum values.
+	 * 
+	 * 	Every instance is launched in a security group. If you do not specify a security group at launch, the instances start in your default security group. For more information on creating security groups, see <create_security_group()>.
+	 * 
+	 * 	You can provide an optional key pair ID for each image in the launch request (for more information, see <create_key_pair()>). All instances that are created from images that use this key pair will have access to the associated public key at boot. You can use this key to provide secure access to an instance of an image on a per-instance basis. Amazon EC2 public images use this feature to provide secure access without passwords. IMPORTANT: Launching public images without a key pair ID will leave them inaccessible.
+	 * 
+	 * 	The public key material is made available to the instance at boot time by placing it in the openssh_id.pub file on a logical device that is exposed to the instance as /dev/sda2 (the instance store). The format of this file is suitable for use as an entry within ~/.ssh/authorized_keys (the OpenSSH format). This can be done at boot (e.g., as part of rc.local) allowing for secure access without passwords.
+	 * 
+	 * 	Optional user data can be provided in the launch request. All instances that collectively comprise the launch request have access to this data For more information, see Instance Metadata. NOTE: If any of the AMIs have a product code attached for which the user has not subscribed, the <run_instances()> call will fail.
+	 * 
+	 * 	IMPORTANT: We strongly recommend using the 2.6.18 Xen stock kernel with the c1.medium and c1.xlarge instances. Although the default Amazon EC2 kernels will work, the new kernels provide greater stability and performance for these instance types. For more information about kernels, see Kernels, RAM Disks, and Block Device Mappings.
 	 * 
 	 * Access:
 	 * 	public
@@ -459,8 +837,13 @@ class AmazonEC2 extends TarzanCore
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 
 	 * Keys for the $opt parameter:
-	 * 	AddressingType - _string_ (Optional) The addressing scheme to launch the instance with. The addressing type can be direct or public. In the direct scheme the instance has one IP address that is not NAT'd. For the public scheme the instance has a NAT'd IP address. See the section called "Instance Addressing" for more information on instance addressing.
+	 * 	BlockDeviceMapping.n.DeviceName - _string_ (Optional; Required if BlockDeviceMapping.n.VirtualName is used) Specifies the device to which you are mapping a virtual name. For example: sdb.
+	 * 	BlockDeviceMapping.n.VirtualName - _string_ (Optional; Required if BlockDeviceMapping.n.DeviceName is used) 	Specifies the virtual name to map to the corresponding device name. For example: instancestore0.
+	 * 	InstanceType - _string_ (Optional) Specifies the instance type. Options include 'm1.small', 'm1.large', 'm1.xlarge', 'c1.medium', and 'c1.xlarge'. Defaults to 'm1.small'.
+	 * 	KernelId - _string_ (Optional) 	The ID of the kernel with which to launch the instance. For information on finding available kernel IDs, see ec2-describe-images.
 	 * 	KeyName - _string_ (Optional) Name of the keypair to launch instances with.
+	 * 	Placement.AvailabilityZone - _string_ (Optional) Specifies the availability zone in which to launch the instance(s). To display a list of availability zones in which you can launch the instances, use the <describe_availability_zones()> operation. Default is determined by Amazon EC2.
+	 * 	RamdiskId - _string_ (Optional) The ID of the RAM disk with which to launch the instance. Some kernels require additional drivers at launch. Check the kernel requirements for information on whether you need to specify a RAM disk. To find kernel requirements, go to the Resource Center and search for the kernel ID.
 	 * 	SecurityGroup.n - _string_ (Optional) Names of the security groups to associate the instances with.
 	 * 	UserData - _string_ (Optional) The user data available to the launched instances. This should be base64-encoded. See the UserDataType data type for encoding details.
 	 * 
@@ -468,7 +851,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RunInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-RunInstances.html
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <terminate_instances()>
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
@@ -478,20 +861,9 @@ class AmazonEC2 extends TarzanCore
 			$opt = array();
 		}
 
-		if ($image_id)
-		{
-			$opt['ImageId'] = $image_id;
-		}
-
-		if ($min_count)
-		{
-			$opt['MinCount'] = $min_count;
-		}
-
-		if ($max_count)
-		{
-			$opt['MaxCount'] = $max_count;
-		}
+		$opt['ImageId'] = $image_id;
+		$opt['MinCount'] = $min_count;
+		$opt['MaxCount'] = $max_count;
 
 		return $this->authenticate('RunInstances', $opt, EC2_DEFAULT_URL);
 	}
@@ -514,7 +886,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-TerminateInstances.html
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <run_instances()>
 	 */
 	public function terminate_instances($opt = null)
@@ -533,32 +905,25 @@ class AmazonEC2 extends TarzanCore
 
 	/**
 	 * Method: create_key_pair()
-	 * 	Creates a new 2048 bit RSA keypair and returns a unique ID that can be used to reference this keypair when launching new instances.
+	 * 	Creates a new 2048 bit RSA key pair and returns a unique ID that can be used to reference this key pair when launching new instances. For more information, see <run_instances()>.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	key_name - _string_ (Required) Unique name for this key.
+	 * 	key_name - _string_ (Required) A unique name for the key pair.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
 	 * 	Related - <delete_key_pair()>, <describe_key_pairs()>
 	 */
 	public function create_key_pair($key_name)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($key_name)
-		{
-			$opt['KeyName'] = $key_name;
-		}
+		$opt = array();
+		$opt['KeyName'] = $key_name;
 
 		return $this->authenticate('CreateKeyPair', $opt, EC2_DEFAULT_URL);
 	}
@@ -577,27 +942,20 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
 	 * 	Related - <create_key_pair()>, <describe_key_pairs()>
 	 */
 	public function delete_key_pair($key_name)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($key_name)
-		{
-			$opt['KeyName'] = $key_name;
-		}
+		$opt = array();
+		$opt['KeyName'] = $key_name;
 
 		return $this->authenticate('DeleteKeyPair', $opt, EC2_DEFAULT_URL);
 	}
 
 	/**
 	 * Method: describe_key_pairs()
-	 * 	Returns information about keypairs available for use by the user making the request. Selected keypairs may be specified or the list may be left empty if information for all registered keypairs is required.
+	 * 	Returns information about key pairs available to you. If you specify key pairs, information about those key pairs is returned. Otherwise, information for all registered key pairs is returned.
 	 * 
 	 * Access:
 	 * 	public
@@ -612,7 +970,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
 	 * 	Related - <create_key_pair()>, <delete_key_pair()>
 	 */
 	public function describe_key_pairs($opt = null)
@@ -658,7 +1016,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
 	 * 	Related - <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
@@ -668,10 +1026,7 @@ class AmazonEC2 extends TarzanCore
 			$opt = array();
 		}
 
-		if ($group_name)
-		{
-			$opt['GroupName'] = $group_name;
-		}
+		$opt['GroupName'] = $group_name;
 
 		return $this->authenticate('AuthorizeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
 	}
@@ -691,57 +1046,41 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function create_security_group($group_name, $group_description)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($group_name)
-		{
-			$opt['GroupName'] = $group_name;
-		}
-
-		if ($group_description)
-		{
-			$opt['GroupDescription'] = $group_description;
-		}
+		$opt = array();
+		$opt['GroupName'] = $group_name;
+		$opt['GroupDescription'] = $group_description;
 
 		return $this->authenticate('CreateSecurityGroup', $opt, EC2_DEFAULT_URL);
 	}
 
 	/**
 	 * Method: delete_security_group()
-	 * 	Deletes a security group. If an attempt is made to delete a security group and any instances exist that are members of that group a fault is returned.
+	 * 	Deletes a security group.
+	 * 
+	 * 	If you attempt to delete a security group that contains instances, a fault is returned. If you attempt to delete a security group that is referenced by another security group, a fault is returned. For example, if security group B has a rule that allows access from security group A, security group A cannot be deleted until the allow rule is removed.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	group_name - _string_ (Required) Name for the new security group.
+	 * 	group_name - _string_ (Required) Name for the security group.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <describe_security_groups()>
 	 */
 	public function delete_security_group($group_name)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		if ($group_name)
-		{
-			$opt['GroupName'] = $group_name;
-		}
+		$opt = array();
+		$opt['GroupName'] = $group_name;
 
 		return $this->authenticate('DeleteSecurityGroup', $opt, EC2_DEFAULT_URL);
 	}
@@ -763,7 +1102,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>
 	 */
 	public function describe_security_groups($opt = null)
@@ -805,7 +1144,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2007-03-01/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
 	 * 	Related - <authorize_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)
@@ -815,10 +1154,7 @@ class AmazonEC2 extends TarzanCore
 			$opt = array();
 		}
 
-		if ($group_name)
-		{
-			$opt['GroupName'] = $group_name;
-		}
+		$opt['GroupName'] = $group_name;
 
 		return $this->authenticate('RevokeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
 	}
