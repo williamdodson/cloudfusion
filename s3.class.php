@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.10.17
+ * 	2008.10.21
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -517,10 +517,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function get_bucket($bucket, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->list_objects($bucket, $opt);
 	}
@@ -972,10 +969,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function create_object($bucket, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
@@ -1013,10 +1007,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function get_object($bucket, $filename, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
@@ -1188,10 +1179,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function list_objects($bucket, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
@@ -1334,10 +1322,7 @@ class AmazonS3 extends TarzanCore
 	 */
 	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;

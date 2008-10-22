@@ -4,10 +4,10 @@
  * 	Amazon Simple Queue Service (http://aws.amazon.com/sqs)
  *
  * Version:
- * 	2008.09.28
+ * 	2008.10.21
  * 
  * Copyright:
-* 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2008 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
@@ -208,10 +208,7 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function set_queue_attributes($queue_url, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		if (isset($opt['VisibilityTimeout']))
 		{
@@ -277,10 +274,7 @@ class AmazonSQS extends TarzanCore
 	 */
 	public function receive_message($queue_url, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('ReceiveMessage', $opt, $queue_url);
 	}

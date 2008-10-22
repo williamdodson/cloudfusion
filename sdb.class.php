@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2008.08.11
+ * 	2008.10.21
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -131,10 +131,7 @@ class AmazonSDB extends TarzanCore
 	 */
 	public function list_domains($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('ListDomains', $opt, SDB_DEFAULT_URL);
 	}
@@ -430,10 +427,7 @@ class AmazonSDB extends TarzanCore
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;
@@ -487,10 +481,7 @@ class AmazonSDB extends TarzanCore
 	 */
 	public function query_with_attributes($domain_name, $opt = null, $expression = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;

@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2008.08.11
+ * 	2008.10.21
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -99,10 +99,10 @@ class AmazonAAWS extends TarzanCore
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
 	 */
-	public function __construct($key = null, $secret_key = null, $account_id = null, $assoc_id = null)
+	public function __construct($key = null, $secret_key = null, $assoc_id = null)
 	{
-		$this->api_version = '2007-10-29';
-		parent::__construct($key, $secret_key, $account_id, $assoc_id);
+		$this->api_version = '2008-10-07';
+		parent::__construct($key, $secret_key, null, $assoc_id);
 	}
 
 
@@ -195,7 +195,7 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/BrowseNodeLookup.html
+	 * 	AWS Method - UPDATE
 	 */
 	public function browse_node_lookup($browse_node_id, $response_group = 'BrowseNodeInfo', $locale = AAWS_LOCALE_US)
 	{
@@ -211,91 +211,27 @@ class AmazonAAWS extends TarzanCore
 	// CART METHODS
 
 	/**
-	 * Method: cart_add()
-	 * 	The CartAdd operation enables you to add items to an existing remote shopping cart. CartAdd can only be used to place a new item in a shopping cart. It cannot be used to increase the quantity of an item already in the cart. If you would like to increase the quantity of an item that is already in the cart, you must use the CartModify operation.
 	 * 
-	 * 	To add items to a cart, you must specify the cart using the CartId and HMAC values, which are returned by the CartCreate operation.
-	 *
-	 * 	Two caveats: (1) Although the Amazon AAWS service allows for adding up to 10 items at once, this method only supports adding one at a time because of how the rest of the API is constructed. (2) The ASIN parameter discussed in the Amazon documentation is not supported in this API. You MUST use OfferListingId instead as this is preferred by Amazon.
-	 * 
-	 * Access:
-	 * 	public
-	 * 
-	 * Parameters:
-	 * 	offer_listing_id - _integer_ (Required) An offer listing ID is a token that uniquely identifies an item that is sold by any merchant, including Amazon. This parameter MUST be used as support for Amazon's ASIN parameter is not available in this API.
-	 * 	cart_id - _string_ (Required) Alphanumeric token returned by CartCreate that identifies a cart.
-	 * 	hmac - _string_ (Required) Hash Message Authentication Code returned by CartCreate that identifies a cart. This is an encrypted alphanumeric token that is used to authenticate cart operations.
-	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
-	 * 
-	 * Keys for the $opt parameter:
-	 * 	ListItemId - _string_ (Optional) The ListItemId value is returned by the ListItems response group. The value identifies an item on a list, such as a wishlist. To add this item to a cart, you must include in the CartAdd request the item's ASIN and ListItemId. The ListItemId attaches the name and address of the list owner, which the ASIN alone does not.
-	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer’s Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False (the default) the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the value is always false.
-	 * 	Quantity - _integer_ (Optional) Specifies number of items to be added to the cart where N is a positive integer between 1 and 999.
-	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
-	 * 
-	 * Returns:
-	 * 	<TarzanHTTPResponse> object
-	 * 
-	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CartAdd.html
-	 * 	Related - <cart_add()>, <cart_clear()>, <cart_create()>, <cart_get()>, <cart_modify()>
 	 */
-	public function cart_add($offer_listing_id, $cart_id, $hmac, $opt = null, $locale = AAWS_LOCALE_US)
-	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
-
-		// Convert the required values.
-		$opt['Item.1.OfferListingId'] = $offer_listing_id;
-		$opt['CartId'] = $cart_id;
-		$opt['HMAC'] = $hmac;
-
-		// Convert quantity to the correct format
-		if (!isset($opt['Quantity']) || empty($opt['Quantity']))
-		{
-			$opt['Quantity'] = 1;
-		}
-		$opt['Item.1.Quantity'] = $opt['Quantity'];
-		unset($opt['Quantity']);
-
-		// Convert listitemid to the correct format.
-		if (!isset($opt['ListItemId']) || empty($opt['ListItemId']))
-		{
-			$opt['Item.1.ListItemId'] = $opt['ListItemId'];
-		}
-		unset($opt['ListItemId']);
-
-		return $this->authenticate('CartAdd', $opt, $locale);
-	}
+	public function cart_add() {}
 
 	/**
-	 * Cart Clear
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	public function cart_clear() {}
 	
 	/**
-	 * Cart Create
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
-	public function cart_create() {}	
+	public function cart_create() {}
 
 	/**
-	 * Cart Get
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	public function cart_get() {}
 	
 	/**
-	 * Cart Modify
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	public function cart_modify() {}
 
@@ -326,15 +262,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentLookup.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
 	 */
 	public function customer_content_lookup($customer_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['CustomerId'] = $customer_id;
 
@@ -363,15 +296,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/CustomerContentSearch.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
 	 */
 	public function customer_content_search($email_name, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		if (!isset($opt['CustomerPage']) || empty($opt['CustomerPage']))
 		{
@@ -414,14 +344,11 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/Help.html
+	 * 	AWS Method - UPDATE
 	 */
 	public function help($opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('Help', $opt, $locale);
 	}
@@ -446,15 +373,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemLookup.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <item_lookup()>, <item_search()>
 	 */
 	public function item_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['ItemId'] = $item_id;
 
@@ -477,15 +401,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ItemSearch.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <item_lookup()>, <item_search()>
 	 */
 	public function item_search($keywords, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['Keywords'] = $keywords;
 
@@ -519,15 +440,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListLookup.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <list_lookup()>, <list_search()>
 	 */
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['ListId'] = $list_id;
 		$opt['ListType'] = $list_type;
@@ -552,15 +470,12 @@ class AmazonAAWS extends TarzanCore
 	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2007-10-29/DG/ListSearch.html
+	 * 	AWS Method - UPDATE
 	 * 	Related - <list_lookup()>, <list_search()>
 	 */
 	public function list_search($opt = null, $locale = AAWS_LOCALE_US)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('ListSearch', $opt, $locale);
 	}
@@ -570,48 +485,153 @@ class AmazonAAWS extends TarzanCore
 	// SELLER METHODS
 
 	/**
-	 * Seller Listing Lookup
+	 * Method: seller_listing_lookup()
+	 * 	Enables you to return information about a seller's listings, including product descriptions, availability, condition, and quantity available. The response also includes the seller's nickname. Each request requires a seller ID.
 	 * 
-	 * @todo Build this method. No work done on this yet.
+	 * 	You can also find a seller's items using ItemLookup. There are, however, some reasons why it is better to use <seller_listing_lookup()>: (a) <seller_listing_lookup()> enables you to search by seller ID. (b) <seller_listing_lookup()> returns much more information than <item_lookup()>.
+	 * 
+	 * 	This operation only works with sellers who have less than 100,000 items for sale. Sellers that have more items for sale should use, instead of Amazon Associates Web Service, other APIs, including the Amazon Inventory Management System, and the Merchant@ API.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	item_id - _string_ (Optional) Number that uniquely identifies an item. The valid value depends on the value for IdType. Allows an Exchange ID, a Listing ID, an ASIN, or a SKU.
+	 * 	id_type - _string_ (Optional) Use the IdType parameter to specify the value type of the Id parameter value. If you are looking up an Amazon Marketplace item, use Exchange, ASIN, or SKU as the value for IdType. Discontinued, out of stock, or unavailable products will not be returned if IdType is Listing, SKU, or ASIN. Those products will be returned, however, if IdType is Exchange. Allows 'Exchange', 'Listing', 'ASIN', 'SKU'.
+	 * 	seller_id - _string_ (Optional) Alphanumeric token that uniquely identifies a seller. This parameter limits the results to a single seller ID.
+	 * 	response_group - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <seller_listing_search()>, <seller_lookup()>
 	 */
-	function seller_listing_lookup() {}
+	public function seller_listing_lookup($item_id, $id_type, $seller_id, $response_group = 'SellerListing', $locale = AAWS_LOCALE_US)
+	{
+		$opt = array();
+		$opt['Id'] = $item_id;
+		$opt['IdType'] = $id_type;
+		$opt['SellerId'] = $seller_id;
+		$opt['ResponseGroup'] = $response_group;
+
+		return $this->authenticate('SellerListingLookup', $opt, $locale);
+	}
 
 	/**
-	 * Seller Listing Search
+	 * Method: seller_listing_search()
+	 * 	Enables you to search for items offered by specific sellers. You cannot use <seller_listing_search()> to look up items sold by merchants. To look up an item sold by a merchant, use <item_lookup()> or <item_search()> along with the MerchantId parameter.
 	 * 
-	 * @todo Build this method. No work done on this yet.
+	 * 	<seller_listing_search()> returns the listing ID or exchange ID of an item. Typically, you use those values with <seller_listing_lookup()> to find out more about those items.
+	 * 
+	 * 	Each request returns up to ten items. By default, the first ten items are returned. You can use the ListingPage parameter to retrieve additional pages of (up to) ten listings. To use Amazon Associates Web Service, sellers must have less than 100,000 items for sale. Sellers that have more items for sale should use, instead of Amazon Associates Web Service, other seller APIs, including the Amazon Inventory Management System, and the Merchant@ API.
+	 * 
+	 * 	<seller_listing_search()> requires a seller ID, which means that you cannot use this operation to search across all sellers. Amazon Associates Web Service does not have a seller-specific operation that does this. To search across all sellers, use <item_lookup()> or <item_search()>.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	seller_id - _string_ (Required) An alphanumeric token that uniquely identifies a seller. These tokens are created by Amazon and distributed to sellers.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ListingPage - _integer_ (Optional) Page of the response to return. Up to ten lists are returned per page. For customers that have more than ten lists, more than one page of results are returned. By default, the first page is returned. To return another page, specify the page number. Allows 1 through 500.
+	 * 	OfferStatus - _string_ (Optional) Specifies whether the product is available (Open), or not (Closed.) Closed products are those that are discontinued, out of stock, or unavailable. Defaults to 'Open'.
+	 * 	Sort - _string_ (Optional) Use the Sort parameter to specify how your seller listing search results will be ordered. The -bfp (featured listings - default), applies only to the US, UK, and DE locales. Allows '-startdate', 'startdate', '+startdate', '-enddate', 'enddate', '-sku', 'sku', '-quantity', 'quantity', '-price', 'price |+price', '-title', 'title'.
+	 * 	Title - _string_ (Optional) Searches for products based on the product's name. Keywords and Title are mutually exclusive; you can have only one of the two in a request.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <seller_listing_lookup()>, <seller_lookup()>
 	 */
-	function seller_listing_search() {}
+	public function seller_listing_search($seller_id, $opt = null, $locale = AAWS_LOCALE_US)
+	{
+		if (!$opt) $opt = array();
+
+		$opt['SellerId'] = $seller_id;
+
+		return $this->authenticate('SellerListingSearch', $opt, $locale);
+	}
 
 	/**
-	 * Seller Lookup
+	 * Method: seller_lookup()
+	 * 	Returns detailed information about sellers and, in the US locale, merchants. To lookup a seller, you must use their seller ID. The information returned includes the seller's name, average rating by customers, and the first five customer feedback entries. <seller_lookup()> will not, however, return the seller's e-mail or business addresses.
 	 * 
-	 * @todo Build this method. No work done on this yet.
+	 * A seller must enter their information. Sometimes, sellers do not. In that case, <seller_lookup()> cannot return some seller-specific information.
+	 * 
+	 * To look up more than one seller in a single request, insert a comma-delimited list of up to five seller IDs in the SellerId parameter of the REST request. Customers can rate sellers. 5 is the best rating; 0 is the worst. The rating reflects the customer's experience with the seller. The <seller_lookup()> operation, by default, returns review comments by individual customers.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	seller_id - _string_ (Required) An alphanumeric token that uniquely identifies a seller. These tokens are created by Amazon and distributed to sellers.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	FeedbackPage - _string_ (Optional) Specifies the page of reviews to return. Up to five reviews are returned per page. The first page is returned by default. To access additional pages, use this parameter to specify the desired page. The maximum number of pages that can be returned is 10 (50 feedback items). Allows 1 through 10.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <seller_listing_lookup()>, <seller_listing_search()>
 	 */
-	function seller_lookup() {}
+	public function seller_lookup($seller_id, $opt = null, $locale = AAWS_LOCALE_US)
+	{
+		if (!$opt) $opt = array();
+
+		$opt['SellerId'] = $seller_id;
+
+		return $this->authenticate('SellerLookup', $opt, $locale);
+	}
+
+
+	/*%******************************************************************************************%*/
+	// VEHICLE METHODS
+
+	/**
+	 * 
+	 */
+	public function vehicle_part_lookup() {}
+
+	/**
+	 * 
+	 */
+	public function vehicle_part_search() {}
+
+	/**
+	 * 
+	 */
+	public function vehicle_search() {}
 
 
 	/*%******************************************************************************************%*/
 	// OTHER LOOKUP METHODS
 
 	/**
-	 * Similarity Lookup
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	function similarity_lookup() {}
 
 	/**
-	 * Tag Lookup
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	function tag_lookup() {}
 
 	/**
-	 * Transaction Lookup
 	 * 
-	 * @todo Build this method. No work done on this yet.
 	 */
 	function transaction_lookup() {}
 }

@@ -100,10 +100,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_availability_zones($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeAvailabilityZones', $opt, EC2_DEFAULT_URL);
 	}
@@ -183,10 +180,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_addresses($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeAddresses', $opt, EC2_DEFAULT_URL);
 	}
@@ -298,10 +292,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_snapshots($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeSnapshots', $opt, EC2_DEFAULT_URL);
 	}
@@ -392,10 +383,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_volumes($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeVolumes', $opt, EC2_DEFAULT_URL);
 	}
@@ -455,10 +443,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function detach_volume($volume_id, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['VolumeId'] = $volume_id;
 
@@ -542,10 +527,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function reboot_instances($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('RebootInstances', $opt, EC2_DEFAULT_URL);
 	}
@@ -613,10 +595,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_images($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeImages', $opt, EC2_DEFAULT_URL);
 	}
@@ -709,10 +688,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['ImageId'] = $image_id;
 		$opt['Attribute'] = $attribute;
@@ -803,10 +779,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_instances($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeInstances', $opt, EC2_DEFAULT_URL);
 	}
@@ -856,10 +829,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['ImageId'] = $image_id;
 		$opt['MinCount'] = $min_count;
@@ -891,10 +861,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function terminate_instances($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('TerminateInstances', $opt, EC2_DEFAULT_URL);
 	}
@@ -975,10 +942,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_key_pairs($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeKeyPairs', $opt, EC2_DEFAULT_URL);
 	}
@@ -1021,10 +985,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['GroupName'] = $group_name;
 
@@ -1107,10 +1068,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function describe_security_groups($opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		return $this->authenticate('DescribeSecurityGroups', $opt, EC2_DEFAULT_URL);
 	}
@@ -1149,10 +1107,7 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)
 	{
-		if (!$opt)
-		{
-			$opt = array();
-		}
+		if (!$opt) $opt = array();
 
 		$opt['GroupName'] = $group_name;
 
