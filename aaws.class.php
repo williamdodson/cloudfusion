@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2008.10.21
+ * 	2008.10.26
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -131,37 +131,37 @@ class AmazonAAWS extends TarzanCore
 		{
 			// United Kingdom
 			case AAWS_LOCALE_UK:
-				$hostname = 'http://ecs.amazonaws.co.uk/';
+				$hostname = 'http://ecs.amazonaws.co.uk';
 				break;
 
 			// Canada
 			case AAWS_LOCALE_CANADA:
-				$hostname = 'http://ecs.amazonaws.ca/';
+				$hostname = 'http://ecs.amazonaws.ca';
 				break;
 
 			// France
 			case AAWS_LOCALE_FRANCE:
-				$hostname = 'http://ecs.amazonaws.fr/';
+				$hostname = 'http://ecs.amazonaws.fr';
 				break;
 
 			// Germany
 			case AAWS_LOCALE_GERMANY:
-				$hostname = 'http://ecs.amazonaws.de/';
+				$hostname = 'http://ecs.amazonaws.de';
 				break;
 
 			// Japan
 			case AAWS_LOCALE_JAPAN:
-				$hostname = 'http://ecs.amazonaws.jp/';
+				$hostname = 'http://ecs.amazonaws.jp';
 				break;
 
 			// Default to United States
 			default:
-				$hostname = 'http://ecs.amazonaws.com/';
+				$hostname = 'http://ecs.amazonaws.com';
 				break;
 		}
 
 		// Send the request to the service.
-		$request_url = $hostname . 'onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
+		$request_url = $hostname . '/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
 		$request =& new $this->request_class($request_url, $this->set_proxy);
 		$request->sendRequest();
 
@@ -188,8 +188,16 @@ class AmazonAAWS extends TarzanCore
 	 * 
 	 * Parameters:
 	 * 	browse_node_id - _integer_ (Required) A positive integer assigned by Amazon that uniquely identifies a product category.
-	 * 	response_group - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -197,11 +205,15 @@ class AmazonAAWS extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - UPDATE
 	 */
-	public function browse_node_lookup($browse_node_id, $response_group = 'BrowseNodeInfo', $locale = AAWS_LOCALE_US)
+	public function browse_node_lookup($browse_node_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt) $opt = array();
 		$opt['BrowseNodeId'] = $browse_node_id;
-		$opt['ResponseGroup'] = $response_group;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('BrowseNodeLookup', $opt, $locale);
 	}
@@ -252,11 +264,16 @@ class AmazonAAWS extends TarzanCore
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 * 
 	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.
 	 * 	ReviewPage - _integer_ (Optional) A positive integer that specifies the page of reviews to read. There are ten reviews per page. For example, to read reviews 11 through 20, specify ReviewPage=2. The total number of pages is returned in the TotalPages response tag.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
 	 * 	TagPage - _integer_ (Optional) Specifies the page of results to return. There are ten results on a page. The maximum page number is 400.
 	 * 	TagsPerPage - _integer_ (Optional) The number of tags to return that are associated with a specified item.
 	 * 	TagSort - _string_ (Optional) Specifies the sorting order for the results. Allows 'FirstUsed', 'LastUsed', 'Name', or 'Usages' (default)
-	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -268,15 +285,19 @@ class AmazonAAWS extends TarzanCore
 	public function customer_content_lookup($customer_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['CustomerId'] = $customer_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('CustomerContentLookup', $opt, $locale);
 	}
 
 	/**
 	 * Method: customer_content_search()
-	 * 	For a given customer Email address or name, the <customer_content_search()> operation returns matching customer IDs, names, nicknames, and residence information (city, state, and country). In general, supplying an Email address returns unique results whereas supplying a name more often returns multiple results.
+	 * 	For a given customer Email address or name, the <customer_content_search()> operation returns matching customer IDs, names, nicknames, and residence information (city, state, and country). In general, supplying an Email address returns unique results whereas supplying a name more often returns multiple results. This operation is US-only.
 	 * 
 	 * Access:
 	 * 	public
@@ -284,13 +305,17 @@ class AmazonAAWS extends TarzanCore
 	 * Parameters:
 	 * 	email_name - _string_ (Required) Either the email address or the name of the customer you want to look up the ID for.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 * 
 	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	CustomerPage - _integer_ (Optional) A positive integer that specifies the page of customer IDs to return. Up to twenty customer IDs are returned per page. Defaults to 1.
 	 * 	Email - _string_ (Optional) Besides the first parameter, you can set the email address here.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	Name - _string_ (Optional) Besides the first parameter, you can set the name here.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -299,14 +324,9 @@ class AmazonAAWS extends TarzanCore
 	 * 	AWS Method - UPDATE
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
 	 */
-	public function customer_content_search($email_name, $opt = null, $locale = AAWS_LOCALE_US)
+	public function customer_content_search($email_name, $opt = null)
 	{
 		if (!$opt) $opt = array();
-
-		if (!isset($opt['CustomerPage']) || empty($opt['CustomerPage']))
-		{
-			$opt['CustomerPage'] = 1;
-		}
 
 		if (strpos($email_name, '@'))
 		{
@@ -317,7 +337,12 @@ class AmazonAAWS extends TarzanCore
 			$opt['Name'] = $email_name;
 		}
 
-		return $this->authenticate('CustomerContentSearch', $opt, $locale);
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('CustomerContentSearch', $opt, AAWS_LOCALE_US);
 	}
 
 
@@ -337,8 +362,13 @@ class AmazonAAWS extends TarzanCore
 	 * 
 	 * Keys for the $opt parameter:
 	 * 	About - _string_ (Optional) Specifies the operation or response group about which you want more information. Allows all AAWS operations, all AAWS response groups.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	HelpType - _string_ (Optional) Specifies whether the help topic is an operation or response group. HelpType and About values must both be operations or response groups, not a mixture of the two. Allows 'Operation' or 'ResponseGroup'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Request' or 'Help'.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -349,6 +379,11 @@ class AmazonAAWS extends TarzanCore
 	public function help($opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('Help', $opt, $locale);
 	}
@@ -366,8 +401,28 @@ class AmazonAAWS extends TarzanCore
 	 * 
 	 * Parameters:
 	 * 	item_id - _string_ (Required) A positive integer that unique identifies an item. The meaning of the number is specified by IdType. That is, if IdType is ASIN, the ItemId value is an ASIN. If ItemId is an ASIN, a search index cannot be specified in the request.
-	 * 	opt - _array_ (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All," a separate set of responses is returned for each valid value of Condition. The default value is "New" (not "All"). So, if your request does not return results, consider setting the value to "All." When the value is "New," the ItemSearch Availability parameter cannot be set to "Available." Amazon only sells items that are "New." Allows 'New', 'Used', 'Collectible', 'Refurbished', and 'All'. Defaults to 'New'.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	IdType - _string_ (Optional) Type of item identifier used to look up an item. All IdTypes except ASINx require a SearchIndex to be specified. SKU requires a MerchantId to be specified also. Allows 'ASIN', 'SKU', 'UPC', 'EAN', 'ISBN' (US only, when search index is Books), and 'JAN'. UPC is not valid in the Canadian locale. Defaults to 'ASIN'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	OfferPage - _string_ (Optional) Page of offers returned. There are 10 offers per page. To examine offers 11 trough 20, for example, set OfferPage to 2. Allows 1 through 100.
+	 * 	RelatedItemsPage - _integer_ (Optional) This optional parameter is only valid when the RelatedItems response group is used. Each ItemLookup request can return, at most, ten related items. The RelatedItemsPage value specifies the set of ten related items to return. A value of 2, for example, returns the second set of ten related items.
+	 * 	RelationshipType - _string_ (Optional) This parameter is required when the RelatedItems response group is used. The type of related item returned is specified by the RelationshipType parameter. Sample values include Episode, Season, and Tracks. For a complete list of types, go to the documentation for "Relationship Types". Required when 'RelatedItems' response group is used.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Check the documentation for all allowed values.
+	 * 	ReviewPage - _integer_ (Optional) Page of reviews returned. There are 5 reviews per page. To examine reviews 6 through 10, for example, set ReviewPage to 2. Allows 1 through 20.
+	 * 	ReviewSort - _string_ (Optional) Specifies the order in which Reviews are sorted in the return. Allows '-HelpfulVotes', 'HelpfulVotes', '-OverallRating', 'OverallRating', 'SubmissionDate' and '-SubmissionDate'. Defaults to '-SubmissionDate'.
+	 * 	SearchIndex - _string_ (Optional) The product category to search. Constraint: If ItemIds an ASIN, a search index cannot be specified in the request. Required for for non-ASIN ItemIds. Allows any valid search index. See the "Search Indices" documentation page for more details.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TagPage - _integer_ (Optional) Specifies the page of results to return. There are ten results on a page. Allows 1 through 400.
+	 * 	TagsPerPage - _integer_ (Optional) The number of tags to return that are associated with a specified item.
+	 * 	TagSort - _string_ (Optional) Specifies the sorting order for the results. Allows 'FirstUsed', '-FirstUsed', 'LastUsed', '-LastUsed', 'Name', '-Name', 'Usages', and '-Usages'. Defaults to '-Usages'.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	VariationPage - _string_ (Optional) Page number of variations returned by ItemLookup. By default, ItemLookup returns all variations. Use VariationPage to return a subsection of the response. There are 10 variations per page. To examine offers 11 trough 20, for example, set VariationPage to 2. Allows 1 through 150.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -379,8 +434,12 @@ class AmazonAAWS extends TarzanCore
 	public function item_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['ItemId'] = $item_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('ItemLookup', $opt, $locale);
 	}
@@ -394,8 +453,49 @@ class AmazonAAWS extends TarzanCore
 	 * 
 	 * Parameters:
 	 * 	keywords - _string_ (Required) A word or phrase associated with an item. The word or phrase can be in various product fields, including product title, author, artist, description, manufacturer, and so forth. When, for example, the search index equals "MusicTracks", the Keywords parameter enables you to search by song title.
-	 * 	opt - _array_ (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	Actor - _string_ (Optional) Name of an actor associated with the item. You can enter all or part of the name.
+	 * 	Artist - _string_ (Optional) 	Name of an artist associated with the item. You can enter all or part of the name.
+	 * 	AudienceRating - _string_ (Optional) Movie ratings based on MPAA ratings or age, depending upon the locale. You may specify one or more values in a comma-separated list.
+	 * 	Author - _string_ (Optional) Name of an author associated with the item. You can enter all or part of the name.
+	 * 	Availability - _string_ (Optional) Enables ItemSearch to return only those items that are available. This parameter must be used in combination with a merchant ID and Condition. When Availability is set to "Available," the Condition parameter cannot be set to "New".
+	 * 	Brand - _string_ (Optional) Name of a brand associated with the item. You can enter all or part of the name.
+	 * 	BrowseNode - _integer_ (Optional) Browse nodes are positive integers that identify product categories.
+	 * 	City - _string_ (Optional) Name of a city associated with the item. You can enter all or part of the name. This parameter only works in the US locale.
+	 * 	Composer - _string_ (Optional) Name of an composer associated with the item. You can enter all or part of the name.
+	 * 	Condition - _string_ (Optional) Use the Condition parameter to filter the offers returned in the product list by condition type. By default, Condition equals "New". If you do not get results, consider changing the value to "All. When the Availability parameter is set to "Available," the Condition parameter cannot be set to "New". ItemSearch returns up to ten search results at a time. Allows 'New', 'Used', 'Collectible', 'Refurbished', 'All'.
+	 * 	Conductor - _string_ (Optional) Name of a conductor associated with the item. You can enter all or part of the name.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	Director - _string_ (Optional) Name of a director associated with the item. You can enter all or part of the name.
+	 * 	ItemPage - _integer_ (Optional) Retrieves a specific page of items from all of the items in a response. Up to ten items are returned on a page unless Condition equals "All." In that case, returns up to three results per Condition, for example, three new, three used, three refurbished, and three collectible items. Or, for example, if there are no collectible or refurbished items being offered, returns three new and three used items. The total number of pages of items found is returned in the TotalPages response tag. Allows 1 through 400.
+	 * 	Keywords - _string_ (Optional) A word or phrase associated with an item. The word or phrase can be in various product fields, including product title, author, artist, description, manufacturer, and so forth. When, for example, the search index equals "MusicTracks," the Keywords parameter enables you to search by song title.
+	 * 	Manufacturer - _string_ (Optional) Name of a manufacturer associated with the item. You can enter all or part of the name.
+	 * 	MaximumPrice - _string_ (Optional) Specifies the maximum price of the items in the response. Prices are in terms of the lowest currency denomination, for example, pennies.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	MinimumPrice - _string_ (Optional) Specifies the minimum price of the items in the response. Prices are in terms of the lowest currency denomination, for example, pennies.
+	 * 	Neighborhood - _string_ (Optional) Name of a neighborhood You can enter all or part of the name. The neighborhoods are located in one of the valid values for City.
+	 * 	Orchestra - _string_ (Optional) Name of an orchestra associated with the item. You can enter all or part of the name.
+	 * 	PostalCode - _string_ (Optional) Postal code of the merchant. In the US, the postal code is the postal code. This parameter enables you to search for items sold in a specified region of a country.
+	 * 	Power - _string_ (Optional) Performs a book search using a complex query string. Only works when the search index is set equal to "Books".
+	 * 	Publisher - _string_ (Optional) Name of a publisher associated with the item. You can enter all or part of the name.
+	 * 	RelatedItemsPage - _integer_ (Optional) This optional parameter is only valid when the RelatedItems response group is used. Each ItemLookup request can return, at most, ten related items. The RelatedItemsPage value specifies the set of ten related items to return. A value of 2, for example, returns the second set of ten related items.
+	 * 	RelationshipType - _string_ (Optional; Required when RelatedItems response group is used) This parameter is required when the RelatedItems response group is used. The type of related item returned is specified by the RelationshipType parameter. Sample values include Episode, Season, and Tracks. A complete list of values follows this table.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	ReviewSort - _string_ (Optional) Sorts reviews based on the value of the parameter. '-HelpfulVotes', 'HelpfulVotes', '-OverallRating', 'OverallRating', 'Rank', '-Rank', '-SubmissionDate', 'SubmissionDate'.
+	 * 	SearchIndex - _string_ (Optional) The product category to search. Many ItemSearch parameters are valid with only specific values of SearchIndex.
+	 * 	Sort - _string_ (Optional) Means by which the items in the response are ordered.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TagPage - _integer_ (Optional) Specifies the page of results to return. There are ten results on a page. The maximum page number is 400.
+	 * 	TagsPerPage - _integer_ (Optional) The number of tags to return that are associated with a specified item.
+	 * 	TagSort - _string_ (Optional) Specifies the sorting order for the results. Allows 'FirstUsed', '-FirstUsed', 'LastUsed', '-LastUsed', 'Name', '-Name', 'Usages', and '-Usages'. To sort items in descending order, prefix the values with a negative sign (-).
+	 * 	TextStream - _string_ (Optional) A search based on two or more words. Picks out of the block of text up to ten keywords and returns up to ten items that match those keywords. For example, if five keywords are found, two items for each keyword are returned. Only one page of results is returned so ItemPage does not work with TextStream.
+	 * 	Title - _string_ (Optional) The title associated with the item. You can enter all or part of the title. Title searches are a subset of Keyword searches. If a Title search yields insufficient results, consider using a Keywords search.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	VariationPage - _integer_ (Optional) Retrieves a specific page of variations returned by ItemSearch. By default, ItemSearch returns all variations. Use VariationPage to return a subsection of the response. There are 10 variations per page. To examine offers 11 trough 20, for example, set VariationPage to 2. The total number of pages is returned in the TotalPages element.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -407,13 +507,11 @@ class AmazonAAWS extends TarzanCore
 	public function item_search($keywords, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['Keywords'] = $keywords;
 
-		// Default to 'All' if nothing else has been sent.
-		if (!isset($opt['SearchIndex']) || empty($opt['SearchIndex']))
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
 		{
-			$opt['SearchIndex'] = 'All';
+			$opt['AssociateTag'] = $this->assoc_id;
 		}
 
 		return $this->authenticate('ItemSearch', $opt, $locale);
@@ -433,8 +531,21 @@ class AmazonAAWS extends TarzanCore
 	 * Parameters:
 	 * 	list_id - _string_ (Required) Number that uniquely identifies a list.
 	 * 	list_type - _string_ (Required) Type of list. Accepts 'WeddingRegistry', 'Listmania', 'WishList'.
-	 * 	opt - _array_ (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All", a separate set of responses is returned for each valid value of Condition. Allows 'All', 'Collectible', 'Refurbished', or 'Used'.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	IsOmitPurchasedItems - _boolean_ (Optional) If you set IsOmitPurchasedItems to TRUE, items on a wishlist that have been purchased will not be returned. Only those items that have not been purchased or those for which the entire quantity has not been purchased are returned. Defaults to FALSE.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ProductGroup - _string_ (Optional) Category of the item, for example, 'Book' or 'DVD'.
+	 * 	ProductPage - _integer_ (Optional) Retrieves a specific page of lists returned. There are ten lists per page.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Sort - _string_ (Optional) Means by which the list items in the response are ordered. Use only with wishlists. Allows 'DateAdded', 'LastUpdated', 'Price', and 'Priority'.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -446,9 +557,13 @@ class AmazonAAWS extends TarzanCore
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['ListId'] = $list_id;
 		$opt['ListType'] = $list_type;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('ListLookup', $opt, $locale);
 	}
@@ -463,8 +578,24 @@ class AmazonAAWS extends TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	opt - _array_ (Optional) Associative array of parameters. There are a large number available, so check the Amazon documentation page for details.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 *  City - _string_ (Optional) City in which the list creator lives.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 *  e-mail - _string_ (Optional) E-mail address of the list creator. This parameter is not supported for the BabyRegistry.
+	 *  FirstName - _string_ (Optional) First name of the list creator. Returns all list owners that have FirstName in their first name. For example, specifying 'John', will return first names of 'John', 'Johnny', and 'Johnson'.
+	 *  LastName - _string_ (Optional) Last name of the list creator. ListSearch returns all list owners that have LastName in their last name. For example, specifying 'Ender', will return the last names of 'Ender', 'Enders', and 'Enderson'.
+	 *  ListPage - _integer_ (Optional) Retrieve a specific page of list IDs. There are ten list IDs per page. The total number of pages is returned in the TotalPages response tag. The default is to return the first page. Allows 1 through 20.
+	 *  ListType - _string_ (Optional) Specifies the kind of list you are retrieving. Allows 'BabyRegistry', 'WeddingRegistry', 'Wishlist'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 *  Name - _string_ (Optional) Name of the list creator. This parameter is not supported for the BabyRegistry.
+	 *  State - _string_ (Optional) State in which the list creator lives.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 *  ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -476,6 +607,11 @@ class AmazonAAWS extends TarzanCore
 	public function list_search($opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('ListSearch', $opt, $locale);
 	}
@@ -499,8 +635,16 @@ class AmazonAAWS extends TarzanCore
 	 * 	item_id - _string_ (Optional) Number that uniquely identifies an item. The valid value depends on the value for IdType. Allows an Exchange ID, a Listing ID, an ASIN, or a SKU.
 	 * 	id_type - _string_ (Optional) Use the IdType parameter to specify the value type of the Id parameter value. If you are looking up an Amazon Marketplace item, use Exchange, ASIN, or SKU as the value for IdType. Discontinued, out of stock, or unavailable products will not be returned if IdType is Listing, SKU, or ASIN. Those products will be returned, however, if IdType is Exchange. Allows 'Exchange', 'Listing', 'ASIN', 'SKU'.
 	 * 	seller_id - _string_ (Optional) Alphanumeric token that uniquely identifies a seller. This parameter limits the results to a single seller ID.
-	 * 	response_group - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 *  ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -509,13 +653,17 @@ class AmazonAAWS extends TarzanCore
 	 * 	AWS Method - UPDATE
 	 * 	Related - <seller_listing_search()>, <seller_lookup()>
 	 */
-	public function seller_listing_lookup($item_id, $id_type, $seller_id, $response_group = 'SellerListing', $locale = AAWS_LOCALE_US)
+	public function seller_listing_lookup($item_id, $id_type, $seller_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		$opt = array();
+		if (!$opt) $opt = array();
 		$opt['Id'] = $item_id;
 		$opt['IdType'] = $id_type;
 		$opt['SellerId'] = $seller_id;
-		$opt['ResponseGroup'] = $response_group;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('SellerListingLookup', $opt, $locale);
 	}
@@ -539,11 +687,16 @@ class AmazonAAWS extends TarzanCore
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 * 
 	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	ListingPage - _integer_ (Optional) Page of the response to return. Up to ten lists are returned per page. For customers that have more than ten lists, more than one page of results are returned. By default, the first page is returned. To return another page, specify the page number. Allows 1 through 500.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	OfferStatus - _string_ (Optional) Specifies whether the product is available (Open), or not (Closed.) Closed products are those that are discontinued, out of stock, or unavailable. Defaults to 'Open'.
-	 * 	Sort - _string_ (Optional) Use the Sort parameter to specify how your seller listing search results will be ordered. The -bfp (featured listings - default), applies only to the US, UK, and DE locales. Allows '-startdate', 'startdate', '+startdate', '-enddate', 'enddate', '-sku', 'sku', '-quantity', 'quantity', '-price', 'price |+price', '-title', 'title'.
-	 * 	Title - _string_ (Optional) Searches for products based on the product's name. Keywords and Title are mutually exclusive; you can have only one of the two in a request.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Sort - _string_ (Optional) Use the Sort parameter to specify how your seller listing search results will be ordered. The -bfp (featured listings - default), applies only to the US, UK, and DE locales. Allows '-startdate', 'startdate', '+startdate', '-enddate', 'enddate', '-sku', 'sku', '-quantity', 'quantity', '-price', 'price |+price', '-title', 'title'.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Title - _string_ (Optional) Searches for products based on the product's name. Keywords and Title are mutually exclusive; you can have only one of the two in a request.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -555,8 +708,12 @@ class AmazonAAWS extends TarzanCore
 	public function seller_listing_search($seller_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['SellerId'] = $seller_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('SellerListingSearch', $opt, $locale);
 	}
@@ -565,9 +722,9 @@ class AmazonAAWS extends TarzanCore
 	 * Method: seller_lookup()
 	 * 	Returns detailed information about sellers and, in the US locale, merchants. To lookup a seller, you must use their seller ID. The information returned includes the seller's name, average rating by customers, and the first five customer feedback entries. <seller_lookup()> will not, however, return the seller's e-mail or business addresses.
 	 * 
-	 * A seller must enter their information. Sometimes, sellers do not. In that case, <seller_lookup()> cannot return some seller-specific information.
+	 * 	A seller must enter their information. Sometimes, sellers do not. In that case, <seller_lookup()> cannot return some seller-specific information.
 	 * 
-	 * To look up more than one seller in a single request, insert a comma-delimited list of up to five seller IDs in the SellerId parameter of the REST request. Customers can rate sellers. 5 is the best rating; 0 is the worst. The rating reflects the customer's experience with the seller. The <seller_lookup()> operation, by default, returns review comments by individual customers.
+	 * 	To look up more than one seller in a single request, insert a comma-delimited list of up to five seller IDs in the SellerId parameter of the REST request. Customers can rate sellers. 5 is the best rating; 0 is the worst. The rating reflects the customer's experience with the seller. The <seller_lookup()> operation, by default, returns review comments by individual customers.
 	 * 
 	 * Access:
 	 * 	public
@@ -578,8 +735,13 @@ class AmazonAAWS extends TarzanCore
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 * 
 	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	FeedbackPage - _string_ (Optional) Specifies the page of reviews to return. Up to five reviews are returned per page. The first page is returned by default. To access additional pages, use this parameter to specify the desired page. The maximum number of pages that can be returned is 10 (50 feedback items). Allows 1 through 10.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -591,8 +753,12 @@ class AmazonAAWS extends TarzanCore
 	public function seller_lookup($seller_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
 		if (!$opt) $opt = array();
-
 		$opt['SellerId'] = $seller_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
 
 		return $this->authenticate('SellerLookup', $opt, $locale);
 	}
@@ -602,37 +768,298 @@ class AmazonAAWS extends TarzanCore
 	// VEHICLE METHODS
 
 	/**
+	 * Method: vehicle_part_lookup()
+	 * 	Given a car part, <vehicle_part_lookup()> returns the vehicle models and years the part works in. For example, one carburetor might work in the same vehicle model over a five year period. You can page through the parts returned using the parameters, Count and FitmentPage. This operation is US-only.
 	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	BedId - _integer_ (Optional) Identifier that uniquely identifies the bed style of a truck. This parameter does not pertain to cars.
+	 * 	BodyStyleId - _integer_ (Optional) 	Identifier that uniquely identifies the body style of the car.
+	 * 	BrakesId - _integer_ (Optional) Identifier that uniquely identifies the brake type on a car.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	DriveTypeId - _integer_ (Optional) Identifier that uniquely identifies the type of drive on the car. A drive type, for example, is four wheel drive.
+	 * 	EngineId - _integer_ (Optional) Identifier that uniquely identifies the type of engine in the car. An engine type would be, for example, the piston displacement, like 409 cu. inches.
+	 * 	FitmentCount - _integer_ (Optional) Specifies the number of Fitments returned per page of results. Fitments are a combination of car characteristics, including make, model, year, and trim. This parameter is only used with the Fitments response group.
+	 * 	FitmentPage - _integer_ (Optional) The page number of the Fitments returned. Use FitmentPage with Count to page through the results.
+	 * 	IdType - _string_ (Optional) Specifies the type of ID.
+	 * 	MakeId - _integer_ (Optional; Required when using the VehiclePartFit response group) Identifier that uniquely identifies the make of the car.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	MfrBodyCodeId - _integer_ (Optional) Identifier that uniquely identifies the manufacturer's car body code.
+	 * 	ModelId - _integer_ (Optional; Required when using the VehiclePartFit response group) Identifier that uniquely identifies the model of the car.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Fitments', 'HasPartCompatibility', and 'VehiclePartFit'. Defaults to 'HasPartCompatibility'.
+	 * 	SpringTypesId - _integer_ (Optional) Identifier that uniquely identifies the type of spring shocks in the car.
+	 * 	SteeringId - _integer_ (Optional) Identifier that uniquely identifies the steering type of the car. A steering type would be power steering.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TransmissionId - _integer_ (Optional) Identifier that uniquely identifies the transmission type used in the car.
+	 * 	TrimId - _integer_ (Optional) Identifier that uniquely identifies the trim on the car. Trim generally refers to a package of car options (e.g. Volvo GL vs. Volvo DL). Using this parameter helps narrow responses.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	WheelbaseId - _integer_ (Optional) Identifier that uniquely identifies the car's wheelbase.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 	Year - _integer_ (Optional; Required when using the VehiclePartFit response group) The year of the vehicle.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <vehicle_part_search()>, <vehicle_search()>
 	 */
-	public function vehicle_part_lookup() {}
+	public function vehicle_part_lookup($opt = null)
+	{
+		if (!$opt) $opt = array();
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('VehiclePartLookup', $opt, AAWS_LOCALE_US);
+	}
 
 	/**
+	 * Method: vehicle_part_search()
+	 * 	Returns the parts that work in the car. For example, a 2008 GMC Yukon has a list of parts that can work in it. The more parameters that you supply in the request, the narrower your results.
 	 * 
+	 * 	VehicleSearch has additional, optional parameters to narrow the results, for example BrowseNodeId and Brand. You can page through the vehicles returned using the parameters, Count, PartPageDirection, and FromItemId.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	make - _integer_ (Required) Identifier that uniquely identifies the make of the car. The make is the car's manufacturer, such as Ford or General Motors.
+	 * 	model - _integer_ (Required) Identifier that uniquely identifies the model of the car.
+	 * 	year - _integer_ (Required) The year of the car the part works in.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	BedId - _integer_ (Optional) Identifier that uniquely identifies the bed style of a truck. This parameter does not pertain to cars.
+	 * 	BodyStyleId - _integer_ (Optional) 	Identifier that uniquely identifies the body style of the car.
+	 * 	BrakesId - _integer_ (Optional) Identifier that uniquely identifies the brake type on a car.
+	 * 	Brand - _integer_ (Optional) The brand of the company that made the part.
+	 * 	BrowseNodeId - _integer_ (Optional) Identifier that uniquely identifies the BrowseNode to which the part belongs.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	Count - _integer_ (Optional) Controls the number of items returned. Use Count with FitmentPage to page through the results.
+	 * 	DriveTypeId - _integer_ (Optional) Identifier that uniquely identifies the type of drive on the car. A drive type, for example, is four wheel drive.
+	 * 	EngineId - _integer_ (Optional) Identifier that uniquely identifies the type of engine in the car. An engine type would be, for example, the piston displacement, like 409 cu. inches.
+	 * 	FromItemId - _integer_ (Optional) An ASIN that identifies where to start or end the next page of returned results. If PartPageDirection is "Next," the ASIN after this one starts the next set of up to 15 returned results. If PartPageDirection is "Previous," the ASIN is one after the previous set of up to fifteen results returned.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	MfrBodyCodeId - _integer_ (Optional) Identifier that uniquely identifies the manufacturer's car body code.
+	 * 	PartPageDirection - _string_ (Optional) Specifies the direction, forward or backward, to go from FromItemId in presenting the next set of (up to) fifteen results.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'PartBrowseNodeBinsSummary', 'PartBrandBinsSummary', 'HasPartCompatibility', 'VehiclePartFit', and 'VehicleParts'. Defaults to 'VehicleParts'.
+	 * 	SpringTypesId - _integer_ (Optional) Identifier that uniquely identifies the type of spring shocks in the car.
+	 * 	SteeringId - _integer_ (Optional) Identifier that uniquely identifies the steering type of the car. A steering type would be power steering.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TransmissionId - _integer_ (Optional) Identifier that uniquely identifies the transmission type used in the car.
+	 * 	TrimId - _integer_ (Optional; Sometimes Required) Identifier that uniquely identifies the trim on the car. Required when using one of the following parameters: 'BedId', 'BodyStyleId', 'BrakesId', 'DriveTypeId', 'EngineId', 'MfrBodyCodeId', 'SpringTypesId', 'SteeringId', 'TransmissionId', 'WheelbaseId'.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	WheelbaseId - _integer_ (Optional) Identifier that uniquely identifies the car's wheelbase.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <vehicle_part_lookup()>, <vehicle_search()>
 	 */
-	public function vehicle_part_search() {}
+	public function vehicle_part_search($make, $model, $year, $opt = null)
+	{
+		if (!$opt) $opt = array();
+		$opt['MakeId'] = $make;
+		$opt['ModelId'] = $model;
+		$opt['Year'] = $year;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('VehiclePartLookup', $opt, AAWS_LOCALE_US);
+	}
 
 	/**
+	 * Method: vehicle_search()
+	 * 	Returns all vehicles that match the specified values for year, make, model, and trim. The request can have one or more of those parameters—the more parameters, the narrower the results. Typically, VehicleSearch requests are repeated, first with the year to get the make, then with the year and make to get the model, and then with the year, make, and model, to get the trim.
 	 * 
+	 * 	The operation can also return all of the vehicle's options, including BedId, BedName, BodyStyleId, BodyStyleName, BrakesId, BrakesName, DriveTypeId, DriveTypeName, EngineId, EngineName, MakeId, and MakeName. (The full list of options follows.) All of these parameters can be used in subsequent requests with the other vehicle operations to narrow results.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MakeId - _integer_ (Optional; Sometimes Required) Identifier that uniquely identifies the make of the car. The make is the car's manufacturer, such as Ford or General Motors. Use with 'Year' to get model.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ModelId - _integer_ (Optional; Sometimes Required) Identifier that uniquely identifies the model of the car. Use with 'Year' and 'MakeId' to get trim.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'VehicleYears', 'VehicleMakes', 'VehicleModels', 'VehicleTrims', and 'VehicleOptions'. Defaults to 'VehicleYears'.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TrimId - _integer_ (Optional; Sometimes Required) Identifier that uniquely identifies the trim on the car. Required when when using the 'VehicleOptions' response group.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 	Year - _integer_ (Optional; Sometimes Required) The year of the car the part works in. Required only if including 'MakeId' in request or if you are using 'VehicleSearch' to look up a 'MakeId'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <vehicle_part_lookup()>, <vehicle_part_search()>
 	 */
-	public function vehicle_search() {}
+	public function vehicle_search($opt = null)
+	{
+		if (!$opt) $opt = array();
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('VehicleSearch', $opt, AAWS_LOCALE_US);
+	}
 
 
 	/*%******************************************************************************************%*/
 	// OTHER LOOKUP METHODS
 
 	/**
+	 * Method: similarity_lookup()
+	 * 	Returns up to ten products per page that are similar to one or more items specified in the request. This operation is typically used to pique a customer's interest in buying something similar to what they've already ordered.
 	 * 
+	 * 	If you specify more than one item, <similarity_lookup()> returns the intersection of similar items each item would return separately. Alternatively, you can use the SimilarityType parameter to return the union of items that are similar to any of the specified items. A maximum of ten similar items are returned; the operation does not return additional pages of similar items. If there are more than ten similar items, running the same request can result in different answers because the ten that are included in the response are picked randomly. The results are picked randomly only when you specify multiple items and the results include more than ten similar items.
+	 * 
+	 * 	When you specify multiple items, it is possible for there to be no intersection of similar items. In this case, the operation returns an error.
+	 * 
+	 * 	Similarity is a measurement of similar items purchased, that is, customers who bought X also bought Y and Z. It is not a measure, for example, of items viewed, that is, customers who viewed X also viewed Y and Z.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	item_id - _string_ (Required) Specifies the item you want to look up. An ItemId is an alphanumeric identifier assigned to an item. You can specify up to ten ItemIds separated by commas.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All", a separate set of responses is returned for each valid value of Condition. Allows 'All', 'Collectible', 'Refurbished', or 'Used'.
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MerchantId - _string_ (Optional) Specifies the merchant who is offering the item. MerchantId is an alphanumeric identifier assigned by Amazon to merchants. Make sure to use a Merchant ID and not a Seller ID. Seller IDs are not supported.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	SimilarityType - _string_ (Optional) "Intersection" returns the intersection of items that are similar to all of the ASINs specified. "Random" returns the union of items that are similar to all of the ASINs specified. Only ten items are returned. So, if there are more than ten similar items found, a random selection from the group is returned. For this reason, running the same request multiple times can yield different results.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <tag_lookup()>, <transaction_lookup()>
 	 */
-	function similarity_lookup() {}
+	function similarity_lookup($item_id, $opt = null, $locale = AAWS_LOCALE_US)
+	{
+		if (!$opt) $opt = array();
+		$opt['ItemId'] = $item_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('SimilarityLookup', $opt, $locale);
+	}
 
 	/**
+	 * Method: tag_lookup()
+	 * 	Returns entities based on specifying one to five tags. A tag is a descriptive word that a customer uses to label entities on Amazon's retail web site. Entities can be items for sale, Listmania lists, guides, and so forth. For example, a customer might tag a given entity with the phrase, "BestCookbook". This operation is US-only.
 	 * 
+	 * 	In the tag-related response groups, Tags and TagSummary specify the amount of information returned. The other tag-related response groups, TaggedGuides, TaggedItems, and Tagged listmaniaLists, specify the kind of entity tagged.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	tagname - _string_ (Required) Comma separated list of tag names. Up to five tags can be included in a request.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	Count - _integer_ (Optional) Number of tagged entities to return per tag. The default is 5; the maximum is 20.
+	 * 	CustomerId - _string_ (Optional) Alphanumeric token that uniquely identifies a customer. This parameter limits the tags returned to those provided by a single customer.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	TagPage - _integer_ (Optional) Specifies the page of results to return. There are twenty results on a page.
+	 * 	TagSort - _string_ (Optional) Specifies the sorting order for the results. Allows 'FirstUsed', '-FirstUsed', 'LastUsed', '-LastUsed', 'Name', '-Name', 'Usages', and '-Usages'. To sort items in descending order, prefix the previous values with a negative sign (-).
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <similarity_lookup()>, <transaction_lookup()>
 	 */
-	function tag_lookup() {}
+	function tag_lookup($tagname, $opt = null)
+	{
+		if (!$opt) $opt = array();
+		$opt['TagName'] = $tagname;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('TagLookup', $opt, AAWS_LOCALE_US);
+	}
 
 	/**
+	 * Method: transaction_lookup()
+	 * 	Returns information about up to ten purchases that have already taken place. Transaction IDs are created whenever a purchase request is made by a customer. This operation is US-only.
 	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	transaction_id - _string_ (Required) A number that uniquely identifies a transaction. The retail web site calls this number the Order number.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
+	 * 	Related - <similarity_lookup()>, <tag_lookup()>
 	 */
-	function transaction_lookup() {}
+	function transaction_lookup($transaction_id, $opt = null)
+	{
+		if (!$opt) $opt = array();
+		$opt['TransactionId'] = $transaction_id;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('TransactionLookup', $opt, AAWS_LOCALE_US);
+	}
 }
 ?>
