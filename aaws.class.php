@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2008.10.29
+ * 	2008.11.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -416,19 +416,119 @@ class AmazonAAWS extends TarzanCore
 	}
 
 	/**
+	 * Method: cart_get()
+	 * 	Enables you to retrieve the IDs, quantities, and prices of all of the items, including SavedForLater items in a remote shopping cart.
 	 * 
+	 * 	Because the contents of a cart can change for different reasons, such as availability, you should not keep a copy of a cart locally. Instead, use <cart_get()> to retrieve the items in a remote shopping cart. To retrieve the items in a cart, you must specify the cart using the CartId and HMAC values, which are returned in the <cart_create()> operation. A value similar to HMAC, URLEncodedHMAC, is also returned.
+	 * 
+	 * 	This value is the URL encoded version of the HMAC. This encoding is necessary because some characters, such as + and /, cannot be included in a URL. Rather than encoding the HMAC yourself, use the URLEncodedHMAC value for the HMAC parameter.
+	 * 
+	 * 	<cart_get()> does not work after the customer has used the PurchaseURL to either purchase the items or merge them with the items in their Amazon cart.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	cart_id - _string_ (Required) Alphanumeric token returned by <cart_create()> that identifies a cart.
+	 * 	hmac - _string_ (Required) Encrypted alphanumeric token returned by <cart_create()> that authorizes access to a cart.
+	 * 	cart_item_id - _string_ (Required) Alphanumeric token that uniquely identifies an item in a cart. Once an item, specified by an ASIN or OfferListingId, has been added to a cart, you must use the CartItemId to refer to it. The other identifiers will not work.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
 	 */
-	public function cart_get()
+	public function cart_get($cart_id, $hmac, $cart_item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		
+		if (!$opt) $opt = array();
+		$opt['CartId'] = $cart_id;
+		$opt['CartItemId'] = $cart_item_id;
+		$opt['HMAC'] = $hmac;
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('CartGet', $opt, $locale);
 	}
-	
+
 	/**
+	 * Method: cart_modify()
+	 * 	Enables you to change the quantity of items that are already in a remote shopping cart, move items from the active area of a cart to the SaveForLater area or the reverse, and change the MergeCart setting.
 	 * 
+	 * 	To modify the number of items in a cart, you must specify the cart using the CartId and HMAC values that are returned in the <cart_create()> operation. A value similar to HMAC, URLEncodedHMAC, is also returned. This value is the URL encoded version of the HMAC. This encoding is necessary because some characters, such as + and /, cannot be included in a URL. Rather than encoding the HMAC yourself, use the URLEncodedHMAC value for the HMAC parameter.
+	 * 
+	 * 	You can use <cart_modify()> to modify the number of items in a remote shopping cart by setting the value of the Quantity parameter appropriately. You can eliminate an item from a cart by setting the value of the Quantity parameter to zero. Or, you can double the number of a particular item in the cart by doubling its Quantity. You cannot, however, use <cart_modify()> to add new items to a cart.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	cart_id - _string_ (Required) Alphanumeric token returned by <cart_create()> that identifies a cart.
+	 * 	hmac - _string_ (Required) Encrypted alphanumeric token returned by <cart_create()> that authorizes access to a cart.
+	 * 	cart_item_id - _string|array_ (Required) Specifies an item to be modified in the cart where N is a positive integer between 1 and 10, inclusive. Up to ten items can be modified at a time.CartItemId is neither an ASIN nor an OfferListingId. It is, instead, an alphanumeric token returned by <cart_create()> and <cart_add()>. This parameter is used in conjunction with Item.N.Quantity to modify the number of items in a 
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	Action - _string_ (Optional) Change cart items to move items to the Saved-For-Later area, or change Saved-For- Later (SaveForLater) items to the active cart area (MoveToCart).
+	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
+	 * 	ListItemId - _string_ (Optional) The ListItemId parameter is returned by the ListItems response group. The parameter identifies an item on a list, such as a wishlist. To add this item to a cart, you must include in the <cart_create()> request the item's ASIN and ListItemId. The ListItemId includes the name and address of the list owner, which the ASIN alone does not.
+	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
+	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
+	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
+	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	AWS Method - UPDATE
 	 */
-	public function cart_modify()
+	public function cart_modify($cart_id, $hmac, $cart_item_id, $opt = null, $locale = AAWS_LOCALE_US)
 	{
-		
+		if (!$opt) $opt = array();
+		$opt['CartId'] = $cart_id;
+		$opt['HMAC'] = $hmac;
+
+		if (is_array($cart_item_id))
+		{
+			$count = 1;
+			foreach ($cart_item_id as $offer => $quantity)
+			{
+				$opt['Item.' . $count . '.CartItemId'] = $offer;
+				$opt['Item.' . $count . '.Quantity'] = $quantity;
+
+				$count++;
+			}
+		}
+		else
+		{
+			$opt['Item.1.CartItemId'] = $offer_listing_id;
+			$opt['Item.1.Quantity'] = 1;
+		}
+
+		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		{
+			$opt['AssociateTag'] = $this->assoc_id;
+		}
+
+		return $this->authenticate('CartModify', $opt, $locale);
 	}
 
 
