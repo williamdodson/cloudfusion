@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL.
  *
  * Version:
- * 	2008.10.17
+ * 	2008.11.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -15,6 +15,16 @@
  * See Also:
  * 	Tarzan - http://tarzan-aws.com
  */
+
+
+/*%******************************************************************************************%*/
+// EXCEPTIONS
+
+/**
+ * Exception: TarzanHTTPRequest_Exception
+ * 	Default TarzanHTTPRequest Exception.
+ */
+class TarzanHTTPRequest_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
@@ -104,6 +114,24 @@ class TarzanHTTPRequest
 	 */
 	var $password = null;
 
+	/**
+	 * Property: utilities_class
+	 * The default class to use for Utilities (defaults to <TarzanUtilities>).
+	 */
+	var $utilities_class = 'TarzanUtilities';
+
+	/**
+	 * Property: request_class
+	 * The default class to use for HTTP Requests (defaults to <TarzanHTTPRequest>).
+	 */
+	var $request_class = 'TarzanHTTPRequest';
+
+	/**
+	 * Property: response_class
+	 * The default class to use for HTTP Responses (defaults to <TarzanHTTPResponse>).
+	 */
+	var $response_class = 'TarzanHTTPResponse';
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -122,13 +150,31 @@ class TarzanHTTPRequest
 	 * Returns:
 	 * 	void
 	 */
-	public function __construct($url, $proxy = null)
+	public function __construct($url, $proxy = null, $helpers = null)
 	{
 		// Set some default values.
 		$this->request_url = $url;
 		$this->method = HTTP_GET;
 		$this->request_headers = array();
 		$this->request_body = '';
+
+		// Set a new Request class if one was set.
+		if (isset($helpers['utilities']) && !empty($helpers['utilities']))
+		{
+			$this->utilities_class = $helpers['utilities'];
+		}
+
+		// Set a new Request class if one was set.
+		if (isset($helpers['request']) && !empty($helpers['request']))
+		{
+			$this->request_class = $helpers['request'];
+		}
+
+		// Set a new Request class if one was set.
+		if (isset($helpers['response']) && !empty($helpers['response']))
+		{
+			$this->response_class = $helpers['response'];
+		}
 
 		if ($proxy)
 		{
@@ -397,7 +443,7 @@ class TarzanHTTPRequest
 
 		if ($curl_handle && $response)
 		{
-			return new TarzanHTTPResponse($this->response_headers, $this->response_body, $this->response_code);
+			return new $this->response_class($this->response_headers, $this->response_body, $this->response_code);
 		}
 	}
 
@@ -468,12 +514,12 @@ class TarzanHTTPRequest
 		{
 			if (curl_errno($handle) == CURLE_OK)
 			{
-				$HTTPRequest = new TarzanHTTPRequest(null);
-				$handles_post[] = $HTTPRequest->processResponse($handle, curl_multi_getcontent($handle));
+				$http = new $this->request_class(null);
+				$handles_post[] = $http->processResponse($handle, curl_multi_getcontent($handle));
 			}
 			else
 			{
-				trigger_error(curl_error($handle));
+				throw new TarzanHTTPRequest_Exception(curl_error($handle));
 			}
 		}
 

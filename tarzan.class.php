@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.11.02
+ * 	2008.11.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -440,10 +440,17 @@ class TarzanCore
 		// Generate the querystring from $query
 		$querystring = $this->util->to_query_string($query);
 
+		// Gather information to pass along to other classes.
+		$helpers = array(
+			'utilities' => $this->utilities_class,
+			'request' => $this->request_class,
+			'response' => $this->response_class,
+		);
+
 		// Compose the request.
 		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
 		$request_url = $scheme . $domain . '/?' . $querystring;
-		$request = new $this->request_class($request_url, $this->set_proxy);
+		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
