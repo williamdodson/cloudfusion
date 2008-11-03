@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.10.10
+ * 	2008.11.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -58,7 +58,7 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.0b');
+define('TARZAN_VERSION', '1.9');
 
 /**
  * Constant: TARZAN_BUILD
@@ -75,7 +75,7 @@ define('TARZAN_URL', 'http://tarzan-aws.com');
 /**
  * Constant: TARZAN_USERAGENT
  * User agent string used to identify Tarzan
- * > Tarzan/2.0b (Amazon Web Services API; http://tarzan-aws.com) Build/20080927210040
+ * > Tarzan/2.0 (Amazon Web Services API; http://tarzan-aws.com) Build/20080927210040
  */
 define('TARZAN_USERAGENT', TARZAN_NAME . '/' . TARZAN_VERSION . ' (Amazon Web Services API; ' . TARZAN_URL . ') Build/' . TARZAN_BUILD);
 
@@ -126,6 +126,16 @@ define('HTTP_DELETE', 'DELETE');
  * HTTP method type: Head
  */
 define('HTTP_HEAD', 'HEAD');
+
+
+/*%******************************************************************************************%*/
+// EXCEPTIONS
+
+/**
+ * Exception: TarzanCore_Exception
+ * 	Default TarzanCore Exception.
+ */
+class TarzanCore_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
@@ -243,26 +253,6 @@ class TarzanCore
 		// Determine the current service.
 		$this->service = get_class($this);
 
-		// Set a default value for the Account ID.
-		if (!$account_id && defined('AWS_ACCOUNT_ID'))
-		{
-			$this->account_id = AWS_ACCOUNT_ID;
-		}
-		else // Move this to the EC2 class.
-		{
-			error_log('Tarzan: No Amazon account ID was passed into the constructor, nor was it set in the AWS_ACCOUNT_ID constant. Only required for EC2.');
-		}
-
-		// Set a default value for the Associates ID.
-		if (!$assoc_id && defined('AWS_ASSOC_ID'))
-		{
-			$this->assoc_id = AWS_ASSOC_ID;
-		}
-		else // Move this to the AAWS class.
-		{
-			error_log('Tarzan: No Amazon Associates ID was passed into the constructor, nor was it set in the AWS_ASSOC_ID constant. Only required for AAWS.');
-		}
-
 		// If both a key and secret key are passed in, use those.
 		if ($key && $secret_key)
 		{
@@ -282,9 +272,7 @@ class TarzanCore
 		// Otherwise set the values to blank and return false.
 		else
 		{
-			$this->key = '';
-			$this->secret_key = '';
-			return false;
+			throw new TarzanCore_Exception('No valid credentials were used to authenticate with AWS.');
 		}
 	}
 

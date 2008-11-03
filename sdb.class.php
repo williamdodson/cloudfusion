@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2008.10.21
+ * 	2008.11.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -26,6 +26,16 @@
  * 	Specify the default queue URL.
  */
 define('SDB_DEFAULT_URL', 'sdb.amazonaws.com');
+
+
+/*%******************************************************************************************%*/
+// EXCEPTIONS
+
+/**
+ * Exception: SDB_Exception
+ * 	Default SDB Exception.
+ */
+class SDB_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
@@ -71,6 +81,17 @@ class AmazonSDB extends TarzanCore
 	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2007-11-07';
+
+		if (!$key && !defined('AWS_KEY'))
+		{
+			throw new SDB_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
+		}
+
+		if (!$secret_key && !defined('AWS_SECRET_KEY'))
+		{
+			throw new SDB_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
+		}
+
 		parent::__construct($key, $secret_key);
 	}
 

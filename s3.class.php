@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.10.21
+ * 	2008.11.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -65,6 +65,16 @@ define('S3_PCRE_ALL', '/.*/i');
 
 
 /*%******************************************************************************************%*/
+// EXCEPTIONS
+
+/**
+ * Exception: S3_Exception
+ * 	Default S3 Exception.
+ */
+class S3_Exception extends Exception {}
+
+
+/*%******************************************************************************************%*/
 // MAIN CLASS
 
 /**
@@ -121,6 +131,17 @@ class AmazonS3 extends TarzanCore
 	{
 		$this->vhost = null;
 		$this->api_version = '2006-03-01';
+
+		if (!$key && !defined('AWS_KEY'))
+		{
+			throw new S3_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
+		}
+
+		if (!$secret_key && !defined('AWS_SECRET_KEY'))
+		{
+			throw new S3_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
+		}
+
 		parent::__construct($key, $secret_key);
 	}
 

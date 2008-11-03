@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2008.10.21
+ * 	2008.11.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -26,6 +26,16 @@
  * 	Specify the default queue URL.
  */
 define('EC2_DEFAULT_URL', 'ec2.amazonaws.com');
+
+
+/*%******************************************************************************************%*/
+// EXCEPTIONS
+
+/**
+ * Exception: EC2_Exception
+ * 	Default EC2 Exception.
+ */
+class EC2_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
@@ -72,6 +82,22 @@ class AmazonEC2 extends TarzanCore
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
 		$this->api_version = '2008-05-05';
+
+		if (!$key && !defined('AWS_KEY'))
+		{
+			throw new EC2_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
+		}
+
+		if (!$secret_key && !defined('AWS_SECRET_KEY'))
+		{
+			throw new EC2_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
+		}
+
+		if (!$account_id && !defined('AWS_ACCOUNT_ID'))
+		{
+			throw new EC2_Exception('No Amazon account ID was passed into the constructor, nor was it set in the AWS_ACCOUNT_ID constant.');
+		}
+
 		parent::__construct($key, $secret_key, $account_id);
 	}
 
