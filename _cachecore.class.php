@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across caching classes.
  *
  * Version:
- * 	2008.10.10
+ * 	2008.11.06
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -175,15 +175,44 @@ class CacheCore
 	public function is_expired() { return; }
 
 	/**
-	 * Method: get_drivers()
-	 * 	Returns a list of supported PDO database drivers. Placeholder method should be defined by the extending class.
+	 * Method: response_manager()
+	 * 	Provides a simple, straightforward cache-logic mechanism. Useful for non-complex response caches.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
+	 * Parameters:
+	 * 	callback - _string_ (Required) The name of the function to fire when we need to fetch new data to cache.
+	 * 	params - _array_ (Optional) Parameters to pass into the callback function, as an array.
+	 * 
 	 * Returns:
-	 * 	_array_ The list of supported database drivers.
+	 * 	_array_ The cached data being requested.
 	 */
-	public function get_drivers() { return; }
+	public function response_manager($callback, $params = null)
+	{
+		if ($data = $this->read())
+		{
+			if ($this->is_expired())
+			{
+				if ($data = call_user_func_array($callback, $params))
+				{
+					$this->update($data);
+				}
+				else
+				{
+					$this->reset();
+				}
+			}
+		}
+		else
+		{
+			if ($data = call_user_func_array($callback, $params))
+			{
+				$this->create($data);
+			}
+		}
+
+		return $data;
+	}
 }
 ?>
