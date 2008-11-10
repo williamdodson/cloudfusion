@@ -21,7 +21,7 @@ class SQSQueue_Exception extends SQS_Exception {}
 
 class AmazonSQSQueue extends AmazonSQS
 {
-	var $queue;
+	var $queue_url;
 
 	public function __construct($queue_url, $key = null, $secret_key = null)
 	{
