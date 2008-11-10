@@ -84,12 +84,12 @@ class AmazonSQS extends TarzanCore
 
 		if (!$key && !defined('AWS_KEY'))
 		{
-			throw new SDB_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
+			throw new SQS_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
 		}
 
 		if (!$secret_key && !defined('AWS_SECRET_KEY'))
 		{
-			throw new SDB_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
+			throw new SQS_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
 		}
 
 		parent::__construct($key, $secret_key);
