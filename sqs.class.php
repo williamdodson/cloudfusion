@@ -53,10 +53,10 @@ class SQS_Exception extends Exception {}
  * require_once('tarzan.class.php');
  * 
  * // Instantiate a new AmazonSQS object using the settings from the config.inc.php file.
- * $s3 = new AmazonSQS();
+ * $sqs = new AmazonSQS();
  * 
  * // Instantiate a new AmazonSQS object using these specific settings.
- * $s3 = new AmazonSQS($key, $secret_key);
+ * $sqs = new AmazonSQS($key, $secret_key);
  * (end)
  */
 class AmazonSQS extends TarzanCore
