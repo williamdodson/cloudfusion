@@ -217,7 +217,7 @@ class TarzanCore
 	 * Property: enable_ssl
 	 * 	Whether SSL/HTTPS should be enabled by default.
 	 */
-	var $enable_ssl = false;
+	var $enable_ssl = true;
 
 	/**
 	 * Property: set_proxy
@@ -446,6 +446,9 @@ class TarzanCore
 			'request' => $this->request_class,
 			'response' => $this->response_class,
 		);
+
+		// Remove the default scheme from the domain.
+		$domain = str_replace(array('http://', 'https://'), '', $domain);
 
 		// Compose the request.
 		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';

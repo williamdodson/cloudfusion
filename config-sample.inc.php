@@ -1,10 +1,10 @@
 <?php
 /**
  * File: Configuration
- * 	Stores your AWS account information.
+ * 	Stores your AWS account information. Add your account information, then rename this file to 'config.inc.php'.
  *
  * Version:
- * 	2008.04.12
+ * 	2008.11.18
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
