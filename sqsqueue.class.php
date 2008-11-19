@@ -1,7 +1,7 @@
 <?php
 /**
  * File: Amazon SQS Queue
- * 	Queue-centric wrapper for Amazon Simple Queue Service (http://aws.amazon.com/sqs)
+ * 	Queue-centric wrapper for Amazon Simple Queue Service
  *
  * Version:
  * 	2008.11.18
@@ -46,7 +46,7 @@ class SQSQueue_Exception extends Exception {}
  * 	Container for all Amazon SQS-related methods. Inherits additional methods from AmazonSQS.
  * 
  * Extends:
- * 	TarzanCore
+ * 	AmazonSQS
  * 
  * Example Usage:
  * (start code)
@@ -97,7 +97,7 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: create_queue()
-	 * 	Identical to AmazonSQS::create_queue(). The queue URL created from this method will replace the queue URL already being used with this class.
+	 * 	Identical to <AmazonSQS::create_queue()>. The queue URL created from this method will replace the queue URL already being used with this class.
 	 * 
 	 * 	New queue URL will NOT automatically apply when using MultiCurl for parallel requests.
 	 * 
@@ -105,8 +105,8 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	queue_name - See AmazonSQS::create_queue().
-	 * 	returnCurlHandle - See AmazonSQS::create_queue().
+	 * 	queue_name - See <AmazonSQS::create_queue()>.
+	 * 	returnCurlHandle - See <AmazonSQS::create_queue()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -125,13 +125,13 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: delete_queue()
-	 * 	Identical to AmazonSQS::delete_queue(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::delete_queue()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	returnCurlHandle - See AmazonSQS::delete_queue().
+	 * 	returnCurlHandle - See <AmazonSQS::delete_queue()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -148,13 +148,13 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: get_queue_attributes()
-	 * 	Identical to AmazonSQS::get_queue_attributes(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::get_queue_attributes()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	returnCurlHandle - See AmazonSQS::get_queue_attributes().
+	 * 	returnCurlHandle - See <AmazonSQS::get_queue_attributes()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -171,13 +171,13 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: set_queue_attributes()
-	 * 	Identical to AmazonSQS::set_queue_attributes(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::set_queue_attributes()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	opt - See AmazonSQS::set_queue_attributes().
+	 * 	opt - See <AmazonSQS::set_queue_attributes()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -198,14 +198,14 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: send_message()
-	 * 	Identical to AmazonSQS::send_message(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::send_message()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	message - See AmazonSQS::send_message().
-	 * 	returnCurlHandle - See AmazonSQS::send_message().
+	 * 	message - See <AmazonSQS::send_message()>.
+	 * 	returnCurlHandle - See <AmazonSQS::send_message()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -222,13 +222,13 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: receive_message()
-	 * 	Identical to AmazonSQS::receive_message(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::receive_message()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	opt - See AmazonSQS::receive_message().
+	 * 	opt - See <AmazonSQS::receive_message()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -245,14 +245,14 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: delete_message()
-	 * 	Identical to AmazonSQS::delete_message(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::delete_message()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	receipt_handle - See AmazonSQS::delete_message().
-	 * 	returnCurlHandle - See AmazonSQS::delete_message().
+	 * 	receipt_handle - See <AmazonSQS::delete_message()>.
+	 * 	returnCurlHandle - See <AmazonSQS::delete_message()>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -273,7 +273,7 @@ class AmazonSQSQueue extends AmazonSQS
 
 	/**
 	 * Method: get_queue_size()
-	 * 	Identical to AmazonSQS::get_queue_size(), except that you don't need to pass in a queue URL.
+	 * 	Identical to <AmazonSQS::get_queue_size()>, except that you don't need to pass in a queue URL.
 	 * 
 	 * Access:
 	 * 	public
