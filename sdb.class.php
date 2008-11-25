@@ -77,6 +77,9 @@ class AmazonSDB extends TarzanCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
