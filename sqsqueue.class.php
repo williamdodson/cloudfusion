@@ -84,6 +84,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/__construct.phps
 	 */
 	public function __construct($queue = null, $key = null, $secret_key = null)
 	{
@@ -110,6 +113,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/create_queue.phps
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
 	{
@@ -135,6 +141,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_queue.phps
 	 */
 	public function delete_queue($returnCurlHandle = null)
 	{
@@ -158,6 +167,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/get_queue_attributes.phps
 	 */
 	public function get_queue_attributes($returnCurlHandle = null)
 	{
@@ -181,6 +193,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/set_queue_attributes.phps
 	 */
 	public function set_queue_attributes($opt = null)
 	{
@@ -209,6 +224,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/send_message.phps
 	 */
 	public function send_message($message, $returnCurlHandle = null)
 	{
@@ -232,6 +250,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/receive_message.phps
 	 */
 	public function receive_message($opt = null)
 	{
@@ -256,6 +277,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_message.phps
 	 */
 	public function delete_message($receipt_handle, $returnCurlHandle = null)
 	{
@@ -280,6 +304,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 
 	 * Returns:
 	 * 	_integer_ The Approximate number of messages in the queue.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/get_queue_size.phps
 	 */
 	public function get_queue_size()
 	{
