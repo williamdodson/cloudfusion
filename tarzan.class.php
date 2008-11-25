@@ -292,6 +292,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/adjust_offset.phps
 	 */
 	public function adjust_offset($seconds)
 	{
@@ -300,7 +303,7 @@ class TarzanCore
 
 	/**
 	 * Method: enable_ssl()
-	 * 	Enables all Amazon classes to use SSL (https) for enhanced security.
+	 * 	Enables all Amazon classes to use SSL (https) for enhanced security. SSL is enabled by default starting with r198.
 	 * 
 	 * Access:
 	 * 	public
@@ -310,6 +313,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/enable_ssl.phps
 	 */
 	public function enable_ssl($enable = true)
 	{
@@ -328,6 +334,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_proxy.phps
 	 */
 	public function set_proxy($proxy)
 	{
@@ -350,6 +359,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_utilities_class.phps
 	 */
 	function set_utilities_class($class = 'TarzanUtilities')
 	{
@@ -369,6 +381,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_request_class.phps
 	 */
 	function set_request_class($class = 'TarzanHTTPRequest')
 	{
@@ -387,6 +402,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_response_class.phps
 	 */
 	function set_response_class($class = 'TarzanHTTPResponse')
 	{
@@ -507,6 +525,9 @@ class TarzanCore
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/cache_response.phps
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{
