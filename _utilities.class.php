@@ -53,6 +53,9 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether this has a real value.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/ready.phps
 	 */
 	public function ready($var)
 	{
@@ -71,6 +74,9 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_string_ Base64-encoded string.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/hex_to_base64.phps
 	 */
 	public function hex_to_base64($str)
 	{
@@ -96,6 +102,9 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_string_ URL-friendly query string.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/to_query_string.phps
 	 */
 	public function to_query_string($array)
 	{
@@ -121,6 +130,9 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_string_ URL-friendly sign-able string.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/to_signable_string.phps
 	 */
 	public function to_signable_string($array)
 	{
@@ -147,23 +159,8 @@ class TarzanUtilities
 	 * Returns:
 	 * 	_array_ Associative array of keys and values.
 	 * 
-	 * Example Usage:
-	 * (start code)
-	 * // This query string...
-	 * ?key1=value&key1=value&key2=value
-	 * 
-	 * // Will become this array...
-	 * Array
-	 * (
-	 *     [key1] => Array
-	 *         (
-	 *             [0] => value
-	 *             [1] => value
-	 *         )
-	 * 
-	 *     [key2] => value
-	 * )
-	 * (end)
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/query_to_array.phps
 	 */
 	public function query_to_array($qs)
 	{
@@ -208,6 +205,7 @@ class TarzanUtilities
 	 * 
 	 * See Also:
 	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/size_readable.phps
 	 */
 	public function size_readable($size, $unit = null, $retstring = null)
 	{
@@ -252,34 +250,25 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_string_ The formatted time.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/time_hms.phps
 	 */
 	public function time_hms($seconds)
 	{
 		$time = '';
 
-		$hours = floor($seconds / 3600);
-		$remainder = $seconds % 3600;
+		// First pass
+		$hours = (int) ($seconds / 3600);
+		$seconds = $seconds % 3600;
+		$minutes = (int) ($seconds / 60);
+		$seconds = $seconds % 60;
 
-		if ($hours > 0)
-		{
-			$time .= $hours . ':';
-		}
-
-		$minutes = floor($remainder / 60);
-		$seconds = $remainder % 60;
-
-		if ($minutes < 10 && $hours > 0)
-		{
-			$minutes = '0' . $minutes;
-		}
-
-		if ($seconds < 10)
-		{
-			$seconds = '0' . $seconds;
-		}
-
-		$time .= $minutes . ':';
-		$time .= $seconds;
+		// Cleanup
+		$time .= ($hours) ? $hours . ':' : '';
+		$time .= ($minutes < 10 && $hours > 0) ? '0' . $minutes : $minutes;
+		$time .= ':';
+		$time .= ($seconds < 10) ? '0' . $seconds : $seconds;
 
 		return $time;
 	}
@@ -298,6 +287,9 @@ class TarzanUtilities
 	 * 
 	 * Returns:
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/try_these.phps
 	 */
 	public function try_these($attrs, $base = null, $default = null)
 	{
