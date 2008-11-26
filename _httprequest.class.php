@@ -146,9 +146,13 @@ class TarzanHTTPRequest
 	 * Parameters:
 	 * 	url - _string_ (Required) The URL to request or service endpoint to query.
 	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
+	 * 	helpers - _array_ (Optional) An associative array of classnames to use for utilities, request, and response functionality. Gets passed in automatically by the calling class.
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/__construct.phps
 	 */
 	public function __construct($url, $proxy = null, $helpers = null)
 	{
@@ -203,6 +207,9 @@ class TarzanHTTPRequest
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/set_credentials.phps
 	 */
 	public function setCredentials($user, $pass)
 	{
@@ -223,6 +230,9 @@ class TarzanHTTPRequest
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/add_header.phps
 	 */
 	public function addHeader($key, $value)
 	{
@@ -241,6 +251,9 @@ class TarzanHTTPRequest
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/remove_header.phps
 	 */
 	public function removeHeader($key)
 	{
@@ -262,6 +275,9 @@ class TarzanHTTPRequest
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/set_method.phps
 	 */
 	public function setMethod($method)
 	{
@@ -280,6 +296,9 @@ class TarzanHTTPRequest
 	 * 
 	 * Returns:
 	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/set_body.phps
 	 */
 	public function setBody($body)
 	{
@@ -459,6 +478,7 @@ class TarzanHTTPRequest
 	 * 
 	 * See Also:
 	 * 	Related - <sendMultiRequest()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/send_request.phps
 	 */
 	public function sendRequest()
 	{
@@ -485,6 +505,7 @@ class TarzanHTTPRequest
 	 * 
 	 * See Also:
 	 * 	Related - <sendRequest()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/send_multi_request.phps
 	 */
 	public function sendMultiRequest($handles)
 	{
@@ -545,6 +566,7 @@ class TarzanHTTPRequest
 	 * 
 	 * See Also:
 	 * 	Related - <getResponseBody()>, <getResponseCode()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/get_response_header.phps
 	 */
 	public function getResponseHeader($header = null)
 	{
@@ -567,6 +589,7 @@ class TarzanHTTPRequest
 	 * 
 	 * See Also:
 	 * 	Related - <getResponseHeader()>, <getResponseCode()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/get_response_body.phps
 	 */
 	public function getResponseBody()
 	{
@@ -585,6 +608,7 @@ class TarzanHTTPRequest
 	 * 
 	 * See Also:
 	 * 	Related - <getResponseHeader()>, <getResponseBody()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httprequest/get_response_code.phps
 	 */
 	public function getResponseCode()
 	{

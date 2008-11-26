@@ -58,6 +58,9 @@ class TarzanHTTPResponse
 	 * 
 	 * Returns:
 	 * 	_object_ Contains an _array_ 'header' property (HTTP headers as an associative array), a _SimpleXMLElement_ 'body' property, and an _integer_ 'status' code.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httpresponse/httpresponse.phps
 	 */
 	public function __construct($header, $body, $status = null)
 	{
@@ -89,6 +92,9 @@ class TarzanHTTPResponse
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether we received the expected status code or not.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httpresponse/httpresponse.phps
 	 */
 	public function isOK($codes = array(200, 204))
 	{
