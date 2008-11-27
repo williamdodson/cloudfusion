@@ -78,6 +78,9 @@ class AmazonEC2 extends TarzanCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
@@ -123,6 +126,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/describe_availability_zones.phps
 	 */
 	public function describe_availability_zones($opt = null)
 	{
@@ -147,6 +151,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AllocateAddress.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <associate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
 	public function allocate_address()
@@ -172,6 +177,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-AssociateAddress.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
 	public function associate_address($instance_id, $public_ip)
@@ -202,6 +208,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <disassociate_address()>, <release_address()>
 	 */
 	public function describe_addresses($opt = null)
@@ -228,6 +235,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <release_address()>
 	 */
 	public function disassociate_address($public_ip)
@@ -257,6 +265,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <disassociate_address()>
 	 */
 	public function release_address($public_ip)
@@ -851,6 +860,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-RunInstances.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <terminate_instances()>
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
@@ -883,6 +893,7 @@ class AmazonEC2 extends TarzanCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-05-05/DeveloperGuide/ApiReference-Query-TerminateInstances.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <run_instances()>
 	 */
 	public function terminate_instances($opt = null)
