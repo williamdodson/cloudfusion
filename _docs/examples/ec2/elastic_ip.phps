@@ -37,7 +37,9 @@ foreach ($images->body->imagesSet->item as $image)
 		{
 			// Let's output some data that we've collected so far.
 			echo '<h1>Report</h1>';
-			echo '<p>Instance <strong>' . $instance_id . '</strong> was launched from AMI <strong>' . $image_id . '</strong> and is associated with <strong>' . $ip_addr . '</strong>.</p>';
+			echo '<p>Instance <strong>' . $instance_id . '</strong>';
+			echo ' was launched from AMI <strong>' . $image_id . '</strong>';
+			echo ' and is associated with <strong>' . $ip_addr . '</strong>.</p>';
 
 			// Prepare to store some data
 			$ips = array();
