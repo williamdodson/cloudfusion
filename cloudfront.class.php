@@ -1,6 +1,6 @@
 <?php
 /**
- * File: Amazon CloudFront
+ * File: CloudFront
  * 	Amazon CloudFront CDN Service (http://aws.amazon.com/cloudfront)
  *
  * Version:
