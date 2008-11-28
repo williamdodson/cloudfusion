@@ -4,7 +4,7 @@
  * 	Converts the HTTP responses into organized data chunks.
  *
  * Version:
- * 	2008.08.02
+ * 	2008.11.27
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -96,7 +96,7 @@ class TarzanHTTPResponse
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/httpresponse/httpresponse.phps
 	 */
-	public function isOK($codes = array(200, 204))
+	public function isOK($codes = array(200, 201, 204))
 	{
 		if (is_array($codes))
 		{
