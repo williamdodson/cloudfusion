@@ -316,5 +316,86 @@ class TarzanUtilities
 
 		return $default;
 	}
+
+	/**
+	 * Method: json_encode()
+	 * 	Replicates json_encode() for versions of PHP 5 earlier than 5.2.
+	 * 
+	 * Author:
+	 * 	http://us2.php.net/manual/en/function.json-encode.php#82904
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	obj - _mixed_ (Required) The PHP object to convert into a JSON string.
+	 * 
+	 * Returns:
+	 * 	_string_ A JSON string.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/json_encode.phps
+	 */
+	public function json_encode($obj)
+	{
+		if (function_exists('json_encode'))
+		{
+			return json_encode($obj);
+		}
+
+		if (is_null($obj)) return 'null';
+		if ($obj === false) return 'false';
+		if ($obj === true) return 'true';
+
+		if (is_scalar($obj))
+		{
+			if (is_float($obj))
+			{
+				// Always use "." for floats.
+				return floatval(str_replace(",", ".", strval($obj)));
+			}
+
+			if (is_string($obj))
+			{
+				static $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
+				return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $obj) . '"';
+			}
+			else
+			{
+				return $obj;
+			}
+		}
+
+		$isList = true;
+		for ($i = 0, reset($obj); $i < count($obj); $i++, next($obj))
+		{
+			if (key($obj) !== $i)
+			{
+				$isList = false;
+				break;
+			}
+		}
+
+		$result = array();
+
+		if ($isList)
+		{
+			foreach ($obj as $v)
+			{
+				$result[] = json_encode($v);
+			}
+
+			return '[' . join(',', $result) . ']';
+		}
+		else
+		{
+			foreach ($obj as $k => $v)
+			{
+				$result[] = json_encode($k).':'.json_encode($v);
+			}
+
+			return '{' . join(',', $result) . '}';
+		}
+	}
 }
 ?>
