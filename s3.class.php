@@ -995,7 +995,7 @@ class AmazonS3 extends TarzanCore
 		// Add this to our request
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'create_object';
-		$opt['filename'] = rawurlencode($opt['filename']);
+		$opt['filename'] = $opt['filename'];
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -1033,7 +1033,7 @@ class AmazonS3 extends TarzanCore
 		// Add this to our request
 		$opt['verb'] = HTTP_GET;
 		$opt['method'] = 'get_object';
-		$opt['filename'] = rawurlencode($filename);
+		$opt['filename'] = $filename;
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -1065,7 +1065,7 @@ class AmazonS3 extends TarzanCore
 		$opt = array();
 		$opt['verb'] = HTTP_HEAD;
 		$opt['method'] = 'head_object';
-		$opt['filename'] = rawurlencode($filename);
+		$opt['filename'] = $filename;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
@@ -1122,7 +1122,7 @@ class AmazonS3 extends TarzanCore
 		$opt = array();
 		$opt['verb'] = HTTP_DELETE;
 		$opt['method'] = 'delete_object';
-		$opt['filename'] = rawurlencode($filename);
+		$opt['filename'] = $filename;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		// Authenticate to S3
@@ -1352,7 +1352,7 @@ class AmazonS3 extends TarzanCore
 		$opt['sourceObject'] = $source_filename;
 		$opt['destinationBucket'] = $dest_bucket;
 		$opt['destinationObject'] = $dest_filename;
-		$opt['filename'] = rawurlencode($dest_filename);
+		$opt['filename'] = $dest_filename;
 		$opt['metadataDirective'] = isset($opt['metadataDirective']) ? $opt['metadataDirective'] : 'COPY';
 
 		// Do we have metadata?
