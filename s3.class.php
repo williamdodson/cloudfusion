@@ -265,7 +265,7 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Add ACL stuff if we're getting/setting ACL preferences.
-			elseif ($method == 'get_bucket_acl' || $method == 'get_object_acl')
+			elseif ($method == 'get_bucket_acl' || $method == 'get_object_acl' || $method == 'set_bucket_acl' || $method == 'set_object_acl')
 			{
 				$request .= '?acl';
 				$filename .= '?acl';
