@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across caching classes.
  *
  * Version:
- * 	2008.11.06
+ * 	2008.11.30
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -74,6 +74,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	_object_ Reference to the cache object.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function __construct($name, $location, $expires)
 	{
@@ -96,6 +99,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	void
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function create($data) { return; }
 
@@ -108,6 +114,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	void
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function read() { return; }
 
@@ -123,6 +132,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	void
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function update($data) { return; }
 
@@ -159,6 +171,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	void
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function reset() { return; }
 
@@ -171,6 +186,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether the cache is expired or not.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function is_expired() { return; }
 
@@ -187,6 +205,9 @@ class CacheCore
 	 * 
 	 * Returns:
 	 * 	_array_ The cached data being requested.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/response_manager.phps
 	 */
 	public function response_manager($callback, $params = null)
 	{

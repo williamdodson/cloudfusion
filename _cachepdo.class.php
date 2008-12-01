@@ -4,7 +4,7 @@
  * 	Database-based caching class using PHP Data Objects (PDO).
  *
  * Version:
- * 	2008.10.10
+ * 	2008.11.30
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -101,6 +101,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_object_ Reference to the cache object.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function __construct($name, $location, $expires)
 	{
@@ -161,6 +164,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether the operation was successful.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function create($data)
 	{
@@ -180,6 +186,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_mixed_ Either the content of the cache object, or _boolean_ false.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function read()
 	{
@@ -210,6 +219,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether the operation was successful.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function update($data)
 	{
@@ -278,6 +290,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether the operation was successful.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function reset()
 	{
@@ -295,6 +310,9 @@ class CachePDO extends CacheCore
 	 * 
 	 * Returns:
 	 * 	_boolean_ Whether the cache is expired or not.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cachecore/cache.phps
 	 */
 	public function is_expired()
 	{
@@ -308,13 +326,16 @@ class CachePDO extends CacheCore
 
 	/**
 	 * Method: get_drivers()
-	 * 	Returns a list of supported PDO database drivers.
+	 * 	Returns a list of supported PDO database drivers. Identical to PDO::getAvailableDrivers().
 	 * 
 	 * Access:
 	 * 	public
 	 * 
 	 * Returns:
 	 * 	_array_ The list of supported database drivers.
+	 * 
+	 * See Also:
+	 * 	PHP Method - http://php.net/pdo.getavailabledrivers
 	 */
 	public function get_drivers()
 	{
