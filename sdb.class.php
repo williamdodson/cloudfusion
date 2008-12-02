@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2008.11.02
+ * 	2008.12.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -119,7 +119,7 @@ class AmazonSDB extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/create_domain.phps
-	 * 	Related - <list_domains()>, <delete_domain()>
+ 	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function create_domain($domain_name, $returnCurlHandle = null)
 	{
@@ -151,7 +151,7 @@ class AmazonSDB extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/list_domains.phps
- 	 * 	Related - <create_domain()>, <delete_domain()>
+ 	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function list_domains($opt = null)
 	{
@@ -168,7 +168,7 @@ class AmazonSDB extends TarzanCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	domain_name - _string_ (Required) The domain name to delete.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
@@ -177,7 +177,7 @@ class AmazonSDB extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/delete_domain.phps
- 	 * 	Related - <create_domain()>, <list_domains()>
+ 	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function delete_domain($domain_name, $returnCurlHandle = null)
 	{
@@ -186,6 +186,34 @@ class AmazonSDB extends TarzanCore
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
 		return $this->authenticate('DeleteDomain', $opt, SDB_DEFAULT_URL);
+	}
+
+	/**
+	 * Method: domain_metadata()
+	 * 	Returns information about the domain, including when the domain was created, the number of items and attributes, and the size of attribute names and values.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for retrieving metadata.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DomainMetadata.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/domain_metadata.phps
+ 	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
+	 */
+	public function domain_metadata($domain_name, $returnCurlHandle = null)
+	{
+		$opt = array();
+		$opt['DomainName'] = $domain_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+
+		return $this->authenticate('DomainMetadata', $opt, SDB_DEFAULT_URL);
 	}
 
 
