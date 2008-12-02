@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.11.02
+ * 	2008.12.01
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -58,6 +58,36 @@ define('S3_ACL_OPEN', 'public-read-write');
 define('S3_ACL_AUTH_READ', 'authenticated-read');
 
 /**
+ * Constant: S3_GRANT_READ
+ * 	When applied to a bucket, grants permission to list the bucket. When applied to an object, this grants permission to read the object data and/or metadata.
+ */
+define('S3_GRANT_READ', 'READ');
+
+/**
+ * Constant: S3_GRANT_WRITE
+ * 	When applied to a bucket, grants permission to create, overwrite, and delete any object in the bucket. This permission is not supported for objects.
+ */
+define('S3_GRANT_WRITE', 'WRITE');
+
+/**
+ * Constant: READ_ACP
+ * 	Grants permission to read the ACL for the applicable bucket or object. The owner of a bucket or object always has this permission implicitly.
+ */
+define('S3_GRANT_READ_ACP', 'READ_ACP');
+
+/**
+ * Constant: S3_GRANT_WRITE_ACP
+ * 	Gives permission to overwrite the ACP for the applicable bucket or object. The owner of a bucket or object always has this permission implicitly. Granting this permission is equivalent to granting FULL_CONTROL because the grant recipient can make any changes to the ACP.
+ */
+define('S3_GRANT_WRITE_ACP', 'WRITE_ACP');
+
+/**
+ * Constant: S3_GRANT_FULL_CONTROL
+ * 	Provides READ, WRITE, READ_ACP, and WRITE_ACP permissions. It does not convey additional rights and is provided only for convenience.
+ */
+define('S3_GRANT_FULL_CONTROL', 'FULL_CONTROL');
+
+/**
  * Constant: S3_PCRE_ALL
  * 	PCRE: Match all items
  */
@@ -109,6 +139,12 @@ class AmazonS3 extends TarzanCore
 	 */
 	var $vhost;
 
+	/**
+	 * Property: base_logging_xml
+	 * 	The base XML elements to use for logging methods.
+	 */
+	var $base_logging_xml;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -131,6 +167,8 @@ class AmazonS3 extends TarzanCore
 	{
 		$this->vhost = null;
 		$this->api_version = '2006-03-01';
+
+		$this->base_logging_xml = '<?xml version="1.0" encoding="utf-8"?><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/' . $this->api_version . '"></BucketLoggingStatus>';
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -251,7 +289,7 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Logging
-			elseif ($method == 'get_logs')
+			elseif ($method == 'get_logs' || $method == 'enable_logging' || $method == 'disable_logging')
 			{
 				$request .= '?logging';
 				$filename .= '?logging';
@@ -361,8 +399,8 @@ class AmazonS3 extends TarzanCore
 				$req->addHeader('Range', 'bytes=' . $range);
 			}
 
-			// Add a body if we're creating
-			if ($method == 'create_object' || $method == 'create_bucket')
+			// Add a body if we're creating or setting
+			if ($method == 'create_object' || $method == 'create_bucket' || $method == 'enable_logging' || $method == 'disable_logging')
 			{
 				if (isset($body) && !empty($body))
 				{
@@ -1518,7 +1556,7 @@ class AmazonS3 extends TarzanCore
 
 	/**
 	 * Method: get_logs()
-	 * 	NOT YET IMPLEMENTED! Get the access logs associated with a given bucket.
+	 * 	Get the access logs associated with a given bucket.
 	 * 
 	 * Access:
 	 * 	public
@@ -1545,28 +1583,86 @@ class AmazonS3 extends TarzanCore
 	}
 
 	/**
-	 * Method: toggle_logging()
-	 * 	NOT YET IMPLEMENTED! Enable/Disable bucket logging.
+	 * Method: enable_logging()
+	 * 	Enable access logging.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	bucket - _string_ (Required) The name of the bucket to be log. Pass null if using <set_vhost()>.
+	 * 	target_bucket - _string_ (Required) The name of the bucket to store the logs in.
+	 * 	target_prefix - _string_ (Required) The prefix to give to the log filenames.
+	 * 	users - _array_ (Optional) Any non-owner users to give access to. Set as an array of key-value pairs: the email address (must be tied to an AWS account) is the key, and the permission is the value. Allowable permissions are <S3_GRANT_READ>, <S3_GRANT_WRITE>, <S3_GRANT_READ_ACP>, <S3_GRANT_WRITE_ACP>, and <S3_GRANT_FULL_CONTROL>.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	Related - <get_logs()>, <set_logging_permissions()>
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
+	 * 	Permissions - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html#S3_ACLs_Permissions
+	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>, <set_logging_permissions()>
 	 */
-	// public function toggle_logging()
-	// 	{
-	// 		
-	// 	}
+	public function enable_logging($bucket, $target_bucket, $target_prefix, $users = null)
+	{
+		// Add this to our request
+		$opt = array();
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'enable_logging';
+
+		$xml = simplexml_load_string($this->base_logging_xml);
+		$LoggingEnabled = $xml->addChild('LoggingEnabled');
+		$LoggingEnabled->addChild('TargetBucket', $target_bucket);
+		$LoggingEnabled->addChild('TargetPrefix', $target_prefix);
+
+		if ($users && is_array($users))
+		{
+			$TargetGrants = $LoggingEnabled->addChild('TargetGrants');
+
+			foreach ($users as $email => $permission)
+			{
+				$Grant = $TargetGrants->addChild('Grant');
+				$Grantee = $Grant->addChild('Grantee');
+				$Grantee->addAttribute('xsi:type', 'AmazonCustomerByEmail', 'http://www.w3.org/2001/XMLSchema-instance');
+				$Grantee->addChild('EmailAddress', $email);
+				$Grant->addChild('Permission', $permission);
+			}
+		}
+
+		$opt['body'] = $xml->asXML();
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
 
 	/**
-	 * Method: set_logging_permissions()
-	 * 	NOT YET IMPLEMENTED! Determine the permissions for managing the logging process.
+	 * Method: disable_logging()
+	 * 	Disable access logging.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	bucket - _string_ (Required) The name of the bucket to be used. Pass null if using <set_vhost()>.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
 	 * 
 	 * See Also:
-	 * 	Related - <get_logs()>, <toggle_logging()>
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
+	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>, <set_logging_permissions()>
 	 */
-	// public function set_logging_permissions()
-	// 	{
-	// 		
-	// 	}
+	public function disable_logging($bucket)
+	{
+		// Add this to our request
+		$opt = array();
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'disable_logging';
+		$opt['body'] = $this->base_logging_xml;
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
+	}
 
 
 	/*%******************************************************************************************%*/
