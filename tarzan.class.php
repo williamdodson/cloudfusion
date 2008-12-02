@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.11.03
+ * 	2008.12.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -20,29 +20,8 @@
 /*%******************************************************************************************%*/
 // CORE DEPENDENCIES
 
-/**
- * Include the Tarzan config file
- */
-@include_once('config.inc.php');
-
-/**
- * Autoload classes.
- */
-function __autoload($class_name)
-{
-	if (stristr($class_name, 'amazon'))
-	{
-		require_once(dirname(__FILE__) . '/' . str_replace('amazon', '', strtolower($class_name)) . '.class.php');
-	}
-	elseif (stristr($class_name, 'tarzan'))
-	{
-		require_once(dirname(__FILE__) . '/' . str_replace('tarzan', '_', strtolower($class_name)) . '.class.php');
-	}
-	elseif (stristr($class_name, 'cache'))
-	{
-		require_once(dirname(__FILE__) . '/' . '_' . strtolower($class_name) . '.class.php');
-	}
-}
+// Include the Tarzan config file
+@include_once 'config.inc.php';
 
 
 /*%******************************************************************************************%*/
@@ -224,6 +203,39 @@ class TarzanCore
 	 * 	Sets the proxy to use for connecting.
 	 */
 	var $set_proxy = null;
+
+
+	/*%******************************************************************************************%*/
+	// AUTO-LOADER
+
+	/**
+	 * Method: autoloader()
+	 * 	Automatically load classes that aren't included.
+	 * 
+	 * Access:
+	 * 	public static
+	 * 
+	 * Parameters:
+	 * 	class_name - _string_ (Required) The classname to load.
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public static function autoloader($class_name)
+	{
+		if (stristr($class_name, 'amazon'))
+		{
+			require_once(dirname(__FILE__) . '/' . str_replace('amazon', '', strtolower($class_name)) . '.class.php');
+		}
+		elseif (stristr($class_name, 'tarzan'))
+		{
+			require_once(dirname(__FILE__) . '/' . '_' . str_replace('tarzan', '', strtolower($class_name)) . '.class.php');
+		}
+		elseif (stristr($class_name, 'cache'))
+		{
+			require_once(dirname(__FILE__) . '/' . '_' . strtolower($class_name) . '.class.php');
+		}
+	}
 
 
 	/*%******************************************************************************************%*/
@@ -681,4 +693,9 @@ class TarzanCore
 		return $data;
 	}
 }
+
+
+// Register the autoloader.
+spl_autoload_register(array('TarzanCore', 'autoloader'));
+
 ?>
