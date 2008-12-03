@@ -1793,6 +1793,34 @@ class AmazonS3 extends TarzanCore
 		}
 	}
 
+	/**
+	 * Method: change_content_type()
+	 * 	Changes the content type for an existing object.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	bucket - _string_ (Required) The name of the bucket to be used.
+	 * 	filename - _string_ (Required) The filename for the object.
+	 * 	contentType - _string_ (Required) The content-type to apply to the object.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/change_content_type.phps
+	 */
+	public function change_content_type($bucket, $filename, $contentType, $returnCurlHandle = null)
+	{
+		return $s3->copy_object($bucket, $filename, $bucket, $filename, array(
+			'contentType' => $contentType,
+			'metadataDirective' => 'REPLACE',
+			'returnCurlHandle' => $returnCurlHandle
+		));
+	}
+
 
 	/*%******************************************************************************************%*/
 	// URLS
