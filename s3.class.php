@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.12.01
+ * 	2008.12.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -86,6 +86,24 @@ define('S3_GRANT_WRITE_ACP', 'WRITE_ACP');
  * 	Provides READ, WRITE, READ_ACP, and WRITE_ACP permissions. It does not convey additional rights and is provided only for convenience.
  */
 define('S3_GRANT_FULL_CONTROL', 'FULL_CONTROL');
+
+/**
+ * Constant: S3_USERS_AUTH
+ * 	The "AuthenticatedUsers" group for access control policies.
+ */
+define('S3_USERS_AUTH', 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers');
+
+/**
+ * Constant: S3_USERS_ALL
+ * 	The "AllUsers" group for access control policies.
+ */
+define('S3_USERS_ALL', 'http://acs.amazonaws.com/groups/global/AllUsers');
+
+/**
+ * Constant: S3_USERS_LOGGING
+ * 	The "LogDelivery" group for access control policies.
+ */
+define('S3_USERS_LOGGING', 'http://acs.amazonaws.com/groups/s3/LogDelivery');
 
 /**
  * Constant: S3_PCRE_ALL
@@ -721,6 +739,7 @@ class AmazonS3 extends TarzanCore
 	 * Parameters:
 	 * 	source_bucket - _string_ (Required) The name of the source bucket.
 	 * 	dest_bucket - _string_ (Required) The name of the destination bucket.
+	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 
 	 * Returns:
 	 * 	<TarzanHTTPResponse> object
@@ -729,7 +748,7 @@ class AmazonS3 extends TarzanCore
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_bucket.phps
 	 * 	Related - <copy_object()>, <rename_bucket()>, <list_buckets()>
 	 */
-	public function copy_bucket($source_bucket, $dest_bucket)
+	public function copy_bucket($source_bucket, $dest_bucket, $acl = S3_ACL_PRIVATE)
 	{
 		// Since S3 can't yet copy across geographical locations, make sure that the new bucket matches the existing bucket.
 		$locale = $this->get_bucket_locale($source_bucket);
@@ -754,7 +773,7 @@ class AmazonS3 extends TarzanCore
 			foreach ($list as $item)
 			{
 				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, array(
-					'acl' => S3_ACL_PRIVATE, 
+					'acl' => $acl, 
 					'returnCurlHandle' => true
 				));
 			}
@@ -971,6 +990,7 @@ class AmazonS3 extends TarzanCore
  	 * 
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
+	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
@@ -1614,11 +1634,10 @@ class AmazonS3 extends TarzanCore
 		$LoggingEnabled = $xml->addChild('LoggingEnabled');
 		$LoggingEnabled->addChild('TargetBucket', $target_bucket);
 		$LoggingEnabled->addChild('TargetPrefix', $target_prefix);
+		$TargetGrants = $LoggingEnabled->addChild('TargetGrants');
 
 		if ($users && is_array($users))
 		{
-			$TargetGrants = $LoggingEnabled->addChild('TargetGrants');
-
 			foreach ($users as $email => $permission)
 			{
 				$Grant = $TargetGrants->addChild('Grant');
@@ -1834,6 +1853,30 @@ class AmazonS3 extends TarzanCore
 			return $this->get_object_url($bucket, $filename, $qsa, true);
 		}
 		return $this->get_object_url($bucket, $filename, 0 , true);
+	}
+
+	// public function generate_access_policy()
+	// {
+	// 	
+	// }
+
+	/**
+	 * Method: get_canonical_user_id()
+	 * 	Obtains the CanonicalUser ID and DisplayName from the server.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Returns:
+ 	 * 	_array_ The id and display_name values.
+	 */
+	public function get_canonical_user_id()
+	{
+		$id = $this->list_buckets();
+		return array(
+			'id' => (string) $id->body->Owner->ID,
+			'display_name' => (string) $id->body->Owner->DisplayName
+		);
 	}
 }
 ?>

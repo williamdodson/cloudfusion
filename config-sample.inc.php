@@ -4,7 +4,7 @@
  * 	Stores your AWS account information. Add your account information, then rename this file to 'config.inc.php'.
  *
  * Version:
- * 	2008.11.18
+ * 	2008.12.02
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -40,5 +40,17 @@ define('AWS_ACCOUNT_ID', '');
  * 	Amazon Associates ID. Used for crediting referrals via Amazon AAWS. <http://affiliate-program.amazon.com/gp/associates/join/>
  */
 define('AWS_ASSOC_ID', '');
+
+/**
+ * Constant: AWS_CANONICAL_ID
+ * 	Your CanonicalUser ID. Used for setting access control settings in AmazonS3. Must be fetched from the server. Call print_r($s3->get_canonical_user_id()); to view.
+ */
+define('AWS_CANONICAL_ID', '');
+
+/**
+ * Constant: AWS_CANONICAL_ID
+ * 	Your CanonicalUser DisplayName. Used for setting access control settings in AmazonS3. Must be fetched from the server. Call print_r($s3->get_canonical_user_id()); to view.
+ */
+define('AWS_CANONICAL_NAME', '');
 
 ?>
