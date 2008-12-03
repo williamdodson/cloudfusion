@@ -14,6 +14,11 @@ $acl = $s3->set_bucket_acl('warpshare.test.eu', S3_ACL_PUBLIC);
 
 
 /**
+ * See the example in s3/generate_access_policy.phps to see how to pass an array of users instead of a canned access policy.
+ */
+
+
+/**
  * Look at the response to navigate through the headers and body of the response.
  * Note that this is an object, not an array, and that the body is a SimpleXML object.
  * 

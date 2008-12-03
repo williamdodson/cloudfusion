@@ -70,7 +70,7 @@ define('S3_GRANT_READ', 'READ');
 define('S3_GRANT_WRITE', 'WRITE');
 
 /**
- * Constant: READ_ACP
+ * Constant: S3_GRANT_READ_ACP
  * 	Grants permission to read the ACL for the applicable bucket or object. The owner of a bucket or object always has this permission implicitly.
  */
 define('S3_GRANT_READ_ACP', 'READ_ACP');
@@ -158,6 +158,12 @@ class AmazonS3 extends TarzanCore
 	var $vhost;
 
 	/**
+	 * Property: base_acp_xml
+	 * 	The base XML elements to use for access control policy methods.
+	 */
+	var $base_acp_xml;
+
+	/**
 	 * Property: base_logging_xml
 	 * 	The base XML elements to use for logging methods.
 	 */
@@ -186,6 +192,7 @@ class AmazonS3 extends TarzanCore
 		$this->vhost = null;
 		$this->api_version = '2006-03-01';
 
+		$this->base_acp_xml = '<?xml version="1.0" encoding="UTF-8"?><AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"></AccessControlPolicy>';
 		$this->base_logging_xml = '<?xml version="1.0" encoding="utf-8"?><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/' . $this->api_version . '"></BucketLoggingStatus>';
 
 		if (!$key && !defined('AWS_KEY'))
@@ -418,7 +425,9 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Add a body if we're creating or setting
-			if ($method == 'create_object' || $method == 'create_bucket' || $method == 'enable_logging' || $method == 'disable_logging')
+			if ($method == 'create_object' || $method == 'create_bucket' || 
+				$method == 'enable_logging' || $method == 'disable_logging' || 
+				$method == 'set_object_acl' || $method == 'set_bucket_acl')
 			{
 				if (isset($body) && !empty($body))
 				{
@@ -990,7 +999,7 @@ class AmazonS3 extends TarzanCore
  	 * 
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
-	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
+	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Alternatively, an array of associative arrays. Each associative array contains an 'id' and a 'permission'. Defaults to <S3_ACL_PRIVATE>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
@@ -1008,7 +1017,15 @@ class AmazonS3 extends TarzanCore
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'set_bucket_acl';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$opt['acl'] = $acl;
+
+		if (is_array($acl))
+		{
+			$opt['body'] = $this->generate_access_policy(AWS_CANONICAL_ID, AWS_CANONICAL_NAME, $acl);
+		}
+		else
+		{
+			$opt['acl'] = $acl;
+		}
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -1545,7 +1562,7 @@ class AmazonS3 extends TarzanCore
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
-	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
+	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Alternatively, an array of associative arrays. Each associative array contains an 'id' and a 'permission'. Defaults to <S3_ACL_PRIVATE>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
@@ -1564,7 +1581,15 @@ class AmazonS3 extends TarzanCore
 		$opt['method'] = 'set_object_acl';
 		$opt['filename'] = $filename;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$opt['acl'] = $acl;
+
+		if (is_array($acl))
+		{
+			$opt['body'] = $this->generate_access_policy(AWS_CANONICAL_ID, AWS_CANONICAL_NAME, $acl);
+		}
+		else
+		{
+			$opt['acl'] = $acl;
+		}
 
 		// Authenticate to S3
 		return $this->authenticate($bucket, $opt);
@@ -1589,7 +1614,8 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ServerLogs.html
-	 * 	Related - <toggle_logging()>, <set_logging_permissions()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function get_logs($bucket)
 	{
@@ -1621,7 +1647,8 @@ class AmazonS3 extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
 	 * 	Permissions - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html#S3_ACLs_Permissions
-	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>, <set_logging_permissions()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function enable_logging($bucket, $target_bucket, $target_prefix, $users = null)
 	{
@@ -1669,7 +1696,8 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
-	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>, <set_logging_permissions()>
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function disable_logging($bucket)
 	{
@@ -1685,7 +1713,7 @@ class AmazonS3 extends TarzanCore
 
 
 	/*%******************************************************************************************%*/
-	// MISCELLANEOUS METHODS
+	// CONVENIENCE METHODS
 
 	/**
 	 * Method: store_remote_file()
@@ -1764,6 +1792,10 @@ class AmazonS3 extends TarzanCore
 			return null;
 		}
 	}
+
+
+	/*%******************************************************************************************%*/
+	// URLS
 
 	/**
 	 * Method: get_object_url()
@@ -1855,10 +1887,74 @@ class AmazonS3 extends TarzanCore
 		return $this->get_object_url($bucket, $filename, 0 , true);
 	}
 
-	// public function generate_access_policy()
-	// {
-	// 	
-	// }
+
+	/*%******************************************************************************************%*/
+	// ACCESS CONTROL POLICY
+
+	/**
+	 * Method: generate_access_policy()
+	 * 	Generate the XML to be used for the Access Control Policy.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	canonical_id - _string_ (Required) The Canonical ID for the Owner. Use the <AWS_CANONICAL_ID> constant or the 'id' value from <get_canonical_user_id()>.
+	 * 	canonical_name - _string_ (Required) The Canonical Display Name for the Owner. Use the <AWS_CANONICAL_NAME> constant or the 'display_name' value from <get_canonical_user_id()>.
+	 * 	users - _array_ (Optional) Array of associative arrays. Each associative array contains an 'id' and a 'permission'.
+	 * 
+	 * Returns:
+	 * 	_string_ Access Control Policy XML.
+	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/generate_access_policy.phps
+	 */
+	public function generate_access_policy($canonical_id, $canonical_name, $users)
+	{
+		$xml = simplexml_load_string($this->base_acp_xml);
+		$owner = $xml->addChild('Owner');
+		$owner->addChild('ID', $canonical_id);
+		$owner->addChild('DisplayName', $canonical_name);
+		$acl = $xml->addChild('AccessControlList');
+
+		foreach ($users as $user)
+		{
+			$grant = $acl->addChild('Grant');
+			$grantee = $grant->addChild('Grantee');
+
+			switch ($user['id'])
+			{
+				// Authorized Users
+				case S3_USERS_AUTH:
+					$grantee->addAttribute('xsi:type', 'Group', 'http://www.w3.org/2001/XMLSchema-instance');
+					$grantee->addChild('URI', S3_USERS_AUTH);
+					break;
+
+				// All Users
+				case S3_USERS_ALL:
+					$grantee->addAttribute('xsi:type', 'Group', 'http://www.w3.org/2001/XMLSchema-instance');
+					$grantee->addChild('URI', S3_USERS_ALL);
+					break;
+
+				// The Logging User
+				case S3_USERS_LOGGING:
+					$grantee->addAttribute('xsi:type', 'Group', 'http://www.w3.org/2001/XMLSchema-instance');
+					$grantee->addChild('URI', S3_USERS_LOGGING);
+					break;
+
+				// Assume an Email Address
+				default:
+					$grantee->addAttribute('xsi:type', 'AmazonCustomerByEmail', 'http://www.w3.org/2001/XMLSchema-instance');
+					$grantee->addChild('EmailAddress', $user['id']);
+					break;
+			}
+
+			$grant->addChild('Permission', $user['permission']);
+		}
+
+		return $xml->asXML();
+	}
 
 	/**
 	 * Method: get_canonical_user_id()
