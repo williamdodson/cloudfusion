@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.12.02
+ * 	2008.12.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.

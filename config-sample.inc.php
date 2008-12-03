@@ -48,7 +48,7 @@ define('AWS_ASSOC_ID', '');
 define('AWS_CANONICAL_ID', '');
 
 /**
- * Constant: AWS_CANONICAL_ID
+ * Constant: AWS_CANONICAL_NAME
  * 	Your CanonicalUser DisplayName. Used for setting access control settings in AmazonS3. Must be fetched from the server. Call print_r($s3->get_canonical_user_id()); to view.
  */
 define('AWS_CANONICAL_NAME', '');
