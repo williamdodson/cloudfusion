@@ -1225,7 +1225,7 @@ class AmazonS3 extends TarzanCore
 	public function delete_all_objects($bucket, $pcre = S3_PCRE_ALL)
 	{
 		// Collect all matches
-		$list = $this->get_object_list($bucket, array('pcre', $pcre));
+		$list = $this->get_object_list($bucket, array('pcre' => $pcre));
 
 		// As long as we have at least one match...
 		if (count($list) > 0)
