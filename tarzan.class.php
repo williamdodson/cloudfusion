@@ -221,19 +221,30 @@ class TarzanCore
 	 * Returns:
 	 * 	void
 	 */
-	public static function autoloader($class_name)
+	public static function autoloader($class)
 	{
-		if (stristr($class_name, 'amazon'))
+		$path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+
+		if (stristr($class, 'amazon'))
 		{
-			require_once(dirname(__FILE__) . '/' . str_replace('amazon', '', strtolower($class_name)) . '.class.php');
+			$path .= str_replace('amazon', '', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class_name, 'tarzan'))
+		elseif (stristr($class, 'tarzan'))
 		{
-			require_once(dirname(__FILE__) . '/' . '_' . str_replace('tarzan', '', strtolower($class_name)) . '.class.php');
+			$path .= str_replace('tarzan', '_', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class_name, 'cache'))
+		elseif (stristr($class, 'cache'))
 		{
-			require_once(dirname(__FILE__) . '/' . '_' . strtolower($class_name) . '.class.php');
+			$path .= '_' . strtolower($class) . '.class.php';
+		}
+		else
+		{
+			$path = '';
+		}
+
+		if (file_exists($path))
+		{
+			require_once($path);
 		}
 	}
 
