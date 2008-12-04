@@ -11,6 +11,19 @@ $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO cachi
 
 
 /**
+ * Memcached caching (available in upcoming version 2.1 or in the trunk @ r228). 
+ * Location is an indexed array of associative arrays. Each associative array 
+ * has a 'host' and a 'port' representing a server to add to the server pool.
+ */
+$cache = new CacheMC('cache_obj', array(
+	array(
+		'host' => 'localhost',
+		'port' => 11211
+	)
+), 10);
+
+
+/**
  * This is the function that is used to fetch new data. It accepts a URL as its 
  * only parameter. If SUCCESS, return the data. If FAIL, return null.
  */

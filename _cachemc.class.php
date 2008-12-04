@@ -1,7 +1,7 @@
 <?php
 /**
  * File: CacheMC
- * 	APC-based caching class.
+ * 	Memcache-based caching class.
  *
  * Version:
  * 	2008.12.03
@@ -23,7 +23,7 @@
 
 /**
  * Class: CacheMC
- * 	Container for all APC-based cache methods. Inherits additional methods from CacheCore.
+ * 	Container for all Memcache-based cache methods. Inherits additional methods from CacheCore.
  */
 class CacheMC extends CacheCore
 {
