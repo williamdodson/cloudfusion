@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.02
+ * 	2008.12.03
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -561,22 +561,30 @@ class TarzanCore
 			$method = $method[1];
 		}
 
-		// I would expect locations like '/tmp/cache', 'pdo.mysql://user:pass@hostname:port', 'pdo.sqlite:memory:', and 'apc'.
-		$type = strtolower(substr($location, 0, 3));
-		switch ($type)
+		// If we have an array, we're probably passing in Memcached servers and ports.
+		if (is_array($location))
 		{
-			case 'apc':
-				$CacheMethod = 'CacheAPC';
-				break;
-	
-			case 'pdo':
-				$CacheMethod = 'CachePDO';
-				$location = substr($location, 4);
-				break;
+			$CacheMethod = 'CacheMC';
+		}
+		else
+		{
+			// I would expect locations like '/tmp/cache', 'pdo.mysql://user:pass@hostname:port', 'pdo.sqlite:memory:', and 'apc'.
+			$type = strtolower(substr($location, 0, 3));
+			switch ($type)
+			{
+				case 'apc':
+					$CacheMethod = 'CacheAPC';
+					break;
 
-			default:
-				$CacheMethod = 'CacheFile';
-				break;
+				case 'pdo':
+					$CacheMethod = 'CachePDO';
+					$location = substr($location, 4);
+					break;
+
+				default:
+					$CacheMethod = 'CacheFile';
+					break;
+			}
 		}
 
 		// Once we've determined the preferred caching method, instantiate a new cache.
