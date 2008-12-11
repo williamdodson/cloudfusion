@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.03
+ * 	2008.12.10
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -37,7 +37,7 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '1.9');
+define('TARZAN_VERSION', '2.1');
 
 /**
  * Constant: TARZAN_BUILD
@@ -176,15 +176,15 @@ class TarzanCore
 
 	/**
 	 * Property: request_class
-	 * The default class to use for HTTP Requests (defaults to <TarzanHTTPRequest>).
+	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
 	 */
-	var $request_class = 'TarzanHTTPRequest';
+	var $request_class = 'RequestCore';
 
 	/**
 	 * Property: response_class
-	 * The default class to use for HTTP Responses (defaults to <TarzanHTTPResponse>).
+	 * The default class to use for HTTP Responses (defaults to <ResponseCore>).
 	 */
-	var $response_class = 'TarzanHTTPResponse';
+	var $response_class = 'ResponseCore';
 
 	/**
 	 * Property: adjust_offset
@@ -233,7 +233,7 @@ class TarzanCore
 		{
 			$path .= str_replace('tarzan', '_', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class, 'cache'))
+		elseif (stristr($class, 'cache') || stristr($class, 'request'))
 		{
 			$path .= '_' . strtolower($class) . '.class.php';
 		}
@@ -408,7 +408,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_request_class.phps
 	 */
-	function set_request_class($class = 'TarzanHTTPRequest')
+	function set_request_class($class = 'RequestCore')
 	{
 		$this->request_class = $class;
 	}
@@ -429,7 +429,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_response_class.phps
 	 */
-	function set_response_class($class = 'TarzanHTTPResponse')
+	function set_response_class($class = 'ResponseCore')
 	{
 		$this->response_class = $class;
 	}
@@ -452,7 +452,7 @@ class TarzanCore
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
 	 */
 	public function authenticate($action, $opt = null, $domain = null, $message = null)
 	{
@@ -530,7 +530,7 @@ class TarzanCore
 
 	/**
 	 * Method: cache_response()
-	 * 	Caches a TarzanHTTPResponse object using the preferred caching method.
+	 * 	Caches a ResponseCore object using the preferred caching method.
 	 * 
 	 * Access:
 	 * 	public
@@ -547,7 +547,7 @@ class TarzanCore
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/cache_response.phps

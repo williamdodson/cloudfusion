@@ -13,7 +13,7 @@ $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO cachi
 /**
  * Example that uses all of the various methods.
  */
-$request = new TarzanHTTPRequest('http://example.com/endpoint');
+$request = new RequestCore('http://example.com/endpoint');
 
 // Does a cache already exist, and can we read it?
 if ($data = $cache->read())

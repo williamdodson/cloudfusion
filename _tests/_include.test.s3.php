@@ -300,7 +300,7 @@ class S3Base extends UnitTestCase
 	public function test_get_object_url_qsa()
 	{
 		$get_object_url = $this->class->get_object_url($this->bucket, $this->file, 60);
-		$request = new TarzanHTTPRequest($get_object_url);
+		$request = new RequestCore($get_object_url);
 		$request->sendRequest();
 		$this->assertEqual(200, (integer) $request->getResponseCode());
 	}
@@ -314,7 +314,7 @@ class S3Base extends UnitTestCase
 	public function test_get_torrent_url_qsa()
 	{
 		$get_torrent_url = $this->class->get_torrent_url($this->bucket, $this->file, 60);
-		$request = new TarzanHTTPRequest($get_torrent_url);
+		$request = new RequestCore($get_torrent_url);
 		$request->sendRequest();
 		$this->assertEqual(200, (integer) $request->getResponseCode());
 	}
@@ -351,9 +351,9 @@ class S3Base extends UnitTestCase
 
 	public function test_get_public()
 	{
-		$get_public = new TarzanHTTPRequest($this->request_url);
+		$get_public = new RequestCore($this->request_url);
 		$get_public->sendRequest();
-		$get_public = new TarzanHTTPResponse($get_public->getResponseHeader(), null, $get_public->getResponseCode());
+		$get_public = new ResponseCore($get_public->getResponseHeader(), null, $get_public->getResponseCode());
 
 		if ($get_public->isOK())
 		{
