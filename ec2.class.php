@@ -27,6 +27,18 @@
  */
 define('EC2_DEFAULT_URL', 'ec2.amazonaws.com');
 
+/**
+ * Constant: EC2_LOCATION_US
+ * 	Specify the queue URL for the U.S.-specific hostname.
+ */
+define('EC2_LOCATION_US', 'us-east-1.');
+
+/**
+ * Constant: EC2_LOCATION_EU
+ * 	Specify the queue URL for the E.U.-specific hostname.
+ */
+define('EC2_LOCATION_EU', 'eu-west-1.');
+
 
 /*%******************************************************************************************%*/
 // EXCEPTIONS
@@ -61,6 +73,13 @@ class EC2_Exception extends Exception {}
  */
 class AmazonEC2 extends TarzanCore
 {
+	/**
+	 * Property: hostname
+	 * Stores the hostname to use to make the request.
+	 */
+	var $hostname;
+
+
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
 
@@ -84,7 +103,8 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
-		$this->api_version = '2008-08-08';
+		$this->api_version = '2008-12-01';
+		$this->hostname = EC2_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -102,6 +122,31 @@ class AmazonEC2 extends TarzanCore
 		}
 
 		parent::__construct($key, $secret_key, $account_id);
+	}
+
+
+	/*%******************************************************************************************%*/
+	// MISCELLANEOUS
+
+	/**
+	 * Method: set_locale()
+	 * 	By default EC2 will self-select the most appropriate locale. This allows you to explicitly sets the locale for EC2 to use.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	locale - _string_ (Required) The locale to explicitly set for EC2. Available options are <EC2_LOCATION_US> and <EC2_LOCATION_EU>.
+	 * 
+	 * Returns:
+	 * 	<ResponseCore> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/set_locale.phps
+	 */
+	public function set_locale($locale)
+	{
+		$this->hostname = $locale . EC2_DEFAULT_URL;
 	}
 
 
@@ -133,7 +178,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeAvailabilityZones', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeAvailabilityZones', $opt, $this->hostname);
 	}
 
 
@@ -163,7 +208,7 @@ class AmazonEC2 extends TarzanCore
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AllocateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AllocateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -195,7 +240,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AssociateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AssociateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -225,7 +270,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeAddresses', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeAddresses', $opt, $this->hostname);
 	}
 
 	/**
@@ -255,7 +300,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DisassociateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DisassociateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -287,7 +332,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('ReleaseAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ReleaseAddress', $opt, $this->hostname);
 	}
 
 
@@ -318,7 +363,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['VolumeId'] = $volume_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateSnapshot', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateSnapshot', $opt, $this->hostname);
 	}
 
 	/**
@@ -346,7 +391,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeSnapshots', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeSnapshots', $opt, $this->hostname);
 	}
 
 	/**
@@ -373,7 +418,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['SnapshotId'] = $snapshot_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteSnapshot', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteSnapshot', $opt, $this->hostname);
 	}
 
 
@@ -414,7 +459,7 @@ class AmazonEC2 extends TarzanCore
 			$opt['SnapshotId'] = $sizesnapid;
 		}
 
-		return $this->authenticate('CreateVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -442,7 +487,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeVolumes', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeVolumes', $opt, $this->hostname);
 	}
 
 	/**
@@ -474,7 +519,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['Device'] = $device;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AttachVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AttachVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -507,7 +552,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['VolumeId'] = $volume_id;
 
-		return $this->authenticate('DetachVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DetachVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -534,7 +579,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['VolumeId'] = $volume_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteVolume', $opt, $this->hostname);
 	}
 
 
@@ -565,7 +610,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['InstanceId'] = $instance_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('GetConsoleOutput', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('GetConsoleOutput', $opt, $this->hostname);
 	}
 
 	/**
@@ -594,7 +639,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('RebootInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RebootInstances', $opt, $this->hostname);
 	}
 
 
@@ -625,7 +670,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageId'] = $image_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeregisterImage', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeregisterImage', $opt, $this->hostname);
 	}
 
 	/**
@@ -665,7 +710,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeImages', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeImages', $opt, $this->hostname);
 	}
 
 	/**
@@ -696,7 +741,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageLocation'] = $image_location;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('RegisterImage', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RegisterImage', $opt, $this->hostname);
 	}
 
 
@@ -730,7 +775,7 @@ class AmazonEC2 extends TarzanCore
 		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
-		return $this->authenticate('DescribeImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeImageAttribute', $opt, $this->hostname);
 	}
 
 	/**
@@ -766,7 +811,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageId'] = $image_id;
 		$opt['Attribute'] = $attribute;
 
-		return $this->authenticate('ModifyImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ModifyImageAttribute', $opt, $this->hostname);
 	}
 
 	/**
@@ -796,7 +841,7 @@ class AmazonEC2 extends TarzanCore
 		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
-		return $this->authenticate('ResetImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ResetImageAttribute', $opt, $this->hostname);
 	}
 
 
@@ -831,7 +876,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['InstanceId'] = $instance_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('ConfirmProductInstance', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ConfirmProductInstance', $opt, $this->hostname);
 	}
 
 	/**
@@ -859,7 +904,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeInstances', $opt, $this->hostname);
 	}
 
 	/**
@@ -915,7 +960,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['MinCount'] = $min_count;
 		$opt['MaxCount'] = $max_count;
 
-		return $this->authenticate('RunInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RunInstances', $opt, $this->hostname);
 	}
 
 	/**
@@ -945,7 +990,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('TerminateInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('TerminateInstances', $opt, $this->hostname);
 	}
 
 
@@ -976,7 +1021,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['KeyName'] = $key_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateKeyPair', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateKeyPair', $opt, $this->hostname);
 	}
 
 	/**
@@ -1003,7 +1048,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['KeyName'] = $key_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteKeyPair', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteKeyPair', $opt, $this->hostname);
 	}
 
 	/**
@@ -1031,7 +1076,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeKeyPairs', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeKeyPairs', $opt, $this->hostname);
 	}
 
 
@@ -1077,7 +1122,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['GroupName'] = $group_name;
 
-		return $this->authenticate('AuthorizeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AuthorizeSecurityGroupIngress', $opt, $this->hostname);
 	}
 
 	/**
@@ -1106,7 +1151,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['GroupDescription'] = $group_description;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateSecurityGroup', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateSecurityGroup', $opt, $this->hostname);
 	}
 
 	/**
@@ -1135,7 +1180,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['GroupName'] = $group_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteSecurityGroup', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteSecurityGroup', $opt, $this->hostname);
 	}
 
 	/**
@@ -1163,7 +1208,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeSecurityGroups', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeSecurityGroups', $opt, $this->hostname);
 	}
 
 	/**
@@ -1205,7 +1250,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['GroupName'] = $group_name;
 
-		return $this->authenticate('RevokeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RevokeSecurityGroupIngress', $opt, $this->hostname);
 	}
 
 
@@ -1291,7 +1336,7 @@ class AmazonEC2 extends TarzanCore
 		// Storage.S3.UploadPolicySignature
 		$opt['Storage.S3.UploadPolicySignature'] = $this->util->hex_to_base64(hash_hmac('sha1', base64_encode($opt['Storage.S3.UploadPolicy']), $this->secret_key));
 
-		return $this->authenticate('BundleInstance', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('BundleInstance', $opt, $this->hostname);
 	}
 
 	/**
@@ -1319,7 +1364,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['bundleId'] = $bundle_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CancelBundleTask', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CancelBundleTask', $opt, $this->hostname);
 	}
 
 	/**
@@ -1348,7 +1393,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeBundleTasks', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeBundleTasks', $opt, $this->hostname);
 	}
 }
 ?>
