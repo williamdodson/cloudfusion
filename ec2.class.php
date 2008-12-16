@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.16
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -171,7 +171,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/describe_availability_zones.phps
 	 */
 	public function describe_availability_zones($opt = null)
@@ -199,7 +199,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AllocateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AllocateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <associate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
@@ -229,7 +229,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AssociateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AssociateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
@@ -262,7 +262,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <disassociate_address()>, <release_address()>
 	 */
@@ -290,7 +290,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <release_address()>
 	 */
@@ -322,7 +322,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <disassociate_address()>
 	 */
@@ -354,7 +354,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
 	 * 	Related - <describe_snapshots()>, <delete_snapshot()>
 	 */
 	public function create_snapshot($volume_id, $returnCurlHandle = null)
@@ -384,7 +384,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
 	 * 	Related - <create_snapshot()>, <delete_snapshot()>
 	 */
 	public function describe_snapshots($opt = null)
@@ -409,7 +409,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
 	 * 	Related - <create_snapshot()>, <describe_snapshots()>
 	 */
 	public function delete_snapshot($snapshot_id, $returnCurlHandle = null)
@@ -441,7 +441,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateVolume.html
 	 * 	Related - <describe_volumes()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function create_volume($sizesnapid, $zone, $returnCurlHandle = null)
@@ -480,7 +480,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
 	 * 	Related - <create_volume()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function describe_volumes($opt = null)
@@ -507,8 +507,8 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AttachVolume.html
-	 * 	Storage Locations - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/instance-storage.html#storage-locations
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AttachVolume.html
+	 * 	Storage Locations - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/instance-storage.html#storage-locations
 	 * 	Related - <create_volume()>, <describe_volumes()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function attach_volume($volume_id, $instance_id, $device, $returnCurlHandle = null)
@@ -543,7 +543,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DetachVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DetachVolume.html
 	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <delete_volume()>
 	 */
 	public function detach_volume($volume_id, $opt = null)
@@ -570,7 +570,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteVolume.html
 	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <detach_volume()>
 	 */
 	public function delete_volume($volume_id, $returnCurlHandle = null)
@@ -601,7 +601,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
 	 * 	Related - <reboot_instances()>
 	 */
 	public function get_console_output($instance_id, $returnCurlHandle = null)
@@ -632,7 +632,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RebootInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RebootInstances.html
 	 * 	Related - <get_console_output()>
 	 */
 	public function reboot_instances($opt = null)
@@ -661,7 +661,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeregisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeregisterImage.html
 	 * 	Related - <describe_images()>, <register_image()>
 	 */
 	public function deregister_image($image_id, $returnCurlHandle = null)
@@ -703,7 +703,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeImages.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImages.html
 	 * 	Related - <deregister_image()>, <register_image()>
 	 */
 	public function describe_images($opt = null)
@@ -732,7 +732,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RegisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RegisterImage.html
 	 * 	Related - <deregister_image()>, <describe_images()>
 	 */
 	public function register_image($image_location, $returnCurlHandle = null)
@@ -763,7 +763,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
 	 * 	Related - <modify_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function describe_image_attribute($image_id, $returnCurlHandle = null)
@@ -801,7 +801,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
@@ -829,7 +829,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <modify_image_attribute()>
 	 */
 	public function reset_image_attribute($image_id, $returnCurlHandle = null)
@@ -866,7 +866,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
 	 * 	Related - <describe_instances()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function confirm_product_instance($product_code, $instance_id, $returnCurlHandle = null)
@@ -897,7 +897,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeInstances.html
 	 * 	Related - <confirm_product_instance()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function describe_instances($opt = null)
@@ -948,7 +948,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RunInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RunInstances.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <terminate_instances()>
 	 */
@@ -982,7 +982,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-TerminateInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <run_instances()>
 	 */
@@ -1012,7 +1012,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
 	 * 	Related - <delete_key_pair()>, <describe_key_pairs()>
 	 */
 	public function create_key_pair($key_name, $returnCurlHandle = null)
@@ -1039,7 +1039,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
 	 * 	Related - <create_key_pair()>, <describe_key_pairs()>
 	 */
 	public function delete_key_pair($key_name, $returnCurlHandle = null)
@@ -1069,7 +1069,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
 	 * 	Related - <create_key_pair()>, <delete_key_pair()>
 	 */
 	public function describe_key_pairs($opt = null)
@@ -1113,7 +1113,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
 	 * 	Related - <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
@@ -1141,7 +1141,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function create_security_group($group_name, $group_description, $returnCurlHandle = null)
@@ -1171,7 +1171,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <describe_security_groups()>
 	 */
 	public function delete_security_group($group_name, $returnCurlHandle = null)
@@ -1201,7 +1201,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>
 	 */
 	public function describe_security_groups($opt = null)
@@ -1241,7 +1241,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
 	 * 	Related - <authorize_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)
@@ -1279,7 +1279,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-BundleInstance.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-BundleInstance.html
 	 * 	Upload Policy - http://docs.amazonwebservices.com/AmazonS3/latest/HTTPPOSTExamples.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
@@ -1354,7 +1354,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
@@ -1385,7 +1385,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */

@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.16
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -169,6 +169,12 @@ class AmazonS3 extends TarzanCore
 	 */
 	var $base_logging_xml;
 
+	/**
+	 * Property: devpay_tokens
+	 * 	Stores the Amazon DevPay tokens to use, if any.
+	 */
+	var $devpay_tokens;
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -191,6 +197,7 @@ class AmazonS3 extends TarzanCore
 	{
 		$this->vhost = null;
 		$this->api_version = '2006-03-01';
+		$this->devpay_tokens = null;
 
 		$this->base_acp_xml = '<?xml version="1.0" encoding="UTF-8"?><AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"></AccessControlPolicy>';
 		$this->base_logging_xml = '<?xml version="1.0" encoding="utf-8"?><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/' . $this->api_version . '"></BucketLoggingStatus>';
@@ -409,6 +416,12 @@ class AmazonS3 extends TarzanCore
 				// Metadata directive
 				$acl .= 'x-amz-metadata-directive:' . $metadataDirective . "\n";
 				$req->addHeader('x-amz-metadata-directive', $metadataDirective);
+			}
+
+			// Set DevPay tokens if we have them.
+			if ($this->devpay_tokens)
+			{
+				$request->addHeader('x-amz-security-token', $this->devpay_tokens);
 			}
 
 			// Are we checking for changes?

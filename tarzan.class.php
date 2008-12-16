@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.16
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -366,6 +366,29 @@ class TarzanCore
 		$this->set_proxy = $proxy;
 	}
 
+	/**
+	 * Method: set_devpay_tokens()
+	 * 	Enable the DevPay tokens to use for the request. Currently only works with S3 and EC2.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	user_token - _string_ (Required) The user token to use with DevPay.
+	 * 	product_token - _string_ (Required) The product token to use with DevPay.
+	 * 
+	 * Returns:
+	 * 	void
+ 	 * 
+	 * See Also:
+	 * 	DevPay information - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingDevPay.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/set_vhost.phps
+	 */
+	public function set_devpay_tokens($user_token, $product_token)
+	{
+		$this->devpay_tokens = $user_token . ',' . $product_token;
+	}
+
 
 	/*%******************************************************************************************%*/
 	// SET CUSTOM CLASSES
@@ -495,6 +518,12 @@ class TarzanCore
 		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
 		$request_url = $scheme . $domain . '/?' . $querystring;
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
+
+		// Set DevPay tokens if we have them.
+		if ($this->devpay_tokens)
+		{
+			$request->addHeader('x-amz-security-token', $this->devpay_tokens);
+		}
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
