@@ -388,7 +388,7 @@ class TarzanCore
  	 * 
 	 * See Also:
 	 * 	DevPay information - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingDevPay.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/set_vhost.phps
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_devpay_tokens.phps
 	 */
 	public function set_devpay_tokens($user_token, $product_token)
 	{
