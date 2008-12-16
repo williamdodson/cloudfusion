@@ -169,12 +169,6 @@ class AmazonS3 extends TarzanCore
 	 */
 	var $base_logging_xml;
 
-	/**
-	 * Property: devpay_tokens
-	 * 	Stores the Amazon DevPay tokens to use, if any.
-	 */
-	var $devpay_tokens;
-
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
