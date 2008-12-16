@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2008.11.29
+ * 	2008.12.16
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -26,6 +26,18 @@
  * 	Specify the default queue URL.
  */
 define('EC2_DEFAULT_URL', 'ec2.amazonaws.com');
+
+/**
+ * Constant: EC2_LOCATION_US
+ * 	Specify the queue URL for the U.S.-specific hostname.
+ */
+define('EC2_LOCATION_US', 'us-east-1.');
+
+/**
+ * Constant: EC2_LOCATION_EU
+ * 	Specify the queue URL for the E.U.-specific hostname.
+ */
+define('EC2_LOCATION_EU', 'eu-west-1.');
 
 
 /*%******************************************************************************************%*/
@@ -61,6 +73,13 @@ class EC2_Exception extends Exception {}
  */
 class AmazonEC2 extends TarzanCore
 {
+	/**
+	 * Property: hostname
+	 * Stores the hostname to use to make the request.
+	 */
+	var $hostname;
+
+
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
 
@@ -84,7 +103,8 @@ class AmazonEC2 extends TarzanCore
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
-		$this->api_version = '2008-08-08';
+		$this->api_version = '2008-12-01';
+		$this->hostname = EC2_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -106,6 +126,31 @@ class AmazonEC2 extends TarzanCore
 
 
 	/*%******************************************************************************************%*/
+	// MISCELLANEOUS
+
+	/**
+	 * Method: set_locale()
+	 * 	By default EC2 will self-select the most appropriate locale. This allows you to explicitly sets the locale for EC2 to use.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	locale - _string_ (Required) The locale to explicitly set for EC2. Available options are <EC2_LOCATION_US> and <EC2_LOCATION_EU>.
+	 * 
+	 * Returns:
+	 * 	<ResponseCore> object
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/set_locale.phps
+	 */
+	public function set_locale($locale)
+	{
+		$this->hostname = $locale . EC2_DEFAULT_URL;
+	}
+
+
+	/*%******************************************************************************************%*/
 	// AVAILABILITY ZONES
 
 	/**
@@ -123,17 +168,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/describe_availability_zones.phps
 	 */
 	public function describe_availability_zones($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeAvailabilityZones', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeAvailabilityZones', $opt, $this->hostname);
 	}
 
 
@@ -151,10 +196,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AllocateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AllocateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <associate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
@@ -163,7 +208,7 @@ class AmazonEC2 extends TarzanCore
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AllocateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AllocateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -181,10 +226,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AssociateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AssociateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
@@ -195,7 +240,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AssociateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AssociateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -214,10 +259,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <disassociate_address()>, <release_address()>
 	 */
@@ -225,7 +270,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeAddresses', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeAddresses', $opt, $this->hostname);
 	}
 
 	/**
@@ -242,10 +287,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <release_address()>
 	 */
@@ -255,7 +300,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DisassociateAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DisassociateAddress', $opt, $this->hostname);
 	}
 
 	/**
@@ -274,10 +319,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <disassociate_address()>
 	 */
@@ -287,7 +332,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['PublicIp'] = $public_ip;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('ReleaseAddress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ReleaseAddress', $opt, $this->hostname);
 	}
 
 
@@ -306,10 +351,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
 	 * 	Related - <describe_snapshots()>, <delete_snapshot()>
 	 */
 	public function create_snapshot($volume_id, $returnCurlHandle = null)
@@ -318,7 +363,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['VolumeId'] = $volume_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateSnapshot', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateSnapshot', $opt, $this->hostname);
 	}
 
 	/**
@@ -336,17 +381,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
 	 * 	Related - <create_snapshot()>, <delete_snapshot()>
 	 */
 	public function describe_snapshots($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeSnapshots', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeSnapshots', $opt, $this->hostname);
 	}
 
 	/**
@@ -361,10 +406,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
 	 * 	Related - <create_snapshot()>, <describe_snapshots()>
 	 */
 	public function delete_snapshot($snapshot_id, $returnCurlHandle = null)
@@ -373,7 +418,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['SnapshotId'] = $snapshot_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteSnapshot', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteSnapshot', $opt, $this->hostname);
 	}
 
 
@@ -393,10 +438,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateVolume.html
 	 * 	Related - <describe_volumes()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function create_volume($sizesnapid, $zone, $returnCurlHandle = null)
@@ -414,7 +459,7 @@ class AmazonEC2 extends TarzanCore
 			$opt['SnapshotId'] = $sizesnapid;
 		}
 
-		return $this->authenticate('CreateVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -432,17 +477,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
 	 * 	Related - <create_volume()>, <attach_volume()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function describe_volumes($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeVolumes', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeVolumes', $opt, $this->hostname);
 	}
 
 	/**
@@ -459,11 +504,11 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AttachVolume.html
-	 * 	Storage Locations - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/instance-storage.html#storage-locations
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AttachVolume.html
+	 * 	Storage Locations - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/instance-storage.html#storage-locations
 	 * 	Related - <create_volume()>, <describe_volumes()>, <detach_volume()>, <delete_volume()>
 	 */
 	public function attach_volume($volume_id, $instance_id, $device, $returnCurlHandle = null)
@@ -474,7 +519,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['Device'] = $device;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AttachVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AttachVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -495,10 +540,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DetachVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DetachVolume.html
 	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <delete_volume()>
 	 */
 	public function detach_volume($volume_id, $opt = null)
@@ -507,7 +552,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['VolumeId'] = $volume_id;
 
-		return $this->authenticate('DetachVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DetachVolume', $opt, $this->hostname);
 	}
 
 	/**
@@ -522,10 +567,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteVolume.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteVolume.html
 	 * 	Related - <create_volume()>, <describe_volumes()>, <attach_volume()>, <detach_volume()>
 	 */
 	public function delete_volume($volume_id, $returnCurlHandle = null)
@@ -534,7 +579,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['VolumeId'] = $volume_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteVolume', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteVolume', $opt, $this->hostname);
 	}
 
 
@@ -553,10 +598,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
 	 * 	Related - <reboot_instances()>
 	 */
 	public function get_console_output($instance_id, $returnCurlHandle = null)
@@ -565,7 +610,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['InstanceId'] = $instance_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('GetConsoleOutput', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('GetConsoleOutput', $opt, $this->hostname);
 	}
 
 	/**
@@ -584,17 +629,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RebootInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RebootInstances.html
 	 * 	Related - <get_console_output()>
 	 */
 	public function reboot_instances($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('RebootInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RebootInstances', $opt, $this->hostname);
 	}
 
 
@@ -613,10 +658,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeregisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeregisterImage.html
 	 * 	Related - <describe_images()>, <register_image()>
 	 */
 	public function deregister_image($image_id, $returnCurlHandle = null)
@@ -625,7 +670,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageId'] = $image_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeregisterImage', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeregisterImage', $opt, $this->hostname);
 	}
 
 	/**
@@ -655,17 +700,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeImages.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImages.html
 	 * 	Related - <deregister_image()>, <register_image()>
 	 */
 	public function describe_images($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeImages', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeImages', $opt, $this->hostname);
 	}
 
 	/**
@@ -684,10 +729,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RegisterImage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RegisterImage.html
 	 * 	Related - <deregister_image()>, <describe_images()>
 	 */
 	public function register_image($image_location, $returnCurlHandle = null)
@@ -696,7 +741,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageLocation'] = $image_location;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('RegisterImage', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RegisterImage', $opt, $this->hostname);
 	}
 
 
@@ -715,10 +760,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
 	 * 	Related - <modify_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function describe_image_attribute($image_id, $returnCurlHandle = null)
@@ -730,7 +775,7 @@ class AmazonEC2 extends TarzanCore
 		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
-		return $this->authenticate('DescribeImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeImageAttribute', $opt, $this->hostname);
 	}
 
 	/**
@@ -753,10 +798,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <reset_image_attribute()>
 	 */
 	public function modify_image_attribute($image_id, $attribute, $opt = null)
@@ -766,7 +811,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['ImageId'] = $image_id;
 		$opt['Attribute'] = $attribute;
 
-		return $this->authenticate('ModifyImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ModifyImageAttribute', $opt, $this->hostname);
 	}
 
 	/**
@@ -781,10 +826,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
 	 * 	Related - <describe_image_attribute()>, <modify_image_attribute()>
 	 */
 	public function reset_image_attribute($image_id, $returnCurlHandle = null)
@@ -796,7 +841,7 @@ class AmazonEC2 extends TarzanCore
 		// This is the only supported value in the current release.
 		$opt['Attribute'] = 'launchPermission';
 
-		return $this->authenticate('ResetImageAttribute', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ResetImageAttribute', $opt, $this->hostname);
 	}
 
 
@@ -818,10 +863,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
 	 * 	Related - <describe_instances()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function confirm_product_instance($product_code, $instance_id, $returnCurlHandle = null)
@@ -831,7 +876,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['InstanceId'] = $instance_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('ConfirmProductInstance', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('ConfirmProductInstance', $opt, $this->hostname);
 	}
 
 	/**
@@ -849,17 +894,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeInstances.html
 	 * 	Related - <confirm_product_instance()>, <run_instances()>, <terminate_instances()>
 	 */
 	public function describe_instances($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeInstances', $opt, $this->hostname);
 	}
 
 	/**
@@ -900,10 +945,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RunInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RunInstances.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <terminate_instances()>
 	 */
@@ -915,7 +960,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['MinCount'] = $min_count;
 		$opt['MaxCount'] = $max_count;
 
-		return $this->authenticate('RunInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RunInstances', $opt, $this->hostname);
 	}
 
 	/**
@@ -934,10 +979,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-TerminateInstances.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <run_instances()>
 	 */
@@ -945,7 +990,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('TerminateInstances', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('TerminateInstances', $opt, $this->hostname);
 	}
 
 
@@ -964,10 +1009,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
 	 * 	Related - <delete_key_pair()>, <describe_key_pairs()>
 	 */
 	public function create_key_pair($key_name, $returnCurlHandle = null)
@@ -976,7 +1021,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['KeyName'] = $key_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateKeyPair', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateKeyPair', $opt, $this->hostname);
 	}
 
 	/**
@@ -991,10 +1036,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
 	 * 	Related - <create_key_pair()>, <describe_key_pairs()>
 	 */
 	public function delete_key_pair($key_name, $returnCurlHandle = null)
@@ -1003,7 +1048,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['KeyName'] = $key_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteKeyPair', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteKeyPair', $opt, $this->hostname);
 	}
 
 	/**
@@ -1021,17 +1066,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
 	 * 	Related - <create_key_pair()>, <delete_key_pair()>
 	 */
 	public function describe_key_pairs($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeKeyPairs', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeKeyPairs', $opt, $this->hostname);
 	}
 
 
@@ -1065,10 +1110,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
 	 * 	Related - <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function authorize_security_group_ingress($group_name, $opt = null)
@@ -1077,7 +1122,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['GroupName'] = $group_name;
 
-		return $this->authenticate('AuthorizeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('AuthorizeSecurityGroupIngress', $opt, $this->hostname);
 	}
 
 	/**
@@ -1093,10 +1138,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function create_security_group($group_name, $group_description, $returnCurlHandle = null)
@@ -1106,7 +1151,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['GroupDescription'] = $group_description;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateSecurityGroup', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CreateSecurityGroup', $opt, $this->hostname);
 	}
 
 	/**
@@ -1123,10 +1168,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <describe_security_groups()>
 	 */
 	public function delete_security_group($group_name, $returnCurlHandle = null)
@@ -1135,7 +1180,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['GroupName'] = $group_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteSecurityGroup', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DeleteSecurityGroup', $opt, $this->hostname);
 	}
 
 	/**
@@ -1153,17 +1198,17 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
 	 * 	Related - <authorize_security_group_ingress()>, <revoke_security_group_ingress()>, <create_security_group()>, <delete_security_group()>
 	 */
 	public function describe_security_groups($opt = null)
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeSecurityGroups', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeSecurityGroups', $opt, $this->hostname);
 	}
 
 	/**
@@ -1193,10 +1238,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
 	 * 	Related - <authorize_security_group_ingress()>, <create_security_group()>, <delete_security_group()>, <describe_security_groups()>
 	 */
 	public function revoke_security_group_ingress($group_name, $opt = null)
@@ -1205,7 +1250,7 @@ class AmazonEC2 extends TarzanCore
 
 		$opt['GroupName'] = $group_name;
 
-		return $this->authenticate('RevokeSecurityGroupIngress', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('RevokeSecurityGroupIngress', $opt, $this->hostname);
 	}
 
 
@@ -1231,10 +1276,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-BundleInstance.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-BundleInstance.html
 	 * 	Upload Policy - http://docs.amazonwebservices.com/AmazonS3/latest/HTTPPOSTExamples.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
@@ -1291,7 +1336,7 @@ class AmazonEC2 extends TarzanCore
 		// Storage.S3.UploadPolicySignature
 		$opt['Storage.S3.UploadPolicySignature'] = $this->util->hex_to_base64(hash_hmac('sha1', base64_encode($opt['Storage.S3.UploadPolicy']), $this->secret_key));
 
-		return $this->authenticate('BundleInstance', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('BundleInstance', $opt, $this->hostname);
 	}
 
 	/**
@@ -1306,10 +1351,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
@@ -1319,7 +1364,7 @@ class AmazonEC2 extends TarzanCore
 		$opt['bundleId'] = $bundle_id;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CancelBundleTask', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('CancelBundleTask', $opt, $this->hostname);
 	}
 
 	/**
@@ -1337,10 +1382,10 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-08-08/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
@@ -1348,7 +1393,7 @@ class AmazonEC2 extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('DescribeBundleTasks', $opt, EC2_DEFAULT_URL);
+		return $this->authenticate('DescribeBundleTasks', $opt, $this->hostname);
 	}
 }
 ?>

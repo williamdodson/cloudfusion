@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.12.03
+ * 	2008.12.16
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -409,6 +409,12 @@ class AmazonS3 extends TarzanCore
 				// Metadata directive
 				$acl .= 'x-amz-metadata-directive:' . $metadataDirective . "\n";
 				$req->addHeader('x-amz-metadata-directive', $metadataDirective);
+			}
+
+			// Set DevPay tokens if we have them.
+			if ($this->devpay_tokens)
+			{
+				$request->addHeader('x-amz-security-token', $this->devpay_tokens);
 			}
 
 			// Are we checking for changes?
