@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.15
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -745,7 +745,8 @@ class ResponseCore
 			// If the response is XML data, parse it.
 			if (substr(ltrim($body), 0, 5) == '<?xml')
 			{
-				$this->body = new SimpleXMLElement($body, LIBXML_NOCDATA);
+				// $this->body = new SimpleXMLElement($body, LIBXML_NOCDATA);
+				$this->body = new SimpleXMLElement($body);
 			}
 		}
 
