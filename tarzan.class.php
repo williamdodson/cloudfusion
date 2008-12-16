@@ -204,6 +204,12 @@ class TarzanCore
 	 */
 	var $set_proxy = null;
 
+	/**
+	 * Property: devpay_tokens
+	 * 	Stores the Amazon DevPay tokens to use, if any.
+	 */
+	var $devpay_tokens;
+
 
 	/*%******************************************************************************************%*/
 	// AUTO-LOADER
