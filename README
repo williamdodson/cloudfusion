@@ -8,6 +8,13 @@ A fast, powerful PHP toolkit for building web applications with Amazon Web Servi
 * WIKI: http://tarzan-aws.com/wiki/
 
 
+== DEPENDENCIES ==
+The latest versions of these projects are pulled into the correct locations on 'svn update'.
+
+* CacheCore: http://cachecore.googlecode.com
+* RequestCore: http://requestcore.googlecode.com
+
+
 == LICENSE ==
 This code has been released under the Simplified (aka "New") BSD license (1999) as follows:
 
