@@ -243,6 +243,10 @@ class TarzanCore
 		{
 			$path .= '_' . strtolower($class) . '.class.php';
 		}
+		elseif (stristr($class, 'responsecore'))
+		{
+			$path .= '_requestcore.class.php';
+		}
 		else
 		{
 			$path = '';

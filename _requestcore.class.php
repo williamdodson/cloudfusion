@@ -745,8 +745,7 @@ class ResponseCore
 			// If the response is XML data, parse it.
 			if (substr(ltrim($body), 0, 5) == '<?xml')
 			{
-				// $this->body = new SimpleXMLElement($body, LIBXML_NOCDATA);
-				$this->body = new SimpleXMLElement($body);
+				$this->body = new SimpleXMLElement($body, LIBXML_NOCDATA);
 			}
 		}
 
