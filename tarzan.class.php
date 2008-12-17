@@ -239,13 +239,13 @@ class TarzanCore
 		{
 			$path .= str_replace('tarzan', '_', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class, 'cache') || stristr($class, 'request'))
+		elseif (stristr($class, 'cache'))
 		{
-			$path .= '_' . strtolower($class) . '.class.php';
+			$path .= './cachecore/' . strtolower($class) . '.class.php';
 		}
-		elseif (stristr($class, 'responsecore'))
+		elseif (stristr($class, 'requestcore') || stristr($class, 'responsecore'))
 		{
-			$path .= '_requestcore.class.php';
+			$path .= './requestcore/requestcore.class.php';
 		}
 		else
 		{
