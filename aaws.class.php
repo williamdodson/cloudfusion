@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.18
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -187,8 +187,7 @@ class AmazonAAWS extends TarzanCore
 		}
 
 		// Send the request to the service.
-		$secure = ($this->enable_ssl) ? 'https://' : 'http://';
-		$request_url = $secure . $hostname . '/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
+		$request_url = 'https://' . $hostname . '/onca/xml?Service=AWSECommerceService&AWSAccessKeyId=' . $this->key . '&Operation=' . $action . '&' . $this->util->to_query_string($opt);
 		$request =& new $this->request_class($request_url, $this->set_proxy);
 
 		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.

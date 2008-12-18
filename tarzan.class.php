@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.16
+ * 	2008.12.18
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -335,27 +335,6 @@ class TarzanCore
 	}
 
 	/**
-	 * Method: enable_ssl()
-	 * 	Enables all Amazon classes to use SSL (https) for enhanced security. SSL is enabled by default starting with r198.
-	 * 
-	 * Access:
-	 * 	public
-	 * 
-	 * Parameters:
-	 * 	enable - _boolean_ (Optional) Whether to enable SSL or not.
-	 * 
-	 * Returns:
-	 * 	void
- 	 * 
-	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/enable_ssl.phps
-	 */
-	public function enable_ssl($enable = true)
-	{
-		$this->enable_ssl = $enable;
-	}
-
-	/**
 	 * Method: set_proxy()
 	 * 	Set the proxy settings to use for connecting.
 	 * 
@@ -525,8 +504,7 @@ class TarzanCore
 		$domain = str_replace(array('http://', 'https://'), '', $domain);
 
 		// Compose the request.
-		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
-		$request_url = $scheme . $domain . '/?' . $querystring;
+		$request_url = 'https://' . $domain . '/?' . $querystring;
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
 
 		// Set DevPay tokens if we have them.
