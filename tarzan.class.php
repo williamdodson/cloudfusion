@@ -468,10 +468,13 @@ class TarzanCore
 	 */
 	public function authenticate($action, $opt = null, $domain = null, $message = null)
 	{
+		$return_curl_handle = false;
+		$key_prepend = 'AWSAccessKeyId=' . $this->key . '&';
+
 		// Manage the key-value pairs that are used in the query.
 		$query['Action'] = $action;
-		$query['AWSAccessKeyId'] = $this->key;
-		$query['SignatureVersion'] = 1;
+		$query['SignatureMethod'] = 'HmacSHA256';
+		$query['SignatureVersion'] = 2;
 		$query['Timestamp'] = gmdate(DATE_AWS_ISO8601, time() + $this->adjust_offset);
 		$query['Version'] = $this->api_version;
 
@@ -481,17 +484,39 @@ class TarzanCore
 			$query = array_merge($query, $opt);
 		}
 
+		$return_curl_handle = isset($query['returnCurlHandle']) ? $query['returnCurlHandle'] : false;
+		unset($query['returnCurlHandle']);
+
 		// Do a case-insensitive, natural order sort on the array keys.
 		uksort($query, 'strcasecmp');
 
 		// Create the string that needs to be hashed.
-		$sign_query = $this->util->to_signable_string($query);
+		$canonical_query_string = $key_prepend . $this->util->to_signable_string($query);
+
+		// Set the proper verb.
+		$verb = HTTP_GET;
+		if ($message) $verb = HTTP_POST;
+
+		// Remove the default scheme from the domain.
+		$domain = str_replace(array('http://', 'https://'), '', $domain);
+
+		// Parse our request.
+		$parsed_url = parse_url('http://' . $domain);
+
+		// Set the proper host header.
+		$host_header = strtolower($parsed_url['host']);
+
+		// Set the proper request URI.
+		$request_uri = isset($parsed_url['path']) ? strtolower($parsed_url['path']) : '/';
+
+		// Prepare the string to sign
+		$stringToSign = "$verb\n$host_header\n$request_uri\n$canonical_query_string";
 
 		// Hash the AWS secret key and generate a signature for the request.
-		$query['Signature'] = $this->util->hex_to_base64(hash_hmac('sha1', $sign_query, $this->secret_key));
+		$query['Signature'] = $this->util->hex_to_base64(hash_hmac('sha256', $stringToSign, $this->secret_key));
 
 		// Generate the querystring from $query
-		$querystring = $this->util->to_query_string($query);
+		$querystring = $key_prepend . $this->util->to_query_string($query);
 
 		// Gather information to pass along to other classes.
 		$helpers = array(
@@ -499,9 +524,6 @@ class TarzanCore
 			'request' => $this->request_class,
 			'response' => $this->response_class,
 		);
-
-		// Remove the default scheme from the domain.
-		$domain = str_replace(array('http://', 'https://'), '', $domain);
 
 		// Compose the request.
 		$request_url = 'https://' . $domain . '/?' . $querystring;
@@ -522,7 +544,7 @@ class TarzanCore
 		}
 
 		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
-		if (isset($opt['returnCurlHandle']))
+		if ($return_curl_handle)
 		{
 			return $request->prepRequest();
 		}
@@ -533,7 +555,7 @@ class TarzanCore
 		// Prepare the response.
 		$headers = $request->getResponseHeader();
 		$headers['x-tarzan-requesturl'] = $request_url;
-		$headers['x-tarzan-stringtosign'] = $sign_query;
+		$headers['x-tarzan-stringtosign'] = $stringToSign;
 		if ($message) $headers['x-tarzan-body'] = $message;
 		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
 

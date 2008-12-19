@@ -140,10 +140,29 @@ class TarzanUtilities
 
 		foreach ($array as $k => $v)
 		{
-			$t[] = $k . $v;
+			$t[] = $this->encode_signature2($k) . '=' . $this->encode_signature2($v);
 		}
 
-		return implode('', $t);
+		return implode('&', $t);
+	}
+
+	/**
+	 * Method: encode_signature2()
+	 * 	Encode the value according to RFC 3986.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	string - _string_ (Required) String to convert
+	 * 
+	 * Returns:
+	 * 	_string_ URL-friendly sign-able string.
+	 */
+	public function encode_signature2($string)
+	{
+		$string = rawurlencode($string);
+		return str_replace('%7E', '~', $string);
 	}
 
 	/**
