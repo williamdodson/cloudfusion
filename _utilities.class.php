@@ -4,7 +4,7 @@
  * 	Utilities for connecting to, and working with, AWS.
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.18
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
