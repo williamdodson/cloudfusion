@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2008.12.10
+ * 	2008.12.18
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -475,7 +475,7 @@ class AmazonSDB extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query.phps
- 	 * 	Related - <query_with_attributes()>
+ 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
 	{
@@ -529,7 +529,7 @@ class AmazonSDB extends TarzanCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query_with_attributes.phps
- 	 * 	Related - <query()>
+ 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
 	 */
 	public function query_with_attributes($domain_name, $opt = null, $expression = null)
 	{
@@ -539,6 +539,41 @@ class AmazonSDB extends TarzanCore
 		$opt['QueryExpression'] = $expression;
 
 		$query = $this->authenticate('QueryWithAttributes', $opt, SDB_DEFAULT_URL);
+
+		return $query;
+	}
+
+	/**
+	 * Method: select()
+	 * 	The Select operation returns a set of Attributes for ItemNames that match the query expression. Select is similar to the standard SQL SELECT statement.
+	 * 
+	 * 	The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 items and an appropriate next token so you can get the next page of results.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	expression - _string_ (Optional) The SimpleDB select expression to use.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<ResponseCore> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Select.html
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/select.phps
+ 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
+	 */
+	public function select($expression, $opt = null)
+	{
+		if (!$opt) $opt = array();
+		$opt['SelectExpression'] = $expression;
+
+		$query = $this->authenticate('Select', $opt, SDB_DEFAULT_URL);
 
 		return $query;
 	}
