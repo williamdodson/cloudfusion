@@ -9,9 +9,10 @@ $cache = new CacheAPC('cache_obj', 'apc', 10); // APC-based caching
 /* OR */
 $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO caching (using SQLite)
 
+/* OR */
 
 /**
- * Memcached caching (available in upcoming version 2.1 or in the trunk @ r228). 
+ * Memcached caching (available in upcoming version 2.0 or in the trunk @ r228). 
  * Location is an indexed array of associative arrays. Each associative array 
  * has a 'host' and a 'port' representing a server to add to the server pool.
  */

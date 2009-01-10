@@ -585,6 +585,7 @@ class TarzanCore
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
+	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
