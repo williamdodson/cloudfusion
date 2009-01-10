@@ -526,7 +526,9 @@ class TarzanCore
 		);
 
 		// Compose the request.
-		$request_url = 'https://' . $domain . '/?' . $querystring;
+		$request_url = 'https://' . $domain;
+		$request_url .= !isset($parsed_url['path']) ? '/' : '';
+		$request_url .= '?' . $querystring;
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
 
 		// Set DevPay tokens if we have them.
