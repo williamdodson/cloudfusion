@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.18
+ * 	2008.01.09
  * 
  * Copyright:
  * 	2006-2008 LifeNexus Digital, Inc., and contributors.
@@ -37,13 +37,13 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.0.1');
+define('TARZAN_VERSION', '2.0.2');
 
 /**
  * Constant: TARZAN_BUILD
  * Build ID of the software.
  */
-define('TARZAN_BUILD', 20081219045505);
+define('TARZAN_BUILD', gmdate('YmdHis', strtotime(substr('$Date$', 7, 25)) ? strtotime(substr('$Date$', 7, 25)) : filemtime(__FILE__)));
 
 /**
  * Constant: TARZAN_URL
@@ -176,7 +176,7 @@ class TarzanCore
 
 	/**
 	 * Property: request_class
-	 * The default class to use for HTTP Requests (defaults to <TarzanHTTPRequest>).
+	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
 	 */
 	var $request_class = 'TarzanHTTPRequest';
 
@@ -499,8 +499,9 @@ class TarzanCore
 		);
 
 		// Compose the request.
-		$scheme = ($this->enable_ssl) ? 'https://' : 'http://';
-		$request_url = $scheme . $domain . '/?' . $querystring;
+		$request_url = 'https://' . $domain;
+		$request_url .= !isset($parsed_url['path']) ? '/' : '';
+		$request_url .= '?' . $querystring;
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
 
 		// Set DevPay tokens if we have them.
@@ -557,6 +558,7 @@ class TarzanCore
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
+	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
