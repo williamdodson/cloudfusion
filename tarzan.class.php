@@ -559,7 +559,11 @@ class TarzanCore
 		$headers['x-tarzan-requesturl'] = $request_url;
 		$headers['x-tarzan-stringtosign'] = $stringToSign;
 		if ($message) $headers['x-tarzan-body'] = $message;
-		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
+
+		$body = $request->getResponseBody();
+		$body = new SimpleXMLElement($body, LIBXML_NOCDATA);
+
+		$data = new $this->response_class($headers, $body, $request->getResponseCode());
 
 		// Return!
 		return $data;
