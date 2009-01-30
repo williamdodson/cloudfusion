@@ -369,7 +369,7 @@ class AmazonS3 extends TarzanCore
 			{
 				$req->addHeader('Content-Type', $contentType);
 			}
-			else if ($verb == HTTP_PUT) // Set a default value for HTTP_PUT
+			else if ($verb == HTTP_PUT || $verb == HTTP_GET) // Set a default value for HTTP_(PUT|GET)
 			{
 				$contentType = 'application/x-www-form-urlencoded';
 			}
