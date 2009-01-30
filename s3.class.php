@@ -193,7 +193,7 @@ class AmazonS3 extends TarzanCore
 		$this->api_version = '2006-03-01';
 		$this->devpay_tokens = null;
 
-		$this->base_acp_xml = '<?xml version="1.0" encoding="UTF-8"?><AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"></AccessControlPolicy>';
+		$this->base_acp_xml = '<?xml version="1.0" encoding="utf-8"?><AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/' . $this->api_version . '/"></AccessControlPolicy>';
 		$this->base_logging_xml = '<?xml version="1.0" encoding="utf-8"?><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/' . $this->api_version . '"></BucketLoggingStatus>';
 
 		if (!$key && !defined('AWS_KEY'))
@@ -508,7 +508,8 @@ class AmazonS3 extends TarzanCore
 			$headers['x-tarzan-requesturl'] = $this->request_url;
 			$headers['x-tarzan-stringtosign'] = $stringToSign;
 			$headers['x-tarzan-requestheaders'] = $req->request_headers;
-			$data = new $this->response_class($headers, $req->getResponseBody(), $req->getResponseCode());
+			$body = new SimpleXMLElement($req->getResponseBody());
+			$data = new $this->response_class($headers, $body, $req->getResponseCode());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html
