@@ -5,8 +5,8 @@ require_once('tarzan.class.php');
  * Instantiate a new RequestCore object, and add a couple of custom headers.
  */
 $request = new RequestCore('http://example.com/endpoint');
-$request->setMethod(HTTP_HEAD);
-$response = $request->sendRequest();
+$request->set_method(HTTP_HEAD);
+$response = $request->send_request();
 
 print_r($response);
 

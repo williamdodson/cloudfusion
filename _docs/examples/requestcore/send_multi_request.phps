@@ -25,7 +25,7 @@ foreach ($buckets as $bucket)
  * Instantiate a new RequestCore object for the purpose of firing a MultiCurl (parallel) request.
  */
 $request = new RequestCore(null); // We're not firing on a single URL.
-$response = $request->sendMultiRequest($handles); // Fire the cURL handles we previously collected.
+$response = $request->send_multi_request($handles); // Fire the cURL handles we previously collected.
 
 print_r($response);
 
