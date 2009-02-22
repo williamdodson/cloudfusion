@@ -32,7 +32,7 @@ function fetch_the_fresh_data($url)
 {
 	$request = new RequestCore($url);
 
-	if ($data = $request->sendRequest())
+	if ($data = $request->send_request())
 	{
 		return $data->body;
 	}
