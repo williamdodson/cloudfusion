@@ -4,10 +4,10 @@
  * 	Amazon Simple Queue Service (http://aws.amazon.com/sqs)
  *
  * Version:
- * 	2008.12.10
+ * 	2009.02.28
  * 
  * Copyright:
- * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
@@ -364,6 +364,12 @@ class AmazonSQS extends TarzanCore
 		$opt = array();
 		$opt['AttributeName'] = 'ApproximateNumberOfMessages';
 		$response = $this->authenticate('GetQueueAttributes', $opt, $queue_url);
+
+		if ($response->isOK() === false)
+		{
+			throw new SQS_Exception("Could not get queue size for $queue_url: " . $response->body->Error->Code);
+		}
+
 		return (integer) $response->body->GetQueueAttributesResult->Attribute->Value;
 	}
 }
