@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2008.12.18
+ * 	2009.02.28
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -21,7 +21,10 @@
 // CORE DEPENDENCIES
 
 // Include the Tarzan config file
-@include_once 'config.inc.php';
+if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php'))
+{
+	include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php';
+}
 
 
 /*%******************************************************************************************%*/
