@@ -7,7 +7,7 @@
  * 	2008.11.30
  * 
  * Copyright:
- * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
