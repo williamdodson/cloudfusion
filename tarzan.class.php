@@ -634,7 +634,11 @@ class TarzanCore
 						{
 							// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 							$copy[$i] = clone($data[$i]);
-							$copy[$i]->body = $copy[$i]->body->asXML();
+
+							if (get_class($copy[$i]->body) == 'SimpleXMLElement')
+							{
+								$copy[$i]->body = $copy[$i]->body->asXML();
+							}
 						}
 
 						// Cache the data
@@ -648,7 +652,11 @@ class TarzanCore
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 						$copy = clone($data);
-						$copy->body = $copy->body->asXML();
+
+						if (get_class($copy->body) == 'SimpleXMLElement')
+						{
+							$copy->body = $copy->body->asXML();
+						}
 
 						// Cache the data
 						$cache->update($copy);
@@ -675,13 +683,19 @@ class TarzanCore
 					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-						$data[$i]->body = new SimpleXMLElement($data[$i]->body);
+						if (substr(trim($data[$i]->body), 0, 5) == '<?xml')
+						{
+							$data[$i]->body = new SimpleXMLElement($data[$i]->body);
+						}
 					}
 				}
 				else
 				{
 					// Since we're going to use this, let's convert the XML back into a SimpleXML object.
-					$data->body = new SimpleXMLElement($data->body);
+					if (substr(trim($data->body), 0, 5) == '<?xml')
+					{
+						$data->body = new SimpleXMLElement($data->body);
+					}
 				}
 			}
 		}
@@ -700,7 +714,11 @@ class TarzanCore
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 						$copy[$i] = clone($data[$i]);
-						$copy[$i]->body = $copy[$i]->body->asXML();
+
+						if (get_class($copy[$i]->body) == 'SimpleXMLElement')
+						{
+							$copy[$i]->body = $copy[$i]->body->asXML();
+						}
 					}
 
 					// Cache the data
@@ -714,7 +732,10 @@ class TarzanCore
 				{
 					// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 					$copy = clone($data);
-					$copy->body = $copy->body->asXML();
+					if (get_class($copy->body) == 'SimpleXMLElement')
+					{
+						$copy->body = $copy->body->asXML();
+					}
 
 					// Cache the data
 					$cache->create($copy);
