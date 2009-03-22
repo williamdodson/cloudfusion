@@ -7,6 +7,8 @@ $cache = new CacheFile('cache_obj', './cache', 10); // File-based caching
 /* OR */
 $cache = new CacheAPC('cache_obj', 'apc', 10); // APC-based caching
 /* OR */
+$cache = new CacheXCache('cache_obj', 'xcache', 10); // XCache-based caching
+/* OR */
 $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO caching (using SQLite)
 
 /* OR */
