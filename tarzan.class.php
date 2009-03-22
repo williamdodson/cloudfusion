@@ -592,6 +592,7 @@ class TarzanCore
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
+	 * 	XCache - Pass in 'xcache' to use this lightweight cache.  You must have the XCache extension installed. <http://xcache.lighttpd.net/>
 	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
@@ -623,6 +624,10 @@ class TarzanCore
 			{
 				case 'apc':
 					$CacheMethod = 'CacheAPC';
+					break;
+
+				case 'xca': // First three letters of 'xcache'
+					$CacheMethod = 'CacheXCache';
 					break;
 
 				case 'pdo':
@@ -780,6 +785,86 @@ class TarzanCore
 
 		// We're done. Return the data. Huzzah!
 		return $data;
+	}
+
+	/**
+	 * Method: delete_cache_response()
+	 * 	Deletes a cached ResponseCore object using the preferred caching method.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	method - _string_ (Required) The same method you used while caching initially.
+	 * 	location - _string_ (Required) The same location you used while caching initially.
+	 * 	params - _array_ (Optional) The same parameters that you used while caching initially.
+	 * 
+	 * Example values for $location:
+	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
+	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
+	 * 	XCache - Pass in 'xcache' to use this lightweight cache.  You must have the XCache extension installed. <http://xcache.lighttpd.net/>
+	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
+	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
+	 * 
+	 * Returns:
+	 * 	boolean TRUE if cached object exists and is successfully deleted, otherwise FALSE
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - None at this time
+	 */
+	public function delete_cache_response($method, $location, $params = null)
+	{
+		$_this = $this;
+		if (is_array($method))
+		{
+			$_this = $method[0];
+			$method = $method[1];
+		}
+
+		// If we have an array, we're probably passing in Memcached servers and ports.
+		if (is_array($location))
+		{
+			$CacheMethod = 'CacheMC';
+		}
+		else
+		{
+			// I would expect locations like '/tmp/cache', 'pdo.mysql://user:pass@hostname:port', 'pdo.sqlite:memory:', and 'apc'.
+			$type = strtolower(substr($location, 0, 3));
+			switch ($type)
+			{
+				case 'apc':
+					$CacheMethod = 'CacheAPC';
+					break;
+
+				case 'xca': // First three letters of 'xcache'
+					$CacheMethod = 'CacheXCache';
+					break;
+
+				case 'pdo':
+					$CacheMethod = 'CachePDO';
+					$location = substr($location, 4);
+					break;
+
+				default:
+					$CacheMethod = 'CacheFile';
+					break;
+			}
+		}
+
+		// Once we've determined the preferred caching method, instantiate a new cache.
+		if (isset($_this->key))
+		{
+			$cache_uuid = $method . '-' . $_this->key . '-' . sha1($method . serialize($params));
+		}
+		else
+		{
+			$cache_uuid = $method . '-' . 'nokey' . '-' . sha1($method . serialize($params));
+		}
+
+		$cache = new $CacheMethod($cache_uuid, $location, 0);
+
+		// Try and delete, returns true if cached object exists and is successfully deleted, otherwise false
+		return $cache->delete();
 	}
 }
 
