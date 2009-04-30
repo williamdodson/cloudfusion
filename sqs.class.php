@@ -4,7 +4,7 @@
  * 	Amazon Simple Queue Service (http://aws.amazon.com/sqs)
  *
  * Version:
- * 	2009.02.28
+* 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -84,6 +84,7 @@ class AmazonSQS extends TarzanCore
 	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2008-01-01';
+		$this->hostname = SQS_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -126,7 +127,7 @@ class AmazonSQS extends TarzanCore
 		$opt = array();
 		$opt['QueueName'] = $queue_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('CreateQueue', $opt, SQS_DEFAULT_URL);
+		return $this->authenticate('CreateQueue', $opt, $this->hostname);
 	}
 
 	/**
@@ -182,7 +183,7 @@ class AmazonSQS extends TarzanCore
 		{
 			$opt['QueueNamePrefix'] = $queue_name_prefix;
 		}
-		return $this->authenticate('ListQueues', $opt, SQS_DEFAULT_URL);
+		return $this->authenticate('ListQueues', $opt, $this->hostname);
 	}
 
 	/**

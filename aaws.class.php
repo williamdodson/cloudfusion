@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2008.11.02
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -184,6 +184,12 @@ class AmazonAAWS extends TarzanCore
 			default:
 				$hostname = 'ecs.amazonaws.com';
 				break;
+		}
+
+		// Use alternate hostname, if one exists.
+		if ($this->hostname)
+		{
+			$hostname = $this->hostname;
 		}
 
 		// Send the request to the service.

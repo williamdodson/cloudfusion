@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2008.12.16
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.

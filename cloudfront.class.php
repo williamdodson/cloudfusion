@@ -4,7 +4,7 @@
  * 	Amazon CloudFront CDN Service (http://aws.amazon.com/cloudfront)
  *
  * Version:
- * 	2008.11.28
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -16,6 +16,16 @@
  * 	Tarzan - http://tarzan-aws.com
  * 	Amazon CloudFront - http://aws.amazon.com/cloudfront
  */
+
+
+/*%******************************************************************************************%*/
+// CONSTANTS
+
+/**
+ * Constant: EC2_DEFAULT_URL
+ * 	Specify the default queue URL.
+ */
+define('CDN_DEFAULT_URL', 'cloudfront.amazonaws.com');
 
 
 /*%******************************************************************************************%*/
@@ -81,7 +91,7 @@ class AmazonCloudFront extends TarzanCore
 	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2008-06-30';
-
+		$this->hostname = CDN_DEFAULT_URL;
 		$this->base_xml = '<?xml version="1.0" encoding="UTF-8"?><DistributionConfig xmlns="http://cloudfront.amazonaws.com/doc/' . $this->api_version . '/"></DistributionConfig>';
 
 		if (!$key && !defined('AWS_KEY'))
@@ -143,7 +153,7 @@ class AmazonCloudFront extends TarzanCore
 		);
 
 		// Compose the request.
-		$request_url = 'https://cloudfront.amazonaws.com/' . $this->api_version . '/distribution';
+		$request_url = 'https://' . $this->hostname . '/' . $this->api_version . '/distribution';
 		$request_url .= ($path) ? $path : '';
 		$request_url .= ($querystring) ? $querystring : '';
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
@@ -186,6 +196,25 @@ class AmazonCloudFront extends TarzanCore
 
 		// Return!
 		return $data;
+	}
+
+
+	/*%******************************************************************************************%*/
+	// SET CUSTOM SETTINGS
+
+	/**
+	 * Method: disable_ssl()
+	 * 	Throws an error because SSL is required for the CloudFront service.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function disable_ssl()
+	{
+		throw new CloudFront_Exception('SSL/HTTPS is REQUIRED for CloudFront and cannot be disabled.');
 	}
 
 

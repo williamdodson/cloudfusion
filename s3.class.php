@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2008.12.16
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -20,6 +20,12 @@
 
 /*%******************************************************************************************%*/
 // CONSTANTS
+
+/**
+ * Constant: S3_LOCATION_US
+ * 	Specify the US location.
+ */
+define('S3_DEFAULT_URL', 's3.amazonaws.com');
 
 /**
  * Constant: S3_LOCATION_US
@@ -191,6 +197,7 @@ class AmazonS3 extends TarzanCore
 	{
 		$this->vhost = null;
 		$this->api_version = '2006-03-01';
+		$this->hostname = S3_DEFAULT_URL;
 
 		$this->base_acp_xml = '<?xml version="1.0" encoding="UTF-8"?><AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"></AccessControlPolicy>';
 		$this->base_logging_xml = '<?xml version="1.0" encoding="utf-8"?><BucketLoggingStatus xmlns="http://doc.s3.amazonaws.com/' . $this->api_version . '"></BucketLoggingStatus>';
@@ -275,11 +282,11 @@ class AmazonS3 extends TarzanCore
 			}
 			elseif ($method == 'list_buckets')
 			{
-				$hostname = 's3.amazonaws.com';
+				$hostname = $this->hostname;
 			}
 			else
 			{
-				$hostname = $bucket . '.s3.amazonaws.com';
+				$hostname = $bucket . '.' . $this->hostname;
 			}
 
 			// Get the UTC timestamp in RFC 2616 format

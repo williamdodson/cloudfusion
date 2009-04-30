@@ -212,6 +212,12 @@ class TarzanCore
 	 * 	Stores the Amazon DevPay tokens to use, if any.
 	 */
 	var $devpay_tokens;
+	
+	/**
+	 * Property: set_hostname
+	 * 	Stores the alternate hostname to use, if any.
+	 */
+	var $hostname = null;
 
 
 	/*%******************************************************************************************%*/
@@ -378,6 +384,39 @@ class TarzanCore
 	public function set_proxy($proxy)
 	{
 		$this->set_proxy = $proxy;
+	}
+
+	/**
+	 * Method: set_hostname()
+	 * 	Set the hostname to use for connecting.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	hostname - _string_ (Required) The alternate hostname to use in place of the default one. Useful for API-compatible applications living on different hostnames.
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function set_hostname($hostname)
+	{
+		$this->hostname = $hostname;
+	}
+
+	/**
+	 * Method: disable_ssl()
+	 * 	Disables SSL/HTTPS connections for hosts that don't support them.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function disable_ssl()
+	{
+		$this->enable_ssl = false;
 	}
 
 

@@ -84,6 +84,7 @@ class AmazonSDB extends TarzanCore
 	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2007-11-07';
+		$this->hostname = SDB_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -127,7 +128,7 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('CreateDomain', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('CreateDomain', $opt, $this->hostname);
 	}
 
 	/**
@@ -157,7 +158,7 @@ class AmazonSDB extends TarzanCore
 	{
 		if (!$opt) $opt = array();
 
-		return $this->authenticate('ListDomains', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('ListDomains', $opt, $this->hostname);
 	}
 
 	/**
@@ -185,7 +186,7 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DeleteDomain', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('DeleteDomain', $opt, $this->hostname);
 	}
 
 	/**
@@ -213,7 +214,7 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('DomainMetadata', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('DomainMetadata', $opt, $this->hostname);
 	}
 
 
@@ -326,7 +327,7 @@ class AmazonSDB extends TarzanCore
 			}
 		}
 
-		return $this->authenticate('PutAttributes', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('PutAttributes', $opt, $this->hostname);
 	}
 
 	/**
@@ -374,7 +375,7 @@ class AmazonSDB extends TarzanCore
 			}
 		}
 
-		return $this->authenticate('GetAttributes', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('GetAttributes', $opt, $this->hostname);
 	}
 
 	/**
@@ -440,7 +441,7 @@ class AmazonSDB extends TarzanCore
 			}
 		}
 
-		return $this->authenticate('DeleteAttributes', $opt, SDB_DEFAULT_URL);
+		return $this->authenticate('DeleteAttributes', $opt, $this->hostname);
 	}
 
 
@@ -484,7 +485,7 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;
 
-		$query = $this->authenticate('Query', $opt, SDB_DEFAULT_URL);
+		$query = $this->authenticate('Query', $opt, $this->hostname);
 
 		// If $follow is requested, and there's at least one response to follow...
 		if ($follow && isset($query->body->QueryResult->ItemName))
@@ -538,7 +539,7 @@ class AmazonSDB extends TarzanCore
 		$opt['DomainName'] = $domain_name;
 		$opt['QueryExpression'] = $expression;
 
-		$query = $this->authenticate('QueryWithAttributes', $opt, SDB_DEFAULT_URL);
+		$query = $this->authenticate('QueryWithAttributes', $opt, $this->hostname);
 
 		return $query;
 	}
@@ -573,7 +574,7 @@ class AmazonSDB extends TarzanCore
 		if (!$opt) $opt = array();
 		$opt['SelectExpression'] = $expression;
 
-		$query = $this->authenticate('Select', $opt, SDB_DEFAULT_URL);
+		$query = $this->authenticate('Select', $opt, $this->hostname);
 
 		return $query;
 	}
