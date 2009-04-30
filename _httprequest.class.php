@@ -332,7 +332,7 @@ class TarzanHTTPRequest
  		curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, true);
  		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
  		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, true);
- 		curl_setopt($curl_handle, CURLOPT_VERBOSE, true);
+ 		curl_setopt($curl_handle, CURLOPT_VERBOSE, false);
  		curl_setopt($curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
 		curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($curl_handle, CURLOPT_MAXREDIRS, 5);

@@ -254,6 +254,7 @@ class AmazonS3 extends TarzanCore
 			$contentType = null;
 			$delimiter = null;
 			$filename = null;
+			$headers = null;
 			$marker = null;
 			$maxKeys = null;
 			$method = null;
@@ -395,11 +396,22 @@ class AmazonS3 extends TarzanCore
 			}
 
 			// Do we have COPY settings?
-			if ($method == 'copy_object')
+			if ($method == 'copy_object' || $method == 'update_object')
 			{
 				// Copy data
 				$acl .= 'x-amz-copy-source:/' . $sourceBucket . '/' . $sourceObject . "\n";
 				$req->addHeader('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
+
+				// Add any standard HTTP headers.
+				if ($headers)
+				{
+					uksort($headers, 'strnatcasecmp');
+
+					foreach ($headers as $k => $v)
+					{
+						$req->addHeader($k, $v);
+					}
+				}
 
 				// Add any meta headers.
 				if ($meta)
@@ -447,6 +459,17 @@ class AmazonS3 extends TarzanCore
 					$req->setBody($body);
 					$md5 = $this->util->hex_to_base64(md5($body));
 					$req->addHeader('Content-MD5', $md5);
+				}
+
+				// Add any standard HTTP headers.
+				if ($headers)
+				{
+					uksort($headers, 'strnatcasecmp');
+
+					foreach ($headers as $k => $v)
+					{
+						$req->addHeader($k, $v);
+					}
 				}
 
 				// Add any meta headers.
@@ -1064,6 +1087,7 @@ class AmazonS3 extends TarzanCore
 	 * 	body - _string_ (Required) The data to be stored in the object.
 	 * 	contentType - _string_ (Required) The type of content that is being sent in the body.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
+	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
 	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
@@ -1415,6 +1439,7 @@ class AmazonS3 extends TarzanCore
 	 * 
 	 * Keys for the $opt parameter:
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
+	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
 	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
 	 * 	metadataDirective - _string_ (Optional) Accepts either COPY or REPLACE. You will likely never need to use this, as it manages itself with no issues.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
@@ -1451,6 +1476,53 @@ class AmazonS3 extends TarzanCore
 
 		// Authenticate to S3
 		return $this->authenticate($dest_bucket, $opt);
+	}
+
+	/**
+	 * Method: update_object()
+	 * 	Updates an existing object with new content or settings.
+	 * 
+	 * Access:
+	 * 	public
+ 	 * 
+	 * Parameters:
+	 * 	bucket - _string_ (Required) The name of the bucket that contains the source file.
+	 * 	filename - _string_ (Required) The source filename that you want to update.
+	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
+	 * 
+	 * Keys for the $opt parameter:
+	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
+	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
+	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
+	 * 	metadataDirective - _string_ (Optional) Accepts either COPY or REPLACE. You will likely never need to use this, as it manages itself with no issues.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<TarzanHTTPResponse> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
+	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingCopyingObjects.html
+	 * 	PUT Request Headers - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html#RESTObjectPUTRequestHeaders
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_object.phps
+	 * 	Related - <copy_bucket()>, <duplicate_object()>, <move_object()>, <rename_object()>
+	 */
+	public function update_object($bucket, $filename, $opt)
+	{
+		if (!$opt) $opt = array();
+
+		// Add this to our request
+		$opt['verb'] = HTTP_PUT;
+		$opt['method'] = 'update_object';
+		$opt['sourceBucket'] = $bucket;
+		$opt['sourceObject'] = $filename;
+		$opt['destinationBucket'] = $bucket;
+		$opt['destinationObject'] = $filename;
+		$opt['filename'] = $filename;
+		$opt['metadataDirective'] = 'REPLACE';
+
+		// Authenticate to S3
+		return $this->authenticate($bucket, $opt);
 	}
 
 	/**
