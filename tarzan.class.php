@@ -509,7 +509,7 @@ class TarzanCore
 		$host_header = strtolower($parsed_url['host']);
 
 		// Set the proper request URI.
-		$request_uri = isset($parsed_url['path']) ? strtolower($parsed_url['path']) : '/';
+		$request_uri = isset($parsed_url['path']) ? $parsed_url['path'] : '/';
 
 		// Prepare the string to sign
 		$stringToSign = "$verb\n$host_header\n$request_uri\n$canonical_query_string";
