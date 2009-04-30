@@ -91,7 +91,7 @@ class AmazonSQSQueue extends AmazonSQS
 	public function __construct($queue = null, $key = null, $secret_key = null)
 	{
 		$this->queue_url = SQS_DEFAULT_URL . '/' . $queue;
-		parent::__construct($key, $secret_key);
+		return parent::__construct($key, $secret_key);
 	}
 
 

@@ -121,7 +121,7 @@ class AmazonEC2 extends TarzanCore
 			throw new EC2_Exception('No Amazon account ID was passed into the constructor, nor was it set in the AWS_ACCOUNT_ID constant.');
 		}
 
-		parent::__construct($key, $secret_key, $account_id);
+		return parent::__construct($key, $secret_key, $account_id);
 	}
 
 

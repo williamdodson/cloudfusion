@@ -95,7 +95,7 @@ class AmazonSQS extends TarzanCore
 			throw new SQS_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
 		}
 
-		parent::__construct($key, $secret_key);
+		return parent::__construct($key, $secret_key);
 	}
 
 

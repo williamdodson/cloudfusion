@@ -289,6 +289,32 @@ class TarzanCore
 		// Determine the current service.
 		$this->service = get_class($this);
 
+		// Set default values
+		$this->key = null;
+		$this->secret_key = null;
+		$this->account_id = null;
+		$this->assoc_id = null;
+
+		// Set the Account ID
+		if (defined('AWS_ACCOUNT_ID'))
+		{
+			$this->account_id = AWS_ACCOUNT_ID;
+		}
+		elseif ($account_id)
+		{
+			$this->account_id = $account_id;
+		}
+
+		// Set the Associates ID
+		if (defined('AWS_ASSOC_ID'))
+		{
+			$this->assoc_id = AWS_ASSOC_ID;
+		}
+		elseif ($assoc_id)
+		{
+			$this->assoc_id = $assoc_id;
+		}
+
 		// If both a key and secret key are passed in, use those.
 		if ($key && $secret_key)
 		{
