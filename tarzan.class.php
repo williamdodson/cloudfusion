@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2009.02.28
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -40,7 +40,7 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.0.2');
+define('TARZAN_VERSION', '2.0.4');
 
 /**
  * Constant: TARZAN_BUILD
@@ -284,6 +284,32 @@ class TarzanCore
 
 		// Determine the current service.
 		$this->service = get_class($this);
+
+		// Set default values
+		$this->key = null;
+		$this->secret_key = null;
+		$this->account_id = null;
+		$this->assoc_id = null;
+
+		// Set the Account ID
+		if (defined('AWS_ACCOUNT_ID'))
+		{
+			$this->account_id = AWS_ACCOUNT_ID;
+		}
+		elseif ($account_id)
+		{
+			$this->account_id = $account_id;
+		}
+
+		// Set the Associates ID
+		if (defined('AWS_ASSOC_ID'))
+		{
+			$this->assoc_id = AWS_ASSOC_ID;
+		}
+		elseif ($assoc_id)
+		{
+			$this->assoc_id = $assoc_id;
+		}
 
 		// If both a key and secret key are passed in, use those.
 		if ($key && $secret_key)

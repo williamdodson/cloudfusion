@@ -128,7 +128,7 @@ class AmazonAAWS extends TarzanCore
 			throw new AAWS_Exception('No Amazon Associates ID was passed into the constructor, nor was it set in the AWS_ASSOC_ID constant.');
 		}
 
-		parent::__construct($key, $secret_key, null, $assoc_id);
+		return parent::__construct($key, $secret_key, null, $assoc_id);
 	}
 
 
