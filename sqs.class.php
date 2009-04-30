@@ -152,7 +152,6 @@ class AmazonSQS extends TarzanCore
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('DeleteQueue', $opt, $queue_url);
 	}
 
@@ -210,7 +209,6 @@ class AmazonSQS extends TarzanCore
 		$opt = array();
 		$opt['AttributeName'] = 'All';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('GetQueueAttributes', $opt, $queue_url);
 	}
 
@@ -247,7 +245,6 @@ class AmazonSQS extends TarzanCore
 			$opt['Attribute.Value'] = $opt['VisibilityTimeout'];
 			unset($opt['VisibilityTimeout']);
 		}
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('SetQueueAttributes', $opt, $queue_url);
 	}
 
@@ -279,7 +276,6 @@ class AmazonSQS extends TarzanCore
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('SendMessage', $opt, $queue_url, $message);
 	}
 
@@ -310,7 +306,6 @@ class AmazonSQS extends TarzanCore
 	public function receive_message($queue_url, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('ReceiveMessage', $opt, $queue_url);
 	}
 
@@ -339,7 +334,6 @@ class AmazonSQS extends TarzanCore
 		$opt = array();
 		$opt['ReceiptHandle'] = $receipt_handle;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		$queue_url = strtolower($queue_url);
 		return $this->authenticate('DeleteMessage', $opt, $queue_url);
 	}
 
@@ -368,7 +362,6 @@ class AmazonSQS extends TarzanCore
 	{
 		$opt = array();
 		$opt['AttributeName'] = 'ApproximateNumberOfMessages';
-		$queue_url = strtolower($queue_url);
 		$response = $this->authenticate('GetQueueAttributes', $opt, $queue_url);
 
 		if ($response->isOK() === false)
