@@ -21,7 +21,7 @@ if ($bucket->isOK())
 
 	/**
 	 * Let's get the locale of the bucket we just created. Remember that this returns a 
-	 * ResponseCore object.
+	 * TarzanHTTPResponse object.
 	 */
 	$locale = $s3->get_bucket_locale('warpshare.test.eu');
 

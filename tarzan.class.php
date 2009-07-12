@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2009.02.28
+ * 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -40,7 +40,7 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.1');
+define('TARZAN_VERSION', '2.0.4');
 
 /**
  * Constant: TARZAN_BUILD
@@ -181,13 +181,13 @@ class TarzanCore
 	 * Property: request_class
 	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
 	 */
-	var $request_class = 'RequestCore';
+	var $request_class = 'TarzanHTTPRequest';
 
 	/**
 	 * Property: response_class
-	 * The default class to use for HTTP Responses (defaults to <ResponseCore>).
+	 * The default class to use for HTTP Responses (defaults to <TarzanHTTPResponse>).
 	 */
-	var $response_class = 'ResponseCore';
+	var $response_class = 'TarzanHTTPResponse';
 
 	/**
 	 * Property: adjust_offset
@@ -212,6 +212,12 @@ class TarzanCore
 	 * 	Stores the Amazon DevPay tokens to use, if any.
 	 */
 	var $devpay_tokens;
+	
+	/**
+	 * Property: set_hostname
+	 * 	Stores the alternate hostname to use, if any.
+	 */
+	var $hostname = null;
 
 
 	/*%******************************************************************************************%*/
@@ -244,11 +250,7 @@ class TarzanCore
 		}
 		elseif (stristr($class, 'cache'))
 		{
-			$path .= './cachecore/' . strtolower($class) . '.class.php';
-		}
-		elseif (stristr($class, 'requestcore') || stristr($class, 'responsecore'))
-		{
-			$path .= './requestcore/requestcore.class.php';
+			$path .= '_' . strtolower($class) . '.class.php';
 		}
 		else
 		{
@@ -385,26 +387,36 @@ class TarzanCore
 	}
 
 	/**
-	 * Method: set_devpay_tokens()
-	 * 	Enable the DevPay tokens to use for the request. Currently only works with S3 and EC2.
+	 * Method: set_hostname()
+	 * 	Set the hostname to use for connecting.
 	 * 
 	 * Access:
 	 * 	public
- 	 * 
+	 * 
 	 * Parameters:
-	 * 	user_token - _string_ (Required) The user token to use with DevPay.
-	 * 	product_token - _string_ (Required) The product token to use with DevPay.
+	 * 	hostname - _string_ (Required) The alternate hostname to use in place of the default one. Useful for API-compatible applications living on different hostnames.
 	 * 
 	 * Returns:
 	 * 	void
- 	 * 
-	 * See Also:
-	 * 	DevPay information - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingDevPay.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_devpay_tokens.phps
 	 */
-	public function set_devpay_tokens($user_token, $product_token)
+	public function set_hostname($hostname)
 	{
-		$this->devpay_tokens = $user_token . ',' . $product_token;
+		$this->hostname = $hostname;
+	}
+
+	/**
+	 * Method: disable_ssl()
+	 * 	Disables SSL/HTTPS connections for hosts that don't support them.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Returns:
+	 * 	void
+	 */
+	public function disable_ssl()
+	{
+		$this->enable_ssl = false;
 	}
 
 
@@ -449,7 +461,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_request_class.phps
 	 */
-	function set_request_class($class = 'RequestCore')
+	function set_request_class($class = 'TarzanHTTPRequest')
 	{
 		$this->request_class = $class;
 	}
@@ -470,7 +482,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_response_class.phps
 	 */
-	function set_response_class($class = 'ResponseCore')
+	function set_response_class($class = 'TarzanHTTPResponse')
 	{
 		$this->response_class = $class;
 	}
@@ -493,7 +505,7 @@ class TarzanCore
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
 	 */
 	public function authenticate($action, $opt = null, $domain = null, $message = null)
 	{
@@ -588,11 +600,7 @@ class TarzanCore
 		$headers['x-tarzan-requesturl'] = $request_url;
 		$headers['x-tarzan-stringtosign'] = $stringToSign;
 		if ($message) $headers['x-tarzan-body'] = $message;
-
-		$body = $request->getResponseBody();
-		$body = new SimpleXMLElement($body, LIBXML_NOCDATA);
-
-		$data = new $this->response_class($headers, $body, $request->getResponseCode());
+		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
 
 		// Return!
 		return $data;
@@ -604,7 +612,7 @@ class TarzanCore
 
 	/**
 	 * Method: cache_response()
-	 * 	Caches a ResponseCore object using the preferred caching method.
+	 * 	Caches a TarzanHTTPResponse object using the preferred caching method.
 	 * 
 	 * Access:
 	 * 	public
@@ -618,12 +626,11 @@ class TarzanCore
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
-	 * 	XCache - Pass in 'xcache' to use this lightweight cache.  You must have the XCache extension installed. <http://xcache.lighttpd.net/>
 	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/cache_response.phps
@@ -650,10 +657,6 @@ class TarzanCore
 			{
 				case 'apc':
 					$CacheMethod = 'CacheAPC';
-					break;
-
-				case 'xca': // First three letters of 'xcache'
-					$CacheMethod = 'CacheXCache';
 					break;
 
 				case 'pdo':
@@ -811,86 +814,6 @@ class TarzanCore
 
 		// We're done. Return the data. Huzzah!
 		return $data;
-	}
-
-	/**
-	 * Method: delete_cache_response()
-	 * 	Deletes a cached ResponseCore object using the preferred caching method.
-	 * 
-	 * Access:
-	 * 	public
- 	 * 
-	 * Parameters:
-	 * 	method - _string_ (Required) The same method you used while caching initially.
-	 * 	location - _string_ (Required) The same location you used while caching initially.
-	 * 	params - _array_ (Optional) The same parameters that you used while caching initially.
-	 * 
-	 * Example values for $location:
-	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
-	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
-	 * 	XCache - Pass in 'xcache' to use this lightweight cache.  You must have the XCache extension installed. <http://xcache.lighttpd.net/>
-	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
-	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
-	 * 
-	 * Returns:
-	 * 	boolean TRUE if cached object exists and is successfully deleted, otherwise FALSE
- 	 * 
-	 * See Also:
-	 * 	Example Usage - None at this time
-	 */
-	public function delete_cache_response($method, $location, $params = null)
-	{
-		$_this = $this;
-		if (is_array($method))
-		{
-			$_this = $method[0];
-			$method = $method[1];
-		}
-
-		// If we have an array, we're probably passing in Memcached servers and ports.
-		if (is_array($location))
-		{
-			$CacheMethod = 'CacheMC';
-		}
-		else
-		{
-			// I would expect locations like '/tmp/cache', 'pdo.mysql://user:pass@hostname:port', 'pdo.sqlite:memory:', and 'apc'.
-			$type = strtolower(substr($location, 0, 3));
-			switch ($type)
-			{
-				case 'apc':
-					$CacheMethod = 'CacheAPC';
-					break;
-
-				case 'xca': // First three letters of 'xcache'
-					$CacheMethod = 'CacheXCache';
-					break;
-
-				case 'pdo':
-					$CacheMethod = 'CachePDO';
-					$location = substr($location, 4);
-					break;
-
-				default:
-					$CacheMethod = 'CacheFile';
-					break;
-			}
-		}
-
-		// Once we've determined the preferred caching method, instantiate a new cache.
-		if (isset($_this->key))
-		{
-			$cache_uuid = $method . '-' . $_this->key . '-' . sha1($method . serialize($params));
-		}
-		else
-		{
-			$cache_uuid = $method . '-' . 'nokey' . '-' . sha1($method . serialize($params));
-		}
-
-		$cache = new $CacheMethod($cache_uuid, $location, 0);
-
-		// Try and delete, returns true if cached object exists and is successfully deleted, otherwise false
-		return $cache->delete();
 	}
 }
 

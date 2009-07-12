@@ -8,7 +8,7 @@ $s3 = new AmazonS3();
 
 
 /**
- * Returns a ResponseCore object listing all of the buckets for your account.
+ * Returns a TarzanHTTPResponse object listing all of the buckets for your account.
  */
 $list = $s3->list_buckets();
 

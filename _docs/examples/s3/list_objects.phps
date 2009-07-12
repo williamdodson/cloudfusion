@@ -8,7 +8,7 @@ $s3 = new AmazonS3();
 
 
 /**
- * Returns a ResponseCore object listing all of the objects for this bucket.
+ * Returns a TarzanHTTPResponse object listing all of the objects for this bucket.
  */
 $list = $s3->list_objects('warpshare.test.eu');
 

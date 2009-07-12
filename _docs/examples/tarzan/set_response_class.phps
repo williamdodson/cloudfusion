@@ -9,7 +9,7 @@ $sqs = new AmazonSQS();
 
 /**
  * Tell Tarzan to use a custom class for responses. The custom class should 
- * override/extend the ResponseCore class.
+ * override/extend the TarzanHTTPResponse class.
  */
 $sqs->set_response_class('CustomHTTPResponse');
 
@@ -17,7 +17,7 @@ $sqs->set_response_class('CustomHTTPResponse');
 /**
  * Make sure you define your custom class.
  */
-class CustomHTTPResponse extends ResponseCore
+class CustomHTTPResponse extends TarzanHTTPResponse
 {
 	// Add new methods or override existing ones.
 }

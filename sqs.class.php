@@ -4,7 +4,7 @@
  * 	Amazon Simple Queue Service (http://aws.amazon.com/sqs)
  *
  * Version:
- * 	2009.02.28
+* 	2009.04.29
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -84,6 +84,7 @@ class AmazonSQS extends TarzanCore
 	public function __construct($key = null, $secret_key = null)
 	{
 		$this->api_version = '2008-01-01';
+		$this->hostname = SQS_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
 		{
@@ -114,7 +115,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryCreateQueue.html
@@ -126,7 +127,7 @@ class AmazonSQS extends TarzanCore
 		$opt = array();
 		$opt['QueueName'] = $queue_name;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('CreateQueue', $opt, SQS_DEFAULT_URL);
+		return $this->authenticate('CreateQueue', $opt, $this->hostname);
 	}
 
 	/**
@@ -141,7 +142,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html
@@ -167,7 +168,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryListQueues.html
@@ -182,7 +183,7 @@ class AmazonSQS extends TarzanCore
 		{
 			$opt['QueueNamePrefix'] = $queue_name_prefix;
 		}
-		return $this->authenticate('ListQueues', $opt, SQS_DEFAULT_URL);
+		return $this->authenticate('ListQueues', $opt, $this->hostname);
 	}
 
 	/**
@@ -197,7 +198,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
@@ -228,7 +229,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
@@ -265,7 +266,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html
@@ -296,7 +297,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryReceiveMessage.html
@@ -322,7 +323,7 @@ class AmazonSQS extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	<TarzanHTTPResponse> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteMessage.html

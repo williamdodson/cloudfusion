@@ -7,29 +7,13 @@ $cache = new CacheFile('cache_obj', './cache', 10); // File-based caching
 /* OR */
 $cache = new CacheAPC('cache_obj', 'apc', 10); // APC-based caching
 /* OR */
-$cache = new CacheXCache('cache_obj', 'xcache', 10); // XCache-based caching
-/* OR */
 $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO caching (using SQLite)
-
-/* OR */
-
-/**
- * Memcached caching (available in upcoming version 2.0 or in the trunk @ r228). 
- * Location is an indexed array of associative arrays. Each associative array 
- * has a 'host' and a 'port' representing a server to add to the server pool.
- */
-$cache = new CacheMC('cache_obj', array(
-	array(
-		'host' => 'localhost',
-		'port' => 11211
-	)
-), 10);
 
 
 /**
  * Example that uses all of the various methods.
  */
-$request = new RequestCore('http://example.com/endpoint');
+$request = new TarzanHTTPRequest('http://example.com/endpoint');
 
 // Does a cache already exist, and can we read it?
 if ($data = $cache->read())
@@ -38,10 +22,10 @@ if ($data = $cache->read())
 	if ($cache->is_expired())
 	{
 		// Let's re-fetch fresh data
-		if ($data = $request->send_request())
+		if ($data = $request->sendRequest())
 		{
 			// ...and update the existing cache with it.
-			$cache->update($request->get_response_body());
+			$cache->update($request->getResponseBody());
 		}
 
 		// Re-fetch was unsuccessful for whatever reason
@@ -57,10 +41,10 @@ if ($data = $cache->read())
 else
 {
 	// Let's fetch fresh data
-	if ($data = $request->send_request())
+	if ($data = $request->sendRequest())
 	{
 		// ...and create a new cache.
-		$cache->create($request->get_response_body());
+		$cache->create($request->getResponseBody());
 	}
 }
 

@@ -7,14 +7,11 @@ $cache = new CacheFile('cache_obj', './cache', 10); // File-based caching
 /* OR */
 $cache = new CacheAPC('cache_obj', 'apc', 10); // APC-based caching
 /* OR */
-$cache = new CacheXCache('cache_obj', 'xcache', 10); // XCache-based caching
-/* OR */
 $cache = new CachePDO('cache_obj', 'sqlite://tarzan_cache.db', 10); // PDO caching (using SQLite)
 
-/* OR */
 
 /**
- * Memcached caching (available in upcoming version 2.0 or in the trunk @ r228). 
+ * Memcached caching (available in upcoming version 2.1 or in the trunk @ r228). 
  * Location is an indexed array of associative arrays. Each associative array 
  * has a 'host' and a 'port' representing a server to add to the server pool.
  */
@@ -32,9 +29,9 @@ $cache = new CacheMC('cache_obj', array(
  */
 function fetch_the_fresh_data($url)
 {
-	$request = new RequestCore($url);
+	$request = new TarzanHTTPRequest($url);
 
-	if ($data = $request->send_request())
+	if ($data = $request->sendRequest())
 	{
 		return $data->body;
 	}

@@ -131,7 +131,7 @@ class S3Browser
 		}
 
 		// Execute (and cache) a MultiCurl request for ACL information for all objects in the bucket.
-		$http = new RequestCore(null);
+		$http = new TarzanHTTPRequest(null);
 		$object_acl = $this->s3->cache_response(array($http, 'sendMultiRequest'), $this->options['cache'], $this->options['cache_duration'], array($handles));
 
 		// Chop up the template and prepare for re-use.
