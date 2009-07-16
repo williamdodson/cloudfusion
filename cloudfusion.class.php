@@ -40,7 +40,7 @@ define('TARZAN_NAME', 'Tarzan');
  * Constant: TARZAN_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.0.4');
+define('TARZAN_VERSION', '2.1');
 
 /**
  * Constant: TARZAN_BUILD
