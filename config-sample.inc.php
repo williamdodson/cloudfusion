@@ -7,13 +7,13 @@
  * 	2008.12.02
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  */
 
 

@@ -22,9 +22,9 @@ foreach ($buckets as $bucket)
 
 
 /**
- * Instantiate a new TarzanHTTPRequest object for the purpose of firing a MultiCurl (parallel) request.
+ * Instantiate a new RequestCore object for the purpose of firing a MultiCurl (parallel) request.
  */
-$request = new TarzanHTTPRequest(null); // We're not firing on a single URL.
+$request = new RequestCore(null); // We're not firing on a single URL.
 $response = $request->sendMultiRequest($handles); // Fire the cURL handles we previously collected.
 
 print_r($response);

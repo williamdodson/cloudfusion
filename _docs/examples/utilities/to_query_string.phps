@@ -18,7 +18,7 @@ $arr = array(
 
 $query_string = $s3->util->to_query_string($arr);
 
-$http = new TarzanHTTPRequest('http://domain.com/path.php?' . $query_string);
+$http = new RequestCore('http://domain.com/path.php?' . $query_string);
 
 
 ?>

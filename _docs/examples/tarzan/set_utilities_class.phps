@@ -9,7 +9,7 @@ $sqs = new AmazonSQS();
 
 /**
  * Tell Tarzan to use a custom class for utilities. The custom class should 
- * override/extend the TarzanUtilities class.
+ * override/extend the CFUtilities class.
  */
 $sqs->set_utilities_class('CustomUtilities');
 
@@ -17,7 +17,7 @@ $sqs->set_utilities_class('CustomUtilities');
 /**
  * Make sure you define your custom class.
  */
-class CustomUtilities extends TarzanUtilities
+class CustomUtilities extends CFUtilities
 {
 	public function simplexml_to_array()
 	{

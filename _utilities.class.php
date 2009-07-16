@@ -1,19 +1,19 @@
 <?php
 /**
- * File: TarzanUtilities
+ * File: CFUtilities
  * 	Utilities for connecting to, and working with, AWS.
  *
  * Version:
  * 	2008.12.18
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  */
 
 
@@ -21,10 +21,10 @@
 // CLASS
 
 /**
- * Class: TarzanUtilities
+ * Class: CFUtilities
  * 	Container for all utility-related methods.
  */
-class TarzanUtilities
+class CFUtilities
 {
 	/**
 	 * Method: __construct()
@@ -34,7 +34,7 @@ class TarzanUtilities
 	 * 	public
 	 * 
 	 * Returns:
-	 * 	<TarzanUtilities> object
+	 * 	<CFUtilities> object
 	 */
 	public function __construct()
 	{

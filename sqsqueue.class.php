@@ -7,13 +7,13 @@
  * 	2008.11.18
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  * 	Amazon SQS - http://aws.amazon.com/sqs
  */
 
@@ -112,7 +112,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	returnCurlHandle - See <AmazonSQS::create_queue()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/create_queue.phps
@@ -121,7 +121,7 @@ class AmazonSQSQueue extends AmazonSQS
 	{
 		$data = parent::create_queue($queue_name, $returnCurlHandle);
 
-		if ($data instanceof TarzanHTTPResponse)
+		if ($data instanceof ResponseCore)
 		{
 			$this->queue_url = (string) $data->body->CreateQueueResult->QueueUrl;
 		}
@@ -140,7 +140,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	returnCurlHandle - See <AmazonSQS::delete_queue()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_queue.phps
@@ -166,7 +166,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	returnCurlHandle - See <AmazonSQS::get_queue_attributes()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/get_queue_attributes.phps
@@ -192,7 +192,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	opt - See <AmazonSQS::set_queue_attributes()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/set_queue_attributes.phps
@@ -223,7 +223,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	returnCurlHandle - See <AmazonSQS::send_message()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/send_message.phps
@@ -249,7 +249,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	opt - See <AmazonSQS::receive_message()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/receive_message.phps
@@ -276,7 +276,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	returnCurlHandle - See <AmazonSQS::delete_message()>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_message.phps

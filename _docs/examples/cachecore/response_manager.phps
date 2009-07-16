@@ -29,7 +29,7 @@ $cache = new CacheMC('cache_obj', array(
  */
 function fetch_the_fresh_data($url)
 {
-	$request = new TarzanHTTPRequest($url);
+	$request = new RequestCore($url);
 
 	if ($data = $request->sendRequest())
 	{

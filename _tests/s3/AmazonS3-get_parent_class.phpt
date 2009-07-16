@@ -9,4 +9,4 @@ AmazonS3 - Get parent class
 ?>
 
 --EXPECT--
-string(10) "TarzanCore"
+string(10) "CloudCore"

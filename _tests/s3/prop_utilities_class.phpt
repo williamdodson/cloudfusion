@@ -9,4 +9,4 @@ AmazonS3::utilities_class
 ?>
 
 --EXPECT--
-string(15) "TarzanUtilities"
+string(15) "CFUtilities"

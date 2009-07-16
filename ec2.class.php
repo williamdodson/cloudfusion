@@ -7,13 +7,13 @@
  * 	2009.04.29
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  * 	Amazon EC2 - http://aws.amazon.com/ec2
  */
 
@@ -55,10 +55,10 @@ class EC2_Exception extends Exception {}
 
 /**
  * Class: AmazonEC2
- * 	Container for all Amazon EC2-related methods. Inherits additional methods from TarzanCore.
+ * 	Container for all Amazon EC2-related methods. Inherits additional methods from CloudCore.
  * 
  * Extends:
- * 	TarzanCore
+ * 	CloudCore
  * 
  * Example Usage:
  * (start code)
@@ -71,7 +71,7 @@ class EC2_Exception extends Exception {}
  * $s3 = new AmazonEC2($key, $secret_key);
  * (end)
  */
-class AmazonEC2 extends TarzanCore
+class AmazonEC2 extends CloudCore
 {
 	/**
 	 * Property: hostname
@@ -139,7 +139,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	locale - _string_ (Required) The locale to explicitly set for EC2. Available options are <EC2_LOCATION_US> and <EC2_LOCATION_EU>.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/set_locale.phps
@@ -168,7 +168,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
@@ -196,7 +196,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AllocateAddress.html
@@ -226,7 +226,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AssociateAddress.html
@@ -259,7 +259,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
@@ -287,7 +287,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
@@ -319,7 +319,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
@@ -351,7 +351,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSnapshot.html
@@ -381,7 +381,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSnapshots.html
@@ -406,7 +406,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSnapshot.html
@@ -438,7 +438,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateVolume.html
@@ -477,7 +477,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeVolumes.html
@@ -504,7 +504,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AttachVolume.html
@@ -540,7 +540,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DetachVolume.html
@@ -567,7 +567,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteVolume.html
@@ -598,7 +598,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-GetConsoleOutput.html
@@ -629,7 +629,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RebootInstances.html
@@ -658,7 +658,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeregisterImage.html
@@ -700,7 +700,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImages.html
@@ -729,7 +729,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RegisterImage.html
@@ -760,7 +760,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeImageAttribute.html
@@ -798,7 +798,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ModifyImageAttribute.html
@@ -826,7 +826,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ResetImageAttribute.html
@@ -863,7 +863,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ConfirmProductInstance.html
@@ -894,7 +894,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeInstances.html
@@ -945,7 +945,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RunInstances.html
@@ -979,7 +979,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
@@ -1009,7 +1009,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateKeyPair.html
@@ -1036,7 +1036,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteKeyPair.html
@@ -1066,7 +1066,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeKeyPairs.html
@@ -1110,7 +1110,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AuthorizeSecurityGroupIngress.html
@@ -1138,7 +1138,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CreateSecurityGroup.html
@@ -1168,7 +1168,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DeleteSecurityGroup.html
@@ -1198,7 +1198,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeSecurityGroups.html
@@ -1238,7 +1238,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RevokeSecurityGroupIngress.html
@@ -1276,7 +1276,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-BundleInstance.html
@@ -1325,7 +1325,7 @@ class AmazonEC2 extends TarzanCore
 		else
 		{
 			$opt['Storage.S3.UploadPolicy'] = base64_encode($this->util->json_encode(array(
-				'expiration' => gmdate(DATE_AWS_ISO8601, strtotime('+12 hours')),
+				'expiration' => gmdate(DATE_FORMAT_ISO8601, strtotime('+12 hours')),
 				'conditions' => array(
 					array('bucket' => $opt['Storage.S3.Bucket']), 
 					array('acl' => 'ec2-bundle-read')
@@ -1351,7 +1351,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
@@ -1382,7 +1382,7 @@ class AmazonEC2 extends TarzanCore
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html

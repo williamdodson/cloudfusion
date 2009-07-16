@@ -1,26 +1,26 @@
 <?php
 /**
- * File: TarzanCore
+ * File: CloudCore
  * 	Core functionality and default settings shared across classes.
  *
  * Version:
- * 	2009.04.29
+ * 	2009.07.16
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  */
 
 
 /*%******************************************************************************************%*/
 // CORE DEPENDENCIES
 
-// Include the Tarzan config file
+// Include the CloudFusion config file
 if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php'))
 {
 	include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php';
@@ -31,53 +31,53 @@ if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php'))
 // CONSTANTS
 
 /**
- * Constant: TARZAN_NAME
+ * Constant: CLOUDFUSION_NAME
  * Name of the software.
  */
-define('TARZAN_NAME', 'Tarzan');
+define('CLOUDFUSION_NAME', 'CloudFusion');
 
 /**
- * Constant: TARZAN_VERSION
+ * Constant: CLOUDFUSION_VERSION
  * Version of the software.
  */
-define('TARZAN_VERSION', '2.1');
+define('CLOUDFUSION_VERSION', '2.1');
 
 /**
- * Constant: TARZAN_BUILD
+ * Constant: CLOUDFUSION_BUILD
  * Build ID of the software.
  */
-define('TARZAN_BUILD', gmdate('YmdHis', strtotime(substr('$Date$', 7, 25)) ? strtotime(substr('$Date$', 7, 25)) : filemtime(__FILE__)));
+define('CLOUDFUSION_BUILD', gmdate('YmdHis', strtotime(substr('$Date$', 7, 25)) ? strtotime(substr('$Date$', 7, 25)) : filemtime(__FILE__)));
 
 /**
- * Constant: TARZAN_URL
+ * Constant: CLOUDFUSION_URL
  * URL to learn more about the software.
  */
-define('TARZAN_URL', 'http://tarzan-aws.com');
+define('CLOUDFUSION_URL', 'http://getcloudfusion.com');
 
 /**
- * Constant: TARZAN_USERAGENT
+ * Constant: CLOUDFUSION_USERAGENT
  * User agent string used to identify Tarzan
- * > Tarzan/2.0 (Amazon Web Services API; http://tarzan-aws.com) Build/20080927210040
+ * > CloudFusion/2.1 (Cloud Computing Toolkit; http://getcloudfusion.com) Build/20080927210040
  */
-define('TARZAN_USERAGENT', TARZAN_NAME . '/' . TARZAN_VERSION . ' (Amazon Web Services API; ' . TARZAN_URL . ') Build/' . TARZAN_BUILD);
+define('CLOUDFUSION_USERAGENT', CLOUDFUSION_NAME . '/' . CLOUDFUSION_VERSION . ' (Cloud Computing Toolkit; ' . CLOUDFUSION_URL . ') Build/' . CLOUDFUSION_BUILD);
 
 /**
- * Constant: DATE_AWS_RFC2616
+ * Constant: DATE_FORMAT_RFC2616
  * Define the RFC 2616-compliant date format
  */
-define('DATE_AWS_RFC2616', 'D, d M Y H:i:s \G\M\T');
+define('DATE_FORMAT_RFC2616', 'D, d M Y H:i:s \G\M\T');
 
 /**
- * Constant: DATE_AWS_ISO8601
+ * Constant: DATE_FORMAT_ISO8601
  * Define the ISO-8601-compliant date format
  */
-define('DATE_AWS_ISO8601', 'Y-m-d\TH:i:s\Z');
+define('DATE_FORMAT_ISO8601', 'Y-m-d\TH:i:s\Z');
 
 /**
- * Constant: DATE_AWS_MYSQL
+ * Constant: DATE_FORMAT_MYSQL
  * Define the MySQL-compliant date format
  */
-define('DATE_AWS_MYSQL', 'Y-m-d H:i:s');
+define('DATE_FORMAT_MYSQL', 'Y-m-d H:i:s');
 
 /**
  * Constant: HTTP_GET
@@ -114,20 +114,20 @@ define('HTTP_HEAD', 'HEAD');
 // EXCEPTIONS
 
 /**
- * Exception: TarzanCore_Exception
- * 	Default TarzanCore Exception.
+ * Exception: CloudCore_Exception
+ * 	Default CloudCore Exception.
  */
-class TarzanCore_Exception extends Exception {}
+class CloudCore_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
 // CLASS
 
 /**
- * Class: TarzanCore
- * 	Container for all shared methods. This is not intended to be instantiated directly, but is extended by the Amazon-specific classes.
+ * Class: CloudCore
+ * 	Container for all shared methods. This is not intended to be instantiated directly, but is extended by the service-specific classes.
  */
-class TarzanCore
+class CloudCore
 {
 	/**
 	 * Property: key
@@ -173,21 +173,21 @@ class TarzanCore
 
 	/**
 	 * Property: utilities_class
-	 * The default class to use for Utilities (defaults to <TarzanUtilities>).
+	 * The default class to use for Utilities (defaults to <CFUtilities>).
 	 */
-	var $utilities_class = 'TarzanUtilities';
+	var $utilities_class = 'CFUtilities';
 
 	/**
 	 * Property: request_class
 	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
 	 */
-	var $request_class = 'TarzanHTTPRequest';
+	var $request_class = 'RequestCore';
 
 	/**
 	 * Property: response_class
-	 * The default class to use for HTTP Responses (defaults to <TarzanHTTPResponse>).
+	 * The default class to use for HTTP Responses (defaults to <ResponseCore>).
 	 */
-	var $response_class = 'TarzanHTTPResponse';
+	var $response_class = 'ResponseCore';
 
 	/**
 	 * Property: adjust_offset
@@ -240,17 +240,26 @@ class TarzanCore
 	{
 		$path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 
-		if (stristr($class, 'amazon'))
+		if (strstr($class, 'Amazon'))
 		{
-			$path .= str_replace('amazon', '', strtolower($class)) . '.class.php';
+			$path .= str_replace('Amazon', '', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class, 'tarzan'))
+		elseif (strstr($class, 'CF'))
 		{
-			$path .= str_replace('tarzan', '_', strtolower($class)) . '.class.php';
+			$path .= str_replace('CF', '_', strtolower($class)) . '.class.php';
 		}
-		elseif (stristr($class, 'cache'))
+		elseif (strstr($class, 'Cache'))
 		{
-			$path .= '_' . strtolower($class) . '.class.php';
+			if (file_exists($ipath = 'lib' . DIRECTORY_SEPARATOR . 'CacheCore' . DIRECTORY_SEPARATOR . 'icachecore.interface.php'))
+			{
+				require_once($ipath);
+			}
+
+			$path .= 'lib' . DIRECTORY_SEPARATOR . 'CacheCore' . DIRECTORY_SEPARATOR . strtolower($class) . '.class.php';
+		}
+		elseif (strstr($class, 'RequestCore') || strstr($class, 'ResponseCore'))
+		{
+			$path .= 'lib' . DIRECTORY_SEPARATOR . 'RequestCore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
 		}
 		else
 		{
@@ -298,23 +307,23 @@ class TarzanCore
 		$this->assoc_id = null;
 
 		// Set the Account ID
-		if (defined('AWS_ACCOUNT_ID'))
-		{
-			$this->account_id = AWS_ACCOUNT_ID;
-		}
-		elseif ($account_id)
+		if ($account_id)
 		{
 			$this->account_id = $account_id;
 		}
+		elseif (defined('AWS_ACCOUNT_ID'))
+		{
+			$this->account_id = AWS_ACCOUNT_ID;
+		}
 
 		// Set the Associates ID
-		if (defined('AWS_ASSOC_ID'))
-		{
-			$this->assoc_id = AWS_ASSOC_ID;
-		}
-		elseif ($assoc_id)
+		if ($assoc_id)
 		{
 			$this->assoc_id = $assoc_id;
+		}
+		elseif (defined('AWS_ASSOC_ID'))
+		{
+			$this->assoc_id = AWS_ASSOC_ID;
 		}
 
 		// If both a key and secret key are passed in, use those.
@@ -324,7 +333,6 @@ class TarzanCore
 			$this->secret_key = $secret_key;
 			return true;
 		}
-
 		// If neither are passed in, look for the constants instead.
 		else if (defined('AWS_KEY') && defined('AWS_SECRET_KEY'))
 		{
@@ -336,7 +344,7 @@ class TarzanCore
 		// Otherwise set the values to blank and return false.
 		else
 		{
-			throw new TarzanCore_Exception('No valid credentials were used to authenticate with AWS.');
+			throw new CloudCore_Exception('No valid credentials were used to authenticate with AWS.');
 		}
 	}
 
@@ -439,7 +447,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_utilities_class.phps
 	 */
-	function set_utilities_class($class = 'TarzanUtilities')
+	function set_utilities_class($class = 'CFUtilities')
 	{
 		$this->utilities_class = $class;
 		$this->util = new $this->utilities_class();
@@ -461,7 +469,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_request_class.phps
 	 */
-	function set_request_class($class = 'TarzanHTTPRequest')
+	function set_request_class($class = 'RequestCore')
 	{
 		$this->request_class = $class;
 	}
@@ -482,7 +490,7 @@ class TarzanCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_response_class.phps
 	 */
-	function set_response_class($class = 'TarzanHTTPResponse')
+	function set_response_class($class = 'ResponseCore')
 	{
 		$this->response_class = $class;
 	}
@@ -505,7 +513,7 @@ class TarzanCore
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
 	 */
 	public function authenticate($action, $opt = null, $domain = null, $message = null)
 	{
@@ -516,7 +524,7 @@ class TarzanCore
 		$query['Action'] = $action;
 		$query['SignatureMethod'] = 'HmacSHA256';
 		$query['SignatureVersion'] = 2;
-		$query['Timestamp'] = gmdate(DATE_AWS_ISO8601, time() + $this->adjust_offset);
+		$query['Timestamp'] = gmdate(DATE_FORMAT_ISO8601, time() + $this->adjust_offset);
 		$query['Version'] = $this->api_version;
 
 		// Merge in any options that were passed in
@@ -612,7 +620,7 @@ class TarzanCore
 
 	/**
 	 * Method: cache_response()
-	 * 	Caches a TarzanHTTPResponse object using the preferred caching method.
+	 * 	Caches a ResponseCore object using the preferred caching method.
 	 * 
 	 * Access:
 	 * 	public
@@ -630,7 +638,7 @@ class TarzanCore
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
-	 * 	<TarzanHTTPResponse> object
+	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/cache_response.phps
@@ -819,6 +827,6 @@ class TarzanCore
 
 
 // Register the autoloader.
-spl_autoload_register(array('TarzanCore', 'autoloader'));
+spl_autoload_register(array('CloudCore', 'autoloader'));
 
 ?>

@@ -27,7 +27,7 @@ $bundle = $ec2->bundle_instance('1234567890', array(
  * http://docs.amazonwebservices.com/AmazonS3/latest/index.html?HTTPPOSTExamples.html
  */
 $policy = array(
-	'expiration' => gmdate(DATE_AWS_ISO8601, strtotime('+12 hours')), // Use some date magic.
+	'expiration' => gmdate(DATE_FORMAT_ISO8601, strtotime('+12 hours')), // Use some date magic.
 	'conditions' => array(
 		array('bucket' => 'bucket'), // Associative array
 		array('acl' => 'ec2-bundle-read'), // Associative array

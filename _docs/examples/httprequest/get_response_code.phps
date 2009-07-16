@@ -2,9 +2,9 @@
 require_once('tarzan.class.php');
 
 /**
- * Instantiate a new TarzanHTTPRequest object
+ * Instantiate a new RequestCore object
  */
-$request = new TarzanHTTPRequest('http://example.com/endpoint');
+$request = new RequestCore('http://example.com/endpoint');
 $request->sendRequest();
 
 $status = $request->getResponseCode();

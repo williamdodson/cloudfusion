@@ -42,7 +42,7 @@ $list = $s3->cache_response('list_buckets', './cache', 10);
  * 
  * We've previously collected an array of cURL handles to fire in parallel in $handles.
  */
-$http = new TarzanHTTPRequest(null);
+$http = new RequestCore(null);
 $multi = $s3->cache_response(array($http, 'sendMultiRequest'), './cache', 3600, array($handles));
 
 ?>

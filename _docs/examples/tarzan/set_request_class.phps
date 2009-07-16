@@ -9,7 +9,7 @@ $sqs = new AmazonSQS();
 
 /**
  * Tell Tarzan to use a custom class for requests. The custom class should 
- * override/extend the TarzanHTTPRequest class.
+ * override/extend the RequestCore class.
  */
 $sqs->set_request_class('CustomHTTPRequest');
 
@@ -17,7 +17,7 @@ $sqs->set_request_class('CustomHTTPRequest');
 /**
  * Make sure you define your custom class.
  */
-class CustomHTTPRequest extends TarzanHTTPRequest
+class CustomHTTPRequest extends RequestCore
 {
 	// Add new methods or override existing ones.
 }

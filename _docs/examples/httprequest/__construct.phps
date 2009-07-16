@@ -2,25 +2,25 @@
 require_once('tarzan.class.php');
 
 /**
- * Instantiate a new TarzanHTTPRequest object.
+ * Instantiate a new RequestCore object.
  */
-$request = new TarzanHTTPRequest('http://example.com/endpoint');
+$request = new RequestCore('http://example.com/endpoint');
 
 
 /**
- * Instantiate a new TarzanHTTPRequest object using proxy settings. Make sure you use the 'proxy://' scheme.
+ * Instantiate a new RequestCore object using proxy settings. Make sure you use the 'proxy://' scheme.
  */
-$request = new TarzanHTTPRequest('http://example.com/endpoint', 'proxy://user:pass@hostname:port');
+$request = new RequestCore('http://example.com/endpoint', 'proxy://user:pass@hostname:port');
 
 
 /**
- * Instantiate a new TarzanHTTPRequest object, but use a custom class for utilities.
+ * Instantiate a new RequestCore object, but use a custom class for utilities.
  */
-$request = new TarzanHTTPRequest('http://example.com/endpoint', null, array(
+$request = new RequestCore('http://example.com/endpoint', null, array(
 	'utilities' => 'CustomUtilities'
 ));
 
-class CustomUtilities extends TarzanUtilities
+class CustomUtilities extends CFUtilities
 {
 	public function new_method()
 	{

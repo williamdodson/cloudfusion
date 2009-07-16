@@ -7,13 +7,13 @@
  * 	2008.10.04
  * 
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 Foleeo, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
  * 
  * See Also:
- * 	Tarzan - http://tarzan-aws.com
+ * 	CloudFusion - http://getcloudfusion.com
  */
 
 
@@ -131,7 +131,7 @@ class S3Browser
 		}
 
 		// Execute (and cache) a MultiCurl request for ACL information for all objects in the bucket.
-		$http = new TarzanHTTPRequest(null);
+		$http = new RequestCore(null);
 		$object_acl = $this->s3->cache_response(array($http, 'sendMultiRequest'), $this->options['cache'], $this->options['cache_duration'], array($handles));
 
 		// Chop up the template and prepare for re-use.
