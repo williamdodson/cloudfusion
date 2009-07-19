@@ -1,12 +1,12 @@
 <?php
-require_once('tarzan.class.php');
+require_once('cloudfusion.class.php');
 
 /**
  * Instantiate a new RequestCore object, and set authentication credentials to use for login.
  */
 $request = new RequestCore('http://example.com/endpoint');
-$request->setCredentials('username', 'password');
-$response = $request->sendRequest();
+$request->set_credentials('username', 'password');
+$response = $request->send_request();
 
 print_r($response);
 

@@ -50,7 +50,7 @@ class SQS_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonSQS object using the settings from the config.inc.php file.
  * $sqs = new AmazonSQS();
@@ -79,7 +79,7 @@ class AmazonSQS extends CloudCore
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/__construct.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -119,7 +119,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryCreateQueue.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/create_queue.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/create_queue.phps
 	 * 	Related - <delete_queue()>, <list_queues()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
@@ -146,7 +146,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/delete_queue.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/delete_queue.phps
 	 * 	Related - <create_queue()>, <list_queues()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function delete_queue($queue_url, $returnCurlHandle = null)
@@ -172,7 +172,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryListQueues.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/list_queues.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/list_queues.phps
 	 * 	Related - <create_queue()>, <delete_queue()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function list_queues($queue_name_prefix = null, $returnCurlHandle = null)
@@ -202,7 +202,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/get_queue_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/get_queue_attributes.phps
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <set_queue_attributes()>
 	 */
 	public function get_queue_attributes($queue_url, $returnCurlHandle = null)
@@ -233,7 +233,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/set_queue_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/set_queue_attributes.phps
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <get_queue_attributes()>
 	 */
 	public function set_queue_attributes($queue_url, $opt = null)
@@ -270,7 +270,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/send_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/send_message.phps
 	 * 	Related - <receive_message()>, <delete_message()>
 	 */
 	public function send_message($queue_url, $message, $returnCurlHandle = null)
@@ -301,7 +301,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryReceiveMessage.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/receive_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/receive_message.phps
 	 * 	Related - <send_message()>, <delete_message()>
 	 */
 	public function receive_message($queue_url, $opt = null)
@@ -327,7 +327,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteMessage.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/delete_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/delete_message.phps
 	 * 	Related - <send_message()>, <receive_message()>
 	 */
 	public function delete_message($queue_url, $receipt_handle, $returnCurlHandle = null)
@@ -357,7 +357,7 @@ class AmazonSQS extends CloudCore
  	 * 
 	 * See Also:
 	 * 	Related - <get_queue_attributes()>
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqs/get_queue_size.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqs/get_queue_size.phps
 	 */
 	public function get_queue_size($queue_url)
 	{

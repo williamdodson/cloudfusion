@@ -50,7 +50,7 @@ class SQSQueue_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonSQS object using the settings from the config.inc.php file.
  * $sqs = new AmazonSQSQueue();
@@ -86,7 +86,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/__construct.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/__construct.phps
 	 */
 	public function __construct($queue = null, $key = null, $secret_key = null)
 	{
@@ -115,7 +115,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/create_queue.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/create_queue.phps
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
 	{
@@ -143,7 +143,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_queue.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/delete_queue.phps
 	 */
 	public function delete_queue($returnCurlHandle = null)
 	{
@@ -169,7 +169,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/get_queue_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/get_queue_attributes.phps
 	 */
 	public function get_queue_attributes($returnCurlHandle = null)
 	{
@@ -195,7 +195,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/set_queue_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/set_queue_attributes.phps
 	 */
 	public function set_queue_attributes($opt = null)
 	{
@@ -226,7 +226,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/send_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/send_message.phps
 	 */
 	public function send_message($message, $returnCurlHandle = null)
 	{
@@ -252,7 +252,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/receive_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/receive_message.phps
 	 */
 	public function receive_message($opt = null)
 	{
@@ -279,7 +279,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/delete_message.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/delete_message.phps
 	 */
 	public function delete_message($receipt_handle, $returnCurlHandle = null)
 	{
@@ -306,7 +306,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	_integer_ The Approximate number of messages in the queue.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sqsqueue/get_queue_size.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/get_queue_size.phps
 	 */
 	public function get_queue_size()
 	{

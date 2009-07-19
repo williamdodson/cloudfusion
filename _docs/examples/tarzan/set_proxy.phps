@@ -1,5 +1,5 @@
 <?php
-require_once('tarzan.class.php');
+require_once('cloudfusion.class.php');
 
 /**
  * Instantiate ANY Amazon class. In this example, we'll use AmazonSQS.

@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2009.04.29
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -62,7 +62,7 @@ class EC2_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonEC2 object using the settings from the config.inc.php file.
  * $s3 = new AmazonEC2();
@@ -99,7 +99,7 @@ class AmazonEC2 extends CloudCore
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/__construct.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null, $account_id = null)
 	{
@@ -142,7 +142,7 @@ class AmazonEC2 extends CloudCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/set_locale.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/set_locale.phps
 	 */
 	public function set_locale($locale)
 	{
@@ -172,7 +172,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAvailabilityZones.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/describe_availability_zones.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/describe_availability_zones.phps
 	 */
 	public function describe_availability_zones($opt = null)
 	{
@@ -200,7 +200,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AllocateAddress.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <associate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
 	public function allocate_address($returnCurlHandle = null)
@@ -230,7 +230,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-AssociateAddress.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <describe_addresses()>, <disassociate_address()>, <release_address()>
 	 */
 	public function associate_address($instance_id, $public_ip, $returnCurlHandle = null)
@@ -263,7 +263,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeAddresses.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <disassociate_address()>, <release_address()>
 	 */
 	public function describe_addresses($opt = null)
@@ -291,7 +291,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DisassociateAddress.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <release_address()>
 	 */
 	public function disassociate_address($public_ip, $returnCurlHandle = null)
@@ -323,7 +323,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-ReleaseAddress.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <allocate_address()>, <associate_address()>, <describe_addresses()>, <disassociate_address()>
 	 */
 	public function release_address($public_ip, $returnCurlHandle = null)
@@ -949,7 +949,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-RunInstances.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <terminate_instances()>
 	 */
 	public function run_instances($image_id, $min_count, $max_count, $opt = null)
@@ -983,7 +983,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-TerminateInstances.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/elastic_ip.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/elastic_ip.phps
 	 * 	Related - <confirm_product_instance()>, <describe_instances()>, <run_instances()>
 	 */
 	public function terminate_instances($opt = null)
@@ -1281,7 +1281,7 @@ class AmazonEC2 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-BundleInstance.html
 	 * 	Upload Policy - http://docs.amazonwebservices.com/AmazonS3/latest/HTTPPOSTExamples.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
 	public function bundle_instance($instance_id, $opt = null)
@@ -1355,7 +1355,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-CancelBundleTask.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
 	public function cancel_bundle_task($bundle_id, $returnCurlHandle = null)
@@ -1386,7 +1386,7 @@ class AmazonEC2 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSEC2/2008-12-01/DeveloperGuide/ApiReference-Query-DescribeBundleTasks.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/ec2/bundle_windows.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/bundle_windows.phps
 	 * 	Related - <bundle_instance()>, <cancel_bundle_task()>, <describe_bundle_tasks()>
 	 */
 	public function describe_bundle_tasks($opt = null)

@@ -1,13 +1,13 @@
 <?php
-require_once('tarzan.class.php');
+require_once('cloudfusion.class.php');
 
 /**
  * Instantiate a new RequestCore object
  */
 $request = new RequestCore('http://example.com/endpoint');
-$request->sendRequest();
+$request->send_request();
 
-$status = $request->getResponseCode();
+$status = $request->get_response_code();
 
 if ($status == 200)
 {

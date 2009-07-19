@@ -4,7 +4,7 @@
  * 	Utilities for connecting to, and working with, AWS.
  *
  * Version:
- * 	2008.12.18
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -42,27 +42,6 @@ class CFUtilities
 	}
 
 	/**
-	 * Method: ready()
-	 * 	Check if a value (such as a GET or POST parameter or an array value) has a real, non-empty value.
-	 * 
-	 * Access:
-	 * 	public
-	 * 
-	 * Parameters:
-	 * 	var - _array_ (Required) The value to check.
-	 * 
-	 * Returns:
-	 * 	_boolean_ Whether this has a real value.
- 	 * 
-	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/ready.phps
-	 */
-	public function ready($var)
-	{
-		return (isset($var) && !empty($var)) ? true : false;
-	}
-
-	/**
 	 * Method: hex_to_base64()
 	 * 	Convert a HEX value to Base64.
 	 * 
@@ -76,7 +55,7 @@ class CFUtilities
 	 * 	_string_ Base64-encoded string.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/hex_to_base64.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/hex_to_base64.phps
 	 */
 	public function hex_to_base64($str)
 	{
@@ -104,18 +83,11 @@ class CFUtilities
 	 * 	_string_ URL-friendly query string.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/to_query_string.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_query_string.phps
 	 */
 	public function to_query_string($array)
 	{
-		$t = array();
-
-		foreach ($array as $k => $v)
-		{
-			$t[] = rawurlencode($k) . '=' . rawurlencode($v);
-		}
-
-		return implode('&', $t);
+		return http_build_query($array);
 	}
 
 	/**
@@ -132,7 +104,7 @@ class CFUtilities
 	 * 	_string_ URL-friendly sign-able string.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/to_signable_string.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_signable_string.phps
 	 */
 	public function to_signable_string($array)
 	{
@@ -179,7 +151,7 @@ class CFUtilities
 	 * 	_array_ Associative array of keys and values.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/query_to_array.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/query_to_array.phps
 	 */
 	public function query_to_array($qs)
 	{
@@ -224,7 +196,7 @@ class CFUtilities
 	 * 
 	 * See Also:
 	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/size_readable.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/size_readable.phps
 	 */
 	public function size_readable($size, $unit = null, $retstring = null)
 	{
@@ -271,7 +243,7 @@ class CFUtilities
 	 * 	_string_ The formatted time.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/time_hms.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/time_hms.phps
 	 */
 	public function time_hms($seconds)
 	{
@@ -308,7 +280,7 @@ class CFUtilities
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/try_these.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/try_these.phps
 	 */
 	public function try_these($attrs, $base = null, $default = null)
 	{
@@ -353,7 +325,7 @@ class CFUtilities
 	 * 	_string_ A JSON string.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/utilities/json_encode.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
 	 */
 	public function json_encode($obj)
 	{

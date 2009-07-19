@@ -22,10 +22,10 @@ if ($data = $cache->read())
 	if ($cache->is_expired())
 	{
 		// Let's re-fetch fresh data
-		if ($data = $request->sendRequest())
+		if ($data = $request->send_request())
 		{
 			// ...and update the existing cache with it.
-			$cache->update($request->getResponseBody());
+			$cache->update($request->get_response_body());
 		}
 
 		// Re-fetch was unsuccessful for whatever reason
@@ -41,10 +41,10 @@ if ($data = $cache->read())
 else
 {
 	// Let's fetch fresh data
-	if ($data = $request->sendRequest())
+	if ($data = $request->send_request())
 	{
 		// ...and create a new cache.
-		$cache->create($request->getResponseBody());
+		$cache->create($request->get_response_body());
 	}
 }
 

@@ -4,7 +4,7 @@
  * 	Amazon CloudFront CDN Service (http://aws.amazon.com/cloudfront)
  *
  * Version:
- * 	2009.04.29
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -50,7 +50,7 @@ class CloudFront_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonCloudFront object using the settings from the config.inc.php file.
  * $cdn = new AmazonCloudFront();
@@ -86,7 +86,7 @@ class AmazonCloudFront extends CloudCore
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/__construct.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -159,40 +159,40 @@ class AmazonCloudFront extends CloudCore
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
 
 		// Generate required headers.
-		$request->setMethod($method);
+		$request->set_method($method);
 		$canonical_date = gmdate(DATE_FORMAT_RFC2616);
-		$request->addHeader('x-amz-date', $canonical_date);
+		$request->add_header('x-amz-date', $canonical_date);
 		$signature = $this->util->hex_to_base64(hash_hmac('sha1', $canonical_date, $this->secret_key));
-		$request->addHeader('Authorization', 'AWS ' . $this->key . ':' . $signature);
+		$request->add_header('Authorization', 'AWS ' . $this->key . ':' . $signature);
 
 		// Add configuration XML if we have it.
 		if ($xml)
 		{
-			$request->addHeader('Content-Length', strlen($xml));
-			$request->addHeader('Content-Type', 'text/plain');
-			$request->setBody($xml);
+			$request->add_header('Content-Length', strlen($xml));
+			$request->add_header('Content-Type', 'text/plain');
+			$request->set_body($xml);
 		}
 
 		// Set If-Match: ETag header if we have one.
 		if ($etag)
 		{
-			$request->addHeader('If-Match', $etag);
+			$request->add_header('If-Match', $etag);
 		}
 
 		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
 		if (isset($opt['returnCurlHandle']))
 		{
-			return $request->prepRequest();
+			return $request->prep_request();
 		}
 
 		// Send!
-		$request->sendRequest();
+		$request->send_request();
 
 		// Prepare the response.
-		$headers = $request->getResponseHeader();
+		$headers = $request->get_response_header();
 		$headers['x-tarzan-requesturl'] = $request_url;
 		if ($xml) $headers['x-tarzan-body'] = $xml;
-		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
+		$data = new $this->response_class($headers, $request->get_response_body(), $request->get_response_code());
 
 		// Return!
 		return $data;
@@ -242,7 +242,7 @@ class AmazonCloudFront extends CloudCore
 	 * 	String DistributionConfig XML document.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/generate_config_xml.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/generate_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function generate_config_xml($origin, $caller_reference, $opt = null)
@@ -318,7 +318,7 @@ class AmazonCloudFront extends CloudCore
 	 * 	String DistributionConfig XML document.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/update_config_xml.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/update_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function update_config_xml($xml, $opt = null)
@@ -403,7 +403,7 @@ class AmazonCloudFront extends CloudCore
 	 * 	String DistributionConfig XML document.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/remove_cname.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/remove_cname.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function remove_cname($xml, $cname)
@@ -483,7 +483,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/CreateDistribution.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/create_distribution.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/create_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function create_distribution($origin, $caller_reference, $opt = null)
@@ -520,7 +520,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/ListDistributions.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/list_distributions.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/list_distributions.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function list_distributions($opt = null)
@@ -547,7 +547,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetDistribution.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/get_distribution_info.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_info.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function get_distribution_info($distribution_id, $opt = null)
@@ -575,7 +575,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/DeleteDistribution.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/delete_distribution.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/delete_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function delete_distribution($distribution_id, $etag, $opt = null)
@@ -606,7 +606,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetConfig.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/get_distribution_config.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */
 	public function get_distribution_config($distribution_id, $opt = null)
@@ -635,7 +635,7 @@ class AmazonCloudFront extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/PutConfig.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/cloudfront/set_distribution_config.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/set_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */
 	public function set_distribution_config($distribution_id, $xml, $etag, $opt = null)

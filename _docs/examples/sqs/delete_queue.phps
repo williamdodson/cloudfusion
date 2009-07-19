@@ -1,5 +1,5 @@
 <?php
-require_once('tarzan.class.php');
+require_once('cloudfusion.class.php');
 
 /**
  * Instantiate a new AmazonSQS object using the settings from the config.inc.php file.

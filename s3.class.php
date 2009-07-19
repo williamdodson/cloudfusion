@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2009.04.29
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -140,7 +140,7 @@ class S3_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
  * $s3 = new AmazonS3();
@@ -251,7 +251,7 @@ class AmazonS3 extends CloudCore
 			$bucket = strtolower($bucket);
 			$acl = null;
 			$body = null;
-			$contentType = null;
+			$contentType = 'application/x-www-form-urlencoded';
 			$delimiter = null;
 			$filename = null;
 			$headers = null;
@@ -369,29 +369,25 @@ class AmazonS3 extends CloudCore
 			// Do we have a verb?
 			if (isset($verb) && !empty($verb))
 			{
-				$req->setMethod($verb);
+				$req->set_method($verb);
 			}
 
 			// Do we have a contentType?
 			if (isset($contentType) && !empty($contentType))
 			{
-				$req->addHeader('Content-Type', $contentType);
-			}
-			else if ($verb == HTTP_PUT) // Set a default value for HTTP_PUT
-			{
-				$contentType = 'application/x-www-form-urlencoded';
+				$req->add_header('Content-Type', $contentType);
 			}
 
 			// Do we have a date?
 			if (isset($httpDate) && !empty($httpDate))
 			{
-				$req->addHeader("Date", $httpDate);
+				$req->add_header("Date", $httpDate);
 			}
 
 			// Do we have ACL settings? (Optional in signed string)
 			if (isset($acl) && !empty($acl))
 			{
-				$req->addHeader("x-amz-acl", $acl);
+				$req->add_header("x-amz-acl", $acl);
 				$acl = 'x-amz-acl:' . $acl . "\n";
 			}
 
@@ -400,7 +396,7 @@ class AmazonS3 extends CloudCore
 			{
 				// Copy data
 				$acl .= 'x-amz-copy-source:/' . $sourceBucket . '/' . $sourceObject . "\n";
-				$req->addHeader('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
+				$req->add_header('x-amz-copy-source', '/' . $sourceBucket . '/' . $sourceObject);
 
 				// Add any standard HTTP headers.
 				if ($headers)
@@ -409,7 +405,7 @@ class AmazonS3 extends CloudCore
 
 					foreach ($headers as $k => $v)
 					{
-						$req->addHeader($k, $v);
+						$req->add_header($k, $v);
 					}
 				}
 
@@ -420,33 +416,33 @@ class AmazonS3 extends CloudCore
 
 					foreach ($meta as $k => $v)
 					{
-						$req->addHeader('x-amz-meta-' . strtolower($k), $v);
+						$req->add_header('x-amz-meta-' . strtolower($k), $v);
 						$acl .= 'x-amz-meta-' . strtolower($k) . ':' . $v . "\n";
 					}
 				}
 
 				// Metadata directive
 				$acl .= 'x-amz-metadata-directive:' . $metadataDirective . "\n";
-				$req->addHeader('x-amz-metadata-directive', $metadataDirective);
+				$req->add_header('x-amz-metadata-directive', $metadataDirective);
 			}
 
 			// Set DevPay tokens if we have them.
 			if ($this->devpay_tokens)
 			{
-				$request->addHeader('x-amz-security-token', $this->devpay_tokens);
+				$request->add_header('x-amz-security-token', $this->devpay_tokens);
 			}
 
 			// Are we checking for changes?
 			if ($lastmodified && $etag)
 			{
-				$req->addHeader('If-Modified-Since', $lastmodified);
-				$req->addHeader('If-None-Match', $etag);
+				$req->add_header('If-Modified-Since', $lastmodified);
+				$req->add_header('If-None-Match', $etag);
 			}
 
 			// Partial content range
 			if ($range)
 			{
-				$req->addHeader('Range', 'bytes=' . $range);
+				$req->add_header('Range', 'bytes=' . $range);
 			}
 
 			// Add a body if we're creating or setting
@@ -456,9 +452,9 @@ class AmazonS3 extends CloudCore
 			{
 				if (isset($body) && !empty($body))
 				{
-					$req->setBody($body);
+					$req->set_body($body);
 					$md5 = $this->util->hex_to_base64(md5($body));
-					$req->addHeader('Content-MD5', $md5);
+					$req->add_header('Content-MD5', $md5);
 				}
 
 				// Add any standard HTTP headers.
@@ -468,7 +464,7 @@ class AmazonS3 extends CloudCore
 
 					foreach ($headers as $k => $v)
 					{
-						$req->addHeader($k, $v);
+						$req->add_header($k, $v);
 					}
 				}
 
@@ -479,7 +475,7 @@ class AmazonS3 extends CloudCore
 
 					foreach ($meta as $k => $v)
 					{
-						$req->addHeader('x-amz-meta-' . strtolower($k), $v);
+						$req->add_header('x-amz-meta-' . strtolower($k), $v);
 						$hmeta .= 'x-amz-meta-' . strtolower($k) . ':' . $v . "\n";
 					}
 				}
@@ -509,12 +505,12 @@ class AmazonS3 extends CloudCore
 			$signature = $this->util->hex_to_base64(hash_hmac('sha1', $stringToSign, $this->secret_key));
 
 			// Pass the developer key and signature
-			$req->addHeader("Authorization", "AWS " . $this->key . ":" . $signature);
+			$req->add_header("Authorization", "AWS " . $this->key . ":" . $signature);
 
 			// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
 			if ($returnCurlHandle)
 			{
-				return $req->prepRequest();
+				return $req->prep_request();
 			}
 
 			// Are we getting a Query String Auth?
@@ -530,19 +526,19 @@ class AmazonS3 extends CloudCore
 			}
 
 			// Send!
-			$req->sendRequest();
+			$req->send_request();
 
 			// Prepare the response.
-			$headers = $req->getResponseHeader();
+			$headers = $req->get_response_header();
 			$headers['x-tarzan-redirects'] = $redirects;
 			$headers['x-tarzan-requesturl'] = $this->request_url;
 			$headers['x-tarzan-stringtosign'] = $stringToSign;
 			$headers['x-tarzan-requestheaders'] = $req->request_headers;
-			$data = new $this->response_class($headers, $req->getResponseBody(), $req->getResponseCode());
+			$data = new $this->response_class($headers, new SimpleXMLElement($req->get_response_body()), $req->get_response_code());
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/2006-03-01/Redirects.html
-			if ((int) $req->getResponseCode() == 307) // Temporary redirect to new endpoint.
+			if ((int) $req->get_response_code() == 307) // Temporary redirect to new endpoint.
 			{
 				$redirects++;
 				$data = $this->authenticate($bucket, 
@@ -571,7 +567,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	Virtual Hosting of Buckets - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/VirtualHosting.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/set_vhost.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_vhost.phps
 	 */
 	public function set_vhost($vhost)
 	{
@@ -600,7 +596,7 @@ class AmazonS3 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * 	Using Buckets - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/create_bucket.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/create_bucket.phps
 	 * 	Related - <get_bucket()>, <head_bucket()>, <delete_bucket()>
 	 */
 	public function create_bucket($bucket, $locale = null, $returnCurlHandle = null)
@@ -660,7 +656,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_bucket_locale.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_locale.phps
 	 */
 	public function get_bucket_locale($bucket, $returnCurlHandle = null)
 	{
@@ -690,7 +686,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/head_bucket.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_bucket.phps
 	 * 	Related - <create_bucket()>, <get_bucket()>, <delete_bucket()>
 	 */
 	public function head_bucket($bucket, $returnCurlHandle = null)
@@ -719,7 +715,7 @@ class AmazonS3 extends CloudCore
 	 * 	_boolean_ Whether the bucket exists or not.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/if_bucket_exists.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_bucket_exists.phps
 	 */
 	public function if_bucket_exists($bucket)
 	{
@@ -744,7 +740,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/delete_bucket.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_bucket.phps
 	 * 	Related - <create_bucket()>, <get_bucket()>, <head_bucket()>
 	 */
 	public function delete_bucket($bucket, $force = false, $returnCurlHandle = null)
@@ -790,7 +786,7 @@ class AmazonS3 extends CloudCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_bucket.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_bucket.phps
 	 * 	Related - <copy_object()>, <rename_bucket()>, <list_buckets()>
 	 */
 	public function copy_bucket($source_bucket, $dest_bucket, $acl = S3_ACL_PRIVATE)
@@ -824,7 +820,7 @@ class AmazonS3 extends CloudCore
 			}
 
 			$request = new $this->request_class(null);
-			return $request->sendMultiRequest($handles);
+			return $request->send_multi_request($handles);
 		}
 
 		return false;
@@ -845,7 +841,7 @@ class AmazonS3 extends CloudCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/rename_bucket.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_bucket.phps
 	 * 	Related - <rename_object()>, <copy_bucket()>, <list_buckets()>
 	 */
 	public function rename_bucket($source_bucket, $dest_bucket)
@@ -870,7 +866,7 @@ class AmazonS3 extends CloudCore
 	 * 	_integer_ The number of files in the bucket.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_bucket_size.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_size.phps
 	 * 	Related - <get_bucket_filesize()>
 	 */
 	public function get_bucket_size($bucket)
@@ -893,7 +889,7 @@ class AmazonS3 extends CloudCore
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_bucket_filesize.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_filesize.phps
 	 * 	Related - <get_bucket_size()>, <get_object_filesize()>
 	 */
 	public function get_bucket_filesize($bucket, $friendly_format = false)
@@ -929,7 +925,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTServiceGET.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/list_buckets.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/list_buckets.phps
 	 * 	Related - <get_bucket_list()>
 	 */
 	public function list_buckets($returnCurlHandle = null)
@@ -958,7 +954,7 @@ class AmazonS3 extends CloudCore
 	 * 	_array_ The list of matching bucket names.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_bucket_list.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_list.phps
 	 * 	Related - <list_buckets()>
 	 */
 	public function get_bucket_list($pcre = null)
@@ -1011,7 +1007,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_bucket_acl.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_acl.phps
 	 * 	Related - <set_object_acl()>, <set_bucket_acl()>, <get_object_acl()>
 	 */
 	public function get_bucket_acl($bucket, $returnCurlHandle = null)
@@ -1043,7 +1039,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/set_bucket_acl.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_bucket_acl.phps
 	 * 	Related - <set_object_acl()>, <get_bucket_acl()>, <get_object_acl()>
 	 */
 	public function set_bucket_acl($bucket, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -1097,7 +1093,7 @@ class AmazonS3 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * 	ACL Policy - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/create_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/create_object.phps
 	 * 	Related - <get_object()>, <head_object()>, <delete_object()>
 	 */
 	public function create_object($bucket, $opt = null)
@@ -1135,7 +1131,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object.phps
 	 * 	Related - <create_object()>, <head_object()>, <delete_object()>
 	 */
 	public function get_object($bucket, $filename, $opt = null)
@@ -1168,7 +1164,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/head_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_object.phps
 	 * 	Related - <create_object()>, <get_object()>, <delete_object()>, <if_object_exists()>
 	 */
 	public function head_object($bucket, $filename, $returnCurlHandle = null)
@@ -1199,7 +1195,7 @@ class AmazonS3 extends CloudCore
 	 * 	_boolean_ Whether the object exists or not.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/if_object_exists.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_object_exists.phps
 	 * 	Related - <head_object()>
 	 */
 	public function if_object_exists($bucket, $filename)
@@ -1225,7 +1221,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/delete_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_object.phps
 	 * 	Related - <create_object()>, <get_object()>, <head_object()>, <delete_all_objects()>
 	 */
 	public function delete_object($bucket, $filename, $returnCurlHandle = null)
@@ -1256,7 +1252,7 @@ class AmazonS3 extends CloudCore
 	 * 	_boolean_ Determines the success of deleting all files.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/delete_all_objects.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_all_objects.phps
 	 * 	Related - <delete_object()>
 	 */
 	public function delete_all_objects($bucket, $pcre = S3_PCRE_ALL)
@@ -1277,7 +1273,7 @@ class AmazonS3 extends CloudCore
 			}
 
 			$request = new $this->request_class(null);
-			return $request->sendMultiRequest($handles);
+			return $request->send_multi_request($handles);
 		}
 
 		return false;
@@ -1307,7 +1303,7 @@ class AmazonS3 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketGET.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/list_objects.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/list_objects.phps
 	 * 	Related - <get_bucket()>, <get_object_list()>
 	 */
 	public function list_objects($bucket, $opt = null)
@@ -1338,7 +1334,7 @@ class AmazonS3 extends CloudCore
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_object_filesize.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_filesize.phps
 	 * 	Related - <get_bucket_filesize()>
 	 */
 	public function get_object_filesize($bucket, $filename, $friendly_format = false)
@@ -1379,7 +1375,7 @@ class AmazonS3 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/gsg/ListKeys.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_object_list.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_list.phps
 	 * 	Related - <get_bucket_list()>, <list_objects()>
 	 */
 	public function get_object_list($bucket, $opt = null)
@@ -1451,7 +1447,7 @@ class AmazonS3 extends CloudCore
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingCopyingObjects.html
 	 * 	PUT Request Headers - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html#RESTObjectPUTRequestHeaders
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_object.phps
 	 * 	Related - <copy_bucket()>, <duplicate_object()>, <move_object()>, <rename_object()>
 	 */
 	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
@@ -1504,7 +1500,7 @@ class AmazonS3 extends CloudCore
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingCopyingObjects.html
 	 * 	PUT Request Headers - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html#RESTObjectPUTRequestHeaders
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/copy_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_object.phps
 	 * 	Related - <copy_bucket()>, <duplicate_object()>, <move_object()>, <rename_object()>
 	 */
 	public function update_object($bucket, $filename, $opt)
@@ -1542,7 +1538,7 @@ class AmazonS3 extends CloudCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/duplicate_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/duplicate_object.phps
 	 * 	Related - <copy_object()>, <move_object()>, <rename_object()>
 	 */
 	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1568,7 +1564,7 @@ class AmazonS3 extends CloudCore
 	 * 	_array_ <ResponseCore> objects for the copy and the delete.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/move_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/move_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <rename_object()>
 	 */
 	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1596,7 +1592,7 @@ class AmazonS3 extends CloudCore
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/rename_object.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <move_object()>
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1621,7 +1617,7 @@ class AmazonS3 extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_object_acl.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_acl.phps
 	 * 	Related - <set_object_acl()>, <set_bucket_acl()>, <get_bucket_acl()>
 	 */
 	public function get_object_acl($bucket, $filename, $returnCurlHandle = null)
@@ -1655,7 +1651,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/set_object_acl.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_object_acl.phps
 	 * 	Related - <set_bucket_acl()>, <get_bucket_acl()>, <get_object_acl()>
 	 */
 	public function set_object_acl($bucket, $filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -1699,7 +1695,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ServerLogs.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function get_logs($bucket)
@@ -1732,7 +1728,7 @@ class AmazonS3 extends CloudCore
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
 	 * 	Permissions - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html#S3_ACLs_Permissions
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function enable_logging($bucket, $target_bucket, $target_prefix, $users = null)
@@ -1781,7 +1777,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/logging.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function disable_logging($bucket)
@@ -1821,7 +1817,7 @@ class AmazonS3 extends CloudCore
 	 * 	_string_ The S3 URL for the uploaded file. Returns null if unsuccessful.
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/store_remote_file.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/store_remote_file.phps
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
@@ -1844,14 +1840,14 @@ class AmazonS3 extends CloudCore
 		{
 			// Fetch the file
 			$file = new $this->request_class($remote_file);
-			$file->sendRequest();
+			$file->send_request();
 
 			// Store it in S3
 			unset($object);
 			$object = $this->create_object($bucket, array(
 				'filename' => $filename,
-				'body' => $file->getResponseBody(),
-				'contentType' => $file->getResponseHeader('content-type'),
+				'body' => $file->get_response_body(),
+				'contentType' => $file->get_response_header('content-type'),
 				'acl' => $acl
 			));
 		}
@@ -1895,7 +1891,7 @@ class AmazonS3 extends CloudCore
 	 * 	<ResponseCore> object
 	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/change_content_type.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/change_content_type.phps
 	 */
 	public function change_content_type($bucket, $filename, $contentType, $returnCurlHandle = null)
 	{
@@ -1928,7 +1924,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	Query String Authentication - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_QSAuth.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_object_url.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_url.phps
 	 * 	Related - <get_torrent_url()>
 	 */
 	public function get_object_url($bucket, $filename, $qsa = 0, $torrent = false)
@@ -1988,7 +1984,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3TorrentRetrieve.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/get_torrent_url.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_torrent_url.phps
 	 * 	Related - <get_object_url()>
 	 */
 	public function get_torrent_url($bucket, $filename, $qsa = 0)
@@ -2021,7 +2017,7 @@ class AmazonS3 extends CloudCore
 	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/s3/generate_access_policy.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/generate_access_policy.phps
 	 */
 	public function generate_access_policy($canonical_id, $canonical_name, $users)
 	{

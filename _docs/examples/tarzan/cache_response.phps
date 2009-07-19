@@ -1,5 +1,5 @@
 <?php
-require_once('tarzan.class.php');
+require_once('cloudfusion.class.php');
 
 /**
  * Instantiate ANY Amazon class. In this example, we'll use AmazonS3.
@@ -43,6 +43,6 @@ $list = $s3->cache_response('list_buckets', './cache', 10);
  * We've previously collected an array of cURL handles to fire in parallel in $handles.
  */
 $http = new RequestCore(null);
-$multi = $s3->cache_response(array($http, 'sendMultiRequest'), './cache', 3600, array($handles));
+$multi = $s3->cache_response(array($http, 'send_multi_request'), './cache', 3600, array($handles));
 
 ?>

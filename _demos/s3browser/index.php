@@ -6,7 +6,7 @@ $time_start = microtime(true);
 error_reporting(E_ALL);
 
 // Load the libraries we need.
-require_once('../../tarzan.class.php');
+require_once('../../cloudfusion.class.php');
 require_once('./php/_s3browser.php');
 
 // Instantiate a new AmazonS3 object.

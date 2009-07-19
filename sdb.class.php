@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2008.12.18
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -50,7 +50,7 @@ class SDB_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonSDB object using the settings from the config.inc.php file.
  * $s3 = new AmazonSDB();
@@ -79,7 +79,7 @@ class AmazonSDB extends CloudCore
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/__construct.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -119,7 +119,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_CreateDomain.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/create_domain.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/create_domain.phps
  	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function create_domain($domain_name, $returnCurlHandle = null)
@@ -151,7 +151,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_ListDomains.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/list_domains.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/list_domains.phps
  	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function list_domains($opt = null)
@@ -177,7 +177,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteDomain.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/delete_domain.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/delete_domain.phps
  	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function delete_domain($domain_name, $returnCurlHandle = null)
@@ -205,7 +205,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DomainMetadata.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/domain_metadata.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/domain_metadata.phps
  	 * 	Related - <create_domain()>, <list_domains()>, <delete_domain()>, <domain_metadata()>
 	 */
 	public function domain_metadata($domain_name, $returnCurlHandle = null)
@@ -240,7 +240,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/put_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/put_attributes.phps
  	 * 	Related - <get_attributes()>, <delete_attributes()>
 	 */
 	public function put_attributes($domain_name, $item_name, $keypairs, $replace = null, $returnCurlHandle = null)
@@ -348,7 +348,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_GetAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/get_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/get_attributes.phps
  	 * 	Related - <put_attributes()>, <delete_attributes()>
 	 */
 	public function get_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
@@ -396,7 +396,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_DeleteAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/delete_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/delete_attributes.phps
  	 * 	Related - <put_attributes()>, <get_attributes()>
 	 */
 	public function delete_attributes($domain_name, $item_name, $keys = null, $returnCurlHandle = null)
@@ -413,7 +413,7 @@ class AmazonSDB extends CloudCore
 			if (is_array($keys))
 			{
 				// Indexed array of Attribute Names?
-				if ($this->util->ready($keys[0]))
+				if (isset($keys[0]) && !empty($keys[0]))
 				{
 					for ($x = 0, $i = count($keys); $x < $i; $x++)
 					{
@@ -475,7 +475,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/query.phps
  	 * 	Related - <query()>, <query_with_attributes()>, <select()>
 	 */
 	public function query($domain_name, $opt = null, $expression = null, $follow = null)
@@ -498,7 +498,7 @@ class AmazonSDB extends CloudCore
 			}
 
 			$request = new $this->request_class(null);
-			return $request->sendMultiRequest($handles);
+			return $request->send_multi_request($handles);
 		}
 
 		return $query;
@@ -529,7 +529,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/query_with_attributes.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/query_with_attributes.phps
  	 * 	Related - <query()>, <query_with_attributes()>, <select()>
 	 */
 	public function query_with_attributes($domain_name, $opt = null, $expression = null)
@@ -566,7 +566,7 @@ class AmazonSDB extends CloudCore
  	 * 
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Select.html
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/sdb/select.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/select.phps
  	 * 	Related - <query()>, <query_with_attributes()>, <select()>
 	 */
 	public function select($expression, $opt = null)

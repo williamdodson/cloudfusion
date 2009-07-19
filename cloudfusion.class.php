@@ -1,10 +1,10 @@
 <?php
 /**
  * File: CloudCore
- * 	Core functionality and default settings shared across classes.
+ * 	Core functionality and default settings shared across all CloudFusion classes.
  *
  * Version:
- * 	2009.07.16
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -56,7 +56,7 @@ define('CLOUDFUSION_URL', 'http://getcloudfusion.com');
 
 /**
  * Constant: CLOUDFUSION_USERAGENT
- * User agent string used to identify Tarzan
+ * User agent string used to identify CloudFusion
  * > CloudFusion/2.1 (Cloud Computing Toolkit; http://getcloudfusion.com) Build/20080927210040
  */
 define('CLOUDFUSION_USERAGENT', CLOUDFUSION_NAME . '/' . CLOUDFUSION_VERSION . ' (Cloud Computing Toolkit; ' . CLOUDFUSION_URL . ') Build/' . CLOUDFUSION_BUILD);
@@ -242,11 +242,11 @@ class CloudCore
 
 		if (strstr($class, 'Amazon'))
 		{
-			$path .= str_replace('Amazon', '', strtolower($class)) . '.class.php';
+			$path .= str_ireplace('Amazon', '', strtolower($class)) . '.class.php';
 		}
 		elseif (strstr($class, 'CF'))
 		{
-			$path .= str_replace('CF', '_', strtolower($class)) . '.class.php';
+			$path .= str_ireplace('CF', '_', strtolower($class)) . '.class.php';
 		}
 		elseif (strstr($class, 'Cache'))
 		{
@@ -366,7 +366,7 @@ class CloudCore
 	 * 	void
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/adjust_offset.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/adjust_offset.phps
 	 */
 	public function adjust_offset($seconds)
 	{
@@ -387,7 +387,7 @@ class CloudCore
 	 * 	void
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_proxy.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_proxy.phps
 	 */
 	public function set_proxy($proxy)
 	{
@@ -445,7 +445,7 @@ class CloudCore
 	 * 	void
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_utilities_class.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_utilities_class.phps
 	 */
 	function set_utilities_class($class = 'CFUtilities')
 	{
@@ -467,7 +467,7 @@ class CloudCore
 	 * 	void
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_request_class.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_request_class.phps
 	 */
 	function set_request_class($class = 'RequestCore')
 	{
@@ -488,7 +488,7 @@ class CloudCore
 	 * 	void
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/set_response_class.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_response_class.phps
 	 */
 	function set_response_class($class = 'ResponseCore')
 	{
@@ -583,32 +583,32 @@ class CloudCore
 		// Set DevPay tokens if we have them.
 		if ($this->devpay_tokens)
 		{
-			$request->addHeader('x-amz-security-token', $this->devpay_tokens);
+			$request->add_header('x-amz-security-token', $this->devpay_tokens);
 		}
 
 		// Tweak some things if we have a message (i.e. AmazonSQS::send_message()).
 		if ($message)
 		{
-			$request->addHeader('Content-Type', 'text/plain');
-			$request->setMethod(HTTP_POST);
-			$request->setBody($message);
+			$request->add_header('Content-Type', 'text/plain');
+			$request->set_method(HTTP_POST);
+			$request->set_body($message);
 		}
 
 		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
 		if ($return_curl_handle)
 		{
-			return $request->prepRequest();
+			return $request->prep_request();
 		}
 
 		// Send!
-		$request->sendRequest();
+		$request->send_request();
 
 		// Prepare the response.
-		$headers = $request->getResponseHeader();
-		$headers['x-tarzan-requesturl'] = $request_url;
-		$headers['x-tarzan-stringtosign'] = $stringToSign;
-		if ($message) $headers['x-tarzan-body'] = $message;
-		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
+		$headers = $request->get_response_header();
+		$headers['x-cloudfusion-requesturl'] = $request_url;
+		$headers['x-cloudfusion-stringtosign'] = $stringToSign;
+		if ($message) $headers['x-cloudfusion-body'] = $message;
+		$data = new $this->response_class($headers, $request->get_response_body(), $request->get_response_code());
 
 		// Return!
 		return $data;
@@ -632,16 +632,16 @@ class CloudCore
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
 	 * 
 	 * Example values for $location:
-	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/tarzan (absolute). Location must be server-writable.
+	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/cloudfusion (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
 	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
-	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/tarzan_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/tarzan_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
+	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/cloudfusion_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/cloudfusion_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
 	 * 
 	 * Returns:
 	 * 	<ResponseCore> object
  	 * 
 	 * See Also:
-	 * 	Example Usage - http://tarzan-aws.com/docs/examples/tarzan/cache_response.phps
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/cache_response.phps
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{

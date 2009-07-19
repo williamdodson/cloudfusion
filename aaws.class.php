@@ -4,7 +4,7 @@
  * 	Amazon Associates Web Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2009.04.29
+ * 	2009.07.19
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -80,7 +80,7 @@ class AAWS_Exception extends Exception {}
  * 
  * Example Usage:
  * (start code)
- * require_once('tarzan.class.php');
+ * require_once('cloudfusion.class.php');
  * 
  * // Instantiate a new AmazonAAWS object using the settings from the config.inc.php file.
  * $s3 = new AmazonAAWS();
@@ -200,17 +200,17 @@ class AmazonAAWS extends CloudCore
 		// If we have a "true" value for returnCurlHandle, do that instead of completing the request.
 		if (isset($opt['returnCurlHandle']))
 		{
-			return $request->prepRequest();
+			return $request->prep_request();
 		}
 
 		// Send!
-		$request->sendRequest();
+		$request->send_request();
 
 		// Prepare the response.
-		$headers = $request->getResponseHeader();
+		$headers = $request->get_response_header();
 		$headers['x-tarzan-requesturl'] = $request_url;
-		$headers['x-tarzan-httpstatus'] = $request->getResponseCode();
-		$data = new $this->response_class($headers, $request->getResponseBody(), $request->getResponseCode());
+		$headers['x-tarzan-httpstatus'] = $request->get_response_code();
+		$data = new $this->response_class($headers, $request->get_response_body(), $request->get_response_code());
 
 		// Return!
 		return $data;
