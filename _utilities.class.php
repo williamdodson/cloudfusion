@@ -312,9 +312,6 @@ class CFUtilities
 	 * Method: json_encode()
 	 * 	Replicates json_encode() for versions of PHP 5 earlier than 5.2.
 	 * 
-	 * Author:
-	 * 	http://us2.php.net/manual/en/function.json-encode.php#82904
-	 * 
 	 * Access:
 	 * 	public
 	 * 
@@ -334,6 +331,30 @@ class CFUtilities
 			return json_encode($obj);
 		}
 
+		return $this->json_encode_php51($obj);
+	}
+
+	/**
+	 * Method: json_encode_php51()
+	 * 	Called by CFUtilities::json_encode() if PHP 5.2's json_encode() is unavailable.
+	 * 
+	 * Author:
+	 * 	http://us2.php.net/manual/en/function.json-encode.php#82904
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	obj - _mixed_ (Required) The PHP object to convert into a JSON string.
+	 * 
+	 * Returns:
+	 * 	_string_ A JSON string.
+	 * 
+	 * See Also:
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
+	 */
+	public function json_encode_php51($obj)
+	{
 		if (is_null($obj)) return 'null';
 		if ($obj === false) return 'false';
 		if ($obj === true) return 'true';
@@ -342,19 +363,19 @@ class CFUtilities
 		{
 			if (is_float($obj))
 			{
-				// Always use "." for floats.
-				return floatval(str_replace(",", ".", strval($obj)));
+				// Always use '.' for floats.
+				return str_replace(',', '.', strval($obj));
 			}
-
-			if (is_string($obj))
+			elseif (is_int($obj))
+			{
+				return strval($obj);
+			}
+			elseif (is_string($obj))
 			{
 				static $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
 				return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $obj) . '"';
 			}
-			else
-			{
-				return $obj;
-			}
+			return $obj;
 		}
 
 		$isList = true;
@@ -389,4 +410,3 @@ class CFUtilities
 		}
 	}
 }
-?>

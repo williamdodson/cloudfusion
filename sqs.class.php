@@ -373,4 +373,3 @@ class AmazonSQS extends CloudCore
 		return (integer) $response->body->GetQueueAttributesResult->Attribute->Value;
 	}
 }
-?>

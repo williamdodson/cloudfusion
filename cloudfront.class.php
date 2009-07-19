@@ -643,5 +643,3 @@ class AmazonCloudFront extends CloudCore
 		return $this->authenticate(HTTP_PUT, '/' . $distribution_id . '/config', $opt, $xml, $etag);
 	}
 }
-
-?>

@@ -2084,4 +2084,3 @@ class AmazonS3 extends CloudCore
 		);
 	}
 }
-?>

@@ -318,4 +318,3 @@ class AmazonSQSQueue extends AmazonSQS
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
 	}
 }
-?>

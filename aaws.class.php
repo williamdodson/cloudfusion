@@ -1437,4 +1437,3 @@ class AmazonAAWS extends CloudCore
 		return $this->authenticate('TransactionLookup', $opt, AAWS_LOCALE_US);
 	}
 }
-?>

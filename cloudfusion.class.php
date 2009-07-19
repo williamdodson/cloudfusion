@@ -828,5 +828,3 @@ class CloudCore
 
 // Register the autoloader.
 spl_autoload_register(array('CloudCore', 'autoloader'));
-
-?>

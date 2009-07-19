@@ -579,4 +579,3 @@ class AmazonSDB extends CloudCore
 		return $query;
 	}
 }
-?>

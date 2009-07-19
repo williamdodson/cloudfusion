@@ -1396,4 +1396,3 @@ class AmazonEC2 extends CloudCore
 		return $this->authenticate('DescribeBundleTasks', $opt, $this->hostname);
 	}
 }
-?>
