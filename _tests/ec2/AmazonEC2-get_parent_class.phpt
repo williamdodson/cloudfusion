@@ -1,11 +1,11 @@
 --TEST--
-AmazonS3 - Get parent class
+AmazonEC2 - Get parent class
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
-	$s3 = new AmazonS3();
-	var_dump(get_parent_class('AmazonS3'));
+	$ec2 = new AmazonEC2();
+	var_dump(get_parent_class('AmazonEC2'));
 ?>
 
 --EXPECT--

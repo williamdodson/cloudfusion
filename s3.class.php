@@ -133,10 +133,10 @@ class S3_Exception extends Exception {}
 
 /**
  * Class: AmazonS3
- * 	Container for all Amazon S3-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon S3-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -149,7 +149,7 @@ class S3_Exception extends Exception {}
  * $s3 = new AmazonS3($key, $secret_key);
  * (end)
  */
-class AmazonS3 extends CloudCore
+class AmazonS3 extends CloudFusion
 {
 	/**
 	 * Property: request_url

@@ -1,12 +1,12 @@
 --TEST--
-AmazonS3 - Get parent class
+AmazonCloudFront - Exists
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 	$s3 = new AmazonS3();
-	var_dump(get_parent_class('AmazonS3'));
+	var_dump(class_exists('AmazonCloudFront'));
 ?>
 
 --EXPECT--
-string(11) "CloudFusion"
+bool(true)

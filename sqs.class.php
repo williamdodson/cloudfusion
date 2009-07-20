@@ -43,10 +43,10 @@ class SQS_Exception extends Exception {}
 
 /**
  * Class: AmazonSQS
- * 	Container for all Amazon SQS-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon SQS-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -59,7 +59,7 @@ class SQS_Exception extends Exception {}
  * $sqs = new AmazonSQS($key, $secret_key);
  * (end)
  */
-class AmazonSQS extends CloudCore
+class AmazonSQS extends CloudFusion
 {
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR

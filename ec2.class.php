@@ -55,10 +55,10 @@ class EC2_Exception extends Exception {}
 
 /**
  * Class: AmazonEC2
- * 	Container for all Amazon EC2-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon EC2-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -71,7 +71,7 @@ class EC2_Exception extends Exception {}
  * $s3 = new AmazonEC2($key, $secret_key);
  * (end)
  */
-class AmazonEC2 extends CloudCore
+class AmazonEC2 extends CloudFusion
 {
 	/**
 	 * Property: hostname

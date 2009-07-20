@@ -1,6 +1,6 @@
 <?php
 /**
- * File: CloudCore
+ * File: CloudFusion
  * 	Core functionality and default settings shared across all CloudFusion classes.
  *
  * Version:
@@ -114,20 +114,20 @@ define('HTTP_HEAD', 'HEAD');
 // EXCEPTIONS
 
 /**
- * Exception: CloudCore_Exception
- * 	Default CloudCore Exception.
+ * Exception: CloudFusion_Exception
+ * 	Default CloudFusion Exception.
  */
-class CloudCore_Exception extends Exception {}
+class CloudFusion_Exception extends Exception {}
 
 
 /*%******************************************************************************************%*/
 // CLASS
 
 /**
- * Class: CloudCore
+ * Class: CloudFusion
  * 	Container for all shared methods. This is not intended to be instantiated directly, but is extended by the service-specific classes.
  */
-class CloudCore
+class CloudFusion
 {
 	/**
 	 * Property: key
@@ -344,7 +344,7 @@ class CloudCore
 		// Otherwise set the values to blank and return false.
 		else
 		{
-			throw new CloudCore_Exception('No valid credentials were used to authenticate with AWS.');
+			throw new CloudFusion_Exception('No valid credentials were used to authenticate with AWS.');
 		}
 	}
 
@@ -608,7 +608,7 @@ class CloudCore
 		$headers['x-cloudfusion-requesturl'] = $request_url;
 		$headers['x-cloudfusion-stringtosign'] = $stringToSign;
 		if ($message) $headers['x-cloudfusion-body'] = $message;
-		$data = new $this->response_class($headers, $request->get_response_body(), $request->get_response_code());
+		$data = new $this->response_class($headers, new SimpleXMLElement($request->get_response_body()), $request->get_response_code());
 
 		// Return!
 		return $data;
@@ -827,4 +827,4 @@ class CloudCore
 
 
 // Register the autoloader.
-spl_autoload_register(array('CloudCore', 'autoloader'));
+spl_autoload_register(array('CloudFusion', 'autoloader'));

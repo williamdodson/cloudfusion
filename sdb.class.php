@@ -43,10 +43,10 @@ class SDB_Exception extends Exception {}
 
 /**
  * Class: AmazonSDB
- * 	Container for all Amazon SimpleDB-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon SimpleDB-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -59,7 +59,7 @@ class SDB_Exception extends Exception {}
  * $s3 = new AmazonSDB($key, $secret_key);
  * (end)
  */
-class AmazonSDB extends CloudCore
+class AmazonSDB extends CloudFusion
 {
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR

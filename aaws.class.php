@@ -73,10 +73,10 @@ class AAWS_Exception extends Exception {}
 
 /**
  * Class: AmazonAAWS
- * 	Container for all Amazon AAWS-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon AAWS-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -89,7 +89,7 @@ class AAWS_Exception extends Exception {}
  * $s3 = new AmazonAAWS($key, $secret_key, $assoc_id);
  * (end)
  */
-class AmazonAAWS extends CloudCore
+class AmazonAAWS extends CloudFusion
 {
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR

@@ -43,10 +43,10 @@ class CloudFront_Exception extends Exception {}
 
 /**
  * Class: AmazonCloudFront
- * 	Container for all Amazon CloudFront-related methods. Inherits additional methods from CloudCore.
+ * 	Container for all Amazon CloudFront-related methods. Inherits additional methods from CloudFusion.
  * 
  * Extends:
- * 	CloudCore
+ * 	CloudFusion
  * 
  * Example Usage:
  * (start code)
@@ -59,7 +59,7 @@ class CloudFront_Exception extends Exception {}
  * $cdn = new AmazonCloudFront($key, $secret_key);
  * (end)
  */
-class AmazonCloudFront extends CloudCore
+class AmazonCloudFront extends CloudFusion
 {
 	/**
 	 * Property: base_xml
