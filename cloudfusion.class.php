@@ -261,10 +261,6 @@ class CloudFusion
 		{
 			$path .= 'lib' . DIRECTORY_SEPARATOR . 'RequestCore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
 		}
-		else
-		{
-			$path = '';
-		}
 
 		if (file_exists($path))
 		{
@@ -645,6 +641,11 @@ class CloudFusion
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{
+		if (!is_array($params))
+		{
+			$params = array();
+		}
+
 		$_this = $this;
 		if (is_array($method))
 		{
@@ -703,15 +704,10 @@ class CloudFusion
 					{
 						$copy = array();
 
-						for ($i = 0, $len = sizeof($data); $i < $len; $i++)
+						for ($i = 0, $max = sizeof($data); $i < $max; $i++)
 						{
 							// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 							$copy[$i] = clone($data[$i]);
-
-							if (get_class($copy[$i]->body) == 'SimpleXMLElement')
-							{
-								$copy[$i]->body = $copy[$i]->body->asXML();
-							}
 						}
 
 						// Cache the data
@@ -725,7 +721,6 @@ class CloudFusion
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 						$copy = clone($data);
-
 						if (get_class($copy->body) == 'SimpleXMLElement')
 						{
 							$copy->body = $copy->body->asXML();
@@ -755,20 +750,12 @@ class CloudFusion
 				{
 					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
 					{
-						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-						if (substr(trim($data[$i]->body), 0, 5) == '<?xml')
-						{
-							$data[$i]->body = new SimpleXMLElement($data[$i]->body);
-						}
+						$data[$i]->body = new SimpleXMLElement($data[$i]->body);
 					}
 				}
 				else
 				{
-					// Since we're going to use this, let's convert the XML back into a SimpleXML object.
-					if (substr(trim($data->body), 0, 5) == '<?xml')
-					{
-						$data->body = new SimpleXMLElement($data->body);
-					}
+					$data->body = new SimpleXMLElement($data->body);
 				}
 			}
 		}
@@ -783,15 +770,10 @@ class CloudFusion
 				{
 					$copy = array();
 
-					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
+					for ($i = 0, $max = sizeof($data); $i < $max; $i++)
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
 						$copy[$i] = clone($data[$i]);
-
-						if (get_class($copy[$i]->body) == 'SimpleXMLElement')
-						{
-							$copy[$i]->body = $copy[$i]->body->asXML();
-						}
 					}
 
 					// Cache the data
