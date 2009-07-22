@@ -7,11 +7,11 @@ AmazonSQS::cache_response CachePDO:SQLite
 	$sqs = new AmazonSQS();
 
 	// First time pulls live data
-	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:./cache/sqlite.db', 10);
+	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:' . dirname(dirname(__FILE__)) . '/_cache/sqlite.db', 10);
 	var_dump($response->status);
 
 	// Second time pulls from cache
-	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:./cache/sqlite.db', 10);
+	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:' . dirname(dirname(__FILE__)) . '/_cache/sqlite.db', 10);
 	var_dump($response->status);
 ?>
 

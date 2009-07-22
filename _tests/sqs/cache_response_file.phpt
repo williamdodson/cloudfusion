@@ -7,11 +7,11 @@ AmazonSQS::cache_response CacheFile
 	$sqs = new AmazonSQS();
 
 	// First time pulls live data
-	$response = $sqs->cache_response('list_queues', './cache', 10);
+	$response = $sqs->cache_response('list_queues', dirname(dirname(__FILE__)) . '/_cache', 10);
 	var_dump($response->status);
 
 	// Second time pulls from cache
-	$response = $sqs->cache_response('list_queues', './cache', 10);
+	$response = $sqs->cache_response('list_queues', dirname(dirname(__FILE__)) . '/_cache', 10);
 	var_dump($response->status);
 ?>
 

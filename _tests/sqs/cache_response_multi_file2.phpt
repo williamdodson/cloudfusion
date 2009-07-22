@@ -13,14 +13,14 @@ AmazonSQS::cache_response MultiCurl CacheFile
 	$http = new RequestCore(null);
 
 	// First time pulls live data
-	$response = $sqs->cache_response(array($http, 'send_multi_request'), './cache', 2, array($handles));
+	$response = $sqs->cache_response(array($http, 'send_multi_request'), dirname(dirname(__FILE__)) . '/_cache', 2, array($handles));
 	var_dump($response[0]->status);
 	var_dump($response[1]->status);
 
 	sleep(2);
 
 	// Second time pulls from cache
-	$response = $sqs->cache_response(array($http, 'send_multi_request'), './cache', 2, array($handles));
+	$response = $sqs->cache_response(array($http, 'send_multi_request'), dirname(dirname(__FILE__)) . '/_cache', 2, array($handles));
 	var_dump($response[0]->status);
 	var_dump($response[1]->status);
 ?>
