@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2009.07.19
+ * 	2009.07.21
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
