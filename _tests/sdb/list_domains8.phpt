@@ -1,18 +1,17 @@
 --TEST--
-AmazonSDB::list_domains MaxNumberOfDomains + NextToken
+AmazonSDB::list_domains MaxNumberOfDomains + NextToken + returnCurlHandle
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 	$sdb = new AmazonSDB();
-
-	// First time pulls live data
 	$response = $sdb->list_domains(array(
 		'MaxNumberOfDomains' => 1,
-		'NextToken' => 't'
+		'NextToken' => 't',
+		'returnCurlHandle' => true
 	));
-	var_dump($response->status);
+	var_dump($response);
 ?>
 
 --EXPECT--
-int(200)
+resource(9) of type (curl)
