@@ -4,7 +4,7 @@
  * 	Amazon SimpleDB Service (http://aws.amazon.com/simpledb)
  *
  * Version:
- * 	2009.07.21
+ * 	2009.07.22
  * 
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -83,7 +83,7 @@ class AmazonSDB extends CloudFusion
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
-		$this->api_version = '2007-11-07';
+		$this->api_version = '2009-04-15';
 		$this->hostname = SDB_DEFAULT_URL;
 
 		if (!$key && !defined('AWS_KEY'))
@@ -331,6 +331,132 @@ class AmazonSDB extends CloudFusion
 	}
 
 	/**
+	 * Method: batch_put_attributes()
+	 * 	Creates or replaces attributes in an item. You specify new attributes using a combination of the Attribute.X.Name and Attribute.X.Value parameters.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
+	 * 	item_name - _string_ (Required) The name of the base item which will contain the series of keypairs.
+	 * 	keypairs - _array_ (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
+	 * 	replace - _boolean|array_ (Optional) Whether to replace a key-value pair if a matching key already exists. Supports either a boolean (which affects ALL key-value pairs) or an indexed array of key names (which affects only the keys specified). Defaults to boolean false.
+	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
+	 * 
+	 * Returns:
+	 * 	<ResponseCore> object
+ 	 * 
+	 * See Also:
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_PutAttributes.html
+	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/put_attributes.phps
+ 	 * 	Related - <get_attributes()>, <delete_attributes()>
+	 */
+	public function batch_put_attributes($domain_name, $item_keypairs, $replace = null, $returnCurlHandle = null)
+	{
+		$opt = array();
+		$opt['DomainName'] = $domain_name;
+		$opt['returnCurlHandle'] = $returnCurlHandle;
+		$is_replace_an_array = is_array($replace); // Cache this value
+
+		// Start looping through the item-keypairs
+		$item_count = 0;
+		foreach ($item_keypairs as $item => $keypairs)
+		{
+			// Clear these for re-use
+			unset($rstore);
+			$rstore = array();
+
+			// Set the item name
+			$opt['Item.' . (string) $item_count . '.ItemName'] = $item;
+
+			// Start looping through the keypairs.
+			$count = 0;
+			foreach ($keypairs as $k => $v)
+			{
+				// Is one of the values an array?
+				if (is_array($v))
+				{
+					// Loop through each of them so that all values are passed as individual attributes.
+					foreach ($v as $va)
+					{
+						$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Name'] = $k;
+						$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Value'] = $va;
+
+						// Do we want to do replacement?
+						if ($replace)
+						{
+							// Do we have an array of key names?
+							if ($is_replace_an_array)
+							{
+								// Store this key-index pair for later.
+								$rstore[] = array(
+									'count' => $count,
+									'key' => $k
+								);
+							}
+							// Or just a since REPLACE ALL?
+							else
+							{
+								$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Replace'] = 'true';
+							}
+						}
+
+						// Increment
+						$count++;
+					}
+				}
+				else
+				{
+					$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Name'] = $k;
+					$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Value'] = $v;
+
+					// Do we want to do replacement?
+					if ($replace)
+					{
+						// Do we have an array of key names?
+						if ($is_replace_an_array)
+						{
+							// Store this key-index pair for later.
+							$rstore[] = array(
+								'count' => $count,
+								'key' => $k
+							);
+						}
+						// Or just a since REPLACE ALL?
+						else
+						{
+							$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $count . '.Replace'] = 'true';
+						}
+					}
+				}
+
+				// Increment
+				$count++;
+			}
+
+			// Go through all of the saved key-index pairs we saved earlier.
+			foreach ($rstore as $k => $store)
+			{
+				if (isset($replace[$item]))
+				{
+					// Did we want to replace one of these keypairs?
+					if (in_array($store['key'], $replace[$item]))
+					{
+						// Replace!
+						$opt['Item.' . (string) $item_count . '.Attribute.' . (string) $store['count'] . '.Replace'] = 'true';
+					}
+				}
+			}
+
+			// Increment
+			$item_count++;
+		}
+
+		return $this->authenticate('BatchPutAttributes', $opt, $this->hostname);
+	}
+
+	/**
 	 * Method: get_attributes()
 	 * 	Returns all of the attributes associated with the item. Optionally, the attributes returned can be limited to one or more specified attribute name parameters. If the item does not exist on the replica that was accessed for this operation, an empty set is returned. The system does not return an error as it cannot guarantee the item does not exist on other replicas.
 	 * 
@@ -446,103 +572,7 @@ class AmazonSDB extends CloudFusion
 
 
 	/*%******************************************************************************************%*/
-	// QUERY
-
-	/**
-	 * Method: query()
-	 * 	Returns a set of ItemNames that match the query expression. Query operations that run longer than 5 seconds will likely time-out and return a time-out error response. A Query with no QueryExpression matches all items in the domain.
-	 * 
-	 * 	The Query operation returns a list of ItemNames that match the query expression. The maximum number that can be returned by one query is determined by MaxNumberOfItems which can be set to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If more than MaxNumberOfItems items match the query expression, a NextToken is also returned. 
-	 * 
-	 * 	Submitting the query again with the NextToken will return the next set of items. To obtain all items matching the query expression, repeat until no NextToken is returned.
-	 * 
-	 * Access:
-	 * 	public
-	 * 
-	 * Parameters:
-	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
-	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
-	 * 	follow - _boolean_ (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to <query_with_attributes()>, except that the response is a bit different and it can return a larger data set. Defaults to false.
-	 * 
-	 * Keys for the $opt parameter:
-	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
-	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
-	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
-	 * Returns:
-	 * 	<ResponseCore> object
- 	 * 
-	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_Query.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/query.phps
- 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
-	 */
-	public function query($domain_name, $opt = null, $expression = null, $follow = null)
-	{
-		if (!$opt) $opt = array();
-
-		$opt['DomainName'] = $domain_name;
-		$opt['QueryExpression'] = $expression;
-
-		$query = $this->authenticate('Query', $opt, $this->hostname);
-
-		// If $follow is requested, and there's at least one response to follow...
-		if ($follow && isset($query->body->QueryResult->ItemName))
-		{
-			$handles = array();
-
-			foreach ($query->body->QueryResult->ItemName as $item)
-			{
-				$handles[] = $this->get_attributes($domain_name, $item, null, true);
-			}
-
-			$request = new $this->request_class(null);
-			return $request->send_multi_request($handles);
-		}
-
-		return $query;
-	}
-
-	/**
-	 * Method: query_with_attributes()
-	 * 	The QueryWithAttributes operation returns a set of Attributes for ItemNames that match the query expression. QueryWithAttributes operations that run longer than 5 seconds will likely time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression matches all items in the domain.
-	 * 
-	 * 	The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 items and an appropriate NextToken to get the next page of results.
-	 * 
-	 * Access:
-	 * 	public
-	 * 
-	 * Parameters:
-	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
-	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
-	 * 
-	 * Keys for the $opt parameter:
-	 * 	AttributeName - _string_ (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.
-	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
-	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
-	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
-	 * Returns:
-	 * 	<ResponseCore> object
- 	 * 
-	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/2007-11-07/DeveloperGuide/SDB_API_QueryWithAttributes.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sdb/query_with_attributes.phps
- 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
-	 */
-	public function query_with_attributes($domain_name, $opt = null, $expression = null)
-	{
-		if (!$opt) $opt = array();
-
-		$opt['DomainName'] = $domain_name;
-		$opt['QueryExpression'] = $expression;
-
-		$query = $this->authenticate('QueryWithAttributes', $opt, $this->hostname);
-
-		return $query;
-	}
+	// SELECT
 
 	/**
 	 * Method: select()
