@@ -1,11 +1,11 @@
 --TEST--
-AmazonCloudFront - Exists
+AmazonS3 - Exists
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
-	$cdn = new AmazonCloudFront();
-	var_dump(class_exists('AmazonCloudFront'));
+	$s3 = new AmazonS3();
+	var_dump(class_exists('AmazonS3'));
 ?>
 
 --EXPECT--
