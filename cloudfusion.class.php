@@ -4,7 +4,7 @@
  * 	Core functionality and default settings shared across all CloudFusion classes.
  *
  * Version:
- * 	2009.07.19
+ * 	2009.08.14
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.

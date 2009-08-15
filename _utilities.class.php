@@ -5,13 +5,13 @@
  *
  * Version:
  * 	2009.07.19
- * 
+ *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
- * 
+ *
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
- * 
+ *
  * See Also:
  * 	CloudFusion - http://getcloudfusion.com
  */
@@ -29,10 +29,10 @@ class CFUtilities
 	/**
 	 * Method: __construct()
 	 * 	The constructor
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Returns:
 	 * 	<CFUtilities> object
 	 */
@@ -44,16 +44,16 @@ class CFUtilities
 	/**
 	 * Method: hex_to_base64()
 	 * 	Convert a HEX value to Base64.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	str - _string_ (Required) Value to convert.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ Base64-encoded string.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/hex_to_base64.phps
 	 */
@@ -72,16 +72,16 @@ class CFUtilities
 	/**
 	 * Method: to_query_string()
 	 * 	Convert an associative array into a query string.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	array - _array_ (Required) Array to convert.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ URL-friendly query string.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_query_string.phps
 	 */
@@ -93,16 +93,16 @@ class CFUtilities
 	/**
 	 * Method: to_signable_string()
 	 * 	Convert an associative array into a sign-able string.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	array - _array_ (Required) Array to convert.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ URL-friendly sign-able string.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_signable_string.phps
 	 */
@@ -121,13 +121,13 @@ class CFUtilities
 	/**
 	 * Method: encode_signature2()
 	 * 	Encode the value according to RFC 3986.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	string - _string_ (Required) String to convert
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ URL-friendly sign-able string.
 	 */
@@ -140,16 +140,16 @@ class CFUtilities
 	/**
 	 * Method: query_to_array()
 	 * 	Convert a query string into an associative array. Multiple, identical keys will become an indexed array.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	qs - _string_ (Required) Query string to convert.
-	 * 
+	 *
 	 * Returns:
 	 * 	_array_ Associative array of keys and values.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/query_to_array.phps
 	 */
@@ -182,18 +182,18 @@ class CFUtilities
 	/**
 	 * Method: size_readable()
 	 * 	Return human readable file sizes. Original function by Aidan Lister <mailto:aidan@php.net>, modified by Ryan Parman.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	size - _integer_ (Required) Filesize in bytes.
 	 * 	unit - _string_ (Optional) The maximum unit to use. Defaults to the largest appropriate unit.
 	 * 	retstring - _string_ (Optional) The format for the return string. Defaults to '%01.2f %s'
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ The human-readable file size.
-	 * 
+	 *
 	 * See Also:
 	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/size_readable.phps
@@ -232,16 +232,16 @@ class CFUtilities
 	/**
 	 * Method: time_hms()
 	 * 	Convert a number of seconds into Hours:Minutes:Seconds.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	seconds - _integer_ (Required) The number of seconds to convert.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ The formatted time.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/time_hms.phps
 	 */
@@ -267,18 +267,18 @@ class CFUtilities
 	/**
 	 * Method: try_these()
 	 * 	Returns the first value that is set. Based on Try.these() from Prototype <http://prototypejs.org>.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	attrs - _array_ (Required) The attributes to test, as strings. Intended for testing properties of the $base object, but also works with variables if you place an @ symbol at the beginning of the command.
 	 * 	base - _object_ (Optional) The base object to use, if any.
 	 * 	default - _mixed_ (Optional) What to return if there are no matches. Defaults to null.
-	 * 
+	 *
 	 * Returns:
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/try_these.phps
 	 */
@@ -311,16 +311,16 @@ class CFUtilities
 	/**
 	 * Method: json_encode()
 	 * 	Replicates json_encode() for versions of PHP 5 earlier than 5.2.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	obj - _mixed_ (Required) The PHP object to convert into a JSON string.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ A JSON string.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
 	 */
@@ -337,19 +337,19 @@ class CFUtilities
 	/**
 	 * Method: json_encode_php51()
 	 * 	Called by CFUtilities::json_encode() if PHP 5.2's json_encode() is unavailable.
-	 * 
+	 *
 	 * Author:
 	 * 	http://us2.php.net/manual/en/function.json-encode.php#82904
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	obj - _mixed_ (Required) The PHP object to convert into a JSON string.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ A JSON string.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
 	 */
@@ -408,5 +408,29 @@ class CFUtilities
 
 			return '{' . join(',', $result) . '}';
 		}
+	}
+
+	/**
+	 * Method: convert_response_to_array()
+	 * 	Converts a SimpleXML response to an array structure.
+	 *
+	 * Author:
+	 * 	Adrien Cahen <http://gaarf.info/2009/08/13/xml-string-to-php-array/>
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	obj - _ResponseCore_ (Required) A CloudFusion ResponseCore response value.
+	 *
+	 * Returns:
+	 * 	_array_ The response value as a standard, multi-dimensional array.
+	 *
+	 * Requirements:
+	 * 	PHP 5.2 or newer.
+	 */
+	public function convert_response_to_array(ResponseCore $response)
+	{
+		return json_decode(json_encode((array) $response), true);
 	}
 }
