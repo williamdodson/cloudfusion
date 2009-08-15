@@ -5,13 +5,13 @@
  *
  * Version:
  * 	2009.07.19
- * 
+ *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
- * 
+ *
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
- * 
+ *
  * See Also:
  * 	CloudFusion - http://getcloudfusion.com
  */
@@ -40,7 +40,7 @@ define('CLOUDFUSION_NAME', 'CloudFusion');
  * Constant: CLOUDFUSION_VERSION
  * Version of the software.
  */
-define('CLOUDFUSION_VERSION', '2.1');
+define('CLOUDFUSION_VERSION', '2.5');
 
 /**
  * Constant: CLOUDFUSION_BUILD
@@ -212,7 +212,7 @@ class CloudFusion
 	 * 	Stores the Amazon DevPay tokens to use, if any.
 	 */
 	var $devpay_tokens;
-	
+
 	/**
 	 * Property: set_hostname
 	 * 	Stores the alternate hostname to use, if any.
@@ -226,13 +226,13 @@ class CloudFusion
 	/**
 	 * Method: autoloader()
 	 * 	Automatically load classes that aren't included.
-	 * 
+	 *
 	 * Access:
 	 * 	public static
-	 * 
+	 *
 	 * Parameters:
 	 * 	class_name - _string_ (Required) The classname to load.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -275,16 +275,16 @@ class CloudFusion
 	/**
 	 * Method: __construct()
 	 * 	The constructor
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
 	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
 	 * 	account_id - _string_ (Optional) Your Amazon account ID without the hyphens. Required for EC2. If blank, it will look for the <AWS_ACCOUNT_ID> constant.
 	 * 	assoc_id - _string_ (Optional) Your Amazon Associates ID. Required for AAWS. If blank, it will look for the <AWS_ASSOC_ID> constant.
-	 * 
+	 *
 	 * Returns:
 	 * 	boolean FALSE if no valid values are set, otherwise true.
 	 */
@@ -351,16 +351,16 @@ class CloudFusion
 	/**
 	 * Method: adjust_offset()
 	 * 	Allows you to adjust the current time, for occasions when your server is out of sync with Amazon's servers.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	seconds - _integer_ (Required) The number of seconds to adjust the sent timestamp by.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/adjust_offset.phps
 	 */
@@ -372,16 +372,16 @@ class CloudFusion
 	/**
 	 * Method: set_proxy()
 	 * 	Set the proxy settings to use for connecting.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	proxy - _string_ (Required) Accepts proxy credentials in the following format: proxy://user:pass@hostname:port
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_proxy.phps
 	 */
@@ -393,13 +393,13 @@ class CloudFusion
 	/**
 	 * Method: set_hostname()
 	 * 	Set the hostname to use for connecting.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	hostname - _string_ (Required) The alternate hostname to use in place of the default one. Useful for API-compatible applications living on different hostnames.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -411,10 +411,10 @@ class CloudFusion
 	/**
 	 * Method: disable_ssl()
 	 * 	Disables SSL/HTTPS connections for hosts that don't support them.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -430,16 +430,16 @@ class CloudFusion
 	/**
 	 * Method: set_utilities_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_utilities_class.phps
 	 */
@@ -452,16 +452,16 @@ class CloudFusion
 	/**
 	 * Method: set_request_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_request_class.phps
 	 */
@@ -473,16 +473,16 @@ class CloudFusion
 	/**
 	 * Method: set_response_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	class - _string_ (Optional) The name of the new class to use for this functionality. Defaults to the default class.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_response_class.phps
 	 */
@@ -498,16 +498,16 @@ class CloudFusion
 	/**
 	 * Method: authenticate()
 	 * 	Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis as necessary. This should not be used directly unless you're writing custom methods for this class.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	action - _string_ (Required) Indicates the action to perform.
 	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * 	domain - _string_ (Optional) The URL of the queue to perform the action on.
 	 * 	message - _string_ (Optional) This parameter is only used by the send_message() method.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
 	 */
@@ -617,25 +617,25 @@ class CloudFusion
 	/**
 	 * Method: cache_response()
 	 * 	Caches a ResponseCore object using the preferred caching method.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	method - _string_ (Required) The method of the current object that you want to execute and cache the response for. If the method is not in the $this scope, pass in an array where the correct scope is in the [0] position and the method name is in the [1] position.
 	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. See below.
 	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
-	 * 
+	 *
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/cloudfusion (absolute). Location must be server-writable.
 	 * 	APC - Pass in 'apc' to use this lightweight cache. You must have the APC extension installed. <http://php.net/apc>
 	 * 	Memcached - Pass in an indexed array of associative arrays. Each associative array should have a 'host' and a 'port' value representing a Memcached server to connect to.
 	 * 	PDO - A URL-style string (e.g. pdo.mysql://user:pass@localhost/cloudfusion_cache) or a standard DSN-style string (e.g. pdo.sqlite:/sqlite/cloudfusion_cache.db). MUST be prefixed with 'pdo.'. See <CachePDO> and <http://php.net/pdo> for more details.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/cache_response.phps
 	 */
