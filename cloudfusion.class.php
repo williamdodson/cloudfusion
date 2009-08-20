@@ -575,6 +575,7 @@ class CloudFusion
 		$request_url .= !isset($parsed_url['path']) ? '/' : '';
 		$request_url .= '?' . $querystring;
 		$request = new $this->request_class($request_url, $this->set_proxy, $helpers);
+		$request->set_useragent(CLOUDFUSION_USERAGENT);
 
 		// Set DevPay tokens if we have them.
 		if ($this->devpay_tokens)
