@@ -5,13 +5,13 @@
  *
  * Version:
  * 	2009.07.19
- * 
+ *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
- * 
+ *
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
- * 
+ *
  * See Also:
  * 	CloudFusion - http://getcloudfusion.com
  * 	Amazon CloudFront - http://aws.amazon.com/cloudfront
@@ -22,7 +22,7 @@
 // CONSTANTS
 
 /**
- * Constant: EC2_DEFAULT_URL
+ * Constant: CDN_DEFAULT_URL
  * 	Specify the default queue URL.
  */
 define('CDN_DEFAULT_URL', 'cloudfront.amazonaws.com');
@@ -44,17 +44,17 @@ class CloudFront_Exception extends Exception {}
 /**
  * Class: AmazonCloudFront
  * 	Container for all Amazon CloudFront-related methods. Inherits additional methods from CloudFusion.
- * 
+ *
  * Extends:
  * 	CloudFusion
- * 
+ *
  * Example Usage:
  * (start code)
  * require_once('cloudfusion.class.php');
- * 
+ *
  * // Instantiate a new AmazonCloudFront object using the settings from the config.inc.php file.
  * $cdn = new AmazonCloudFront();
- * 
+ *
  * // Instantiate a new AmazonCloudFront object using these specific settings.
  * $cdn = new AmazonCloudFront($key, $secret_key);
  * (end)
@@ -74,23 +74,23 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: __construct()
 	 * 	The constructor
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
 	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
-	 * 
+	 *
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
-		$this->api_version = '2008-06-30';
+		$this->api_version = '2009-06-23';
 		$this->hostname = CDN_DEFAULT_URL;
 		$this->base_xml = '<?xml version="1.0" encoding="UTF-8"?><DistributionConfig xmlns="http://cloudfront.amazonaws.com/doc/' . $this->api_version . '/"></DistributionConfig>';
 
@@ -114,34 +114,37 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: authenticate()
 	 * 	Authenticates a connection to CloudFront. This should not be used directly unless you're writing custom methods for this class.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	method - _string_ (Required) The HTTP method to use to connect. Accepts <HTTP_GET>, <HTTP_POST>, <HTTP_PUT>, <HTTP_DELETE>, and <HTTP_HEAD>.
 	 * 	path - _string_ (Optional) The endpoint path to make requests to.
 	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * 	xml - _string_ (Optional) The XML body content to send along in the request.
 	 * 	etag - _string_ (Optional) The ETag value to pass along with the If-Match HTTP header.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/RESTAuthentication.html
 	 */
 	public function authenticate($method = HTTP_GET, $path = null, $opt = null, $xml = null, $etag = null)
 	{
-		// Generate the querystring from $opt, removing a reference to returnCurlHandle.
 		$querystring = null;
+
+		// Generate the querystring from $opt, removing a reference to returnCurlHandle.
 		if ($opt)
 		{
 			$query = $opt;
+
 			if (isset($query['returnCurlHandle']))
 			{
 				unset($query['returnCurlHandle']);
 			}
+
 			$querystring = $this->util->to_query_string($query);
 		}
 
@@ -205,10 +208,10 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: disable_ssl()
 	 * 	Throws an error because SSL is required for the CloudFront service.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -224,23 +227,23 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: generate_config_xml()
 	 * 	Used to generate the Distribution Config XML used in <create_distribution()> and <set_distribution_config()>.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	origin - _string_ (Required) The source S3 bucket to use for the CloudFront distribution.
 	 * 	caller_reference - _string_ (Required) A unique identifier for the request. Must be generated on your own. A time stamp or hash is a good example.
  	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	CNAME - _string_|_array_ (Optional) A DNS CNAME to use to map to the CloudFront distribution. If setting more than one, use an indexed array. Supports 1-10 CNAMEs.
 	 * 	Comment - _integer_ (Optional) A comment to apply to the distribution. Cannot exceed 128 characters.
 	 * 	Enabled - _string_ (Optional) Defaults to true. Use this to set Enabled to false.
-	 * 
+	 *
 	 * Returns:
 	 * 	String DistributionConfig XML document.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/generate_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
@@ -295,28 +298,39 @@ class AmazonCloudFront extends CloudFusion
 			$xml->addChild('Enabled', 'true');
 		}
 
+		// Logging
+		if (isset($opt['Logging']))
+		{
+			if (is_array($opt['Logging']))
+			{
+				$logging = $xml->addChild('Logging');
+				$logging->addChild('Bucket', $opt['Logging']['Bucket']);
+				$logging->addChild('Prefix', $opt['Logging']['Prefix']);
+			}
+		}
+
 		return $xml->asXML();
 	}
 
 	/**
 	 * Method: update_config_xml()
 	 * 	Used to update an existing DistributionConfig XML document.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	xml - _SimpleXMLElement_|_ResponseCore_|_string_ (Required) The source DistributionConfig XML to make updates to. Can be the SimpleXMLElement body of a <get_distribution_config()> response, the entire <ResponseCore> of a <get_distribution_config()> response, or a string of XML generated by <generate_config_xml()> or <update_config_xml()>.
  	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	CNAME - _string_|_array_ (Optional) This (these) value(s) will be ADDED to the existing list of CNAME values. To remove a CNAME value, see <remove_cname()>.
 	 * 	Comment - _integer_ (Optional) This value will replace the existing value for 'Comment'. Cannot exceed 128 characters.
 	 * 	Enabled - _string_ (Optional) This value will replace the existing value for 'Enabled'.
-	 * 
+	 *
 	 * Returns:
 	 * 	String DistributionConfig XML document.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/update_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
@@ -384,6 +398,23 @@ class AmazonCloudFront extends CloudFusion
 			$update->addChild('Enabled', $xml->Enabled);
 		}
 
+		// Logging
+		if (isset($opt['Logging']))
+		{
+			if (is_array($opt['Logging']))
+			{
+				$logging = $update->addChild('Logging');
+				$logging->addChild('Bucket', $opt['Logging']['Bucket']);
+				$logging->addChild('Prefix', $opt['Logging']['Prefix']);
+			}
+		}
+		elseif (isset($xml->Logging))
+		{
+			$logging = $update->addChild('Logging');
+			$logging->addChild('Bucket',$xml->Logging->Bucket);
+			$logging->addChild('Prefix', $xml->Logging->Prefix);
+		}
+
 		// Output
 		return $update->asXML();
 	}
@@ -391,17 +422,17 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: remove_cname()
 	 * 	Used to remove one or more CNAMEs from a DistributionConfig XML document.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	xml - _SimpleXMLElement_|_ResponseCore_|_string_ (Required) The source DistributionConfig XML to make updates to. Can be the SimpleXMLElement body of a <get_distribution_config()> response, the entire <ResponseCore> of a <get_distribution_config()> response, or a string of XML generated by <generate_config_xml()> or <update_config_xml()>.
 	 * 	cname - _string_|_array_ (Optional) This (these) value(s) will be REMOVED from the existing list of CNAME values. To add a CNAME value, see <update_config_xml()>.
-	 * 
+	 *
 	 * Returns:
 	 * 	String DistributionConfig XML document.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/remove_cname.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
@@ -463,24 +494,24 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: create_distribution()
 	 * 	The response echoes the DistributionConfig element and returns other metadata about the distribution. For more information, see Parts of a Basic Distribution. It takes a short time for CloudFront to propagate your new distribution's information throughout the CloudFront system. For more information, see Eventual Consistency. You can have up to 100 distributions in the Amazon CloudFront system.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	origin - _string_ (Required) The source S3 bucket to use for the CloudFront distribution.
 	 * 	caller_reference - _integer_ (Required) A unique identifier for the request. Must be generated on your own. A timestamp could be good.
  	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	CNAME - _string_|_array_ (Optional) A DNS CNAME to use to map to the CloudFront distribution. If setting more than one, use an indexed array. Supports 1-10 CNAMEs.
 	 * 	Comment - _integer_ (Optional) A comment to apply to the distribution. Cannot exceed 128 characters.
 	 * 	Enabled - _string_ (Optional) Defaults to true. Use this to set Enabled to false.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/CreateDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/create_distribution.phps
@@ -503,21 +534,21 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: list_distributions()
 	 * 	Gets a list of your distributions. By default, your entire list of distributions is returned in one single page. If the list is long, you can paginate it using the MaxItems and Marker parameters.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
-	 * 	Marker - _string_ (Optional) Use this when paginating results to indicate where in your list of distributions to begin. The results include distributions in the list that occur after the marker. To get the next page of results, set the Marker to the value of the NextMarker from the current page's response (which is also the ID of the last distribution on that page). 
+	 * 	Marker - _string_ (Optional) Use this when paginating results to indicate where in your list of distributions to begin. The results include distributions in the list that occur after the marker. To get the next page of results, set the Marker to the value of the NextMarker from the current page's response (which is also the ID of the last distribution on that page).
 	 * 	MaxItems - _integer_ (Optional) The maximum number of distributions you want in the response body. Maximum of 100.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/ListDistributions.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/list_distributions.phps
@@ -531,20 +562,20 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: get_distribution_info()
 	 * 	Gets information about a given distribution.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	distribution_id - _string_ (Required) The distribution ID returned from <create_distribution()> or <list_distributions()>.
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
- 	 * 
+ 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_info.phps
@@ -558,21 +589,21 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: delete_distribution()
 	 * 	Deletes a disabled distribution. If you haven't disabled the distribution, Amazon CloudFront returns a DistributionNotDisabled error. Use <set_distribution_config()> to disable a distribution before attempting to delete.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	distribution_id - _string_ (Required) The distribution ID returned from <create_distribution()> or <list_distributions()>.
  	 * 	etag - _string_ (Required) The ETag header value retrieved from a call to <get_distribution_config()>.
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
- 	 * 
+ 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/DeleteDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/delete_distribution.phps
@@ -590,20 +621,20 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: get_distribution_config()
 	 * 	Gets the current distribution config information for a given distribution ID.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	distribution_id - _string_ (Required) The distribution ID returned from <create_distribution()> or <list_distributions()>.
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
- 	 * 
+ 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetConfig.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_config.phps
@@ -617,22 +648,22 @@ class AmazonCloudFront extends CloudFusion
 	/**
 	 * Method: set_distribution_config()
 	 * 	Sets a new distribution config for a given distribution ID.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	distribution_id - _string_ (Required) The distribution ID returned from <create_distribution()> or <list_distributions()>.
  	 * 	xml - _string_ (Required) The DistributionConfig XML generated by <generate_config_xml()> or <update_config_xml()>.
  	 * 	etag - _string_ (Required) The ETag header value retrieved from a call to <get_distribution_config()>.
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
- 	 * 
+ 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/PutConfig.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/set_distribution_config.phps
