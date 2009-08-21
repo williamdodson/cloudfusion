@@ -303,22 +303,29 @@ class AmazonS3 extends CloudFusion
 			// List Object settings
 			if ($method == 'list_objects')
 			{
+				$request = '';
+
 				if (isset($prefix) && !empty($prefix))
 				{
-					$request = '/?prefix=' . $prefix;
+					$request .= '&prefix=' . $prefix;
 				}
-				else if (isset($marker) && !empty($marker))
+
+				if (isset($marker) && !empty($marker))
 				{
-					$request = '/?marker=' . $marker;
+					$request .= '&marker=' . $marker;
 				}
-				else if (isset($maxKeys) && !empty($maxKeys))
+
+				if (isset($maxKeys) && !empty($maxKeys))
 				{
-					$request = '/?max-keys=' . $maxKeys;
+					$request .= '&max-keys=' . $maxKeys;
 				}
-				else if (isset($delimiter) && !empty($delimiter))
+
+				if (isset($delimiter) && !empty($delimiter))
 				{
-					$request = '/?delimiter=' . $delimiter;
+					$request .= '&delimiter=' . $delimiter;
 				}
+
+				$request = '/?' . ltrim($request, '&');
 			}
 
 			// Logging
