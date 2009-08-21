@@ -5,13 +5,13 @@
  *
  * Version:
  * 	2009.07.19
- * 
+ *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
- * 
+ *
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
- * 
+ *
  * See Also:
  * 	CloudFusion - http://getcloudfusion.com
  * 	Amazon S3 - http://aws.amazon.com/s3
@@ -134,17 +134,17 @@ class S3_Exception extends Exception {}
 /**
  * Class: AmazonS3
  * 	Container for all Amazon S3-related methods. Inherits additional methods from CloudFusion.
- * 
+ *
  * Extends:
  * 	CloudFusion
- * 
+ *
  * Example Usage:
  * (start code)
  * require_once('cloudfusion.class.php');
- * 
+ *
  * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
  * $s3 = new AmazonS3();
- * 
+ *
  * // Instantiate a new AmazonS3 object using these specific settings.
  * $s3 = new AmazonS3($key, $secret_key);
  * (end)
@@ -182,14 +182,14 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: __construct()
 	 * 	The constructor
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	key - _string_ (Optional) Your Amazon API Key. If blank, it will look for the <AWS_KEY> constant.
 	 * 	secret_key - _string_ (Optional) Your Amazon API Secret Key. If blank, it will look for the <AWS_SECRET_KEY> constant.
-	 * 
+	 *
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
 	 */
@@ -222,19 +222,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: authenticate()
 	 * 	Authenticates a connection to S3. This should not be used directly unless you're writing custom methods for this class.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	opt - _array_ (Optional) Associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * 	location - _string_ (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
 	 * 	redirects - _integer_ (Do Not Use) Used internally by this function on occasions when S3 returns a redirect code and it needs to call itself recursively.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAuthentication.html
 	 */
@@ -446,8 +446,8 @@ class AmazonS3 extends CloudFusion
 			}
 
 			// Add a body if we're creating or setting
-			if ($method == 'create_object' || $method == 'create_bucket' || 
-				$method == 'enable_logging' || $method == 'disable_logging' || 
+			if ($method == 'create_object' || $method == 'create_bucket' ||
+				$method == 'enable_logging' || $method == 'disable_logging' ||
 				$method == 'set_object_acl' || $method == 'set_bucket_acl')
 			{
 				if (isset($body) && !empty($body))
@@ -541,9 +541,9 @@ class AmazonS3 extends CloudFusion
 			if ((int) $req->get_response_code() == 307) // Temporary redirect to new endpoint.
 			{
 				$redirects++;
-				$data = $this->authenticate($bucket, 
-					$_opt, 
-					$headers['location'], 
+				$data = $this->authenticate($bucket,
+					$_opt,
+					$headers['location'],
 					$redirects);
 			}
 
@@ -555,16 +555,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: set_vhost()
 	 * 	Use this virtual host instead of the normal bucket.s3.amazonaws.com domain.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	vhost - _string_ (Required) The hostname to use instead of bucket.s3.amazonaws.com.
-	 * 
+	 *
 	 * Returns:
 	 * 	void
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Virtual Hosting of Buckets - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/VirtualHosting.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_vhost.phps
@@ -581,18 +581,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: create_bucket()
 	 * 	The bucket holds all of your objects, and provides a globally unique namespace in which you can manage the keys that identify objects. A bucket can hold any number of objects.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	locale - _string_ (Optional) Sets the preferred geographical location for the bucket. Accepts S3_LOCATION_US or S3_LOCATION_EU. Defaults to S3_LOCATION_US.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketPUT.html
 	 * 	Using Buckets - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingBucket.html
@@ -629,7 +629,7 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket()
 	 * 	Referred to as "GET Bucket" in the AWS docs, but implemented here as AmazonS3::list_objects(). Therefore, this is an alias of list_objects().
-	 * 
+	 *
 	 * See Also:
  	 * 	Related - <create_bucket()>, <head_bucket()>, <delete_bucket()>, <list_objects()>
 	 */
@@ -643,17 +643,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket_locale()
 	 * 	Lists the location constraint of the bucket. U.S.-based buckets have no response.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketLocationGET.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_locale.phps
@@ -673,17 +673,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: head_bucket()
 	 * 	Reads only the HTTP headers of a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_bucket.phps
@@ -704,16 +704,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: if_bucket_exists()
 	 * 	Checks whether this bucket already exists in your account or not.
-	 * 
+	 *
 	 * Access:
 	 * 	public
-	 * 
+	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
-	 * 
+	 *
 	 * Returns:
 	 * 	_boolean_ Whether the bucket exists or not.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_bucket_exists.phps
 	 */
@@ -726,18 +726,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: delete_bucket()
 	 * 	Deletes a bucket from your account. All objects in the bucket must be deleted before the bucket itself can be deleted.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	force - _boolean_ (Optional) Whether to force-delete the bucket and all of its contents. Defaults to false.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object if normal bucket deletion or if forced bucket deletion was successful, a boolean false if the forced deletion was unsuccessful.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketDELETE.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_bucket.phps
@@ -773,18 +773,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: copy_bucket()
 	 * 	Copies the contents of a bucket into a new bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	source_bucket - _string_ (Required) The name of the source bucket.
 	 * 	dest_bucket - _string_ (Required) The name of the destination bucket.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_bucket.phps
 	 * 	Related - <copy_object()>, <rename_bucket()>, <list_buckets()>
@@ -810,11 +810,11 @@ class AmazonS3 extends CloudFusion
 		{
 			$list = $this->get_object_list($source_bucket);
 			$handles = array();
-	
+
 			foreach ($list as $item)
 			{
 				$handles[] = $this->copy_object($source_bucket, $item, $dest_bucket, $item, array(
-					'acl' => $acl, 
+					'acl' => $acl,
 					'returnCurlHandle' => true
 				));
 			}
@@ -829,17 +829,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: rename_bucket()
 	 * 	Renames a bucket by making a copy and deleting the original.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	source_bucket - _string_ (Required) The name of the source bucket.
 	 * 	dest_bucket - _string_ (Required) The name of the destination bucket.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_bucket.phps
 	 * 	Related - <rename_object()>, <copy_bucket()>, <list_buckets()>
@@ -855,16 +855,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket_size()
 	 * 	Gets the number of files in the bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
-	 * 
+	 *
 	 * Returns:
 	 * 	_integer_ The number of files in the bucket.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_size.phps
 	 * 	Related - <get_bucket_filesize()>
@@ -877,17 +877,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket_filesize()
 	 * 	Gets the file size of the contents of the bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	friendly_format - _boolean_ (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
-	 * 
+	 *
 	 * Returns:
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_filesize.phps
 	 * 	Related - <get_bucket_size()>, <get_object_filesize()>
@@ -913,16 +913,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: list_buckets()
 	 * 	Gets a list of all of the buckets on the S3 account.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTServiceGET.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/list_buckets.phps
@@ -943,16 +943,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket_list()
 	 * 	ONLY lists the bucket names, as an array, on the S3 account.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	pcre - _string_ (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the names against.
-	 * 
+	 *
 	 * Returns:
 	 * 	_array_ The list of matching bucket names.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_list.phps
 	 * 	Related - <list_buckets()>
@@ -994,17 +994,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_bucket_acl()
 	 * 	Gets the ACL settings for a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_acl.phps
@@ -1025,18 +1025,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: set_bucket_acl()
 	 * 	Sets the ACL settings for a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Alternatively, an array of associative arrays. Each associative array contains an 'id' and a 'permission'. Defaults to <S3_ACL_PRIVATE>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_bucket_acl.phps
@@ -1049,6 +1049,18 @@ class AmazonS3 extends CloudFusion
 		$opt['verb'] = HTTP_PUT;
 		$opt['method'] = 'set_bucket_acl';
 		$opt['returnCurlHandle'] = $returnCurlHandle;
+
+		// Make sure these are defined.
+		if (!defined('AWS_CANONICAL_ID') || !defined('AWS_CANONICAL_NAME'))
+		{
+			// Fetch the data live.
+			$canonical = $this->get_canonical_user_id();
+			define('AWS_CANONICAL_ID', $canonical['id']);
+			define('AWS_CANONICAL_NAME', $canonical['display_name']);
+
+			// Issue a notice.
+			trigger_error('One or both of the configuration settings AWS_CANONICAL_ID and AWS_CANONICAL_NAME have NOT been set in config.inc.php. ' . CLOUDFUSION_NAME . ' must make additional requests to fetch the data, resulting in slower performance for ' . __FUNCTION__ . '(). For best performance, be sure to define these values in your config.inc.php file. For more details, see http://tarzan-aws.googlecode.com/svn/tags/' . CLOUDFUSION_VERSION . '/config-sample.inc.php', E_USER_NOTICE);
+		}
 
 		if (is_array($acl))
 		{
@@ -1070,14 +1082,14 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: create_object()
 	 * 	Once you have a bucket, you can start storing objects in it. Objects are stored using the HTTP PUT method. Each object can hold up to 5 GB of data. When you store an object, S3 streams the data to multiple storage servers in multiple data centers to ensure that the data remains available in the event of internal network or hardware failure.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
  	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
- 	 * 
+ 	 *
  	 * Keys for the $opt parameter:
  	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	body - _string_ (Required) The data to be stored in the object.
@@ -1086,10 +1098,10 @@ class AmazonS3 extends CloudFusion
 	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
 	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectPUT.html
 	 * 	ACL Policy - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
@@ -1112,23 +1124,23 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_object()
 	 * 	Reads the contents of an object within a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	lastmodified - _string_ (Optional) The LastModified header passed in from a previous request. If used, requires 'etag' as well. Will return a 304 if file hasn't changed.
 	 * 	etag - _string_ (Optional) The ETag header passed in from a previous request. If used, requires 'lastmodified' as well. Will return a 304 if file hasn't changed.
 	 * 	range - _string_ (Optional) A range of bytes to fetch from the file. Useful for downloading partial bits or completing incomplete files. Range notated with a hyphen (e.g. 0-10485759). Defaults to the complete file.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectGET.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object.phps
@@ -1150,18 +1162,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: head_object()
 	 * 	Reads only the HTTP headers of an object within a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
  	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectHEAD.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_object.phps
@@ -1183,17 +1195,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: if_object_exists()
 	 * 	Checks whether this object already exists in this bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
  	 * 	filename - _string_ (Required) The filename for the object.
-	 * 
+	 *
 	 * Returns:
 	 * 	_boolean_ Whether the object exists or not.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_object_exists.phps
 	 * 	Related - <head_object()>
@@ -1207,18 +1219,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: delete_object()
 	 * 	Deletes an object from within a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
  	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectDELETE.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_object.phps
@@ -1240,17 +1252,17 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: delete_all_objects()
 	 * 	Delete all of the objects inside the specified bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	pcre - _string_ (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the names against. Defaults to <S3_PCRE_ALL>.
-	 * 
+	 *
 	 * Returns:
 	 * 	_boolean_ Determines the success of deleting all files.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_all_objects.phps
 	 * 	Related - <delete_object()>
@@ -1282,24 +1294,24 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: list_objects()
 	 * 	Lists the objects in a bucket. Provided as the 'GetBucket' action in Amazon's REST API.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	prefix - _string_ (Optional) Restricts the response to only contain results that begin with the specified prefix.
 	 * 	marker - _string_ (Optional) It restricts the response to only contain results that occur alphabetically after the value of marker.
 	 * 	maxKeys - _string_ (Optional) Limits the number of results returned in response to your query. Will return no more than this number of results, but possibly less.
 	 * 	delimiter - _string_ (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTBucketGET.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
@@ -1321,18 +1333,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_object_filesize()
 	 * 	Gets the file size of the object.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
  	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	friendly_format - _boolean_ (Optional) Whether to format the value to 2 decimal points using the largest possible unit (i.e. 3.42 GB).
-	 * 
+	 *
 	 * Returns:
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_filesize.phps
 	 * 	Related - <get_bucket_filesize()>
@@ -1353,14 +1365,14 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_object_list()
 	 * 	ONLY lists the object filenames from a bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	prefix - _string_ (Optional) Restricts the response to only contain results that begin with the specified prefix.
 	 * 	marker - _string_ (Optional) It restricts the response to only contain results that occur alphabetically after the value of marker.
@@ -1368,10 +1380,10 @@ class AmazonS3 extends CloudFusion
 	 * 	delimiter - _string_ (Optional) Unicode string parameter. Keys that contain the same string between the prefix and the first occurrence of the delimiter will be rolled up into a single result element in the CommonPrefixes collection.
 	 * 	pcre - _string_ (Optional) A Perl-Compatible Regular Expression (PCRE) to filter the names against. This is applied AFTER any native S3 filtering from 'prefix', 'marker', 'maxKeys', or 'delimiter'.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	_array_ The list of matching object names.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ListingKeysRequest.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/gsg/ListKeys.html
@@ -1422,27 +1434,27 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: copy_object()
 	 * 	Copies an object to a new location, whether in the same locale/bucket or otherwise.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	source_bucket - _string_ (Required) The name of the bucket that contains the source file.
 	 * 	source_filename - _string_ (Required) The source filename that you want to copy.
 	 * 	dest_bucket - _string_ (Required) The name of the bucket that you want to copy the file to.
 	 * 	dest_filename - _string_ (Required) The filename that you want to give to the copy.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
 	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
 	 * 	metadataDirective - _string_ (Optional) Accepts either COPY or REPLACE. You will likely never need to use this, as it manages itself with no issues.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingCopyingObjects.html
@@ -1477,25 +1489,25 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: update_object()
 	 * 	Updates an existing object with new content or settings.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket that contains the source file.
 	 * 	filename - _string_ (Required) The source filename that you want to update.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 	headers - _array_ (Optional) Standard HTTP headers to send along in the request.
 	 * 	meta - _array_ (Optional) Associative array of key-value pairs. Represented by x-amz-meta-: Any header starting with this prefix is considered user metadata. It will be stored with the object and returned when you retrieve the object. The total size of the HTTP request, not including the body, must be less than 4 KB.
 	 * 	metadataDirective - _string_ (Optional) Accepts either COPY or REPLACE. You will likely never need to use this, as it manages itself with no issues.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/UsingCopyingObjects.html
@@ -1524,19 +1536,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: duplicate_object()
 	 * 	Identical to <copy_object()>, except that it only copies within a single bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket that contains the file.
 	 * 	source_filename - _string_ (Required) The source filename that you want to copy.
 	 * 	dest_filename - _string_ (Required) The filename that you want to give to the copy.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/duplicate_object.phps
 	 * 	Related - <copy_object()>, <move_object()>, <rename_object()>
@@ -1549,20 +1561,20 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: move_object()
 	 * 	Moves an object to a new location, whether in the same locale/bucket or otherwise.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	source_bucket - _string_ (Required) The name of the bucket that contains the source file.
 	 * 	source_filename - _string_ (Required) The source filename that you want to copy.
 	 * 	dest_bucket - _string_ (Required) The name of the bucket that you want to copy the file to.
 	 * 	dest_filename - _string_ (Required) The filename that you want to give to the copy.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
-	 * 
+	 *
 	 * Returns:
 	 * 	_array_ <ResponseCore> objects for the copy and the delete.
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/move_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <rename_object()>
@@ -1578,19 +1590,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: rename_object()
 	 * 	Identical to <move_object()>, except that it only moves within a single bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket that contains the file.
 	 * 	source_filename - _string_ (Required) The source filename that you want to copy.
 	 * 	dest_filename - _string_ (Required) The filename that you want to give to the copy.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <move_object()>
@@ -1603,18 +1615,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_object_acl()
 	 * 	Gets the ACL settings for a object.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 * 
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_acl.phps
@@ -1636,19 +1648,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: set_object_acl()
 	 * 	Sets the ACL settings for a object.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Alternatively, an array of associative arrays. Each associative array contains an 'id' and a 'permission'. Defaults to <S3_ACL_PRIVATE>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/RESTAccessPolicy.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_object_acl.phps
@@ -1662,6 +1674,18 @@ class AmazonS3 extends CloudFusion
 		$opt['method'] = 'set_object_acl';
 		$opt['filename'] = $filename;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
+
+		// Make sure these are defined.
+		if (!defined('AWS_CANONICAL_ID') || !defined('AWS_CANONICAL_NAME'))
+		{
+			// Fetch the data live.
+			$canonical = $this->get_canonical_user_id();
+			define('AWS_CANONICAL_ID', $canonical['id']);
+			define('AWS_CANONICAL_NAME', $canonical['display_name']);
+
+			// Issue a notice.
+			trigger_error('One or both of the configuration settings AWS_CANONICAL_ID and AWS_CANONICAL_NAME have NOT been set in config.inc.php. ' . CLOUDFUSION_NAME . ' must make additional requests to fetch the data, resulting in slower performance for ' . __FUNCTION__ . '(). For best performance, be sure to define these values in your config.inc.php file. For more details, see http://tarzan-aws.googlecode.com/svn/tags/' . CLOUDFUSION_VERSION . '/config-sample.inc.php', E_USER_NOTICE);
+		}
 
 		if (is_array($acl))
 		{
@@ -1683,16 +1707,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_logs()
 	 * 	Get the access logs associated with a given bucket.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used. Pass null if using <set_vhost()>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/ServerLogs.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
@@ -1712,19 +1736,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: enable_logging()
 	 * 	Enable access logging.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be log. Pass null if using <set_vhost()>.
 	 * 	target_bucket - _string_ (Required) The name of the bucket to store the logs in.
 	 * 	target_prefix - _string_ (Required) The prefix to give to the log filenames.
 	 * 	users - _array_ (Optional) Any non-owner users to give access to. Set as an array of key-value pairs: the email address (must be tied to an AWS account) is the key, and the permission is the value. Allowable permissions are <S3_GRANT_READ>, <S3_GRANT_WRITE>, <S3_GRANT_READ_ACP>, <S3_GRANT_WRITE_ACP>, and <S3_GRANT_FULL_CONTROL>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
 	 * 	Permissions - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html#S3_ACLs_Permissions
@@ -1765,16 +1789,16 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: disable_logging()
 	 * 	Disable access logging.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used. Pass null if using <set_vhost()>.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/LoggingAPI.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
@@ -1799,23 +1823,23 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: store_remote_file()
 	 * 	Takes an existing remote file, stores it to S3, and returns a URL.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
  	 * 	remote_file - _string_ (Required) The full URL of the file to store on the S3 service.
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
-	 * 
+	 *
 	 * Keys for the $opt parameter:
 	 * 	acl - _string_ (Optional) One of the following options: <S3_ACL_PRIVATE>, <S3_ACL_PUBLIC>, <S3_ACL_OPEN>, or <S3_ACL_AUTH_READ>. Defaults to <S3_ACL_PRIVATE>.
 	 * 	overwrite - _boolean_ (Optional) If set to true, checks to see if the file exists and will overwrite the old data with new data. Defaults to false.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ The S3 URL for the uploaded file. Returns null if unsuccessful.
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/store_remote_file.phps
 	 */
@@ -1877,19 +1901,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: change_content_type()
 	 * 	Changes the content type for an existing object.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	contentType - _string_ (Required) The content-type to apply to the object.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 * 
+	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 * 
+	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/change_content_type.phps
 	 */
@@ -1909,19 +1933,19 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_object_url()
 	 * 	Gets the web-accessible URL for the file (assuming you've set the ACL settings to <S3_ACL_PUBLIC>).
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	qsa - _integer_ (Optional) How many seconds should the query string authenticated URL work for? Only generates query string authentication parameters if value is greater than 0. Defaults to 0.
 	 * 	torrent - _boolean_ (Optional) Whether to return the torrent version of the URL or not. Defaults to false.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ The file URL (with authentication and/or torrent parameters if requested).
-	 * 
+	 *
 	 * See Also:
 	 * 	Query String Authentication - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_QSAuth.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_url.phps
@@ -1952,7 +1976,7 @@ class AmazonS3 extends CloudFusion
 			{
 				return 'http://' . $this->vhost . $data['filename'] . ((!$torrent) ? '?' : '&') . 'AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
 			}
-			
+
 			return 'http://' . $data['bucket'] . '.s3.amazonaws.com' . $data['filename'] . ((!$torrent) ? '?' : '&') . 'AWSAccessKeyId=' . $data['key'] . '&Expires=' . $data['expires'] . '&Signature=' . rawurlencode($data['signature']);
 		}
 		else
@@ -1970,18 +1994,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_torrent_url()
 	 * 	Gets the web-accessible torrent URL for the file (assuming you've set the ACL settings to <S3_ACL_PUBLIC>).
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
 	 * 	filename - _string_ (Required) The filename for the object.
 	 * 	qsa - _integer_ (Optional) How many seconds should the query string authenticated URL work for? Only generates query string authentication parameters if value is greater than 0. Defaults to 0.
-	 * 
+	 *
 	 * Returns:
  	* 	_string_ The torrent URL (with authentication parameters if requested).
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3TorrentRetrieve.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_torrent_url.phps
@@ -2003,18 +2027,18 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: generate_access_policy()
 	 * 	Generate the XML to be used for the Access Control Policy.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Parameters:
 	 * 	canonical_id - _string_ (Required) The Canonical ID for the Owner. Use the <AWS_CANONICAL_ID> constant or the 'id' value from <get_canonical_user_id()>.
 	 * 	canonical_name - _string_ (Required) The Canonical Display Name for the Owner. Use the <AWS_CANONICAL_NAME> constant or the 'display_name' value from <get_canonical_user_id()>.
 	 * 	users - _array_ (Optional) Array of associative arrays. Each associative array contains an 'id' and a 'permission'.
-	 * 
+	 *
 	 * Returns:
 	 * 	_string_ Access Control Policy XML.
-	 * 
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/2006-03-01/S3_ACLs.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/generate_access_policy.phps
@@ -2068,10 +2092,10 @@ class AmazonS3 extends CloudFusion
 	/**
 	 * Method: get_canonical_user_id()
 	 * 	Obtains the CanonicalUser ID and DisplayName from the server.
-	 * 
+	 *
 	 * Access:
 	 * 	public
- 	 * 
+ 	 *
 	 * Returns:
  	 * 	_array_ The id and display_name values.
 	 */
