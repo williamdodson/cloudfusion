@@ -1,5 +1,5 @@
 --TEST--
-AmazonSQS::create_queue
+AmazonSQS::create_queue, returning the cURL handle.
 
 --FILE--
 <?php
