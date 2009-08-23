@@ -13,8 +13,8 @@ AmazonSQS::set_queue_attributes, changing visibility timeout
 	));
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

@@ -11,8 +11,8 @@ AmazonSQS::delete_queue
 	$response = $sqs->delete_queue(SQS_DEFAULT_URL . '/warpshare-unit-test');
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

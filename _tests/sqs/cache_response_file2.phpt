@@ -8,20 +8,20 @@ AmazonSQS::cache_response CacheFile
 
 	// First time pulls live data
 	$response = $sqs->cache_response('list_queues', dirname(dirname(__FILE__)) . '/_cache', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 
 	sleep(2);
 
 	// Second time pulls from cache
 	$response = $sqs->cache_response('list_queues', dirname(dirname(__FILE__)) . '/_cache', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
+bool(true)
+bool(true)
 
 --CLEAN--
 <?php
-	
+
 ?>

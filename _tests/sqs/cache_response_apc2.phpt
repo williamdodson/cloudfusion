@@ -8,15 +8,15 @@ AmazonSQS::cache_response CacheAPC
 
 	// First time pulls live data
 	$response = $sqs->cache_response('list_queues', 'apc', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 
 	sleep(2);
 
 	// Second time pulls from cache
 	$response = $sqs->cache_response('list_queues', 'apc', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
+bool(true)
+bool(true)

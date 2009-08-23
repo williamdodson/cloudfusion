@@ -15,8 +15,8 @@ AmazonSQS::receive_message
 	file_put_contents('receipt_handle.cache', (string) $response->body->ReceiveMessageResult->Message->ReceiptHandle); // Pass data to delete_message.
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

@@ -11,8 +11,8 @@ AmazonSQS::send_message
 	$response = $sqs->send_message(SQS_DEFAULT_URL . '/warpshare-unit-test', 'This is my message.');
 
 	// Success
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

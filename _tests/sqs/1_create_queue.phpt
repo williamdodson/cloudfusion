@@ -11,8 +11,8 @@ AmazonSQS::create_queue
 	$response = $sqs->create_queue('warpshare-unit-test');
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

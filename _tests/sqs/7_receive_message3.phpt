@@ -13,8 +13,8 @@ AmazonSQS::receive_message, change visibility timeout
 	));
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

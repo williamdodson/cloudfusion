@@ -8,13 +8,13 @@ AmazonSQS::cache_response CachePDO:SQLite
 
 	// First time pulls live data
 	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:' . dirname(dirname(__FILE__)) . '/_cache/sqlite.db', 10);
-	var_dump($response->status);
+	var_dump($response->isOK());
 
 	// Second time pulls from cache
 	$response = $sqs->cache_response('list_queues', 'pdo.sqlite:' . dirname(dirname(__FILE__)) . '/_cache/sqlite.db', 10);
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
+bool(true)
+bool(true)

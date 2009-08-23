@@ -13,8 +13,8 @@ AmazonSQS::receive_message, only a single message
 	));
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

@@ -11,8 +11,8 @@ AmazonSQS::list_queues, with prefix
 	$response = $sqs->list_queues('a');
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)
