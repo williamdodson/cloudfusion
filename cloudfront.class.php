@@ -47,17 +47,6 @@ class CloudFront_Exception extends Exception {}
  *
  * Extends:
  * 	CloudFusion
- *
- * Example Usage:
- * (start code)
- * require_once('cloudfusion.class.php');
- *
- * // Instantiate a new AmazonCloudFront object using the settings from the config.inc.php file.
- * $cdn = new AmazonCloudFront();
- *
- * // Instantiate a new AmazonCloudFront object using these specific settings.
- * $cdn = new AmazonCloudFront($key, $secret_key);
- * (end)
  */
 class AmazonCloudFront extends CloudFusion
 {
@@ -84,9 +73,6 @@ class AmazonCloudFront extends CloudFusion
 	 *
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
- 	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/__construct.phps
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
@@ -129,7 +115,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/RESTAuthentication.html
+	 * 	http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/RESTAuthentication.html
 	 */
 	public function authenticate($method = HTTP_GET, $path = null, $opt = null, $xml = null, $etag = null)
 	{
@@ -513,7 +499,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/CreateDistribution.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/CreateDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/create_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
@@ -550,7 +536,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/ListDistributions.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/ListDistributions.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/list_distributions.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
@@ -577,7 +563,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetDistribution.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/GetDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_info.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
@@ -605,7 +591,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/DeleteDistribution.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/DeleteDistribution.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/delete_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
@@ -636,7 +622,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/GetConfig.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/GetConfig.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */
@@ -665,7 +651,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/2008-06-30/DeveloperGuide/PutConfig.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/PutConfig.html
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/set_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */

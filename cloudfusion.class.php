@@ -2,9 +2,10 @@
 /**
  * File: CloudFusion
  * 	Core functionality and default settings shared across all CloudFusion classes.
+ * 	This is a base class containing shared functionality. All methods and properties in this class are inherited by the service-specific classes.
  *
  * Version:
- * 	2009.08.14
+ * 	2009.08.24
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -57,7 +58,7 @@ define('CLOUDFUSION_URL', 'http://getcloudfusion.com');
 /**
  * Constant: CLOUDFUSION_USERAGENT
  * User agent string used to identify CloudFusion
- * > CloudFusion/2.1 (Cloud Computing Toolkit; http://getcloudfusion.com) Build/20080927210040
+ * > CloudFusion/2.5 (Cloud Computing Toolkit; http://getcloudfusion.com) Build/20090824000000
  */
 define('CLOUDFUSION_USERAGENT', CLOUDFUSION_NAME . '/' . CLOUDFUSION_VERSION . ' (Cloud Computing Toolkit; ' . CLOUDFUSION_URL . ') Build/' . CLOUDFUSION_BUILD);
 
@@ -131,91 +132,91 @@ class CloudFusion
 {
 	/**
 	 * Property: key
-	 * The Amazon API Key.
+	 * The Amazon API Key. This is inherited by all service-specific classes.
 	 */
 	var $key;
 
 	/**
 	 * Property: secret_key
-	 * The Amazon API Secret Key.
+	 * The Amazon API Secret Key. This is inherited by all service-specific classes.
 	 */
 	var $secret_key;
 
 	/**
 	 * Property: account_id
-	 * The Amazon Account ID, sans hyphens.
+	 * The Amazon Account ID, sans hyphens. This is inherited by all service-specific classes.
 	 */
 	var $account_id;
 
 	/**
 	 * Property: assoc_id
-	 * The Amazon Associates ID.
+	 * The Amazon Associates ID. This is inherited by all service-specific classes.
 	 */
 	var $assoc_id;
 
 	/**
 	 * Property: util
-	 * Handle for the utility functions.
+	 * Handle for the utility functions. This is inherited by all service-specific classes.
 	 */
 	var $util;
 
 	/**
 	 * Property: service
-	 * An identifier for the current AWS service.
+	 * An identifier for the current AWS service. This is inherited by all service-specific classes.
 	 */
 	var $service = null;
 
 	/**
 	 * Property: api_version
-	 * The supported API version.
+	 * The supported API version. This is inherited by all service-specific classes.
 	 */
 	var $api_version = null;
 
 	/**
 	 * Property: utilities_class
-	 * The default class to use for Utilities (defaults to <CFUtilities>).
+	 * The default class to use for Utilities (defaults to <CFUtilities>). This is inherited by all service-specific classes.
 	 */
 	var $utilities_class = 'CFUtilities';
 
 	/**
 	 * Property: request_class
-	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
+	 * The default class to use for HTTP Requests (defaults to <RequestCore>). This is inherited by all service-specific classes.
 	 */
 	var $request_class = 'RequestCore';
 
 	/**
 	 * Property: response_class
-	 * The default class to use for HTTP Responses (defaults to <ResponseCore>).
+	 * The default class to use for HTTP Responses (defaults to <ResponseCore>). This is inherited by all service-specific classes.
 	 */
 	var $response_class = 'ResponseCore';
 
 	/**
 	 * Property: adjust_offset
-	 * The number of seconds to adjust the request timestamp by (defaults to 0).
+	 * The number of seconds to adjust the request timestamp by (defaults to 0). This is inherited by all service-specific classes.
 	 */
 	var $adjust_offset = 0;
 
 	/**
 	 * Property: enable_ssl
-	 * 	Whether SSL/HTTPS should be enabled by default.
+	 * 	Whether SSL/HTTPS should be enabled by default. This is inherited by all service-specific classes.
 	 */
 	var $enable_ssl = true;
 
 	/**
 	 * Property: set_proxy
-	 * 	Sets the proxy to use for connecting.
+	 * 	Sets the proxy to use for connecting. This is inherited by all service-specific classes.
 	 */
 	var $set_proxy = null;
 
 	/**
 	 * Property: devpay_tokens
-	 * 	Stores the Amazon DevPay tokens to use, if any.
+	 * 	Stores the Amazon DevPay tokens to use, if any. This is inherited by all service-specific classes.
 	 */
 	var $devpay_tokens;
 
 	/**
 	 * Property: set_hostname
-	 * 	Stores the alternate hostname to use, if any.
+	 * 	Stores the alternate hostname to use, if any. This is inherited by all service-specific classes.
 	 */
 	var $hostname = null;
 
@@ -274,7 +275,7 @@ class CloudFusion
 
 	/**
 	 * Method: __construct()
-	 * 	The constructor
+	 * 	The constructor. You would not normally instantiate this class directly. Rather, you would instantiate a service-specific class.
 	 *
 	 * Access:
 	 * 	public
@@ -351,6 +352,7 @@ class CloudFusion
 	/**
 	 * Method: adjust_offset()
 	 * 	Allows you to adjust the current time, for occasions when your server is out of sync with Amazon's servers.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -361,8 +363,8 @@ class CloudFusion
 	 * Returns:
 	 * 	void
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/adjust_offset.phps
+ 	 * Examples:
+ 	 * 	example::cloudfusion/adjust_offset.phpt:
 	 */
 	public function adjust_offset($seconds)
 	{
@@ -372,6 +374,7 @@ class CloudFusion
 	/**
 	 * Method: set_proxy()
 	 * 	Set the proxy settings to use for connecting.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -382,8 +385,8 @@ class CloudFusion
 	 * Returns:
 	 * 	void
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_proxy.phps
+ 	 * Examples:
+ 	 * 	example::cloudfusion/set_proxy.phpt:
 	 */
 	public function set_proxy($proxy)
 	{
@@ -392,7 +395,8 @@ class CloudFusion
 
 	/**
 	 * Method: set_hostname()
-	 * 	Set the hostname to use for connecting.
+	 * 	Set the hostname to use for connecting. This is useful for alternate services that are API-compatible with AWS, but run from a different hostname.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -402,6 +406,9 @@ class CloudFusion
 	 *
 	 * Returns:
 	 * 	void
+ 	 *
+ 	 * Examples:
+ 	 * 	example::cloudfusion/set_hostname.phpt:
 	 */
 	public function set_hostname($hostname)
 	{
@@ -410,13 +417,17 @@ class CloudFusion
 
 	/**
 	 * Method: disable_ssl()
-	 * 	Disables SSL/HTTPS connections for hosts that don't support them.
+	 * 	Disables SSL/HTTPS connections for hosts that don't support them. Some services, however, still REQUIRE SSL support.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
 	 *
 	 * Returns:
 	 * 	void
+ 	 *
+ 	 * Examples:
+ 	 * 	example::cloudfusion/disable_ssl.phpt:
 	 */
 	public function disable_ssl()
 	{
@@ -430,6 +441,7 @@ class CloudFusion
 	/**
 	 * Method: set_utilities_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -440,8 +452,8 @@ class CloudFusion
 	 * Returns:
 	 * 	void
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_utilities_class.phps
+ 	 * Examples:
+ 	 * 	example::cloudfusion/set_utilities_class.phpt:
 	 */
 	function set_utilities_class($class = 'CFUtilities')
 	{
@@ -452,6 +464,7 @@ class CloudFusion
 	/**
 	 * Method: set_request_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -462,8 +475,8 @@ class CloudFusion
 	 * Returns:
 	 * 	void
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_request_class.phps
+ 	 * Examples:
+ 	 * 	example::cloudfusion/set_request_class.phpt:
 	 */
 	function set_request_class($class = 'RequestCore')
 	{
@@ -473,6 +486,7 @@ class CloudFusion
 	/**
 	 * Method: set_response_class()
 	 * 	Set a custom class for this functionality. Perfect for extending/overriding existing classes with new functionality.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -483,8 +497,8 @@ class CloudFusion
 	 * Returns:
 	 * 	void
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/set_response_class.phps
+ 	 * Examples:
+ 	 * 	example::cloudfusion/set_response_class.phpt:
 	 */
 	function set_response_class($class = 'ResponseCore')
 	{
@@ -497,7 +511,8 @@ class CloudFusion
 
 	/**
 	 * Method: authenticate()
-	 * 	Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis as necessary. This should not be used directly unless you're writing custom methods for this class.
+	 * 	Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis as necessary.
+	 * 	This method is inherited by all service-specific classes. This should not be used directly unless you're writing custom methods for this class.
 	 *
 	 * Access:
 	 * 	public
@@ -618,6 +633,7 @@ class CloudFusion
 	/**
 	 * Method: cache_response()
 	 * 	Caches a ResponseCore object using the preferred caching method.
+	 * 	This method is inherited by all service-specific classes. You would call this from those classes, not CloudFusion().
 	 *
 	 * Access:
 	 * 	public
@@ -637,8 +653,13 @@ class CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfusion/cache_response.phps
+ 	 * Examples:
+ 	 * 	example::sqs/cache_response_apc.phpt:
+ 	 * 	example::sqs/cache_response_file.phpt:
+ 	 * 	example::sqs/cache_response_memcached.phpt:
+ 	 * 	example::sqs/cache_response_pdo_sqlite.phpt:
+ 	 * 	example::sqs/cache_response_multi_apc.phpt:
+ 	 * 	example::sqs/cache_response_multi_file.phpt:
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{

@@ -343,7 +343,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/BrowseNodeLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/BrowseNodeLookup.html
 	 */
 	public function browse_node_lookup($browse_node_id, $opt = null, $locale = null)
 	{
@@ -396,7 +396,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CartAdd.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartAdd.html
 	 */
 	public function cart_add($cart_id, $hmac, $offer_listing_id, $opt = null, $locale = null)
 	{
@@ -462,7 +462,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CartClear.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartClear.html
 	 */
 	public function cart_clear($cart_id, $hmac, $opt = null, $locale = null)
 	{
@@ -516,7 +516,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CartCreate.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartCreate.html
 	 */
 	public function cart_create($offer_listing_id, $opt = null, $locale = null)
 	{
@@ -581,7 +581,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CartGet.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartGet.html
 	 */
 	public function cart_get($cart_id, $hmac, $cart_item_id, $opt = null, $locale = null)
 	{
@@ -632,7 +632,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CartModify.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartModify.html
 	 */
 	public function cart_modify($cart_id, $hmac, $cart_item_id, $opt = null, $locale = null)
 	{
@@ -700,7 +700,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CustomerContentLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CustomerContentLookup.html
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
 	 */
 	public function customer_content_lookup($customer_id, $opt = null, $locale = null)
@@ -745,7 +745,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/CustomerContentSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CustomerContentSearch.html
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
 	 */
 	public function customer_content_search($email_name, $opt = null)
@@ -801,7 +801,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/Help.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/Help.html
 	 */
 	public function help($opt = null, $locale = null)
 	{
@@ -858,7 +858,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/ItemLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ItemLookup.html
 	 * 	Related - <item_lookup()>, <item_search()>
 	 */
 	public function item_lookup($item_id, $opt = null, $locale = null)
@@ -934,7 +934,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/ItemSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ItemSearch.html
 	 * 	Related - <item_lookup()>, <item_search()>
 	 */
 	public function item_search($keywords, $opt = null, $locale = null)
@@ -992,7 +992,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/ListLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ListLookup.html
 	 * 	Related - <list_lookup()>, <list_search()>
 	 */
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = null)
@@ -1045,7 +1045,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/ListSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ListSearch.html
 	 * 	Related - <list_lookup()>, <list_search()>
 	 */
 	public function list_search($opt = null, $locale = null)
@@ -1097,7 +1097,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/SellerListingLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerListingLookup.html
 	 * 	Related - <seller_listing_search()>, <seller_lookup()>
 	 */
 	public function seller_listing_lookup($item_id, $id_type, $seller_id, $opt = null, $locale = null)
@@ -1152,7 +1152,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/SellerListingSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerListingSearch.html
 	 * 	Related - <seller_listing_lookup()>, <seller_lookup()>
 	 */
 	public function seller_listing_search($seller_id, $opt = null, $locale = null)
@@ -1200,7 +1200,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/SellerLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerLookup.html
 	 * 	Related - <seller_listing_lookup()>, <seller_listing_search()>
 	 */
 	public function seller_lookup($seller_id, $opt = null, $locale = null)
@@ -1262,7 +1262,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/VehiclePartLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehiclePartLookup.html
 	 * 	Related - <vehicle_part_search()>, <vehicle_search()>
 	 */
 	public function vehicle_part_lookup($opt = null)
@@ -1323,7 +1323,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/VehiclePartSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehiclePartSearch.html
 	 * 	Related - <vehicle_part_lookup()>, <vehicle_search()>
 	 */
 	public function vehicle_part_search($make, $model, $year, $opt = null)
@@ -1372,7 +1372,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/VehicleSearch.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehicleSearch.html
 	 * 	Related - <vehicle_part_lookup()>, <vehicle_part_search()>
 	 */
 	public function vehicle_search($opt = null)
@@ -1426,7 +1426,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/SimilarityLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SimilarityLookup.html
 	 * 	Related - <tag_lookup()>, <transaction_lookup()>
 	 */
 	function similarity_lookup($item_id, $opt = null, $locale = null)
@@ -1475,7 +1475,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/TagLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/TagLookup.html
 	 * 	Related - <similarity_lookup()>, <transaction_lookup()>
 	 */
 	function tag_lookup($tagname, $opt = null)
@@ -1517,7 +1517,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/2008-08-19/DG/TransactionLookup.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/TransactionLookup.html
 	 * 	Related - <similarity_lookup()>, <tag_lookup()>
 	 */
 	function transaction_lookup($transaction_id, $opt = null)

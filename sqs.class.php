@@ -47,17 +47,6 @@ class SQS_Exception extends Exception {}
  *
  * Extends:
  * 	CloudFusion
- *
- * Example Usage:
- * (start code)
- * require_once('cloudfusion.class.php');
- *
- * // Instantiate a new AmazonSQS object using the settings from the config.inc.php file.
- * $sqs = new AmazonSQS();
- *
- * // Instantiate a new AmazonSQS object using these specific settings.
- * $sqs = new AmazonSQS($key, $secret_key);
- * (end)
  */
 class AmazonSQS extends CloudFusion
 {
@@ -116,10 +105,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/1_create_queue.phpt:
- 	 * 	example::sqs/1_create_queue2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryCreateQueue.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryCreateQueue.html
 	 * 	Related - <delete_queue()>, <list_queues()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
@@ -146,10 +134,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/z_delete_queue.phpt:
- 	 * 	example::sqs/z_delete_queue2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteQueue.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryDeleteQueue.html
 	 * 	Related - <create_queue()>, <list_queues()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function delete_queue($queue_url, $returnCurlHandle = null)
@@ -176,10 +163,9 @@ class AmazonSQS extends CloudFusion
  	 * Examples:
  	 * 	example::sqs/2_list_queues.phpt:
  	 * 	example::sqs/2_list_queues2.phpt:
- 	 * 	example::sqs/2_list_queues3.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryListQueues.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryListQueues.html
 	 * 	Related - <create_queue()>, <delete_queue()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
 	public function list_queues($queue_name_prefix = null, $returnCurlHandle = null)
@@ -209,10 +195,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/4_get_queue_attributes.phpt:
- 	 * 	example::sqs/4_get_queue_attributes2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <set_queue_attributes()>
 	 */
 	public function get_queue_attributes($queue_url, $returnCurlHandle = null)
@@ -243,10 +228,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/3_set_queue_attributes.phpt:
- 	 * 	example::sqs/3_set_queue_attributes2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <get_queue_attributes()>
 	 */
 	public function set_queue_attributes($queue_url, $opt = null)
@@ -283,10 +267,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/5_send_message.phpt:
- 	 * 	example::sqs/5_send_message2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QuerySendMessage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QuerySendMessage.html
 	 * 	Related - <receive_message()>, <delete_message()>
 	 */
 	public function send_message($queue_url, $message, $returnCurlHandle = null)
@@ -317,12 +300,11 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/7_receive_message.phpt:
- 	 * 	example::sqs/7_receive_message2.phpt:
  	 * 	example::sqs/7_receive_message3.phpt:
  	 * 	example::sqs/7_receive_message4.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryReceiveMessage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryReceiveMessage.html
 	 * 	Related - <send_message()>, <delete_message()>
 	 */
 	public function receive_message($queue_url, $opt = null)
@@ -348,10 +330,9 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/8_delete_message.phpt:
- 	 * 	example::sqs/8_delete_message2.phpt:
  	 *
 	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/2008-01-01/SQSDeveloperGuide/Query_QueryDeleteMessage.html
+	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryDeleteMessage.html
 	 * 	Related - <send_message()>, <receive_message()>
 	 */
 	public function delete_message($queue_url, $receipt_handle, $returnCurlHandle = null)
