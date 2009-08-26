@@ -111,7 +111,6 @@ class AmazonCloudWatch extends CloudFusion
  	 * Examples:
  	 * 	example::cloudwatch/list_metrics.phpt:
  	 * 	example::cloudwatch/list_metrics2.phpt:
- 	 * 	example::cloudwatch/list_metrics3.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudWatch/latest/DeveloperGuide/index.html?API-ListMetrics.html
@@ -151,7 +150,6 @@ class AmazonCloudWatch extends CloudFusion
  	 * 	example::cloudwatch/get_metric_statistics.phpt:
  	 * 	example::cloudwatch/get_metric_statistics2.phpt:
  	 * 	example::cloudwatch/get_metric_statistics3.phpt:
- 	 * 	example::cloudwatch/get_metric_statistics4.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudWatch/latest/DeveloperGuide/index.html?API_GetMetricStatistics.html
