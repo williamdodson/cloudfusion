@@ -4,7 +4,7 @@
  * 	Utilities for connecting to, and working with, AWS.
  *
  * Version:
- * 	2009.07.19
+ * 	2009.08.24
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -54,8 +54,8 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ Base64-encoded string.
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/hex_to_base64.phps
+ 	 * Examples:
+ 	 * 	example::utilities/hex_to_base64.phpt:
 	 */
 	public function hex_to_base64($str)
 	{
@@ -82,8 +82,8 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ URL-friendly query string.
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_query_string.phps
+ 	 * Examples:
+ 	 * 	example::utilities/to_query_string.phpt:
 	 */
 	public function to_query_string($array)
 	{
@@ -103,8 +103,8 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ URL-friendly sign-able string.
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/to_signable_string.phps
+ 	 * Examples:
+ 	 * 	example::utilities/to_signable_string.phpt:
 	 */
 	public function to_signable_string($array)
 	{
@@ -150,8 +150,9 @@ class CFUtilities
 	 * Returns:
 	 * 	_array_ Associative array of keys and values.
 	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/query_to_array.phps
+ 	 * Examples:
+ 	 * 	example::utilities/query_to_array.phpt:
+ 	 * 	example::utilities/query_to_array2.phpt:
 	 */
 	public function query_to_array($qs)
 	{
@@ -194,9 +195,13 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ The human-readable file size.
 	 *
+ 	 * Examples:
+ 	 * 	example::utilities/size_readable.phpt:
+ 	 * 	example::utilities/size_readable2.phpt:
+ 	 * 	example::utilities/size_readable3.phpt:
+ 	 *
 	 * See Also:
 	 * 	Original Function - http://aidanlister.com/repos/v/function.size_readable.php
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/size_readable.phps
 	 */
 	public function size_readable($size, $unit = null, $retstring = null)
 	{
@@ -242,8 +247,8 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ The formatted time.
 	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/time_hms.phps
+ 	 * Examples:
+ 	 * 	example::utilities/time_hms.phpt:
 	 */
 	public function time_hms($seconds)
 	{
@@ -279,8 +284,12 @@ class CFUtilities
 	 * Returns:
 	 * 	_mixed_ Either a matching property of a given object, _boolean_ false, or any other data type you might choose.
 	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/try_these.phps
+ 	 * Examples:
+ 	 * 	example::utilities/try_these.phpt:
+ 	 * 	example::utilities/try_these2.phpt:
+ 	 * 	example::utilities/try_these3.phpt:
+ 	 * 	example::utilities/try_these4.phpt:
+ 	 * 	example::utilities/try_these5.phpt:
 	 */
 	public function try_these($attrs, $base = null, $default = null)
 	{
@@ -321,8 +330,12 @@ class CFUtilities
 	 * Returns:
 	 * 	_string_ A JSON string.
 	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
+ 	 * Examples:
+ 	 * 	example::utilities/json_encode2.phpt:
+ 	 * 	example::utilities/json_encode3.phpt:
+ 	 * 	example::utilities/json_encode4.phpt:
+ 	 * 	example::utilities/json_encode5.phpt:
+ 	 * 	example::utilities/json_encode6.phpt:
 	 */
 	public function json_encode($obj)
 	{
@@ -336,7 +349,7 @@ class CFUtilities
 
 	/**
 	 * Method: json_encode_php51()
-	 * 	Called by CFUtilities::json_encode() if PHP 5.2's json_encode() is unavailable.
+	 * 	Called by CFUtilities::json_encode() if PHP 5.2's json_encode() is unavailable. DO NOT CALL THIS METHOD DIRECTLY! Use $obj->util->json_encode() instead.
 	 *
 	 * Author:
 	 * 	http://us2.php.net/manual/en/function.json-encode.php#82904
@@ -349,9 +362,6 @@ class CFUtilities
 	 *
 	 * Returns:
 	 * 	_string_ A JSON string.
-	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/utilities/json_encode.phps
 	 */
 	public function json_encode_php51($obj)
 	{
@@ -426,11 +436,40 @@ class CFUtilities
 	 * Returns:
 	 * 	_array_ The response value as a standard, multi-dimensional array.
 	 *
+ 	 * Examples:
+ 	 * 	example::utilities/convert_response_to_array.phpt:
+	 *
 	 * Requirements:
 	 * 	PHP 5.2 or newer.
 	 */
 	public function convert_response_to_array(ResponseCore $response)
 	{
 		return json_decode(json_encode((array) $response), true);
+	}
+
+	/**
+	 * Method: convert_date_to_iso8601()
+	 * 	Checks to see if a date stamp is ISO-8601 formatted, and if not, makes it so.
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	datestamp - _string_ (Required) A date stamp, or a string that can be parsed into a date stamp.
+	 *
+	 * Returns:
+	 * 	_string_ An ISO-8601 formatted date stamp.
+	 *
+ 	 * Examples:
+ 	 * 	example::utilities/convert_date_to_iso8601.phpt:
+	 */
+	public function convert_date_to_iso8601($datestamp)
+	{
+		if (!preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}((\+|-)\d{2}:\d{2}|Z)/m', $datestamp))
+		{
+			return gmdate(DATE_FORMAT_ISO8601, strtotime($datestamp));
+		}
+
+		return $datestamp;
 	}
 }
