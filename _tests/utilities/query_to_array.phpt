@@ -3,13 +3,20 @@ CFUtilities - query_to_array
 
 --FILE--
 <?php
+	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
+
+	// Instantiate
 	$util = new CFUtilities();
+
+	// Test data
 	$qs = $util->to_query_string(array(
 		'a' => 1,
 		'b' => 2,
 		'c' => 3,
 	));
+
+	// Success?
 	var_dump($qs);
 	var_dump($util->query_to_array($qs));
 ?>

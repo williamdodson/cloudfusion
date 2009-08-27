@@ -3,8 +3,13 @@ AmazonSDB::batch_put_attributes with replace specific
 
 --FILE--
 <?php
+	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
+
+	// Instantiate
 	$sdb = new AmazonSDB();
+
+	// Test data
 	$response = $sdb->batch_put_attributes('warpshare-unit-test', array(
 		'item1' => array(
 			'key1' => 'value1',
@@ -43,6 +48,7 @@ AmazonSDB::batch_put_attributes with replace specific
 	));
 	$url = $response->header['_info']['url'];
 
+	// Are these stored in the URL properly?
 	var_dump((stristr($url, 'Item.0.Attribute.0.Replace') !== false) ? true : false);
 	var_dump((stristr($url, 'Item.0.Attribute.1.Replace') !== false) ? true : false);
 	var_dump((stristr($url, 'Item.0.Attribute.2.Replace') !== false) ? true : false);

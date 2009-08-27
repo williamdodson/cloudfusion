@@ -3,7 +3,10 @@ AmazonSDB::cache_response CacheFile
 
 --FILE--
 <?php
+	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
+
+	// Instantiate
 	$sdb = new AmazonSDB();
 
 	// First time pulls live data
@@ -23,5 +26,5 @@ int(200)
 
 --CLEAN--
 <?php
-	
+
 ?>

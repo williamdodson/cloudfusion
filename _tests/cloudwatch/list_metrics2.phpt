@@ -13,7 +13,7 @@ AmazonCloudWatch::list_metrics + NextToken
 	));
 
 	// Success?
-	var_dump($response->isOK());
+	var_dump($response->body->Errors->Error->Code);
 ?>
 
 --EXPECT--

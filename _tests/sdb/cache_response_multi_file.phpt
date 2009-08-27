@@ -3,9 +3,13 @@ AmazonSDB::cache_response MultiCurl CacheFile
 
 --FILE--
 <?php
+	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
+
+	// Instantiate
 	$sdb = new AmazonSDB();
 
+	// Prepare for parallel requests
 	$handles = array();
 	$handles[] = $sdb->list_domains(array(
 		'returnCurlHandle' => true
@@ -14,6 +18,7 @@ AmazonSDB::cache_response MultiCurl CacheFile
 		'returnCurlHandle' => true
 	));
 
+	// Instantiate
 	$http = new RequestCore(null);
 
 	// First time pulls live data

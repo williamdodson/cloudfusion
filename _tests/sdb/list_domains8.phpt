@@ -3,13 +3,18 @@ AmazonSDB::list_domains MaxNumberOfDomains + NextToken + returnCurlHandle
 
 --FILE--
 <?php
+	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
+
+	// Instantiate
 	$sdb = new AmazonSDB();
 	$response = $sdb->list_domains(array(
 		'MaxNumberOfDomains' => 1,
 		'NextToken' => 't',
 		'returnCurlHandle' => true
 	));
+
+	// Success?
 	var_dump($response);
 ?>
 
