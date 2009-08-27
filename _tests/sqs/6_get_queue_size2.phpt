@@ -15,5 +15,5 @@ AmazonSQS::get_queue_size (EU)
 	var_dump($response);
 ?>
 
---EXPECT--
-int(0)
+--EXPECTF--
+int(%d)

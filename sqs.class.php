@@ -115,6 +115,9 @@ class AmazonSQS extends CloudFusion
 	 * 	void
  	 *
 	 * Examples:
+	 * 	example::sqs/1_create_queue3.phpt:
+	 * 	example::sqs/5_send_message3.phpt:
+ 	 * 	example::sqs/z_delete_queue3.phpt:
 	 */
 	public function set_locale($locale)
 	{
@@ -141,6 +144,7 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/1_create_queue.phpt:
+ 	 * 	example::sqs/1_create_queue3.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryCreateQueue.html
@@ -170,6 +174,7 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/z_delete_queue.phpt:
+ 	 * 	example::sqs/z_delete_queue3.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryDeleteQueue.html
@@ -330,6 +335,7 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/5_send_message.phpt:
+ 	 * 	example::sqs/5_send_message3.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QuerySendMessage.html

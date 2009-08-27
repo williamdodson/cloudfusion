@@ -1,6 +1,0 @@
-
----- EXPECTED OUTPUT
-bool(true)
----- ACTUAL OUTPUT
-bool(false)
----- FAILED
