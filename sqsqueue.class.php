@@ -4,7 +4,7 @@
  * 	Queue-centric wrapper for Amazon Simple Queue Service
  *
  * Version:
- * 	2008.11.18
+ * 	2009.08.26
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -152,6 +152,7 @@ class AmazonSQSQueue extends AmazonSQS
 	 * 	public
 	 *
 	 * Parameters:
+ 	 * 	attributes - _string_|_array_ (Optional) The attribute you want to get. Setting this value to 'All' returns all the queue's attributes. Pass a string for a single attribute, or an indexed array for multiple attributes. Possible values are 'All', 'ApproximateNumberOfMessages', 'VisibilityTimeout', 'CreatedTimestamp', 'LastModifiedTimestamp', and 'Policy'. Defaults to 'All'.
 	 * 	returnCurlHandle - See <AmazonSQS::get_queue_attributes()>.
 	 *
 	 * Returns:
@@ -160,11 +161,11 @@ class AmazonSQSQueue extends AmazonSQS
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/get_queue_attributes.phps
 	 */
-	public function get_queue_attributes($returnCurlHandle = null)
+	public function get_queue_attributes($attributes = 'All', $returnCurlHandle = null)
 	{
 		if ($this->queue_url)
 		{
-			return parent::get_queue_attributes($this->queue_url, $returnCurlHandle);
+			return parent::get_queue_attributes($this->queue_url, $attributes, $returnCurlHandle);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -279,6 +280,27 @@ class AmazonSQSQueue extends AmazonSQS
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
 	}
+
+	/**
+	 *
+	 */
+	public function change_message_visibility()
+	{
+
+	}
+
+
+	/*%******************************************************************************************%*/
+	// ACCESS CONTROL METHODS
+
+	// Inherit from parent class
+	// public function generate_policy() {}
+
+	// Inherit from parent class
+	// public function add_permission() {}
+
+	// Inherit from parent class
+	// public function remove_permission() {}
 
 
 	/*%******************************************************************************************%*/

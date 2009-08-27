@@ -139,7 +139,7 @@ class AmazonEC2 extends CloudFusion
 	 * 	locale - _string_ (Required) The locale to explicitly set for EC2. Available options are <EC2_LOCATION_US> and <EC2_LOCATION_EU>.
 	 *
 	 * Returns:
-	 * 	<ResponseCore> object
+	 * 	void
  	 *
 	 * See Also:
 	 * 	Example Usage - http://getcloudfusion.com/docs/examples/ec2/set_locale.phps

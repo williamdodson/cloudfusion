@@ -13,8 +13,11 @@ AmazonCloudWatch::list_metrics + NextToken
 	));
 
 	// Success?
-	var_dump($response->body->Errors->Error->Code);
+	var_dump($response->body->Error->Message);
 ?>
 
 --EXPECT--
-bool(false)
+object(SimpleXMLElement)#7 (1) {
+  [0]=>
+  string(17) "Invalid nextToken"
+}
