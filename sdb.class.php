@@ -602,7 +602,7 @@ class AmazonSDB extends CloudFusion
 	 * Access:
 	 * 	public
 	 *
-	 * DEPRECATED
+	 * DEPRECATED:
 	 * 	Support for this method will be removed in August 2010. Use <select()> instead.
 	 *
 	 * Parameters:
@@ -658,7 +658,7 @@ class AmazonSDB extends CloudFusion
 	 * Access:
 	 * 	public
 	 *
-	 * DEPRECATED
+	 * DEPRECATED:
 	 * 	Support for this method will be removed in August 2010. Use <select()> instead.
 	 *
 	 * Parameters:
