@@ -8,7 +8,7 @@ AmazonSQS::delete_queue, returning the cURL handle
 
 	// Delete a queue, returning the cURL handle
 	$sqs = new AmazonSQS();
-	$response = $sqs->delete_queue(SQS_DEFAULT_URL . '/warpshare-unit-test', true);
+	$response = $sqs->delete_queue('warpshare-unit-test', true);
 
 	// Success?
 	var_dump($response);

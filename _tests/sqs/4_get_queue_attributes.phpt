@@ -8,7 +8,7 @@ AmazonSQS::get_queue_attributes
 
 	// Get queue attributes
 	$sqs = new AmazonSQS();
-	$response = $sqs->get_queue_attributes(SQS_DEFAULT_URL . '/warpshare-unit-test');
+	$response = $sqs->get_queue_attributes('warpshare-unit-test');
 
 	// Success?
 	var_dump($response->isOK());

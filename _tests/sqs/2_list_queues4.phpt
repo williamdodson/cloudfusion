@@ -1,14 +1,15 @@
 --TEST--
-AmazonSQS::delete_queue
+AmazonSQS::list_queues (EU)
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Delete a queue
+	// List queues
 	$sqs = new AmazonSQS();
-	$response = $sqs->delete_queue('warpshare-unit-test');
+	$sqs->set_locale(SQS_LOCATION_EU);
+	$response = $sqs->list_queues();
 
 	// Success?
 	var_dump($response->isOK());

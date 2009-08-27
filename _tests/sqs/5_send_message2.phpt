@@ -8,7 +8,7 @@ AmazonSQS::send_message curl handle
 
 	// Send a message to the queue, returning the cURL handle
 	$sqs = new AmazonSQS();
-	$response = $sqs->send_message(SQS_DEFAULT_URL . '/warpshare-unit-test', 'This is my message.', true);
+	$response = $sqs->send_message('warpshare-unit-test', 'This is my message.', true);
 
 	// Success?
 	var_dump($response);

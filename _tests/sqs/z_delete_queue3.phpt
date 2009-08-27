@@ -1,5 +1,5 @@
 --TEST--
-AmazonSQS::delete_queue
+AmazonSQS::delete_queue (EU)
 
 --FILE--
 <?php
@@ -8,6 +8,7 @@ AmazonSQS::delete_queue
 
 	// Delete a queue
 	$sqs = new AmazonSQS();
+	$sqs->set_locale(SQS_LOCATION_EU);
 	$response = $sqs->delete_queue('warpshare-unit-test');
 
 	// Success?

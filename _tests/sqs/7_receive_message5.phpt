@@ -1,5 +1,5 @@
 --TEST--
-AmazonSQS::receive_message
+AmazonSQS::receive_message (EU)
 
 --FILE--
 <?php
@@ -8,6 +8,7 @@ AmazonSQS::receive_message
 
 	// Receive a message
 	$sqs = new AmazonSQS();
+	$sqs->set_locale(SQS_LOCATION_EU);
 	$response = $sqs->receive_message('warpshare-unit-test');
 
 	// Store the message receipt in a temp file so that the delete message can grab it later.

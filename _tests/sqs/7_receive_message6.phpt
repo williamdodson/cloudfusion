@@ -1,20 +1,21 @@
 --TEST--
-AmazonSQS::receive_message, returning cURL handle
+AmazonSQS::receive_message, only a single message (EU)
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Receive a message, returning the cURL handle
+	// Receive a single message
 	$sqs = new AmazonSQS();
+	$sqs->set_locale(SQS_LOCATION_EU);
 	$response = $sqs->receive_message('warpshare-unit-test', array(
-		'returnCurlHandle' => true
+		'MaxNumberOfMessages' => 1
 	));
 
 	// Success?
-	var_dump($response);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-resource(9) of type (curl)
+bool(true)

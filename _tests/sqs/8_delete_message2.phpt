@@ -8,7 +8,7 @@ AmazonSQS::delete_message, returning cURL handle
 
 	// Delete a message, returning the cURL handle
 	$sqs = new AmazonSQS();
-	$response = $sqs->delete_message(SQS_DEFAULT_URL . '/warpshare-unit-test', null, true);
+	$response = $sqs->delete_message('warpshare-unit-test', null, true);
 
 	// Success?
 	var_dump($response);

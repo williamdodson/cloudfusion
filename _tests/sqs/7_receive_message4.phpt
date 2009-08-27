@@ -8,7 +8,7 @@ AmazonSQS::receive_message, only a single message
 
 	// Receive a single message
 	$sqs = new AmazonSQS();
-	$response = $sqs->receive_message(SQS_DEFAULT_URL . '/warpshare-unit-test', array(
+	$response = $sqs->receive_message('warpshare-unit-test', array(
 		'MaxNumberOfMessages' => 1
 	));
 

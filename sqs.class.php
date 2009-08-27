@@ -162,7 +162,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
 	 * Returns:
@@ -175,11 +175,11 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryDeleteQueue.html
 	 * 	Related - <create_queue()>, <list_queues()>, <get_queue_attributes()>, <set_queue_attributes()>
 	 */
-	public function delete_queue($queue_url, $returnCurlHandle = null)
+	public function delete_queue($queue_name, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('DeleteQueue', $opt, $queue_url);
+		return $this->authenticate('DeleteQueue', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 	/**
@@ -223,7 +223,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	attributes - _string_|_array_ (Optional) The attribute you want to get. Setting this value to 'All' returns all the queue's attributes. Pass a string for a single attribute, or an indexed array for multiple attributes. Possible values are 'All', 'ApproximateNumberOfMessages', 'VisibilityTimeout', 'CreatedTimestamp', 'LastModifiedTimestamp', and 'Policy'. Defaults to 'All'.
  	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
@@ -237,7 +237,7 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <set_queue_attributes()>
 	 */
-	public function get_queue_attributes($queue_url, $attributes = 'All', $returnCurlHandle = null)
+	public function get_queue_attributes($queue_name, $attributes = 'All', $returnCurlHandle = null)
 	{
 		$opt = array();
 
@@ -255,7 +255,7 @@ class AmazonSQS extends CloudFusion
 
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('GetQueueAttributes', $opt, $queue_url);
+		return $this->authenticate('GetQueueAttributes', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 	/**
@@ -266,7 +266,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
@@ -284,7 +284,7 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
 	 * 	Related - <create_queue()>, <delete_queue()>, <list_queues()>, <get_queue_attributes()>
 	 */
-	public function set_queue_attributes($queue_url, $opt = null)
+	public function set_queue_attributes($queue_name, $opt = null)
 	{
 		if (!$opt) $opt = array();
 
@@ -306,7 +306,7 @@ class AmazonSQS extends CloudFusion
 			$count++;
 		}
 
-		return $this->authenticate('SetQueueAttributes', $opt, $queue_url);
+		return $this->authenticate('SetQueueAttributes', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 
@@ -321,7 +321,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	message - _string_ (Required) Message size cannot exceed 8 KB. Allowed Unicode characters (according to http://www.w3.org/TR/REC-xml/#charsets): #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF].
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
@@ -335,11 +335,11 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QuerySendMessage.html
 	 * 	Related - <send_message()>, <receive_message()>, <delete_message()>, <change_message_visibility()>
 	 */
-	public function send_message($queue_url, $message, $returnCurlHandle = null)
+	public function send_message($queue_name, $message, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('SendMessage', $opt, $queue_url, $message);
+		return $this->authenticate('SendMessage', $opt, $this->hostname . '/' . $queue_name, $message);
 	}
 
 	/**
@@ -350,7 +350,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
@@ -371,7 +371,7 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryReceiveMessage.html
 	 * 	Related - <send_message()>, <receive_message()>, <delete_message()>, <change_message_visibility()>
 	 */
-	public function receive_message($queue_url, $opt = null)
+	public function receive_message($queue_name, $opt = null)
 	{
 		if (!$opt) $opt = array();
 
@@ -392,7 +392,7 @@ class AmazonSQS extends CloudFusion
 			unset($opt['AttributeName']);
 		}
 
-		return $this->authenticate('ReceiveMessage', $opt, $queue_url);
+		return $this->authenticate('ReceiveMessage', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 	/**
@@ -403,7 +403,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	receipt_handle - _string_ (Required) The receipt handle of the message to delete, returned by <receive_message()>.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
@@ -417,12 +417,12 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryDeleteMessage.html
 	 * 	Related - <send_message()>, <receive_message()>, <delete_message()>, <change_message_visibility()>
 	 */
-	public function delete_message($queue_url, $receipt_handle, $returnCurlHandle = null)
+	public function delete_message($queue_name, $receipt_handle, $returnCurlHandle = null)
 	{
 		$opt = array();
 		$opt['ReceiptHandle'] = $receipt_handle;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
-		return $this->authenticate('DeleteMessage', $opt, $queue_url);
+		return $this->authenticate('DeleteMessage', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 	/**
@@ -464,10 +464,10 @@ class AmazonSQS extends CloudFusion
 	/**
 	 *
 	 */
-	// public function generate_policy()
-	// {
-	//
-	// }
+	public function generate_policy()
+	{
+
+	}
 
 	/**
 	 * Method: add_permission()
@@ -567,7 +567,7 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	queue_url - _string_ (Required) The URL of the queue to perform the action on.
+	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 *
 	 * Returns:
 	 * 	_integer_ The Approximate number of messages in the queue.
@@ -578,15 +578,15 @@ class AmazonSQS extends CloudFusion
 	 * See Also:
 	 * 	Related - <get_queue_attributes()>
 	 */
-	public function get_queue_size($queue_url)
+	public function get_queue_size($queue_name)
 	{
 		$opt = array();
 		$opt['AttributeName'] = 'ApproximateNumberOfMessages';
-		$response = $this->authenticate('GetQueueAttributes', $opt, $queue_url);
+		$response = $this->authenticate('GetQueueAttributes', $opt, $this->hostname . '/' . $queue_name);
 
 		if ($response->isOK() === false)
 		{
-			throw new SQS_Exception("Could not get queue size for $queue_url: " . $response->body->Error->Code);
+			throw new SQS_Exception("Could not get queue size for $queue_name: " . $response->body->Error->Code);
 		}
 
 		return (integer) $response->body->GetQueueAttributesResult->Attribute->Value;

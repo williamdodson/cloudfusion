@@ -8,7 +8,7 @@ AmazonSQS::set_queue_attributes, changing visibility timeout
 
 	// Change visibility timeout
 	$sqs = new AmazonSQS();
-	$response = $sqs->set_queue_attributes(SQS_DEFAULT_URL . '/warpshare-unit-test', array(
+	$response = $sqs->set_queue_attributes('warpshare-unit-test', array(
 		'VisibilityTimeout' => 7200
 	));
 

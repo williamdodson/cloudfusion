@@ -1,14 +1,15 @@
 --TEST--
-AmazonSQS::receive_message, change visibility timeout
+AmazonSQS::set_queue_attributes, changing visibility timeout (EU)
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Receive a message, and allow more time to process
+	// Change visibility timeout
 	$sqs = new AmazonSQS();
-	$response = $sqs->receive_message('warpshare-unit-test', array(
+	$sqs->set_locale(SQS_LOCATION_EU);
+	$response = $sqs->set_queue_attributes('warpshare-unit-test', array(
 		'VisibilityTimeout' => 7200
 	));
 

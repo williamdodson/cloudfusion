@@ -8,7 +8,7 @@ AmazonSQS::send_message
 
 	// Send a message to the queue
 	$sqs = new AmazonSQS();
-	$response = $sqs->send_message(SQS_DEFAULT_URL . '/warpshare-unit-test', 'This is my message.');
+	$response = $sqs->send_message('warpshare-unit-test', 'This is my message.');
 
 	// Success
 	var_dump($response->isOK());
