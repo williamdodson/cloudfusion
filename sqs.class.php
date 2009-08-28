@@ -237,6 +237,8 @@ class AmazonSQS extends CloudFusion
  	 *
  	 * Examples:
  	 * 	example::sqs/4_get_queue_attributes.phpt:
+ 	 * 	example::sqs/4_get_queue_attributes4.phpt:
+ 	 * 	example::sqs/4_get_queue_attributes5.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryGetQueueAttributes.html
@@ -360,7 +362,7 @@ class AmazonSQS extends CloudFusion
 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
-	 * 	AttributeName - _string_|_array_ (Optional)
+	 * 	AttributeName - _string_|_array_ (Optional) The attribute you want to get. Pass a string for a single attribute, or an indexed array for multiple attributes. Possible values are 'SenderId' and 'SentTimestamp'.
 	 * 	VisibilityTimeout - _integer_ (Optional) Must be an integer from 0 to 7200 (2 hours).
 	 * 	MaxNumberOfMessages - _integer_ (Optional) Maximum number of messages to return, from 1 to 10. Not necessarily all the messages in the queue are returned. If there are fewer messages in the queue than <MaxNumberOfMessages>, the maximum number of messages returned is the current number of messages in the queue. Defaults to 1 message.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
@@ -372,6 +374,8 @@ class AmazonSQS extends CloudFusion
  	 * 	example::sqs/7_receive_message.phpt:
  	 * 	example::sqs/7_receive_message3.phpt:
  	 * 	example::sqs/7_receive_message4.phpt:
+ 	 * 	example::sqs/7_receive_message7.phpt:
+ 	 * 	example::sqs/7_receive_message8.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/Query_QueryReceiveMessage.html
@@ -387,7 +391,7 @@ class AmazonSQS extends CloudFusion
 			{
 				for ($i = 0, $max = count($opt['AttributeName']); $i < $max; $i++)
 				{
-					$opt['AttributeName.' . ($i + 1)] = $attributes[$i];
+					$opt['AttributeName.' . ($i + 1)] = $opt['AttributeName'][$i];
 				}
 			}
 			else
