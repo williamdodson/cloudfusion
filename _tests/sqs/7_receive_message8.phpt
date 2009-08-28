@@ -8,7 +8,6 @@ AmazonSQS::receive_message, multiple attributes
 
 	// Receive a single message
 	$sqs = new AmazonSQS();
-	$sqs->set_locale(SQS_LOCATION_EU);
 	$response = $sqs->receive_message('warpshare-unit-test', array(
 		'AttributeName' => array(
 			'SenderId',

@@ -487,9 +487,9 @@ class AmazonSQS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
+ 	 * 	queue_name - _string_ (Required) The name of the queue to perform the action on.
 	 * 	label - _string_ (Required) The unique identification of the permission you're setting. Maximum 80 characters; alphanumeric characters, hyphens (-), and underscores (_) are allowed.
-	 * 	aws_account_id - _string_|_array_ (Required) The AWS account number of the principal who will be given permission. The principal must have an AWS account, but does not need to be signed up for Amazon SQS. Pass a string for a single account ID, or an indexed array for multiple account IDs.
-	 * 	action - _string_|_array_ (Required) The action you want to allow for the specified principal. Pass a string for a single action, or an indexed array for multiple actions. Valid values are '*', 'SendMessage', 'ReceiveMessage', 'DeleteMessage', 'ChangeMessageVisibility', or 'GetQueueAttributes'.
+	 * 	permissions - _array_ (Required) An associative array of AWS account numbers (key) and the actions they're allowed to execute (value). AWS account numbers are for those who will be given permission. Actions can be passed as a string for a single action, or an indexed array for multiple actions. Valid values are '*', 'SendMessage', 'ReceiveMessage', 'DeleteMessage', 'ChangeMessageVisibility', or 'GetQueueAttributes'.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
 	 * Returns:
@@ -501,40 +501,46 @@ class AmazonSQS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/index.html?Query_QueryAddPermission.html
 	 * 	Related - <add_permission()>, <remove_permission()>, <generate_policy()>
 	 */
-	public function add_permission($label, $aws_account_id, $action, $returnCurlHandle = null)
+	public function add_permission($queue_name, $label, $permissions, $returnCurlHandle = null)
 	{
-		if (!$opt) $opt = array();
+		$opt = array();
 		$opt['Label'] = $label;
 
-		// AWS account IDs
-		if (is_array($aws_account_id))
-		{
-			for ($i = 0, $max = count($aws_account_id); $i < $max; $i++)
-			{
-				$opt['AWSAccountId.' . ($i + 1)] = $aws_account_id[$i];
-			}
-		}
-		else
-		{
-			$opt['AWSAccountId.1'] = $aws_account_id;
-		}
+		// Starting point.
+		$count = 1;
 
-		// Actions
-		if (is_array($action))
+		// Parse through the array
+		if (is_array($permissions))
 		{
-			for ($i = 0, $max = count($action); $i < $max; $i++)
+			foreach ($permissions as $account_id => $actions)
 			{
-				$opt['ActionName.' . ($i + 1)] = $action[$i];
+				if (is_array($actions))
+				{
+					foreach ($actions as $action)
+					{
+						$opt['AWSAccountId.' . $count] = $account_id;
+						$opt['ActionName.' . $count] = $action;
+
+						$count++;
+					}
+				}
+				else
+				{
+					$opt['AWSAccountId.1'] = $account_id;
+					$opt['ActionName.1'] = $actions;
+				}
+
+				$count++;
 			}
 		}
 		else
 		{
-			$opt['ActionName.1'] = $action;
+			throw new SQS_Exception('$permissions MUST be an associative array of AWS Account IDs and Actions they\'re allowed to execute.');
 		}
 
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
-		return $this->authenticate('AddPermission', $opt, $this->hostname);
+		return $this->authenticate('AddPermission', $opt, $this->hostname . '/' . $queue_name);
 	}
 
 	/**
