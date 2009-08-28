@@ -589,107 +589,7 @@ class AmazonSDB extends CloudFusion
 
 
 	/*%******************************************************************************************%*/
-	// QUERY & SELECT
-
-	/**
-	 * Method: query()
-	 * 	Returns a set of ItemNames that match the query expression. Query operations that run longer than 5 seconds will likely time-out and return a time-out error response. A Query with no QueryExpression matches all items in the domain.
-	 *
-	 * 	The Query operation returns a list of ItemNames that match the query expression. The maximum number that can be returned by one query is determined by MaxNumberOfItems which can be set to number between 1 and 250, inclusive. The default value for MaxNumberOfItems is 100. If more than MaxNumberOfItems items match the query expression, a NextToken is also returned.
-	 *
-	 * 	Submitting the query again with the NextToken will return the next set of items. To obtain all items matching the query expression, repeat until no NextToken is returned.
-	 *
-	 * Access:
-	 * 	public
-	 *
-	 * DEPRECATED:
-	 * 	Support for this method will be removed in August 2010. Use <select()> instead.
-	 *
-	 * Parameters:
-	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
-	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
-	 * 	follow - _boolean_ (Optional) Whether to take the next step and fetch the items that are returned. This enables very similar functionality to <query_with_attributes()>, except that the response is a bit different and it can return a larger data set. Defaults to false.
-	 *
-	 * Keys for the $opt parameter:
-	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
-	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
-	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 *
-	 * Returns:
-	 * 	<ResponseCore> object
- 	 *
-	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/latest/DeveloperGuide/SDB_API_Query.html
- 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
-	 */
-	public function query($domain_name, $opt = null, $expression = null, $follow = null)
-	{
-		if (!$opt) $opt = array();
-
-		$opt['DomainName'] = $domain_name;
-		$opt['QueryExpression'] = $expression;
-
-		$query = $this->authenticate('Query', $opt, $this->hostname);
-
-		// If $follow is requested, and there's at least one response to follow...
-		if ($follow && isset($query->body->QueryResult->ItemName))
-		{
-			$handles = array();
-
-			foreach ($query->body->QueryResult->ItemName as $item)
-			{
-				$handles[] = $this->get_attributes($domain_name, $item, null, true);
-			}
-
-			$request = new $this->request_class(null);
-			return $request->send_multi_request($handles);
-		}
-
-		return $query;
-	}
-
-	/**
-	 * Method: query_with_attributes()
-	 * 	The QueryWithAttributes operation returns a set of Attributes for ItemNames that match the query expression. QueryWithAttributes operations that run longer than 5 seconds will likely time-out and return a time-out error response. A QueryWithAttributes with no QueryExpression matches all items in the domain.
-	 *
-	 * 	The total size of the response cannot exceed 1 MB in total size. Amazon SimpleDB automatically adjusts the number of items returned per page to enforce this limit. For example, even if you ask to retrieve 250 items, but each individual item is 100 kB in size, the system returns 10 items and an appropriate NextToken to get the next page of results.
-	 *
-	 * Access:
-	 * 	public
-	 *
-	 * DEPRECATED:
-	 * 	Support for this method will be removed in August 2010. Use <select()> instead.
-	 *
-	 * Parameters:
-	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
-	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
-	 * 	expression - _string_ (Optional) The SimpleDB query expression to use.
-	 *
-	 * Keys for the $opt parameter:
-	 * 	AttributeName - _string_ (Optional) The name of the attribute to return. To return multiple attributes, you can specify this request parameter multiple times.
-	 * 	MaxNumberOfDomains - _integer_ (Optional) The maximum number of domain names you want returned. The range is 1 to 100.
-	 * 	NextToken - _string_ (Optional) String that tells Amazon SimpleDB where to start the next list of domain names.
-	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 *
-	 * Returns:
-	 * 	<ResponseCore> object
- 	 *
-	 * See Also:
-	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/latest/DeveloperGuide/SDB_API_QueryWithAttributes.html
- 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
-	 */
-	public function query_with_attributes($domain_name, $opt = null, $expression = null)
-	{
-		if (!$opt) $opt = array();
-
-		$opt['DomainName'] = $domain_name;
-		$opt['QueryExpression'] = $expression;
-
-		$query = $this->authenticate('QueryWithAttributes', $opt, $this->hostname);
-
-		return $query;
-	}
+	// SELECT
 
 	/**
 	 * Method: select()
@@ -717,7 +617,7 @@ class AmazonSDB extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonSimpleDB/latest/DeveloperGuide/SDB_API_Select.html
- 	 * 	Related - <query()>, <query_with_attributes()>, <select()>
+ 	 * 	Related - <select()>
 	 */
 	public function select($expression, $opt = null)
 	{
