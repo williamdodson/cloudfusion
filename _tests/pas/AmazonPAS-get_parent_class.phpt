@@ -1,11 +1,11 @@
 --TEST--
-AmazonAAWS - Get parent class
+AmazonPAS - Get parent class
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
-	$s3 = new AmazonAAWS();
-	var_dump(get_parent_class('AmazonAAWS'));
+	$pas = new AmazonPAS();
+	var_dump(get_parent_class('AmazonPAS'));
 ?>
 
 --EXPECT--

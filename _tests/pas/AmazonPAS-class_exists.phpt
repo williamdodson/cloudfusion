@@ -1,12 +1,12 @@
 --TEST--
-AmazonAAWS - Object type
+AmazonPAS - Exists
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
-	$s3 = new AmazonAAWS();
-	var_dump(get_class($s3));
+	$pas = new AmazonPAS();
+	var_dump(class_exists('AmazonPAS'));
 ?>
 
 --EXPECT--
-string(10) "AmazonAAWS"
+bool(true)

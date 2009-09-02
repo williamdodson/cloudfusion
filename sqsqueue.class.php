@@ -4,7 +4,7 @@
  * 	Queue-centric wrapper for Amazon Simple Queue Service
  *
  * Version:
- * 	2009.08.26
+ * 	2009.09.02
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -51,10 +51,10 @@ class SQSQueue_Exception extends Exception {}
 class AmazonSQSQueue extends AmazonSQS
 {
 	/**
-	 * Property: queue_url
+	 * Property: queue_name
 	 * 	The queue URL to use for every request.
 	 */
-	var $queue_url;
+	var $queue_name;
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -74,12 +74,14 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	_boolean_ false if no valid values are set, otherwise true.
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/__construct.phps
+	 * Examples:
+	 * 	example::sqsqueue/5_send_message.phpt:
+	 * 	example::sqsqueue/7_receive_message.phpt:
+ 	 * 	example::sqsqueue/8_delete_message.phpt:
 	 */
 	public function __construct($queue = null, $key = null, $secret_key = null)
 	{
-		$this->queue_url = SQS_DEFAULT_URL . '/' . $queue;
+		$this->queue_name = $queue;
 		return parent::__construct($key, $secret_key);
 	}
 
@@ -103,8 +105,9 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/create_queue.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/1_create_queue.phpt:
+ 	 * 	example::sqsqueue/1_create_queue3.phpt:
 	 */
 	public function create_queue($queue_name, $returnCurlHandle = null)
 	{
@@ -112,7 +115,7 @@ class AmazonSQSQueue extends AmazonSQS
 
 		if ($data instanceof ResponseCore)
 		{
-			$this->queue_url = (string) $data->body->CreateQueueResult->QueueUrl;
+			$this->queue_name = (string) $data->body->CreateQueueResult->QueueUrl;
 		}
 
 		return $data;
@@ -131,14 +134,15 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/delete_queue.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/z_delete_queue.phpt:
+ 	 * 	example::sqsqueue/z_delete_queue3.phpt:
 	 */
 	public function delete_queue($returnCurlHandle = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::delete_queue($this->queue_url, $returnCurlHandle);
+			return parent::delete_queue($this->queue_name, $returnCurlHandle);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -158,14 +162,16 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/get_queue_attributes.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/4_get_queue_attributes.phpt:
+ 	 * 	example::sqsqueue/4_get_queue_attributes4.phpt:
+ 	 * 	example::sqsqueue/4_get_queue_attributes5.phpt:
 	 */
 	public function get_queue_attributes($attributes = 'All', $returnCurlHandle = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::get_queue_attributes($this->queue_url, $attributes, $returnCurlHandle);
+			return parent::get_queue_attributes($this->queue_name, $attributes, $returnCurlHandle);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -184,14 +190,14 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/set_queue_attributes.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/3_set_queue_attributes.phpt:
 	 */
 	public function set_queue_attributes($opt = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::set_queue_attributes($this->queue_url, $opt);
+			return parent::set_queue_attributes($this->queue_name, $opt);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -215,14 +221,15 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/send_message.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/5_send_message.phpt:
+ 	 * 	example::sqsqueue/5_send_message3.phpt:
 	 */
 	public function send_message($message, $returnCurlHandle = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::send_message($this->queue_url, $message, $returnCurlHandle);
+			return parent::send_message($this->queue_name, $message, $returnCurlHandle);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -241,14 +248,18 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/receive_message.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/7_receive_message.phpt:
+ 	 * 	example::sqsqueue/7_receive_message3.phpt:
+ 	 * 	example::sqsqueue/7_receive_message4.phpt:
+ 	 * 	example::sqsqueue/7_receive_message7.phpt:
+ 	 * 	example::sqsqueue/7_receive_message8.phpt:
 	 */
 	public function receive_message($opt = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::receive_message($this->queue_url, $opt);
+			return parent::receive_message($this->queue_name, $opt);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -268,14 +279,14 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	<ResponseCore> object
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/delete_message.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/8_delete_message.phpt:
 	 */
 	public function delete_message($receipt_handle, $returnCurlHandle = null)
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::delete_message($this->queue_url, $receipt_handle, $returnCurlHandle);
+			return parent::delete_message($this->queue_name, $receipt_handle, $returnCurlHandle);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);
@@ -296,11 +307,9 @@ class AmazonSQSQueue extends AmazonSQS
 	// Inherit from parent class
 	// public function generate_policy() {}
 
-	// Inherit from parent class
-	// public function add_permission() {}
+	public function add_permission() {}
 
-	// Inherit from parent class
-	// public function remove_permission() {}
+	public function remove_permission() {}
 
 
 	/*%******************************************************************************************%*/
@@ -316,14 +325,14 @@ class AmazonSQSQueue extends AmazonSQS
 	 * Returns:
 	 * 	_integer_ The Approximate number of messages in the queue.
  	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/sqsqueue/get_queue_size.phps
+ 	 * Examples:
+ 	 * 	example::sqsqueue/6_get_queue_size.phpt:
 	 */
 	public function get_queue_size()
 	{
-		if ($this->queue_url)
+		if ($this->queue_name)
 		{
-			return parent::get_queue_size($this->queue_url);
+			return parent::get_queue_size($this->queue_name);
 		}
 
 		throw new SQSQueue_Exception(SQSQUEUE_DEFAULT_ERROR);

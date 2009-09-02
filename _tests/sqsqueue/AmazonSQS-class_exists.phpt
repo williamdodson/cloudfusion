@@ -1,11 +1,11 @@
 --TEST--
-AmazonAAWS - Exists
+AmazonSQSQueue - Exists
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
-	$s3 = new AmazonAAWS();
-	var_dump(class_exists('AmazonAAWS'));
+	$sqs = new AmazonSQSQueue();
+	var_dump(class_exists('AmazonSQSQueue'));
 ?>
 
 --EXPECT--
