@@ -331,7 +331,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
-	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below)
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'BrowseNodeInfo' (default), 'NewReleases', 'TopSellers'.
