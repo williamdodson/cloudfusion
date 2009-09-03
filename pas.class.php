@@ -723,7 +723,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
  	 * Examples:
- 	 * 	example::pas/help_customer_content_lookup.phpt:
+ 	 * 	example::pas/help_customer_content_lookup.php:
  	 * 	example::pas/customer_content_lookup.phpt:
  	 * 	example::pas/customer_content_lookup2.phpt:
  	 *
@@ -775,7 +775,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
  	 * Examples:
- 	 * 	example::pas/help_customer_content_search.phpt:
+ 	 * 	example::pas/help_customer_content_search.php:
  	 * 	example::pas/customer_content_search.phpt:
  	 * 	example::pas/customer_content_search2.phpt:
  	 *
