@@ -342,6 +342,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_browse_node_lookup.php:
+ 	 * 	example::pas/browse_node_lookup.phpt:
+ 	 * 	example::pas/browse_node_lookup2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/BrowseNodeLookup.html
 	 */
@@ -699,6 +704,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/customer_content_lookup.phpt:
+ 	 * 	example::pas/customer_content_lookup2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CustomerContentLookup.html
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
@@ -744,6 +753,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/customer_content_search.phpt:
+ 	 * 	example::pas/customer_content_search2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CustomerContentSearch.html
 	 * 	Related - <customer_content_lookup()>, <customer_content_search()>
@@ -783,13 +796,13 @@ class AmazonPAS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
+ 	 * 	about - _string_ (Required) Specifies the operation or response group about which you want more information. Allows all PAS operations, all PAS response groups.
+	 * 	help_type - _string_ (Required) Specifies whether the help topic is an operation or response group. HelpType and About values must both be operations or response groups, not a mixture of the two. Allows 'Operation' or 'ResponseGroup'.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
-	 * 	About - _string_ (Optional) Specifies the operation or response group about which you want more information. Allows all PAS operations, all PAS response groups.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
-	 * 	HelpType - _string_ (Optional) Specifies whether the help topic is an operation or response group. HelpType and About values must both be operations or response groups, not a mixture of the two. Allows 'Operation' or 'ResponseGroup'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Request' or 'Help'.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
@@ -800,12 +813,18 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/Help.html
 	 */
-	public function help($opt = null, $locale = null)
+	public function help($about, $help_type, $opt = null, $locale = null)
 	{
 		if (!$opt) $opt = array();
+
+		$opt['About'] = $about;
+		$opt['HelpType'] = $help_type;
 
 		if (isset($this->assoc_id) && !empty($this->assoc_id))
 		{

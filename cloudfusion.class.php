@@ -263,7 +263,7 @@ class CloudFusion
 			$path .= 'lib' . DIRECTORY_SEPARATOR . 'RequestCore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
 		}
 
-		if (file_exists($path))
+		if (file_exists($path) && !is_dir($path))
 		{
 			require_once($path);
 		}
