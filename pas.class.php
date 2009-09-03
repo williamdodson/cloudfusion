@@ -902,6 +902,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_item_lookup.php:
+ 	 * 	example::pas/item_lookup.phpt:
+ 	 * 	example::pas/item_lookup2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ItemLookup.html
 	 * 	Related - <item_lookup()>, <item_search()>
