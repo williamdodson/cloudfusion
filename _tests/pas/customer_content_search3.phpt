@@ -6,7 +6,7 @@ AmazonPAS::customer_content_search with ResponseGroup
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Browse a node
+	// Look up the user
 	$pas = new AmazonPAS();
 	$response = $pas->customer_content_search('Ryan Parman', array(
 		'ResponseGroup' => 'CustomerInfo'

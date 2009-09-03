@@ -6,7 +6,7 @@ AmazonPAS::customer_content_lookup
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Browse a node
+	// Look up the user
 	$pas = new AmazonPAS();
 	$response = $pas->customer_content_lookup('A1ESH8CKZLUV25');
 

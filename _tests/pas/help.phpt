@@ -1,14 +1,14 @@
 --TEST--
-AmazonPAS::customer_content_search by email
+AmazonPAS::help
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Look up the user
+	// Get help info
 	$pas = new AmazonPAS();
-	$response = $pas->customer_content_search('ryan@getcloudfusion.com');
+	$response = $pas->help('CustomerContentSearch', 'Operation');
 
 	// Success?
 	var_dump($response->isOK());

@@ -1,14 +1,15 @@
 --TEST--
-AmazonPAS::customer_content_search by email
+AmazonPAS::set_locale
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Look up the user
+	// Browse a node
 	$pas = new AmazonPAS();
-	$response = $pas->customer_content_search('ryan@getcloudfusion.com');
+	$pas->set_locale(PAS_LOCALE_US);
+	$response = $pas->item_lookup('B002FZL94O');
 
 	// Success?
 	var_dump($response->isOK());

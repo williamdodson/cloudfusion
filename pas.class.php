@@ -4,7 +4,7 @@
  * 	Product Advertising Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2009.08.20
+ * 	2009.09.03
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -150,8 +150,12 @@ class AmazonPAS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	locale - _string_ (Optional) The locale to use. Allows PAS_LOCALE_US, PAS_LOCALE_UK, PAS_LOCALE_CA, PAS_LOCALE_FR, PAS_LOCALE_DE, PAS_LOCALE_JP
+	 * 	locale - _string_ (Optional) The locale to use. Allows PAS_LOCALE_US, PAS_LOCALE_UK, PAS_LOCALE_CANADA, PAS_LOCALE_FRANCE, PAS_LOCALE_GERMANY, PAS_LOCALE_JAPAN
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/set_locale.phpt:
+ 	 * 	example::pas/set_locale7.phpt:
+ 	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -390,6 +394,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -456,6 +462,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -510,6 +518,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -575,6 +585,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -624,6 +636,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	Action - _string_ (Optional) Change cart items to move items to the Saved-For-Later area, or change Saved-For- Later (SaveForLater) items to the active cart area (MoveToCart).
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	ListItemId - _string_ (Optional) The ListItemId parameter is returned by the ListItems response group. The parameter identifies an item on a list, such as a wishlist. To add this item to a cart, you must include in the <cart_create()> request the item's ASIN and ListItemId. The ListItemId includes the name and address of the list owner, which the ASIN alone does not.
@@ -691,6 +705,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'CustomerInfo' (default), 'CustomerReviews', 'CustomerLists', 'CustomerFull', 'TaggedGuides', 'TaggedItems', 'TaggedListmaniaLists', 'TagsSummary', or 'Tags'.
@@ -707,6 +723,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
  	 * Examples:
+ 	 * 	example::pas/help_customer_content_lookup.phpt:
  	 * 	example::pas/customer_content_lookup.phpt:
  	 * 	example::pas/customer_content_lookup2.phpt:
  	 *
@@ -741,6 +758,8 @@ class AmazonPAS extends CloudFusion
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	CustomerPage - _integer_ (Optional) A positive integer that specifies the page of customer IDs to return. Up to twenty customer IDs are returned per page. Defaults to 1.
 	 * 	Email - _string_ (Optional) Besides the first parameter, you can set the email address here.
@@ -756,6 +775,7 @@ class AmazonPAS extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
  	 * Examples:
+ 	 * 	example::pas/help_customer_content_search.phpt:
  	 * 	example::pas/customer_content_search.phpt:
  	 * 	example::pas/customer_content_search2.phpt:
  	 *
@@ -804,6 +824,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas. Allows 'Request' or 'Help'.
@@ -855,6 +877,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All," a separate set of responses is returned for each valid value of Condition. The default value is "New" (not "All"). So, if your request does not return results, consider setting the value to "All." When the value is "New," the ItemSearch Availability parameter cannot be set to "Available." Amazon only sells items that are "New." Allows 'New', 'Used', 'Collectible', 'Refurbished', and 'All'. Defaults to 'New'.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	IdType - _string_ (Optional) Type of item identifier used to look up an item. All IdTypes except ASINx require a SearchIndex to be specified. SKU requires a MerchantId to be specified also. Allows 'ASIN', 'SKU', 'UPC', 'EAN', 'ISBN' (US only, when search index is Books), and 'JAN'. UPC is not valid in the Canadian locale. Defaults to 'ASIN'.
@@ -910,6 +934,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	Actor - _string_ (Optional) Name of an actor associated with the item. You can enter all or part of the name.
 	 * 	Artist - _string_ (Optional) 	Name of an artist associated with the item. You can enter all or part of the name.
 	 * 	AudienceRating - _string_ (Optional) Movie ratings based on MPAA ratings or age, depending upon the locale. You may specify one or more values in a comma-separated list.
@@ -996,6 +1022,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All", a separate set of responses is returned for each valid value of Condition. Allows 'All', 'Collectible', 'Refurbished', or 'Used'.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	IsOmitPurchasedItems - _boolean_ (Optional) If you set IsOmitPurchasedItems to TRUE, items on a wishlist that have been purchased will not be returned. Only those items that have not been purchased or those for which the entire quantity has not been purchased are returned. Defaults to FALSE.
@@ -1046,6 +1074,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 *  City - _string_ (Optional) City in which the list creator lives.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 *  Email - _string_ (Optional) E-mail address of the list creator. This parameter is not supported for the BabyRegistry.
@@ -1106,6 +1136,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 *  ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
@@ -1157,6 +1189,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	ListingPage - _integer_ (Optional) Page of the response to return. Up to ten lists are returned per page. For customers that have more than ten lists, more than one page of results are returned. By default, the first page is returned. To return another page, specify the page number. Allows 1 through 500.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -1208,6 +1242,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	FeedbackPage - _string_ (Optional) Specifies the page of reviews to return. Up to five reviews are returned per page. The first page is returned by default. To access additional pages, use this parameter to specify the desired page. The maximum number of pages that can be returned is 10 (50 feedback items). Allows 1 through 10.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -1254,6 +1290,8 @@ class AmazonPAS extends CloudFusion
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	BedId - _integer_ (Optional) Identifier that uniquely identifies the bed style of a truck. This parameter does not pertain to cars.
 	 * 	BodyStyleId - _integer_ (Optional) 	Identifier that uniquely identifies the body style of the car.
 	 * 	BrakesId - _integer_ (Optional) Identifier that uniquely identifies the brake type on a car.
@@ -1316,6 +1354,8 @@ class AmazonPAS extends CloudFusion
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	BedId - _integer_ (Optional) Identifier that uniquely identifies the bed style of a truck. This parameter does not pertain to cars.
 	 * 	BodyStyleId - _integer_ (Optional) 	Identifier that uniquely identifies the body style of the car.
 	 * 	BrakesId - _integer_ (Optional) Identifier that uniquely identifies the brake type on a car.
@@ -1377,6 +1417,8 @@ class AmazonPAS extends CloudFusion
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MakeId - _integer_ (Optional; Sometimes Required) Identifier that uniquely identifies the make of the car. The make is the car's manufacturer, such as Ford or General Motors. Use with 'Year' to get model.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -1433,6 +1475,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	Condition - _string_ (Optional) Specifies an item's condition. If Condition is set to "All", a separate set of responses is returned for each valid value of Condition. Allows 'All', 'Collectible', 'Refurbished', or 'Used'.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) Specifies the merchant who is offering the item. MerchantId is an alphanumeric identifier assigned by Amazon to merchants. Make sure to use a Merchant ID and not a Seller ID. Seller IDs are not supported.
@@ -1480,6 +1524,8 @@ class AmazonPAS extends CloudFusion
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	Count - _integer_ (Optional) Number of tagged entities to return per tag. The default is 5; the maximum is 20.
 	 * 	CustomerId - _string_ (Optional) Alphanumeric token that uniquely identifies a customer. This parameter limits the tags returned to those provided by a single customer.
@@ -1526,6 +1572,8 @@ class AmazonPAS extends CloudFusion
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
+	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
+	 *
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
 	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
