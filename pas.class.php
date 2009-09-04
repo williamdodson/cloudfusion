@@ -985,6 +985,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_item_search.php:
+ 	 * 	example::pas/item_search.phpt:
+ 	 * 	example::pas/item_search2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ItemSearch.html
 	 * 	Related - <item_lookup()>, <item_search()>
@@ -1045,6 +1050,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_list_lookup.php:
+ 	 * 	example::pas/list_lookup.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ListLookup.html
 	 * 	Related - <list_lookup()>, <list_search()>
@@ -1052,8 +1061,8 @@ class AmazonPAS extends CloudFusion
 	public function list_lookup($list_id, $list_type, $opt = null, $locale = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['ListId'] = $list_id;
-		$opt['ListType'] = $list_type;
+		$opt['ListId'] = isset($list_id) ? $list_id : '';
+		$opt['ListType'] = isset($list_type) ? $list_type : '';
 
 		if (isset($this->assoc_id) && !empty($this->assoc_id))
 		{
@@ -1075,36 +1084,42 @@ class AmazonPAS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
+	 * 	email_name - _string_ (Required) Name or email address of the list creator. This parameter is not supported for the BabyRegistry. Set this to null if you want to explicitly pass FirstName and LastName for $opt.
+	 * 	list_type - _string_ (Required) Specifies the kind of list you are retrieving. Allows 'BabyRegistry', 'WeddingRegistry', 'WishList'.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
 	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
 	 *
-	 *  City - _string_ (Optional) City in which the list creator lives.
+	 * 	City - _string_ (Optional) City in which the list creator lives.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
-	 *  Email - _string_ (Optional) E-mail address of the list creator. This parameter is not supported for the BabyRegistry.
-	 *  FirstName - _string_ (Optional) First name of the list creator. Returns all list owners that have FirstName in their first name. For example, specifying 'John', will return first names of 'John', 'Johnny', and 'Johnson'.
-	 *  LastName - _string_ (Optional) Last name of the list creator. ListSearch returns all list owners that have LastName in their last name. For example, specifying 'Ender', will return the last names of 'Ender', 'Enders', and 'Enderson'.
-	 *  ListPage - _integer_ (Optional) Retrieve a specific page of list IDs. There are ten list IDs per page. The total number of pages is returned in the TotalPages response tag. The default is to return the first page. Allows 1 through 20.
-	 *  ListType - _string_ (Optional) Specifies the kind of list you are retrieving. Allows 'BabyRegistry', 'WeddingRegistry', 'Wishlist'.
+	 * 	Email - _string_ (Optional) E-mail address of the list creator. This parameter is not supported for the BabyRegistry.
+	 * 	FirstName - _string_ (Optional) First name of the list creator. Returns all list owners that have FirstName in their first name. For example, specifying 'John', will return first names of 'John', 'Johnny', and 'Johnson'.
+	 * 	LastName - _string_ (Optional) Last name of the list creator. ListSearch returns all list owners that have LastName in their last name. For example, specifying 'Ender', will return the last names of 'Ender', 'Enders', and 'Enderson'.
+	 * 	ListPage - _integer_ (Optional) Retrieve a specific page of list IDs. There are ten list IDs per page. The total number of pages is returned in the TotalPages response tag. The default is to return the first page. Allows 1 through 20.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
-	 *  Name - _string_ (Optional) Name of the list creator. This parameter is not supported for the BabyRegistry.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
-	 *  State - _string_ (Optional) State in which the list creator lives.
+	 * 	State - _string_ (Optional) State in which the list creator lives.
 	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
-	 *  ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
+	 * 	ResponseGroup - _string_ (Optional) Specifies the types of values to return. You can specify multiple response groups in one request by separating them with commas.
 	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
 	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_list_search.php:
+ 	 * 	example::pas/list_search.phpt:
+ 	 * 	example::pas/list_search2.phpt:
+ 	 * 	example::pas/list_search3.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/ListSearch.html
 	 * 	Related - <list_lookup()>, <list_search()>
 	 */
-	public function list_search($opt = null, $locale = null)
+	public function list_search($email_name, $list_type, $opt = null, $locale = null)
 	{
 		if (!$opt) $opt = array();
 
@@ -1112,6 +1127,17 @@ class AmazonPAS extends CloudFusion
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
+
+		if (strpos($email_name, '@'))
+		{
+			$opt['Email'] = $email_name;
+		}
+		else
+		{
+			$opt['Name'] = isset($email_name) ? $email_name : '';
+		}
+
+		$opt['ListType'] = $list_type;
 
 		return $this->pas_authenticate('ListSearch', $opt, $locale);
 	}

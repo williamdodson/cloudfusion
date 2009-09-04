@@ -6,7 +6,7 @@ AmazonPAS::set_locale
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Browse a node
+	// Set a locale and trigger an operation
 	$pas = new AmazonPAS();
 	$pas->set_locale(PAS_LOCALE_US);
 	$response = $pas->item_lookup('B002FZL94O');

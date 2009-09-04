@@ -1,16 +1,14 @@
 --TEST--
-AmazonPAS::item_lookup with ResponseGroup
+AmazonPAS::list_search by name
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Lookup an item
+	// Search for a list
 	$pas = new AmazonPAS();
-	$response = $pas->item_lookup('B002FZL94O', array(
-		'ResponseGroup' => 'Large'
-	));
+	$response = $pas->list_search('Ryan Parman', 'WishList');
 
 	// Success?
 	var_dump($response->isOK());

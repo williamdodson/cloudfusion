@@ -6,7 +6,7 @@ AmazonPAS::item_lookup
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Browse a node
+	// Lookup an item
 	$pas = new AmazonPAS();
 	$response = $pas->item_lookup('B002FZL94O');
 

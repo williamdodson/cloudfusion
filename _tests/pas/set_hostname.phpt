@@ -6,7 +6,7 @@ AmazonPAS::set_hostname
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Browse a node
+	// Set a hostname and trigger an operation
 	$pas = new AmazonPAS();
 	$pas->set_hostname('ecs.amazonaws.com');
 	$response = $pas->item_lookup('B002FZL94O');

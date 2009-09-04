@@ -1,15 +1,16 @@
 --TEST--
-AmazonPAS::item_lookup with ResponseGroup and returnCurlHandle
+AmazonPAS::list_search, skipping $email_name and explicitly setting FirstName and LastName, with returnCurlHandle.
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Lookup an item
+	// Search for a list
 	$pas = new AmazonPAS();
-	$response = $pas->item_lookup('B002FZL94O', array(
-		'ResponseGroup' => 'Large',
+	$response = $pas->list_search(null, 'WishList', array(
+		'FirstName' => 'Ryan',
+		'LastName' => 'Parman',
 		'returnCurlHandle' => true
 	));
 

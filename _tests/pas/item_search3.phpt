@@ -1,14 +1,14 @@
 --TEST--
-AmazonPAS::item_lookup with ResponseGroup and returnCurlHandle
+AmazonPAS::item_search with ResponseGroup and returnCurlHandle
 
 --FILE--
 <?php
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Lookup an item
+	// Search for an item
 	$pas = new AmazonPAS();
-	$response = $pas->item_lookup('B002FZL94O', array(
+	$response = $pas->item_search('skillet awake', array(
 		'ResponseGroup' => 'Large',
 		'returnCurlHandle' => true
 	));
