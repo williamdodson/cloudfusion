@@ -4,7 +4,7 @@
  * 	Product Advertising Service (http://aws.amazon.com/associates)
  *
  * Version:
- * 	2009.09.03
+ * 	2009.09.04
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -361,7 +361,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['BrowseNodeId'] = $browse_node_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -404,13 +404,12 @@ class AmazonPAS extends CloudFusion
 	 * 	Style - _string_ (Optional) Controls the format of the data returned in Amazon Associates Web Service responses. Set this parameter to "XML," the default, to generate a pure XML response. Set this parameter to the URL of an XSLT stylesheet to have Amazon Associates Web Service transform the XML response. See ContentType.
 	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
 	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
-	 *
- 	 * 	example::pas/help_cart_add.php:
  	 *
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
  	 * Examples:
+	 * 	example::pas/help_cart_add.php:
  	 * 	example::pas/cart_add.phpt:
  	 * 	example::pas/cart_add2.phpt:
  	 * 	example::pas/cart_add3.phpt:
@@ -441,7 +440,7 @@ class AmazonPAS extends CloudFusion
 			$opt['Item.1.Quantity'] = 1;
 		}
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -483,6 +482,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_cart_clear.php:
+	 * 	example::pas/cart_clear.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartClear.html
 	 */
@@ -492,7 +495,7 @@ class AmazonPAS extends CloudFusion
 		$opt['CartId'] = $cart_id;
 		$opt['HMAC'] = $hmac;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -568,7 +571,7 @@ class AmazonPAS extends CloudFusion
 			$opt['Item.1.Quantity'] = 1;
 		}
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -592,13 +595,13 @@ class AmazonPAS extends CloudFusion
 	 * Parameters:
 	 * 	cart_id - _string_ (Required) Alphanumeric token returned by <cart_create()> that identifies a cart.
 	 * 	hmac - _string_ (Required) Encrypted alphanumeric token returned by <cart_create()> that authorizes access to a cart.
-	 * 	cart_item_id - _string_ (Required) Alphanumeric token that uniquely identifies an item in a cart. Once an item, specified by an ASIN or OfferListingId, has been added to a cart, you must use the CartItemId to refer to it. The other identifiers will not work.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
 	 * Keys for the $opt parameter:
 	 * 	THIS IS AN INCOMPLETE LIST. For the latest information, check the AWS documentation page (noted below), or run the <help()> method (noted in the examples below).
 	 *
+	 * 	CartItemId - _string_ (Optional) Alphanumeric token that uniquely identifies an item in a cart. Once an item, specified by an ASIN or OfferListingId, has been added to a cart, you must use the CartItemId to refer to it. The other identifiers will not work.
 	 * 	ContentType - _string_ (Optional) Specifies the format of the content in the response. Generally, ContentType should only be changed for REST requests when the Style parameter is set to an XSLT stylesheet. For example, to transform your Amazon Associates Web Service response into HTML, set ContentType to text/html. Allows 'text/xml' and 'text/html'. Defaults to 'text/xml'.
 	 * 	MergeCart - _boolean_ (Optional) A boolean value that when True specifies that the items in a customer's remote shopping cart are added to the customer's Amazon retail shopping cart. This occurs when the customer elects to purchase the items in their remote shopping cart. When the value is False the remote shopping cart contents are not added to the retail shopping cart. Instead, the customer is sent directly to the Order Pipeline when they elect to purchase the items in their cart. This parameter is valid only in the US locale. In all other locales, the parameter is invalid but the request behaves as though the value were set to True.
 	 * 	MerchantId - _string_ (Optional) An alphanumeric token distributed by Amazon that uniquely identifies a merchant. Allows 'All', 'Amazon', 'FeaturedBuyBoxMerchant', or a specific Merchant ID. Defaults to 'Amazon'.
@@ -611,17 +614,20 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_cart_get.php:
+	 * 	example::pas/cart_get.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartGet.html
 	 */
-	public function cart_get($cart_id, $hmac, $cart_item_id, $opt = null, $locale = null)
+	public function cart_get($cart_id, $hmac, $opt = null, $locale = null)
 	{
 		if (!$opt) $opt = array();
 		$opt['CartId'] = $cart_id;
-		$opt['CartItemId'] = $cart_item_id;
 		$opt['HMAC'] = $hmac;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -643,7 +649,7 @@ class AmazonPAS extends CloudFusion
 	 * Parameters:
 	 * 	cart_id - _string_ (Required) Alphanumeric token returned by <cart_create()> that identifies a cart.
 	 * 	hmac - _string_ (Required) Encrypted alphanumeric token returned by <cart_create()> that authorizes access to a cart.
-	 * 	cart_item_id - _string|array_ (Required) Specifies an item to be modified in the cart where N is a positive integer between 1 and 10, inclusive. Up to ten items can be modified at a time.CartItemId is neither an ASIN nor an OfferListingId. It is, instead, an alphanumeric token returned by <cart_create()> and <cart_add()>. This parameter is used in conjunction with Item.N.Quantity to modify the number of items in a
+	 * 	cart_item_id - _array_ (Required) Associative array that specifies an item to be modified in the cart where N is a positive integer between 1 and 10, inclusive. Up to ten items can be modified at a time. CartItemId is neither an ASIN nor an OfferListingId. It is, instead, an alphanumeric token returned by <cart_create()> and <cart_add()>. This parameter is used in conjunction with Item.N.Quantity to modify the number of items in a cart. Also, instead of adjusting the quantity, you can set 'SaveForLater' or 'MoveToCart' as actions instead.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 * 	locale - _string_ (Optional) Which Amazon-supported locale do we use? Defaults to United States.
 	 *
@@ -664,6 +670,12 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_cart_modify.php:
+	 * 	example::pas/cart_modify.phpt:
+	 * 	example::pas/cart_modify2.phpt:
+	 * 	example::pas/cart_modify3.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartModify.html
 	 */
@@ -678,19 +690,20 @@ class AmazonPAS extends CloudFusion
 			$count = 1;
 			foreach ($cart_item_id as $offer => $quantity)
 			{
-				$opt['Item.' . $count . '.CartItemId'] = $offer;
-				$opt['Item.' . $count . '.Quantity'] = $quantity;
+				$action = is_numeric($quantity) ? 'Quantity' : 'Action';
+
+				$opt['Item.' . $count . '.CartItemId'] 	= $offer;
+				$opt['Item.' . $count . '.' . $action] 		= $quantity;
 
 				$count++;
 			}
 		}
 		else
 		{
-			$opt['Item.1.CartItemId'] = $offer_listing_id;
-			$opt['Item.1.Quantity'] = 1;
+			throw new PAS_Exception('$cart_item_id MUST be an array. See the ' . CLOUDFUSION_NAME . ' documentation for more details.');
 		}
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -748,7 +761,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['CustomerId'] = $customer_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -808,7 +821,7 @@ class AmazonPAS extends CloudFusion
 			$opt['Name'] = $email_name;
 		}
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -862,7 +875,7 @@ class AmazonPAS extends CloudFusion
 		$opt['About'] = $about;
 		$opt['HelpType'] = $help_type;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -928,7 +941,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['ItemId'] = $item_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1011,7 +1024,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['Keywords'] = $keywords;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1076,7 +1089,7 @@ class AmazonPAS extends CloudFusion
 		$opt['ListId'] = isset($list_id) ? $list_id : '';
 		$opt['ListType'] = isset($list_type) ? $list_type : '';
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1135,7 +1148,7 @@ class AmazonPAS extends CloudFusion
 	{
 		if (!$opt) $opt = array();
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1203,7 +1216,7 @@ class AmazonPAS extends CloudFusion
 		$opt['IdType'] = $id_type;
 		$opt['SellerId'] = $seller_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1258,7 +1271,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['SellerId'] = $seller_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1308,7 +1321,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['SellerId'] = $seller_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1371,7 +1384,7 @@ class AmazonPAS extends CloudFusion
 	{
 		if (!$opt) $opt = array();
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1437,7 +1450,7 @@ class AmazonPAS extends CloudFusion
 		$opt['ModelId'] = $model;
 		$opt['Year'] = $year;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1485,7 +1498,7 @@ class AmazonPAS extends CloudFusion
 	{
 		if (!$opt) $opt = array();
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1542,7 +1555,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['ItemId'] = $item_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1593,7 +1606,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['TagName'] = $tagname;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
@@ -1637,7 +1650,7 @@ class AmazonPAS extends CloudFusion
 		if (!$opt) $opt = array();
 		$opt['TransactionId'] = $transaction_id;
 
-		if (isset($this->assoc_id) && !empty($this->assoc_id))
+		if (isset($this->assoc_id))
 		{
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
