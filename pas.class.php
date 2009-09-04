@@ -405,9 +405,16 @@ class AmazonPAS extends CloudFusion
 	 * 	Validate - _boolean_ (Optional) Prevents an operation from executing. Set the Validate parameter to True to test your request without actually executing it. When present, Validate must equal True; the default value is False. If a request is not actually executed (Validate=True), only a subset of the errors for a request may be returned because some errors (for example, no_exact_matches) are only generated during the execution of a request. Defaults to FALSE.
 	 * 	XMLEscaping - _string_ (Optional) Specifies whether responses are XML-encoded in a single pass or a double pass. By default, XMLEscaping is Single, and Amazon Associates Web Service responses are encoded only once in XML. For example, if the response data includes an ampersand character (&), the character is returned in its regular XML encoding (&). If XMLEscaping is Double, the same ampersand character is XML-encoded twice (&amp;). The Double value for XMLEscaping is useful in some clients, such as PHP, that do not decode text within XML elements. Defaults to 'Single'.
 	 *
+ 	 * 	example::pas/help_cart_add.php:
+ 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/cart_add.phpt:
+ 	 * 	example::pas/cart_add2.phpt:
+ 	 * 	example::pas/cart_add3.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartAdd.html
 	 */
@@ -532,6 +539,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_cart_create.php:
+ 	 * 	example::pas/cart_create.phpt:
+ 	 * 	example::pas/cart_create2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/CartCreate.html
 	 */
