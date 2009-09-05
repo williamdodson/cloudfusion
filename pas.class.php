@@ -1205,6 +1205,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_seller_listing_lookup.php:
+ 	 * 	example::pas/seller_listing_lookup.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerListingLookup.html
 	 * 	Related - <seller_listing_search()>, <seller_lookup()>
@@ -1262,6 +1266,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_seller_listing_search.php:
+ 	 * 	example::pas/seller_listing_search.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerListingSearch.html
 	 * 	Related - <seller_listing_lookup()>, <seller_lookup()>
@@ -1312,6 +1320,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_seller_lookup.php:
+ 	 * 	example::pas/seller_lookup.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SellerLookup.html
 	 * 	Related - <seller_listing_lookup()>, <seller_listing_search()>
@@ -1439,6 +1451,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_vehicle_part_search.php:
+ 	 * 	example::pas/vehicle_part_search.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehiclePartSearch.html
 	 * 	Related - <vehicle_part_lookup()>, <vehicle_search()>
@@ -1455,7 +1471,7 @@ class AmazonPAS extends CloudFusion
 			$opt['AssociateTag'] = $this->assoc_id;
 		}
 
-		return $this->pas_authenticate('VehiclePartLookup', $opt, PAS_LOCALE_US);
+		return $this->pas_authenticate('VehiclePartSearch', $opt, PAS_LOCALE_US);
 	}
 
 	/**
@@ -1490,6 +1506,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+ 	 * Examples:
+ 	 * 	example::pas/help_vehicle_search.php:
+ 	 * 	example::pas/vehicle_search.phpt:
+ 	 * 	example::pas/vehicle_search2.phpt:
+ 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehicleSearch.html
 	 * 	Related - <vehicle_part_lookup()>, <vehicle_part_search()>
