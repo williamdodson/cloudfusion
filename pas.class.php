@@ -1682,6 +1682,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_transaction_lookup.php:
+	 * 	example::pas/transaction_lookup.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/TransactionLookup.html
 	 * 	Related - <similarity_lookup()>, <tag_lookup()>
