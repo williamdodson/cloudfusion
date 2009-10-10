@@ -152,10 +152,10 @@ class AmazonPAS extends CloudFusion
 	 * Parameters:
 	 * 	locale - _string_ (Optional) The locale to use. Allows PAS_LOCALE_US, PAS_LOCALE_UK, PAS_LOCALE_CANADA, PAS_LOCALE_FRANCE, PAS_LOCALE_GERMANY, PAS_LOCALE_JAPAN
 	 *
- 	 * Examples:
- 	 * 	example::pas/set_locale.phpt:
- 	 * 	example::pas/set_locale7.phpt:
- 	 *
+	 * Examples:
+	 * 	example::pas/set_locale.phpt:
+	 * 	example::pas/set_locale7.phpt:
+	 *
 	 * Returns:
 	 * 	void
 	 */
@@ -348,11 +348,11 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
- 	 * Examples:
- 	 * 	example::pas/help_browse_node_lookup.php:
- 	 * 	example::pas/browse_node_lookup.phpt:
- 	 * 	example::pas/browse_node_lookup2.phpt:
- 	 *
+	 * Examples:
+	 * 	example::pas/help_browse_node_lookup.php:
+	 * 	example::pas/browse_node_lookup.phpt:
+	 * 	example::pas/browse_node_lookup2.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/BrowseNodeLookup.html
 	 */
@@ -1355,6 +1355,10 @@ class AmazonPAS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
+	 * 	make_id - _integer_ (Required) Identifier that uniquely identifies the make of the car. This can be retrieved by using <vehicle_search()> first.
+	 * 	model_id - _integer_ (Required) Identifier that uniquely identifies the model of the car. This can be retrieved by using <vehicle_search()> first.
+	 * 	year - _integer_ (Required) The year of the car the part works in.
+	 * 	item_id - _string_ (Required) The part ID to lookup. This is typically an ASIN, and can be looked up with <vehicle_part_search()>.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
@@ -1388,13 +1392,21 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_vehicle_part_lookup.php:
+	 * 	example::pas/vehicle_part_lookup.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehiclePartLookup.html
 	 * 	Related - <vehicle_part_search()>, <vehicle_search()>
 	 */
-	public function vehicle_part_lookup($opt = null)
+	public function vehicle_part_lookup($make_id, $model_id, $year, $item_id, $opt = null)
 	{
 		if (!$opt) $opt = array();
+		$opt['MakeId'] = $make_id;
+		$opt['ModelId'] = $model_id;
+		$opt['Year'] = $year;
+		$opt['ItemId'] = $item_id;
 
 		if (isset($this->assoc_id))
 		{
@@ -1416,8 +1428,8 @@ class AmazonPAS extends CloudFusion
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	make - _integer_ (Required) Identifier that uniquely identifies the make of the car. The make is the car's manufacturer, such as Ford or General Motors.
-	 * 	model - _integer_ (Required) Identifier that uniquely identifies the model of the car.
+	 * 	make_id - _integer_ (Required) Identifier that uniquely identifies the make of the car. This can be retrieved by using <vehicle_search()> first.
+	 * 	model_id - _integer_ (Required) Identifier that uniquely identifies the model of the car. This can be retrieved by using <vehicle_search()> first.
 	 * 	year - _integer_ (Required) The year of the car the part works in.
 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
@@ -1459,11 +1471,11 @@ class AmazonPAS extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehiclePartSearch.html
 	 * 	Related - <vehicle_part_lookup()>, <vehicle_search()>
 	 */
-	public function vehicle_part_search($make, $model, $year, $opt = null)
+	public function vehicle_part_search($make_id, $model_id, $year, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['MakeId'] = $make;
-		$opt['ModelId'] = $model;
+		$opt['MakeId'] = $make_id;
+		$opt['ModelId'] = $model_id;
 		$opt['Year'] = $year;
 
 		if (isset($this->assoc_id))
@@ -1509,7 +1521,6 @@ class AmazonPAS extends CloudFusion
  	 * Examples:
  	 * 	example::pas/help_vehicle_search.php:
  	 * 	example::pas/vehicle_search.phpt:
- 	 * 	example::pas/vehicle_search2.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/VehicleSearch.html
@@ -1567,6 +1578,10 @@ class AmazonPAS extends CloudFusion
 	 * Returns:
 	 * 	<ResponseCore> object
 	 *
+	 * Examples:
+	 * 	example::pas/help_similarity_lookup.php:
+	 * 	example::pas/similarity_lookup.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/SimilarityLookup.html
 	 * 	Related - <tag_lookup()>, <transaction_lookup()>
@@ -1617,6 +1632,11 @@ class AmazonPAS extends CloudFusion
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
+	 *
+	 * Examples:
+	 * 	example::pas/help_tag_lookup.php:
+	 * 	example::pas/tag_lookup.phpt:
+	 * 	example::pas/tag_lookup2.phpt:
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSECommerceService/latest/DG/TagLookup.html

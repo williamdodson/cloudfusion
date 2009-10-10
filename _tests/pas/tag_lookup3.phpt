@@ -1,5 +1,5 @@
 --TEST--
-AmazonPAS::vehicle_part_search, with returnCurlHandle
+AmazonPAS::tag_lookup, with returnCurlHandle
 
 --FILE--
 <?php
@@ -8,7 +8,8 @@ AmazonPAS::vehicle_part_search, with returnCurlHandle
 
 	// Use vehicle_search() to look up these values
 	$pas = new AmazonPAS();
-	$response = $pas->vehicle_part_search(59, 752, 2005, array(
+	$response = $pas->tag_lookup('skillet', array(
+		'ResponseGroup' => 'Large',
 		'returnCurlHandle' => true
 	));
 

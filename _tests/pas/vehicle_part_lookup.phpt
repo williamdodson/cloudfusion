@@ -1,5 +1,5 @@
 --TEST--
-AmazonPAS::vehicle_part_search, with returnCurlHandle
+AmazonPAS::vehicle_part_lookup
 
 --FILE--
 <?php
@@ -8,13 +8,11 @@ AmazonPAS::vehicle_part_search, with returnCurlHandle
 
 	// Use vehicle_search() to look up these values
 	$pas = new AmazonPAS();
-	$response = $pas->vehicle_part_search(59, 752, 2005, array(
-		'returnCurlHandle' => true
-	));
+	$response = $pas->vehicle_part_lookup(59, 752, 2005, 'B000IYDEPG');
 
 	// Success?
-	var_dump($response);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-resource(9) of type (curl)
+bool(true)
