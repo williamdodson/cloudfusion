@@ -6,7 +6,7 @@ AmazonPAS::tag_lookup, with returnCurlHandle
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Use vehicle_search() to look up these values
+	// Search for tagged items
 	$pas = new AmazonPAS();
 	$response = $pas->tag_lookup('skillet', array(
 		'ResponseGroup' => 'Large',
