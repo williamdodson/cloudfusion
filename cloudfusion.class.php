@@ -643,6 +643,7 @@ class CloudFusion
 	 * 	location - _string_ (Required) The location to store the cache object in. This may vary by cache method. See below.
 	 * 	expires - _integer_ (Required) The number of seconds until a cache object is considered stale.
 	 * 	params - _array_ (Optional) An indexed array of parameters to pass to the aforementioned method, where array[0] represents the first parameter, array[1] is the second, etc.
+	 * 	gzip - _boolean_ (Optional) Whether data should be gzipped before being stored. Defaults to true.
 	 *
 	 * Example values for $location:
 	 * 	File - Local file system paths such as ./cache (relative) or /tmp/cache/cloudfusion (absolute). Location must be server-writable.
@@ -662,7 +663,7 @@ class CloudFusion
  	 * 	example::cloudfusion/cache_response_multi_apc.phpt:
  	 * 	example::cloudfusion/cache_response_multi_file.phpt:
 	 */
-	public function cache_response($method, $location, $expires, $params = null)
+	public function cache_response($method, $location, $expires, $params = null, $gzip = true)
 	{
 		if (!is_array($params))
 		{
@@ -716,7 +717,7 @@ class CloudFusion
 			$cache_uuid = $method . '-' . 'nokey' . '-' . sha1($method . serialize($params));
 		}
 
-		$cache = new $CacheMethod($cache_uuid, $location, $expires);
+		$cache = new $CacheMethod($cache_uuid, $location, $expires, $gzip);
 
 		// If the data exists...
 		if ($data = $cache->read())
@@ -860,6 +861,12 @@ class CloudFusion
 	 *
 	 * Returns:
 	 * 	boolean TRUE if cached object exists and is successfully deleted, otherwise FALSE
+	 *
+	 * Examples:
+	 * 	example::cloudfusion/delete_cache_response_apc.phpt:
+	 * 	example::cloudfusion/delete_cache_response_file.phpt:
+	 * 	example::cloudfusion/delete_cache_response_memcached.phpt:
+	 * 	example::cloudfusion/delete_cache_response_pdo_sqlite.phpt:
 	 */
 	public function delete_cache_response($method, $location, $params = null)
 	{
