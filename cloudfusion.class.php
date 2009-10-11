@@ -729,7 +729,7 @@ class CloudFusion
 						for ($i = 0, $max = sizeof($data); $i < $max; $i++)
 						{
 							// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-							$copy[$i] = clone($data[$i]);
+							$copy[$i] = is_object($data[$i]) ? clone($data[$i]) : $data[$i];
 						}
 
 						// Cache the data
@@ -742,8 +742,8 @@ class CloudFusion
 					else
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-						$copy = clone($data);
-						if (get_class($copy->body) == 'SimpleXMLElement')
+						$copy = is_object($data) ? clone($data) : $data;
+						if (isset($copy->body) && get_class($copy->body) == 'SimpleXMLElement')
 						{
 							$copy->body = $copy->body->asXML();
 						}
@@ -772,12 +772,18 @@ class CloudFusion
 				{
 					for ($i = 0, $len = sizeof($data); $i < $len; $i++)
 					{
-						$data[$i]->body = new SimpleXMLElement($data[$i]->body);
+						if (isset($data[$i]->body))
+						{
+							$data[$i]->body = new SimpleXMLElement($data[$i]->body);
+						}
 					}
 				}
 				else
 				{
-					$data->body = new SimpleXMLElement($data->body);
+					if (isset($data->body))
+					{
+						$data->body = new SimpleXMLElement($data->body);
+					}
 				}
 			}
 		}
@@ -795,7 +801,7 @@ class CloudFusion
 					for ($i = 0, $max = sizeof($data); $i < $max; $i++)
 					{
 						// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-						$copy[$i] = clone($data[$i]);
+						$copy[$i] = is_object($data[$i]) ? clone($data[$i]) : $data[$i];
 					}
 
 					// Cache the data
@@ -808,8 +814,8 @@ class CloudFusion
 				else
 				{
 					// We need to convert the SimpleXML data back to real XML before the cache methods serialize it. <http://bugs.php.net/28152>
-					$copy = clone($data);
-					if (get_class($copy->body) == 'SimpleXMLElement')
+					$copy = is_object($data) ? clone($data) : $data;
+					if (isset($copy->body) && get_class($copy->body) == 'SimpleXMLElement')
 					{
 						$copy->body = $copy->body->asXML();
 					}
