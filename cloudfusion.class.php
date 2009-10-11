@@ -655,12 +655,12 @@ class CloudFusion
 	 * 	<ResponseCore> object
  	 *
  	 * Examples:
- 	 * 	example::sqs/cache_response_apc.phpt:
- 	 * 	example::sqs/cache_response_file.phpt:
- 	 * 	example::sqs/cache_response_memcached.phpt:
- 	 * 	example::sqs/cache_response_pdo_sqlite.phpt:
- 	 * 	example::sqs/cache_response_multi_apc.phpt:
- 	 * 	example::sqs/cache_response_multi_file.phpt:
+ 	 * 	example::cloudfusion/cache_response_apc.phpt:
+ 	 * 	example::cloudfusion/cache_response_file.phpt:
+ 	 * 	example::cloudfusion/cache_response_memcached.phpt:
+ 	 * 	example::cloudfusion/cache_response_pdo_sqlite.phpt:
+ 	 * 	example::cloudfusion/cache_response_multi_apc.phpt:
+ 	 * 	example::cloudfusion/cache_response_multi_file.phpt:
 	 */
 	public function cache_response($method, $location, $expires, $params = null)
 	{
