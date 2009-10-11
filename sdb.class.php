@@ -343,8 +343,7 @@ class AmazonSDB extends CloudFusion
 	 *
 	 * Parameters:
 	 * 	domain_name - _string_ (Required) The domain name to use for storing data.
-	 * 	item_name - _string_ (Required) The name of the base item which will contain the series of keypairs.
-	 * 	keypairs - _array_ (Required) Associative array of parameters which are treated as key-value and key-multivalue pairs (i.e. a key can have one or more values; think tags).
+	 * 	item_keypairs - _array_ (Required) Associative array of parameters which are treated as item-key-value and item-key-multivalue pairs (i.e. a key can have one or more values; think tags).
 	 * 	replace - _boolean|array_ (Optional) Whether to replace a key-value pair if a matching key already exists. Supports either a boolean (which affects ALL key-value pairs) or an indexed array of key names (which affects only the keys specified). Defaults to boolean false.
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
 	 *
