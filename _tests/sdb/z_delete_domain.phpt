@@ -11,8 +11,8 @@ AmazonSDB::delete_domain
 	$response = $sdb->delete_domain('warpshare-unit-test');
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

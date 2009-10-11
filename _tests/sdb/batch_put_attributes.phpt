@@ -41,8 +41,8 @@ AmazonSDB::batch_put_attributes
 	));
 
 	// Success?
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
+bool(true)

@@ -496,6 +496,7 @@ class AmazonSQS extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
  	 * Examples:
+	 * 	example::sqs/add_permission.phpt:
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/index.html?Query_QueryAddPermission.html
