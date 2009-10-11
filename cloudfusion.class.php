@@ -5,7 +5,7 @@
  * 	This is a base class containing shared functionality. All methods and properties in this class are inherited by the service-specific classes.
  *
  * Version:
- * 	2009.08.24
+ * 	2009.10.10
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
