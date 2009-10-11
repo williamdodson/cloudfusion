@@ -6,7 +6,7 @@ AmazonSQS::add_permission
 	// Dependencies
 	require_once dirname(__FILE__) . '/../../cloudfusion.class.php';
 
-	// Delete a queue
+	// Add permissions to a queue
 	$sqs = new AmazonSQS();
 	$response = $sqs->add_permission('warpshare-unit-test', 'WarpShareTesting', array(
 		'133904017518' => array(
