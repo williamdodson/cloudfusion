@@ -23,19 +23,19 @@ AmazonSDB::cache_response MultiCurl CacheFile
 
 	// First time pulls live data
 	$response = $sdb->cache_response(array($http, 'send_multi_request'), dirname(dirname(__FILE__)) . '/_cache', 2, array($handles));
-	var_dump($response[0]->status);
-	var_dump($response[1]->status);
+	var_dump($response[0]->isOK());
+	var_dump($response[1]->isOK());
 
 	sleep(2);
 
 	// Second time pulls from cache
 	$response = $sdb->cache_response(array($http, 'send_multi_request'), dirname(dirname(__FILE__)) . '/_cache', 2, array($handles));
-	var_dump($response[0]->status);
-	var_dump($response[1]->status);
+	var_dump($response[0]->isOK());
+	var_dump($response[1]->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
-int(200)
-int(200)
+bool(true)
+bool(true)
+bool(true)
+bool(true)

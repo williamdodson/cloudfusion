@@ -11,20 +11,15 @@ AmazonSDB::cache_response CacheFile
 
 	// First time pulls live data
 	$response = $sdb->cache_response('list_domains', dirname(dirname(__FILE__)) . '/_cache', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 
 	sleep(2);
 
 	// Second time pulls from cache
 	$response = $sdb->cache_response('list_domains', dirname(dirname(__FILE__)) . '/_cache', 2);
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
-
---CLEAN--
-<?php
-
-?>
+bool(true)
+bool(true)

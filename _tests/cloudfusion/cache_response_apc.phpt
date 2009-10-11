@@ -11,13 +11,13 @@ AmazonSDB::cache_response CacheAPC
 
 	// First time pulls live data
 	$response = $sdb->cache_response('list_domains', 'apc', 10);
-	var_dump($response->status);
+	var_dump($response->isOK());
 
 	// Second time pulls from cache
 	$response = $sdb->cache_response('list_domains', 'apc', 10);
-	var_dump($response->status);
+	var_dump($response->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
+bool(true)
+bool(true)

@@ -1,5 +1,5 @@
 --TEST--
-AmazonSDB::cache_response CacheMC
+AmazonSDB::delete_cache_response CacheMC
 
 --SKIPIF--
 <?php
@@ -15,19 +15,12 @@ AmazonSDB::cache_response CacheMC
 	// Instantiate
 	$sdb = new AmazonSDB();
 
-	// First time pulls live data
-	$response = $sdb->cache_response('list_domains', array(
+	// Delete the data
+	$response = $sdb->delete_cache_response('list_domains', array(
 		array('host' => '127.0.0.1')
-	), 10);
-	var_dump($response->isOK());
-
-	// Second time pulls from cache
-	$response = $sdb->cache_response('list_domains', array(
-		array('host' => '127.0.0.1')
-	), 10);
-	var_dump($response->isOK());
+	));
+	var_dump($response);
 ?>
 
 --EXPECT--
-bool(true)
 bool(true)

@@ -23,17 +23,17 @@ AmazonSDB::cache_response MultiCurl CacheAPC
 
 	// First time pulls live data
 	$response = $sdb->cache_response(array($http, 'send_multi_request'), 'apc', 60, array($handles));
-	var_dump($response[0]->status);
-	var_dump($response[1]->status);
+	var_dump($response[0]->isOK());
+	var_dump($response[1]->isOK());
 
 	// Second time pulls from cache
 	$response = $sdb->cache_response(array($http, 'send_multi_request'), 'apc', 60, array($handles));
-	var_dump($response[0]->status);
-	var_dump($response[1]->status);
+	var_dump($response[0]->isOK());
+	var_dump($response[1]->isOK());
 ?>
 
 --EXPECT--
-int(200)
-int(200)
-int(200)
-int(200)
+bool(true)
+bool(true)
+bool(true)
+bool(true)
