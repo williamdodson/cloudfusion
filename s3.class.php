@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2009.07.19
+ * 	2009.10.10
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -137,17 +137,6 @@ class S3_Exception extends Exception {}
  *
  * Extends:
  * 	CloudFusion
- *
- * Example Usage:
- * (start code)
- * require_once('cloudfusion.class.php');
- *
- * // Instantiate a new AmazonS3 object using the settings from the config.inc.php file.
- * $s3 = new AmazonS3();
- *
- * // Instantiate a new AmazonS3 object using these specific settings.
- * $s3 = new AmazonS3($key, $secret_key);
- * (end)
  */
 class AmazonS3 extends CloudFusion
 {
@@ -574,7 +563,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	Virtual Hosting of Buckets - http://docs.amazonwebservices.com/AmazonS3/latest/VirtualHosting.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_vhost.phps
 	 */
 	public function set_vhost($vhost)
 	{
@@ -603,7 +591,6 @@ class AmazonS3 extends CloudFusion
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTBucketPUT.html
 	 * 	Using Buckets - http://docs.amazonwebservices.com/AmazonS3/latest/UsingBucket.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/create_bucket.phps
 	 * 	Related - <get_bucket()>, <head_bucket()>, <delete_bucket()>
 	 */
 	public function create_bucket($bucket, $locale = null, $returnCurlHandle = null)
@@ -663,7 +650,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTBucketLocationGET.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_locale.phps
 	 */
 	public function get_bucket_locale($bucket, $returnCurlHandle = null)
 	{
@@ -693,7 +679,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectHEAD.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_bucket.phps
 	 * 	Related - <create_bucket()>, <get_bucket()>, <delete_bucket()>
 	 */
 	public function head_bucket($bucket, $returnCurlHandle = null)
@@ -720,9 +705,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * Returns:
 	 * 	_boolean_ Whether the bucket exists or not.
-	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_bucket_exists.phps
 	 */
 	public function if_bucket_exists($bucket)
 	{
@@ -747,7 +729,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTBucketDELETE.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_bucket.phps
 	 * 	Related - <create_bucket()>, <get_bucket()>, <head_bucket()>
 	 */
 	public function delete_bucket($bucket, $force = false, $returnCurlHandle = null)
@@ -793,7 +774,6 @@ class AmazonS3 extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_bucket.phps
 	 * 	Related - <copy_object()>, <rename_bucket()>, <list_buckets()>
 	 */
 	public function copy_bucket($source_bucket, $dest_bucket, $acl = S3_ACL_PRIVATE)
@@ -848,7 +828,6 @@ class AmazonS3 extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_bucket.phps
 	 * 	Related - <rename_object()>, <copy_bucket()>, <list_buckets()>
 	 */
 	public function rename_bucket($source_bucket, $dest_bucket)
@@ -873,7 +852,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_integer_ The number of files in the bucket.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_size.phps
 	 * 	Related - <get_bucket_filesize()>
 	 */
 	public function get_bucket_size($bucket)
@@ -896,7 +874,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_filesize.phps
 	 * 	Related - <get_bucket_size()>, <get_object_filesize()>
 	 */
 	public function get_bucket_filesize($bucket, $friendly_format = false)
@@ -932,7 +909,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTServiceGET.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/list_buckets.phps
 	 * 	Related - <get_bucket_list()>
 	 */
 	public function list_buckets($returnCurlHandle = null)
@@ -961,7 +937,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_array_ The list of matching bucket names.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_list.phps
 	 * 	Related - <list_buckets()>
 	 */
 	public function get_bucket_list($pcre = null)
@@ -1014,7 +989,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTAccessPolicy.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_bucket_acl.phps
 	 * 	Related - <set_object_acl()>, <set_bucket_acl()>, <get_object_acl()>
 	 */
 	public function get_bucket_acl($bucket, $returnCurlHandle = null)
@@ -1046,7 +1020,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTAccessPolicy.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_bucket_acl.phps
 	 * 	Related - <set_object_acl()>, <get_bucket_acl()>, <get_object_acl()>
 	 */
 	public function set_bucket_acl($bucket, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -1112,7 +1085,6 @@ class AmazonS3 extends CloudFusion
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectPUT.html
 	 * 	ACL Policy - http://docs.amazonwebservices.com/AmazonS3/latest/RESTAccessPolicy.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/create_object.phps
 	 * 	Related - <get_object()>, <head_object()>, <delete_object()>
 	 */
 	public function create_object($bucket, $opt = null)
@@ -1137,7 +1109,8 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * Parameters:
 	 * 	bucket - _string_ (Required) The name of the bucket to be used.
-	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
+	 * 	filename - _string_ (Required) The filename for the object.
+	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
 	 *
 	 * Keys for the $opt parameter:
 	 * 	lastmodified - _string_ (Optional) The LastModified header passed in from a previous request. If used, requires 'etag' as well. Will return a 304 if file hasn't changed.
@@ -1150,7 +1123,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectGET.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object.phps
 	 * 	Related - <create_object()>, <head_object()>, <delete_object()>
 	 */
 	public function get_object($bucket, $filename, $opt = null)
@@ -1183,7 +1155,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectHEAD.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/head_object.phps
 	 * 	Related - <create_object()>, <get_object()>, <delete_object()>, <if_object_exists()>
 	 */
 	public function head_object($bucket, $filename, $returnCurlHandle = null)
@@ -1214,7 +1185,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_boolean_ Whether the object exists or not.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/if_object_exists.phps
 	 * 	Related - <head_object()>
 	 */
 	public function if_object_exists($bucket, $filename)
@@ -1240,7 +1210,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectDELETE.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_object.phps
 	 * 	Related - <create_object()>, <get_object()>, <head_object()>, <delete_all_objects()>
 	 */
 	public function delete_object($bucket, $filename, $returnCurlHandle = null)
@@ -1271,7 +1240,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_boolean_ Determines the success of deleting all files.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/delete_all_objects.phps
 	 * 	Related - <delete_object()>
 	 */
 	public function delete_all_objects($bucket, $pcre = S3_PCRE_ALL)
@@ -1322,7 +1290,6 @@ class AmazonS3 extends CloudFusion
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTBucketGET.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/latest/ListingKeysRequest.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/list_objects.phps
 	 * 	Related - <get_bucket()>, <get_object_list()>
 	 */
 	public function list_objects($bucket, $opt = null)
@@ -1353,7 +1320,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_integer_|_string_ The number of bytes as an integer, or the friendly format as a string.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_filesize.phps
 	 * 	Related - <get_bucket_filesize()>
 	 */
 	public function get_object_filesize($bucket, $filename, $friendly_format = false)
@@ -1394,7 +1360,6 @@ class AmazonS3 extends CloudFusion
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/ListingKeysRequest.html
 	 * 	List Keys - http://docs.amazonwebservices.com/AmazonS3/latest/gsg/ListKeys.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_list.phps
 	 * 	Related - <get_bucket_list()>, <list_objects()>
 	 */
 	public function get_object_list($bucket, $opt = null)
@@ -1466,7 +1431,6 @@ class AmazonS3 extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/latest/UsingCopyingObjects.html
 	 * 	PUT Request Headers - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectPUT.html#RESTObjectPUTRequestHeaders
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_object.phps
 	 * 	Related - <copy_bucket()>, <duplicate_object()>, <move_object()>, <rename_object()>
 	 */
 	public function copy_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $opt = null)
@@ -1519,7 +1483,6 @@ class AmazonS3 extends CloudFusion
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectCOPY.html
 	 * 	Using and Copying Objects - http://docs.amazonwebservices.com/AmazonS3/latest/UsingCopyingObjects.html
 	 * 	PUT Request Headers - http://docs.amazonwebservices.com/AmazonS3/latest/RESTObjectPUT.html#RESTObjectPUTRequestHeaders
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/copy_object.phps
 	 * 	Related - <copy_bucket()>, <duplicate_object()>, <move_object()>, <rename_object()>
 	 */
 	public function update_object($bucket, $filename, $opt)
@@ -1557,7 +1520,6 @@ class AmazonS3 extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/duplicate_object.phps
 	 * 	Related - <copy_object()>, <move_object()>, <rename_object()>
 	 */
 	public function duplicate_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1583,7 +1545,6 @@ class AmazonS3 extends CloudFusion
 	 * 	_array_ <ResponseCore> objects for the copy and the delete.
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/move_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <rename_object()>
 	 */
 	public function move_object($source_bucket, $source_filename, $dest_bucket, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1611,7 +1572,6 @@ class AmazonS3 extends CloudFusion
 	 * 	<ResponseCore> object
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/rename_object.phps
 	 * 	Related - <copy_object()>, <duplicate_object()>, <move_object()>
 	 */
 	public function rename_object($bucket, $source_filename, $dest_filename, $acl = S3_ACL_PRIVATE)
@@ -1636,7 +1596,6 @@ class AmazonS3 extends CloudFusion
  	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTAccessPolicy.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_acl.phps
 	 * 	Related - <set_object_acl()>, <set_bucket_acl()>, <get_bucket_acl()>
 	 */
 	public function get_object_acl($bucket, $filename, $returnCurlHandle = null)
@@ -1670,7 +1629,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/RESTAccessPolicy.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/set_object_acl.phps
 	 * 	Related - <set_bucket_acl()>, <get_bucket_acl()>, <get_object_acl()>
 	 */
 	public function set_object_acl($bucket, $filename, $acl = S3_ACL_PRIVATE, $returnCurlHandle = null)
@@ -1726,7 +1684,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/ServerLogs.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function get_logs($bucket)
@@ -1759,7 +1716,6 @@ class AmazonS3 extends CloudFusion
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/LoggingAPI.html
 	 * 	Permissions - http://docs.amazonwebservices.com/AmazonS3/latest/S3_ACLs.html#S3_ACLs_Permissions
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function enable_logging($bucket, $target_bucket, $target_prefix, $users = null)
@@ -1808,7 +1764,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/LoggingAPI.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/logging.phps
 	 * 	Related - <get_logs()>, <enable_logging()>, <disable_logging()>
 	 */
 	public function disable_logging($bucket)
@@ -1829,7 +1784,7 @@ class AmazonS3 extends CloudFusion
 
 	/**
 	 * Method: store_remote_file()
-	 * 	Takes an existing remote file, stores it to S3, and returns a URL.
+	 * 	Takes an existing remote URL, stores it to S3, and returns a URL for the stored copy. For creating new objects in S3, use the <create_object()> method.
 	 *
 	 * Access:
 	 * 	public
@@ -1846,9 +1801,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * Returns:
 	 * 	_string_ The S3 URL for the uploaded file. Returns null if unsuccessful.
-	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/store_remote_file.phps
 	 */
 	public function store_remote_file($remote_file, $bucket, $filename, $opt = null)
 	{
@@ -1920,9 +1872,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
-	 *
-	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/change_content_type.phps
 	 */
 	public function change_content_type($bucket, $filename, $contentType, $returnCurlHandle = null)
 	{
@@ -1955,7 +1904,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	Query String Authentication - http://docs.amazonwebservices.com/AmazonS3/latest/S3_QSAuth.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_object_url.phps
 	 * 	Related - <get_torrent_url()>
 	 */
 	public function get_object_url($bucket, $filename, $qsa = 0, $torrent = false)
@@ -2015,7 +1963,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/index.html?S3TorrentRetrieve.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/get_torrent_url.phps
 	 * 	Related - <get_object_url()>
 	 */
 	public function get_torrent_url($bucket, $filename, $qsa = 0)
@@ -2048,7 +1995,6 @@ class AmazonS3 extends CloudFusion
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonS3/latest/S3_ACLs.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/s3/generate_access_policy.phps
 	 */
 	public function generate_access_policy($canonical_id, $canonical_name, $users)
 	{
