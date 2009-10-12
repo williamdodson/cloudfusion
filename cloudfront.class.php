@@ -4,7 +4,7 @@
  * 	Amazon CloudFront CDN Service (http://aws.amazon.com/cloudfront)
  *
  * Version:
- * 	2009.07.19
+ * 	2009.10.11
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -76,7 +76,7 @@ class AmazonCloudFront extends CloudFusion
 	 */
 	public function __construct($key = null, $secret_key = null)
 	{
-		$this->api_version = '2009-06-23';
+		$this->api_version = '2009-04-02';
 		$this->hostname = CDN_DEFAULT_URL;
 		$this->base_xml = '<?xml version="1.0" encoding="UTF-8"?><DistributionConfig xmlns="http://cloudfront.amazonaws.com/doc/' . $this->api_version . '/"></DistributionConfig>';
 
@@ -121,6 +121,8 @@ class AmazonCloudFront extends CloudFusion
 	{
 		$querystring = null;
 
+		if (!$opt) $opt = array();
+
 		// Generate the querystring from $opt, removing a reference to returnCurlHandle.
 		if ($opt)
 		{
@@ -131,7 +133,7 @@ class AmazonCloudFront extends CloudFusion
 				unset($query['returnCurlHandle']);
 			}
 
-			$querystring = $this->util->to_query_string($query);
+			$querystring = '?' . $this->util->to_query_string($query);
 		}
 
 		// Gather information to pass along to other classes.
@@ -179,9 +181,9 @@ class AmazonCloudFront extends CloudFusion
 
 		// Prepare the response.
 		$headers = $request->get_response_header();
-		$headers['x-tarzan-requesturl'] = $request_url;
-		if ($xml) $headers['x-tarzan-body'] = $xml;
-		$data = new $this->response_class($headers, $request->get_response_body(), $request->get_response_code());
+		$headers['x-cloudfusion-requesturl'] = $request_url;
+		if ($xml) $headers['x-cloudfusion-body'] = $xml;
+		$data = new $this->response_class($headers, new SimpleXMLElement($request->get_response_body()), $request->get_response_code());
 
 		// Return!
 		return $data;
@@ -229,9 +231,13 @@ class AmazonCloudFront extends CloudFusion
 	 *
 	 * Returns:
 	 * 	String DistributionConfig XML document.
+	 *
+	 * Examples:
+	 * 	example::cloudfront/generate_config_xml3.phpt:
+	 * 	example::cloudfront/generate_config_xml4.phpt:
+	 * 	example::cloudfront/generate_config_xml5.phpt:
  	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/generate_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function generate_config_xml($origin, $caller_reference, $opt = null)
@@ -277,7 +283,7 @@ class AmazonCloudFront extends CloudFusion
 		// Enabled
 		if (isset($opt['Enabled']))
 		{
-			$xml->addChild('Enabled', $opt['Enabled']);
+			$xml->addChild('Enabled', $opt['Enabled'] ? 'true' : 'false');
 		}
 		else
 		{
@@ -290,7 +296,18 @@ class AmazonCloudFront extends CloudFusion
 			if (is_array($opt['Logging']))
 			{
 				$logging = $xml->addChild('Logging');
-				$logging->addChild('Bucket', $opt['Logging']['Bucket']);
+				$bucket_name = $opt['Logging']['Bucket'];
+
+				// Origin
+				if (stripos($bucket_name, '.s3.amazonaws.com') !== false)
+				{
+					$logging->addChild('Bucket', $bucket_name);
+				}
+				else
+				{
+					$logging->addChild('Bucket', $bucket_name . '.s3.amazonaws.com');
+				}
+
 				$logging->addChild('Prefix', $opt['Logging']['Prefix']);
 			}
 		}
@@ -316,9 +333,11 @@ class AmazonCloudFront extends CloudFusion
 	 *
 	 * Returns:
 	 * 	String DistributionConfig XML document.
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/update_config_xml4.phpt:
+	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/update_config_xml.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function update_config_xml($xml, $opt = null)
@@ -377,7 +396,7 @@ class AmazonCloudFront extends CloudFusion
 		// Enabled
 		if (isset($opt['Enabled']))
 		{
-			$update->addChild('Enabled', $opt['Enabled']);
+			$update->addChild('Enabled', $opt['Enabled'] ? 'true' : 'false');
 		}
 		elseif (isset($xml->Enabled))
 		{
@@ -390,7 +409,18 @@ class AmazonCloudFront extends CloudFusion
 			if (is_array($opt['Logging']))
 			{
 				$logging = $update->addChild('Logging');
-				$logging->addChild('Bucket', $opt['Logging']['Bucket']);
+				$bucket_name = $opt['Logging']['Bucket'];
+
+				// Origin
+				if (stripos($bucket_name, '.s3.amazonaws.com') !== false)
+				{
+					$logging->addChild('Bucket', $bucket_name);
+				}
+				else
+				{
+					$logging->addChild('Bucket', $bucket_name . '.s3.amazonaws.com');
+				}
+
 				$logging->addChild('Prefix', $opt['Logging']['Prefix']);
 			}
 		}
@@ -419,8 +449,10 @@ class AmazonCloudFront extends CloudFusion
 	 * Returns:
 	 * 	String DistributionConfig XML document.
  	 *
+	 * Examples:
+	 * 	example::cloudfront/remove_cname2.phpt:
+	 *
 	 * See Also:
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/remove_cname.phps
 	 * 	Related - <generate_config_xml()>, <update_config_xml()>, <remove_cname()>
 	 */
 	public function remove_cname($xml, $cname)
@@ -497,10 +529,12 @@ class AmazonCloudFront extends CloudFusion
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/create_distribution.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/CreateDistribution.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/create_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function create_distribution($origin, $caller_reference, $opt = null)
@@ -534,10 +568,13 @@ class AmazonCloudFront extends CloudFusion
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/list_distributions.phpt:
+	 * 	example::cloudfront/list_distributions2.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/ListDistributions.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/list_distributions.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function list_distributions($opt = null)
@@ -561,10 +598,12 @@ class AmazonCloudFront extends CloudFusion
  	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/get_distribution_info.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/GetDistribution.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_info.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
 	public function get_distribution_info($distribution_id, $opt = null)
@@ -582,20 +621,22 @@ class AmazonCloudFront extends CloudFusion
 	 * Parameters:
  	 * 	distribution_id - _string_ (Required) The distribution ID returned from <create_distribution()> or <list_distributions()>.
  	 * 	etag - _string_ (Required) The ETag header value retrieved from a call to <get_distribution_config()>.
- 	 * 	opt - _array_ (Required) Associative array of parameters which can have the following keys:
+ 	 * 	opt - _array_ (Optional) Associative array of parameters which can have the following keys:
  	 *
  	 * Keys for the $opt parameter:
 	 * 	returnCurlHandle - _boolean_ (Optional) A private toggle that will return the CURL handle for the request rather than actually completing the request. This is useful for MultiCURL requests.
  	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/z_delete_distribution.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/DeleteDistribution.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/delete_distribution.phps
 	 * 	Related - <create_distribution()>, <list_distributions()>, <get_distribution_info()>, <delete_distribution()>
 	 */
-	public function delete_distribution($distribution_id, $etag, $opt = null)
+	public function delete_distribution($distribution_id, $etag = null, $opt = null)
 	{
 		return $this->authenticate(HTTP_DELETE, '/' . $distribution_id, $opt, null, $etag);
 	}
@@ -620,10 +661,12 @@ class AmazonCloudFront extends CloudFusion
  	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/get_distribution_config.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/GetConfig.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/get_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */
 	public function get_distribution_config($distribution_id, $opt = null)
@@ -649,10 +692,12 @@ class AmazonCloudFront extends CloudFusion
  	 *
 	 * Returns:
 	 * 	<ResponseCore> object
- 	 *
+	 *
+	 * Examples:
+	 * 	example::cloudfront/get_distribution_config.phpt:
+	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/PutConfig.html
-	 * 	Example Usage - http://getcloudfusion.com/docs/examples/cloudfront/set_distribution_config.phps
 	 * 	Related - <get_distribution_config()>, <set_distribution_config()>
 	 */
 	public function set_distribution_config($distribution_id, $xml, $etag, $opt = null)
