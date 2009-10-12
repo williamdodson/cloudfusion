@@ -19,9 +19,6 @@ CloudFront: set_distribution_config()
 		'Enabled' => false
 	));
 
-	// If we *just* created a new distribution, sleep for ~3 minutes to allow the "eventual consistency" to catch up.
-	sleep(180);
-
 	// Fetch an updated ETag value
 	$etag = $cdn->get_distribution_config($distribution_id)->header['etag'];
 
