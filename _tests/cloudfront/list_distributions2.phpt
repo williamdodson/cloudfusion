@@ -16,5 +16,5 @@ CloudFront: list_distributions() with MaxResults
 	var_dump($response->isOK());
 ?>
 
---EXPECTF--
+--EXPECT--
 bool(true)

@@ -694,7 +694,7 @@ class AmazonCloudFront extends CloudFusion
 	 * 	<ResponseCore> object
 	 *
 	 * Examples:
-	 * 	example::cloudfront/get_distribution_config.phpt:
+	 * 	example::cloudfront/set_distribution_config.phpt:
 	 *
 	 * See Also:
 	 * 	AWS Method - http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/PutConfig.html

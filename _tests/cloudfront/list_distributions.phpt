@@ -14,5 +14,5 @@ CloudFront: list_distributions()
 	var_dump($response->isOK());
 ?>
 
---EXPECTF--
+--EXPECT--
 bool(true)
