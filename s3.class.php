@@ -530,7 +530,15 @@ class AmazonS3 extends CloudFusion
 			$headers['x-tarzan-requesturl'] = $this->request_url;
 			$headers['x-tarzan-stringtosign'] = $stringToSign;
 			$headers['x-tarzan-requestheaders'] = $req->request_headers;
-			$data = new $this->response_class($headers, new SimpleXMLElement($req->get_response_body()), $req->get_response_code());
+
+			if (strpos($req->get_response_body(), '<?xml') !== false)
+			{
+				$data = new $this->response_class($headers, new SimpleXMLElement($req->get_response_body()), $req->get_response_code());
+			}
+			else
+			{
+				$data = new $this->response_class($headers, $req->get_response_body(), $req->get_response_code());
+			}
 
 			// Did Amazon tell us to redirect? Typically happens for multiple rapid requests EU datacenters.
 			// @see http://docs.amazonwebservices.com/AmazonS3/latest/Redirects.html
