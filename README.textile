@@ -18,6 +18,17 @@ Caching support requires one or more of the following:
 * *MySQL:* PDO extension, PDO_MYSQL adapter, MySQL extension (or mysqlnd for PHP 5.3)
 * *PostgreSQL:* PDO extension, PDO_PGSQL adapter, PGSQL extension
 
+h2. Get the latest code
+
+The following will pull down the latest development code, including CacheCore and RequestCore.
+
+<pre><code>
+git clone git://github.com/skyzyx/cloudfusion.git
+cd cloudfusion
+git submodule init
+git submodule update
+</code></pre>
+
 h2. Donate
 
 Help me stop being broke by donating anything you can towards the further development of this software.
