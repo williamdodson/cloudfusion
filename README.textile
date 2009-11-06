@@ -1,0 +1,47 @@
+h1. CloudFusion
+
+Build awesome, cloud-based web applications in a fraction of the time!
+
+h2. Requirements
+
+* PHP 5.1.4 or newer (PHP 5.2+ recommended)
+* SimpleXML extension
+* cURL extension with SSL support
+
+Caching support requires one or more of the following:
+
+* *File:* Write permissions to the file system.
+* *APC:* APC extension
+* *XCache:* XCache extension
+* *Memcache:* Memcached system service, Memcache PHP extension
+* *SQLite:* PDO extension, PDO_SQLITE adapter, SQLite extension
+* *MySQL:* PDO extension, PDO_MYSQL adapter, MySQL extension (or mysqlnd for PHP 5.3)
+* *PostgreSQL:* PDO extension, PDO_PGSQL adapter, PGSQL extension
+
+h2. Contributing
+
+As of early November 2009, CloudFusion has moved to the Git SCM and GitHub for a code repository.
+
+h3. Mac
+
+Mac users can install Git either from "the installer":http://code.google.com/p/git-osx-installer/downloads/list?can=3 or via "MacPorts":http://macports.org. If installing via MacPorts, I'd recommend calling <code>sudo port install git-core +svn</code>.
+
+h3. Windows
+
+Windows users can install "msys-git":http://code.google.com/p/msysgit/ or "TortoiseGit":http://code.google.com/p/tortoisegit/. "Getting started with Git and Github on Windows":http://kylecordes.com/2008/04/30/git-windows-go/ would be a good place to start.
+
+h3. Linux
+
+Depending on your flavor of Linux you can likely either use <code>yum</code> or <code>apt-get</code> to install the Git package.
+
+h2. Links
+
+* "Main site":http://getcloudfusion.com
+* "API reference":http://getcloudfusion.com/docs/latest
+* "Tutorials and screencasts":http://getcloudfusion.com/docs
+* "Discussion and support list":http://getcloudfusion.com/discussion
+* Donate! -- Click the little "Donate" button in the upper-right corner
+
+h2. License
+
+Code is BSD licensed. Documentation and tutorials are Creative Commons licensed. You can find exact details in the footer of the main site.
