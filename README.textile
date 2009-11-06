@@ -18,7 +18,11 @@ Caching support requires one or more of the following:
 * *MySQL:* PDO extension, PDO_MYSQL adapter, MySQL extension (or mysqlnd for PHP 5.3)
 * *PostgreSQL:* PDO extension, PDO_PGSQL adapter, PGSQL extension
 
-h2. Contributing
+h2. Donate
+
+Help me stop being broke by donating anything you can towards the further development of this software.
+
+h2. Getting the hang of Git
 
 As of early November 2009, CloudFusion has moved to the Git SCM and GitHub for a code repository.
 
@@ -33,6 +37,19 @@ Windows users can install "msys-git":http://code.google.com/p/msysgit/ or "Torto
 h3. Linux
 
 Depending on your flavor of Linux you can likely either use <code>yum</code> or <code>apt-get</code> to install the Git package.
+
+h2. Contributing
+
+I want to see CloudFusion become a community project. If you have a patch for a bug or new feature, fork CloudFusion, make the updates, then send me a Github pull request. This makes patching much easier.
+
+It's even better when it's unit tested. Bug fix patches should include matching "PHPT":http://qa.php.net/write-test.php unit tests, and new features should include unit tests and documentation in "NaturalDocs":http://naturaldocs.org format.
+
+Documentation is equally as important as the code itself, and unit tests are actually used for code samples within the documentation. Doing your best will make my job easier. :)
+
+I definitely need help with:
+* Writing PHPT tests for the S3 class
+* Writing PHPT tests for the EC2 class
+* Supporting the new EC2-related services that have come out in the past few months
 
 h2. Links
 
