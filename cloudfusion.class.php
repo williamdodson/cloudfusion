@@ -251,16 +251,16 @@ class CloudFusion
 		}
 		elseif (strstr($class, 'Cache'))
 		{
-			if (file_exists($ipath = 'lib' . DIRECTORY_SEPARATOR . 'CacheCore' . DIRECTORY_SEPARATOR . 'icachecore.interface.php'))
+			if (file_exists($ipath = 'lib' . DIRECTORY_SEPARATOR . 'cachecore' . DIRECTORY_SEPARATOR . 'icachecore.interface.php'))
 			{
 				require_once($ipath);
 			}
 
-			$path .= 'lib' . DIRECTORY_SEPARATOR . 'CacheCore' . DIRECTORY_SEPARATOR . strtolower($class) . '.class.php';
+			$path .= 'lib' . DIRECTORY_SEPARATOR . 'cachecore' . DIRECTORY_SEPARATOR . strtolower($class) . '.class.php';
 		}
 		elseif (strstr($class, 'RequestCore') || strstr($class, 'ResponseCore'))
 		{
-			$path .= 'lib' . DIRECTORY_SEPARATOR . 'RequestCore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
+			$path .= 'lib' . DIRECTORY_SEPARATOR . 'requestcore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
 		}
 
 		if (file_exists($path) && !is_dir($path))
