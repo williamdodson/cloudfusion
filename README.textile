@@ -22,8 +22,7 @@ h2. Get the latest code
 
 The following will pull down the latest development code, including CacheCore and RequestCore.
 
-<pre><code>
-git clone git://github.com/skyzyx/cloudfusion.git
+<pre><code>git clone git://github.com/skyzyx/cloudfusion.git
 cd cloudfusion
 git submodule init
 git submodule update
