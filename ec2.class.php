@@ -4,7 +4,7 @@
  * 	Amazon Elastic Compute Cloud (http://aws.amazon.com/ec2)
  *
  * Version:
- * 	2009.07.19
+ * 	2010.01.10
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -446,7 +446,7 @@ class AmazonEC2 extends CloudFusion
 	 */
 	public function create_volume($sizesnapid, $zone, $returnCurlHandle = null)
 	{
-		if (!$opt) $opt = array();
+		$opt = array();
 		$opt['AvailabilityZone'] = $zone;
 		$opt['returnCurlHandle'] = $returnCurlHandle;
 
