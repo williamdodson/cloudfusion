@@ -4,7 +4,7 @@
  * 	Amazon Simple Storage Service (http://aws.amazon.com/s3)
  *
  * Version:
- * 	2009.10.10
+ * 	2010.01.10
  *
  * Copyright:
  * 	2006-2009 Foleeo, Inc., and contributors.
@@ -1388,23 +1388,29 @@ class AmazonS3 extends CloudFusion
 		// If we have a PCRE regex, store it.
 		if ($pcre)
 		{
-			// Loop through and find the filenames.
-			foreach ($list->body->Contents as $file)
+			if (isset($list))
 			{
-				$file = (string) $file->Key;
-
-				if (preg_match($pcre, $file))
+				// Loop through and find the filenames.
+				foreach ($list->body->Contents as $file)
 				{
-					$filenames[] = $file;
+					$file = (string) $file->Key;
+
+					if (preg_match($pcre, $file))
+					{
+						$filenames[] = $file;
+					}
 				}
 			}
 		}
 		else
 		{
-			// Loop through and find the filenames.
-			foreach ($list->body->Contents as $file)
+			if (isset($list))
 			{
-				$filenames[] = (string) $file->Key;
+				// Loop through and find the filenames.
+				foreach ($list->body->Contents as $file)
+				{
+					$filenames[] = (string) $file->Key;
+				}
 			}
 		}
 
