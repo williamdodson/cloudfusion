@@ -615,7 +615,17 @@ class AmazonS3 extends CloudFusion
 					$body = '<CreateBucketConfiguration><LocationConstraint>' . strtoupper($locale) . '</LocationConstraint></CreateBucketConfiguration>';
 					$contentType = 'application/xml';
 					break;
+
+				default:
+					$body = '<CreateBucketConfiguration><LocationConstraint>US</LocationConstraint></CreateBucketConfiguration>';
+					$contentType = 'application/xml';
+					break;
 			}
+		}
+		else
+		{
+			$body = '<CreateBucketConfiguration><LocationConstraint>US</LocationConstraint></CreateBucketConfiguration>';
+			$contentType = 'application/xml';
 		}
 
 		// Authenticate to S3
